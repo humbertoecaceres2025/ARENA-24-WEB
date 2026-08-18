@@ -17,4 +17,5 @@ Subí estos archivos al repositorio. Después:
 Settings → Pages → Deploy from a branch → rama principal → carpeta raíz.
 
 ## IMPORTANTE
-Reemplazá la sección de contacto por tus redes sociales y datos oficiales antes de publicar.
+ redes sociales 
+<img width="1366" height="768" alt="image" src="" />
