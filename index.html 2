@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>ARENA 24 | Siempre con vos</title>
+
+  <meta name="description"
+        content="ARENA 24 Radio Online desde La Rioja, Argentina. Música, noticias, entretenimiento y deportes.">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="hero">
+
+  <div class="brand">
+
+    <span class="live">● EN VIVO</span>
+
+    <h1>ARENA <strong>24</strong></h1>
+
+    <p>SIEMPRE CON VOS · LA RIOJA, ARGENTINA</p>
+
+  </div>
+
+  <button id="playTop">
+    ▶ ESCUCHAR EN VIVO
+  </button>
+
+</header>
+
+
+<main>
+
+<section class="card player">
+
+  <div>
+
+    <small>RADIO ONLINE 24/7</small>
+
+    <h2>Escuchá ARENA 24</h2>
+
+    <p>
+      Música · Noticias · Entretenimiento · Deportes
+    </p>
+
+  </div>
+
+  <audio id="player" controls preload="none">
+
+    <source
+      src="https://stream.zeno.fm/zuw6xmmwmd0uv"
+      type="audio/mpeg">
+
+    Tu navegador no puede reproducir este audio.
+
+  </audio>
+
+</section>
+
+
+<section class="columns">
+
+
+<article class="card">
+
+  <small>🔴 ARENA 24 FLASH</small>
+
+  <h2>Últimas noticias</h2>
+
+  <div class="news">
+
+    <div>
+      <b>📍 La Rioja</b>
+      <p>
+        Información local y provincial.
+      </p>
+    </div>
+
+    <div>
+      <b>🇦🇷 Argentina</b>
+      <p>
+        Las noticias más importantes del país.
+      </p>
+    </div>
+
+    <div>
+      <b>🌎 Mundo</b>
+      <p>
+        Actualidad internacional.
+      </p>
+    </div>
+
+    <div>
+      <b>⚽ Deportes</b>
+      <p>
+        Resultados, agenda y protagonistas.
+      </p>
+    </div>
+
+  </div>
+
+</article>
+
+
+<article class="card">
+
+  <small>📅 PROGRAMACIÓN</small>
+
+  <h2>ARENA 24 · 24/7</h2>
+
+  <ul>
+
+    <li>
+      <b>06–12</b>
+      Enrique · Noticias
+    </li>
+
+    <li>
+      <b>12–18</b>
+      Viviana · Entretenimiento
+    </li>
+
+    <li>
+      <b>18–21</b>
+      Nicolás · Deportes
+    </li>
+
+    <li>
+      <b>21–06</b>
+      Martina · Night & Relax
+    </li>
+
+  </ul>
+
+</article>
+
+</section>
+
+
+<section class="card">
+
+  <small>🏆 ARENA 24 TOP 10</small>
+
+  <h2>Ranking musical</h2>
+
+  <ol class="top10">
+
+    <li>Artista — Canción</li>
+    <li>Artista — Canción</li>
+    <li>Artista — Canción</li>
+    <li>Artista — Canción</li>
+    <li>Artista — Canción</li>
+    <li>Artista — Canción</li>
+    <li>Artista — Canción</li>
+    <li>Artista — Canción</li>
+    <li>Artista — Canción</li>
+    <li>Artista — Canción</li>
+
+  </ol>
+
+</section>
+
+
+<section class="columns">
+
+
+<article class="card">
+
+  <small>📍 LA RIOJA AHORA</small>
+
+  <h2>Información local</h2>
+
+  <p>
+    Capital e interior · Seguridad · Servicios ·
+    Tránsito · Cultura · Eventos · Deportes riojanos.
+  </p>
+
+</article>
+
+
+<article class="card">
+
+  <small>📢 PUBLICIDAD</small>
+
+  <h2>Publicitá en ARENA 24</h2>
+
+  <p>
+    Promocioná tu negocio en radio, web y redes sociales.
+  </p>
+
+</article>
+
+</section>
+
+
+<section class="card">
+
+  <small>📱 REDES SOCIALES</small>
+
+  <h2>Seguinos</h2>
+
+  <div class="socials">
+
+    <a href="#" target="_blank">
+      Facebook
+    </a>
+
+    <a href="#" target="_blank">
+      Instagram
+    </a>
+
+    <a href="#" target="_blank">
+      TikTok
+    </a>
+
+    <a href="#" target="_blank">
+      YouTube
+    </a>
+
+  </div>
+
+</section>
+
+</main>
+
+
+<footer>
+
+  <strong>ARENA 24</strong>
+
+  · Siempre con vos
+  · La Rioja, Argentina
+
+  <br>
+
+  <small>
+    Radio online 24/7
+  </small>
+
+</footer>
+
+
+<script src="script.js"></script>
+
+</body>
+</html>
