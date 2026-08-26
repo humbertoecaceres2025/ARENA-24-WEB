@@ -1,5 +1,4 @@
 # ARENA 24 — WEB LISTA PARA PUBLICAR
-
 Incluye:
 - index.html
 - styles.css
