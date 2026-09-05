@@ -157,130 +157,68 @@ ARENA 24… siempre con vos.
 </div>
 </section>
    
-</a>/* ================================
-   ARENA 24 · VIDEO PLAYER
-   ================================ */
+</a>/<section class="arena24-video-section">
 
-.arena24-video-section {
-    width: 100%;
-    max-width: 1100px;
-    margin: 40px auto;
-    padding: 0 15px;
-}
+    <div class="arena24-video-card">
 
-.arena24-video-card {
-    position: relative;
-    overflow: hidden;
-    background: #080808;
-    border-radius: 18px;
-    border: 1px solid rgba(255,255,255,.12);
-    box-shadow: 0 15px 45px rgba(0,0,0,.45);
-}
+        <div class="arena24-video-header">
+            <div class="arena24-brand">
+                ARENA <span>24</span>
+            </div>
 
-.arena24-video-header {
-    padding: 18px 22px;
-    background: linear-gradient(90deg,#050505,#171717,#050505);
-    border-bottom: 2px solid #e30613;
-}
+            <div class="arena24-video-label">
+                Música · Entretenimiento
+            </div>
+        </div>
 
-.arena24-brand {
-    font-size: 28px;
-    font-weight: 900;
-    letter-spacing: 1px;
-    color: #fff;
-}
+        <div class="arena24-video-wrapper">
 
-.arena24-brand span {
-    color: #e30613;
-}
+            <video
+                controls
+                preload="metadata"
+                playsinline
+                poster="img/arena24-poster.jpg">
 
-.arena24-video-label {
-    margin-top: 5px;
-    color: #aaa;
-    font-size: 12px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-}
+                <source
+                    src="videos/ARENA24_DJ_MIX_HCPRO.mp4"
+                    type="video/mp4">
 
-.arena24-video-wrapper {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 16 / 9;
-    background: #000;
-}
+                Tu navegador no puede reproducir este video.
 
-.arena24-video-wrapper video {
-    width: 100%;
-    height: 100%;
-    display: block;
-    object-fit: contain;
-    background: #000;
-}
+            </video>
 
-.arena24-video-info {
-    padding: 20px;
-    text-align: center;
-    background: #0d0d0d;
-}
+        </div>
 
-.arena24-video-info h2 {
-    margin: 0;
-    color: #fff;
-    font-size: 28px;
-    font-weight: 900;
-}
+        <div class="arena24-video-info">
 
-.arena24-video-info p {
-    margin: 8px 0 0;
-    color: #aaa;
-    font-size: 14px;
-}
+            <span class="arena24-badge">
+                🎧 DJ MIX HCpro
+            </span>
 
-.arena24-badge {
-    display: inline-block;
-    margin-bottom: 10px;
-    padding: 7px 14px;
-    border-radius: 30px;
-    background: #e30613;
-    color: #fff;
-    font-size: 11px;
-    font-weight: 800;
-    letter-spacing: 1px;
-}
+            <h2>
+                PRESENTAMOS LOS VIDEOS DEL MOMENTO EN ARENA 24
+            </h2>
 
-.arena24-open-button {
-    display: inline-block;
-    margin-top: 15px;
-    padding: 12px 22px;
-    background: #e30613;
-    color: #fff;
-    text-decoration: none;
-    border-radius: 8px;
-    font-weight: 800;
-    transition: .25s;
-}
+            <p>
+                Música · Entretenimiento
+            </p>
 
-.arena24-open-button:hover {
-    background: #ff1825;
-    transform: translateY(-2px);
-}
+            <a
+                href="videos/ARENA24_DJ_MIX_HCPRO.mp4"
+                target="_blank"
+                rel="noopener"
+                class="arena24-open-button">
 
-@media (max-width: 600px) {
+                ▶ ABRIR VIDEO
 
-    .arena24-video-section {
-        margin: 25px auto;
-        padding: 0 10px;
-    }
+            </a>
 
-    .arena24-brand {
-        font-size: 23px;
-    }
+        </div>
 
-    .arena24-video-info h2 {
-        font-size: 22px;
-    }
+    </div>
 
-}
+</section>
+   
   
 <section id="contacto">
 <h2>05 · CONTACTO</h2>
