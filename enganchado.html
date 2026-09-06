@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Enganchado Arena 24 Web</title>
+<meta name="description" content="Enganchado musical de Arena 24 Web">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#080f18;color:#fff;font-family:Arial,Helvetica,sans-serif}
+.wrap{max-width:1100px;margin:auto;padding:25px 18px 50px}
+.header{background:#0d1b2a;border-bottom:4px solid #e50914;padding:22px;border-radius:0 0 14px 14px;text-align:center}
+.logo{font-size:38px;font-weight:900;letter-spacing:-2px}.logo span{color:#e50914}
+.tag{margin-top:7px;color:#c5cdd5;font-size:14px;letter-spacing:1px}
+.player{margin-top:25px;background:#111c28;padding:14px;border-radius:14px;box-shadow:0 12px 40px #0008}
+video{display:block;width:100%;height:auto;max-height:78vh;background:#000;border-radius:9px}
+.title{text-align:center;padding:22px 5px 8px}
+.title h1{margin:0;font-size:clamp(26px,5vw,44px)}.title p{color:#aeb8c2}
+.badge{display:inline-block;margin-top:10px;background:#e50914;padding:8px 15px;border-radius:20px;font-weight:bold;font-size:12px}
+.info{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:20px}
+.box{background:#111c28;padding:18px;border-radius:10px;text-align:center}.box strong{display:block;font-size:13px;color:#e50914}.box span{display:block;margin-top:6px;color:#d5dce2}
+footer{text-align:center;margin-top:35px;color:#82909d;font-size:13px}
+@media(max-width:650px){.logo{font-size:30px}.info{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="header">
+  <div class="logo">ARENA <span>24</span> WEB</div>
+  <div class="tag">LA RIOJA, TODO EL DÍA</div>
+</header>
+
+<section class="player">
+  <video controls preload="metadata" playsinline>
+    <source src="videos/Enganchado_Arena24Web.mp4" type="video/mp4">
+    Tu navegador no puede reproducir este video.
+  </video>
+  <div class="title">
+    <span class="badge">🎵 ENGANCHADO MUSICAL</span>
+    <h1>ENGANCHADO ARENA 24</h1>
+    <p>Los mejores temas, en un solo enganchado.</p>
+  </div>
+</section>
+
+<div class="info">
+  <div class="box"><strong>ARENA 24 WEB</strong><span>Radio y noticias</span></div>
+  <div class="box"><strong>MÚSICA</strong><span>Enganchado musical</span></div>
+  <div class="box"><strong>LA RIOJA</strong><span>Todo el día</span></div>
+</div>
+
+<footer>© 2026 ARENA 24 WEB · Todos los derechos reservados.</footer>
+</div>
+</body>
+</html>
