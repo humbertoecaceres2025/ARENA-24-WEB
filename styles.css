@@ -159,3 +159,13 @@
     transform: translateX(-100%);
   }
 }
+<div class="ticker-container">
+  <div class="ticker-label">ÚLTIMA HORA</div>
+  <div class="ticker-wrapper">
+    <div class="ticker-track">
+      <span class="ticker-item">🔥 Álbum sorpresa del año rompe récords de reproducción.</span>
+      <span class="ticker-item">🎬 Se anuncia la secuela del éxito de taquilla de este verano.</span>
+      <span class="ticker-item">🎧 Revelan el cartel de artistas para el próximo festival internacional.</span>
+    </div>
+  </div>
+</div>
