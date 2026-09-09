@@ -107,3 +107,55 @@
     font-size:22px;
   }
 }
+.ticker-container {
+  display: flex;
+  background-color: #111827;
+  color: #ffffff;
+  height: 40px;
+  line-height: 40px;
+  overflow: hidden;
+  font-family: system-ui, sans-serif;
+}
+
+.ticker-label {
+  background-color: #dc2626;
+  color: #ffffff;
+  padding: 0 1rem;
+  font-weight: 700;
+  font-size: 0.85rem;
+  white-space: nowrap;
+  z-index: 2;
+}
+
+.ticker-wrapper {
+  flex-grow: 1;
+  overflow: hidden;
+  position: relative;
+}
+
+.ticker-track {
+  display: flex;
+  white-space: nowrap;
+  position: absolute;
+  will-change: transform;
+  animation: scrollTicker 20s linear infinite;
+}
+
+/* Pausa el desplazamiento cuando el usuario pasa el mouse */
+.ticker-track:hover {
+  animation-play-state: paused;
+}
+
+.ticker-item {
+  padding: 0 2rem;
+  font-size: 0.9rem;
+}
+
+@keyframes scrollTicker {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
