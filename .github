@@ -1,15 +1,20 @@
 name: ARENA 24 - Actualizar noticias
 
 on:
-
   schedule:
+    # Ejecutar cada 30 minutos
     - cron: "*/30 * * * *"
 
+  # Permite ejecutarlo manualmente desde GitHub
   workflow_dispatch:
+
+  # También se ejecuta cuando modificás este archivo
+  push:
+    paths:
+      - ".github/workflows/actualizar-noticias.yml"
 
 permissions:
   contents: write
-
 
 jobs:
 
@@ -19,113 +24,59 @@ jobs:
 
     steps:
 
+      # =====================================================
+      # 1. Descargar el repositorio
+      # =====================================================
+
       - name: Descargar repositorio
         uses: actions/checkout@v4
 
 
-      - name: Configurar Python
+      # =====================================================
+      # 2. Preparar Python
+      # =====================================================
+
+      - name: Preparar Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.x"
+          python-version: "3.12"
 
+
+      # =====================================================
+      # 3. Instalar dependencias
+      # =====================================================
+
+      - name: Instalar dependencias
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests feedparser
+
+
+      # =====================================================
+      # 4. Ejecutar actualizador
+      # =====================================================
 
       - name: Actualizar noticias
         run: |
-
-          python - <<'PY'
-
-          import json
-          from datetime import datetime, timezone
-
-          archivo = "noticias.json"
-
-          try:
-
-              with open(
-                  archivo,
-                  "r",
-                  encoding="utf-8"
-              ) as f:
-
-                  datos = json.load(f)
-
-          except Exception:
-
-              datos = {
-                  "noticias": []
-              }
+          python actualizar_noticias.py
 
 
-          datos["actualizado"] = (
-              datetime.now(timezone.utc)
-              .astimezone()
-              .isoformat()
-          )
+      # =====================================================
+      # 5. Guardar noticias.json
+      # =====================================================
 
-
-          if not datos.get("noticias"):
-
-              datos["noticias"] = [
-
-                  {
-                      "categoria": "La Rioja",
-                      "titulo": "ARENA 24 Noticias",
-                      "descripcion": "Información de La Rioja."
-                  },
-
-                  {
-                      "categoria": "Argentina",
-                      "titulo": "Actualidad nacional",
-                      "descripcion": "Noticias de Argentina."
-                  },
-
-                  {
-                      "categoria": "Mundo",
-                      "titulo": "Actualidad internacional",
-                      "descripcion": "Las principales noticias del mundo."
-                  },
-
-                  {
-                      "categoria": "Deportes",
-                      "titulo": "ARENA 24 Deportes",
-                      "descripcion": "Toda la actualidad deportiva."
-                  },
-
-                  {
-                      "categoria": "Policiales",
-                      "titulo": "Policiales",
-                      "descripcion": "Información policial."
-                  }
-
-              ]
-
-
-          with open(
-              archivo,
-              "w",
-              encoding="utf-8"
-          ) as f:
-
-              json.dump(
-                  datos,
-                  f,
-                  ensure_ascii=False,
-                  indent=2
-              )
-
-          PY
-
-
-      - name: Guardar actualización
+      - name: Guardar cambios
         run: |
 
           git config user.name "ARENA 24 Bot"
 
-          git config user.email "actions@users.noreply.github.com"
+          git config user.email "actions@github.com"
 
           git add noticias.json
 
-          git diff --cached --quiet || \
-          git commit -m "Actualizar noticias ARENA 24"
-
-          git push
+          if git diff --cached --quiet; then
+            echo "No hay cambios en las noticias."
+          else
+            git commit -m "ARENA 24 - actualización automática"
+            git push
+          fi
