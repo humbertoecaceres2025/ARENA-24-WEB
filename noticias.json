@@ -1,0 +1,46 @@
+{
+  "actualizado": "Esperando primera actualización automática",
+
+  "noticias": [
+    {
+      "category": "La Rioja",
+      "title": "ARENA 24 prepara su actualización automática de noticias",
+      "description": "La sección de actualidad se actualizará automáticamente mediante GitHub Actions.",
+      "link": "https://nuevarioja.com.ar/"
+    }
+  ],
+
+  "policiales": [
+    {
+      "category": "Policiales",
+      "title": "Información policial de La Rioja",
+      "description": "Las noticias policiales serán incorporadas automáticamente.",
+      "link": "https://nuevarioja.com.ar/"
+    }
+  ],
+
+  "deportes": [
+    {
+      "category": "Deportes",
+      "title": "Toda la actualidad deportiva",
+      "description": "ARENA 24 actualizará automáticamente la información deportiva.",
+      "link": "https://nuevarioja.com.ar/"
+    }
+  ],
+
+  "dolar": {
+    "oficial": {
+      "venta": 0
+    },
+    "blue": {
+      "venta": 0
+    },
+    "actualizado": "Esperando actualización"
+  },
+
+  "clima": {
+    "temperatura": "--",
+    "descripcion": "Esperando actualización",
+    "icono": "🌤️"
+  }
+}
