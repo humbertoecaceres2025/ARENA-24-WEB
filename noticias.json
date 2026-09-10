@@ -1,31 +1,453 @@
-{
-  "actualizado": "",
-  "noticias": [
-    {
-      "categoria": "La Rioja",
-      "titulo": "ARENA 24 Noticias",
-      "descripcion": "Las principales noticias de La Rioja, Argentina y el mundo."
-    },
-    {
-      "categoria": "Policiales",
-      "titulo": "Policiales",
-      "descripcion": "Toda la información policial de La Rioja."
-    },
-    {
-      "categoria": "Deportes",
-      "titulo": "ARENA 24 Deportes",
-      "descripcion": "Resultados, protagonistas y actualidad deportiva."
-    },
-    {
-      "categoria": "Argentina",
-      "titulo": "Actualidad nacional",
-      "descripcion": "Las noticias más importantes de Argentina."
-    },
-    {
-      "categoria": "Mundo",
-      "titulo": "Noticias internacionales",
-      "descripcion": "La actualidad de Argentina y el mundo."
-    }
-  ]
+import json
+import re
+from datetime import datetime, timezone
+
+import requests
+import feedparser
+
+
+# =========================================================
+# ARENA 24
+# ACTUALIZADOR AUTOMÁTICO
+# Noticias + Dólar + Clima
+# =========================================================
+
+SALIDA = "noticias.json"
+
+HEADERS = {
+    "User-Agent": "ARENA24-NewsBot/1.0"
 }
 
+
+# =========================================================
+# FUENTES RSS
+# =========================================================
+
+FUENTES = [
+    {
+        "categoria": "Noticias",
+        "nombre": "Google Noticias",
+        "url": (
+            "https://news.google.com/rss/"
+            "search?q=La+Rioja+Argentina"
+            "&hl=es-419"
+            "&gl=AR"
+            "&ceid=AR:es-419"
+        )
+    },
+    {
+        "categoria": "Noticias",
+        "nombre": "Google Noticias Argentina",
+        "url": (
+            "https://news.google.com/rss/"
+            "search?q=Argentina"
+            "&hl=es-419"
+            "&gl=AR"
+            "&ceid=AR:es-419"
+        )
+    },
+    {
+        "categoria": "Policiales",
+        "nombre": "Google Noticias Policiales",
+        "url": (
+            "https://news.google.com/rss/"
+            "search?q=policiales+La+Rioja"
+            "&hl=es-419"
+            "&gl=AR"
+            "&ceid=AR:es-419"
+        )
+    },
+    {
+        "categoria": "Deportes",
+        "nombre": "Google Noticias Deportes",
+        "url": (
+            "https://news.google.com/rss/"
+            "search?q=deportes+Argentina"
+            "&hl=es-419"
+            "&gl=AR"
+            "&ceid=AR:es-419"
+        )
+    }
+]
+
+
+# =========================================================
+# LIMPIAR TEXTO
+# =========================================================
+
+def limpiar(texto):
+
+    if not texto:
+        return ""
+
+    texto = re.sub(
+        r"<[^>]*>",
+        "",
+        str(texto)
+    )
+
+    reemplazos = {
+        "&nbsp;": " ",
+        "&amp;": "&",
+        "&quot;": '"',
+        "&#39;": "'",
+        "&apos;": "'"
+    }
+
+    for viejo, nuevo in reemplazos.items():
+        texto = texto.replace(viejo, nuevo)
+
+    return " ".join(texto.split())
+
+
+# =========================================================
+# OBTENER RSS
+# =========================================================
+
+def obtener_feed(url):
+
+    try:
+
+        respuesta = requests.get(
+            url,
+            headers=HEADERS,
+            timeout=20
+        )
+
+        respuesta.raise_for_status()
+
+        feed = feedparser.parse(
+            respuesta.content
+        )
+
+        if getattr(feed, "bozo", False):
+            print(
+                "Advertencia: RSS con formato irregular."
+            )
+
+        return feed
+
+    except Exception as error:
+
+        print(
+            f"ERROR RSS: {error}"
+        )
+
+        return None
+
+
+# =========================================================
+# NOTICIAS
+# =========================================================
+
+def obtener_noticias():
+
+    noticias = []
+    enlaces = set()
+
+    for fuente in FUENTES:
+
+        print(
+            f"Consultando: {fuente['nombre']}"
+        )
+
+        feed = obtener_feed(
+            fuente["url"]
+        )
+
+        if feed is None:
+            continue
+
+        entradas = getattr(
+            feed,
+            "entries",
+            []
+        )
+
+        for item in entradas[:15]:
+
+            titulo = limpiar(
+                item.get(
+                    "title",
+                    ""
+                )
+            )
+
+            descripcion = limpiar(
+                item.get(
+                    "summary",
+                    ""
+                )
+            )
+
+            enlace = item.get(
+                "link",
+                ""
+            )
+
+            fecha = (
+                item.get(
+                    "published",
+                    ""
+                )
+                or
+                item.get(
+                    "updated",
+                    ""
+                )
+            )
+
+            if not titulo:
+                continue
+
+            if enlace and enlace in enlaces:
+                continue
+
+            if enlace:
+                enlaces.add(enlace)
+
+            noticias.append({
+                "categoria": fuente["categoria"],
+                "titulo": titulo,
+                "descripcion": descripcion[:400],
+                "fuente": fuente["nombre"],
+                "fecha": fecha,
+                "url": enlace
+            })
+
+    return noticias
+
+
+# =========================================================
+# DÓLAR
+# =========================================================
+
+def obtener_dolar():
+
+    url = "https://dolarapi.com/v1/dolares/oficial"
+
+    try:
+
+        respuesta = requests.get(
+            url,
+            headers=HEADERS,
+            timeout=20
+        )
+
+        respuesta.raise_for_status()
+
+        data = respuesta.json()
+
+        return {
+            "compra": data.get(
+                "compra",
+                "--"
+            ),
+            "venta": data.get(
+                "venta",
+                "--"
+            )
+        }
+
+    except Exception as error:
+
+        print(
+            f"ERROR DÓLAR: {error}"
+        )
+
+        return {
+            "compra": "--",
+            "venta": "--"
+        }
+
+
+# =========================================================
+# CLIMA
+# =========================================================
+
+def interpretar_clima(codigo):
+
+    equivalencias = {
+
+        0: ("Despejado", "☀️"),
+
+        1: ("Principalmente despejado", "🌤️"),
+
+        2: ("Parcialmente nublado", "⛅"),
+
+        3: ("Nublado", "☁️"),
+
+        45: ("Niebla", "🌫️"),
+        48: ("Niebla", "🌫️"),
+
+        51: ("Llovizna", "🌦️"),
+        53: ("Llovizna", "🌦️"),
+        55: ("Llovizna", "🌦️"),
+
+        61: ("Lluvia", "🌧️"),
+        63: ("Lluvia", "🌧️"),
+        65: ("Lluvia fuerte", "🌧️"),
+
+        71: ("Nieve", "❄️"),
+        73: ("Nieve", "❄️"),
+        75: ("Nieve fuerte", "❄️"),
+
+        80: ("Chaparrones", "🌦️"),
+        81: ("Chaparrones", "🌦️"),
+        82: ("Chaparrones fuertes", "🌧️"),
+
+        95: ("Tormenta", "⛈️"),
+        96: ("Tormenta", "⛈️"),
+        99: ("Tormenta fuerte", "⛈️")
+    }
+
+    return equivalencias.get(
+        codigo,
+        ("Condiciones variables", "🌤️")
+    )
+
+
+def obtener_clima():
+
+    # La Rioja Capital
+    latitud = -29.4131
+    longitud = -66.8558
+
+    url = (
+        "https://api.open-meteo.com/v1/forecast"
+    )
+
+    parametros = {
+        "latitude": latitud,
+        "longitude": longitud,
+        "current": "temperature_2m,weather_code",
+        "timezone": "America/Argentina/La_Rioja"
+    }
+
+    try:
+
+        respuesta = requests.get(
+            url,
+            params=parametros,
+            headers=HEADERS,
+            timeout=20
+        )
+
+        respuesta.raise_for_status()
+
+        data = respuesta.json()
+
+        current = data.get(
+            "current",
+            {}
+        )
+
+        temperatura = current.get(
+            "temperature_2m",
+            "--"
+        )
+
+        codigo = current.get(
+            "weather_code",
+            0
+        )
+
+        descripcion, icono = interpretar_clima(
+            codigo
+        )
+
+        return {
+            "ciudad": "La Rioja",
+            "temperatura": temperatura,
+            "descripcion": descripcion,
+            "icono": icono
+        }
+
+    except Exception as error:
+
+        print(
+            f"ERROR CLIMA: {error}"
+        )
+
+        return {
+            "ciudad": "La Rioja",
+            "temperatura": "--",
+            "descripcion": "No disponible",
+            "icono": "🌤️"
+        }
+
+
+# =========================================================
+# GUARDAR JSON
+# =========================================================
+
+def guardar_json():
+
+    print("")
+    print("=" * 50)
+    print("ARENA 24 - ACTUALIZACIÓN AUTOMÁTICA")
+    print("=" * 50)
+    print("")
+
+    noticias = obtener_noticias()
+
+    print(
+        f"Noticias encontradas: {len(noticias)}"
+    )
+
+    dolar = obtener_dolar()
+
+    print(
+        f"Dólar compra: {dolar['compra']}"
+    )
+
+    print(
+        f"Dólar venta: {dolar['venta']}"
+    )
+
+    clima = obtener_clima()
+
+    print(
+        f"Clima: {clima['temperatura']}°C - "
+        f"{clima['descripcion']}"
+    )
+
+    datos = {
+        "actualizado": datetime.now(
+            timezone.utc
+        ).isoformat(),
+
+        "noticias": noticias,
+
+        "dolar": dolar,
+
+        "clima": clima
+    }
+
+    with open(
+        SALIDA,
+        "w",
+        encoding="utf-8"
+    ) as archivo:
+
+        json.dump(
+            datos,
+            archivo,
+            ensure_ascii=False,
+            indent=2
+        )
+
+    print("")
+    print(
+        f"OK: {SALIDA} generado correctamente."
+    )
+    print("")
+
+
+# =========================================================
+# EJECUCIÓN
+# =========================================================
+
+if __name__ == "__main__":
+
+    guardar_json()
