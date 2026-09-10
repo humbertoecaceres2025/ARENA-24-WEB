@@ -1,57 +1,35 @@
 {
-  "actualizado": "",
-  "noticias": [],
-  "policiales": [],
-  "deportes": [],
-  "dolar": {},
-  "clima": {}
-}
-
-
-
-{
-  "actualizado": "Esperando primera actualización automática",
-
+  "actualizado": "2026-09-10T14:00:00-03:00",
   "noticias": [
     {
-      "category": "La Rioja",
-      "title": "ARENA 24 prepara su actualización automática de noticias",
-      "description": "La sección de actualidad se actualizará automáticamente mediante GitHub Actions.",
-      "link": "https://nuevarioja.com.ar/"
-    }
-  ],
-
-  "policiales": [
-    {
-      "category": "Policiales",
-      "title": "Información policial de La Rioja",
-      "description": "Las noticias policiales serán incorporadas automáticamente.",
-      "link": "https://nuevarioja.com.ar/"
-    }
-  ],
-
-  "deportes": [
-    {
-      "category": "Deportes",
-      "title": "Toda la actualidad deportiva",
-      "description": "ARENA 24 actualizará automáticamente la información deportiva.",
-      "link": "https://nuevarioja.com.ar/"
-    }
-  ],
-
-  "dolar": {
-    "oficial": {
-      "venta": 0
+      "categoria": "LA RIOJA",
+      "titulo": "ARENA 24 informa",
+      "resumen": "Las principales noticias de La Rioja, Argentina y el mundo."
     },
-    "blue": {
-      "venta": 0
+    {
+      "categoria": "POLICIALES",
+      "titulo": "Información policial",
+      "resumen": "Las noticias policiales de La Rioja serán incorporadas automáticamente."
     },
-    "actualizado": "Esperando actualización"
-  },
-
-  "clima": {
-    "temperatura": "--",
-    "descripcion": "Esperando actualización",
-    "icono": "🌤️"
-  }
+    {
+      "categoria": "DEPORTES",
+      "titulo": "Toda la actualidad deportiva",
+      "resumen": "Resultados, protagonistas y agenda deportiva."
+    },
+    {
+      "categoria": "ECONOMÍA",
+      "titulo": "Dólar y economía",
+      "resumen": "Información económica y cotizaciones actualizadas."
+    },
+    {
+      "categoria": "CLIMA",
+      "titulo": "El tiempo en La Rioja",
+      "resumen": "Información meteorológica actualizada."
+    },
+    {
+      "categoria": "MUNDO",
+      "titulo": "Noticias internacionales",
+      "resumen": "Las principales noticias del mundo."
+    }
+  ]
 }
