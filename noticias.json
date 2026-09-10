@@ -1,27 +1,31 @@
 {
-  "actualizado": "Esperando primera actualización automática",
+  "actualizado": "",
   "noticias": [
     {
-      "titulo": "ARENA 24 prepara su sistema automático de noticias",
-      "descripcion": "La página de ARENA 24 está preparada para recibir automáticamente información de La Rioja, Argentina y el mundo.",
-      "fuente": "ARENA 24",
-      "url": "#"
-    }
-  ],
-  "policiales": [
+      "categoria": "La Rioja",
+      "titulo": "ARENA 24 Noticias",
+      "descripcion": "Las principales noticias de La Rioja, Argentina y el mundo."
+    },
     {
-      "titulo": "Información policial de La Rioja",
-      "descripcion": "Las noticias policiales serán incorporadas automáticamente mediante el sistema de actualización.",
-      "fuente": "ARENA 24",
-      "url": "#"
-    }
-  ],
-  "deportes": [
+      "categoria": "Policiales",
+      "titulo": "Policiales",
+      "descripcion": "Toda la información policial de La Rioja."
+    },
     {
-      "titulo": "Actualidad deportiva",
-      "descripcion": "ARENA 24 incorporará automáticamente las principales noticias deportivas.",
-      "fuente": "ARENA 24",
-      "url": "#"
+      "categoria": "Deportes",
+      "titulo": "ARENA 24 Deportes",
+      "descripcion": "Resultados, protagonistas y actualidad deportiva."
+    },
+    {
+      "categoria": "Argentina",
+      "titulo": "Actualidad nacional",
+      "descripcion": "Las noticias más importantes de Argentina."
+    },
+    {
+      "categoria": "Mundo",
+      "titulo": "Noticias internacionales",
+      "descripcion": "La actualidad de Argentina y el mundo."
     }
   ]
 }
+
