@@ -14,6 +14,9 @@ Incluye:
 ## GitHub Pages
 Subí estos archivos al repositorio. Después:
 Settings → Pages → Deploy from a branch → rama principal → carpeta raíz.
+.github/workflows/actualizar-noticias.yml
+generar_noticias.py
+news.json
 
 ## IMPORTANTE
  redes sociales 
