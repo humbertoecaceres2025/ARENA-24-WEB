@@ -1,6 +1,7 @@
-name: ARENA 24 - Actualizar información
+name: ARENA 24 - Actualizar noticias
 
 on:
+
   schedule:
     - cron: "*/30 * * * *"
 
@@ -8,6 +9,7 @@ on:
 
 permissions:
   contents: write
+
 
 jobs:
 
@@ -20,405 +22,110 @@ jobs:
       - name: Descargar repositorio
         uses: actions/checkout@v4
 
+
       - name: Configurar Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.x"
 
-      - name: Actualizar noticias, dólar y clima
+
+      - name: Actualizar noticias
         run: |
 
           python - <<'PY'
 
           import json
-          import urllib.request
-          import urllib.parse
-          import xml.etree.ElementTree as ET
           from datetime import datetime, timezone
 
+          archivo = "noticias.json"
 
-          def descargar(url):
+          try:
 
-              req = urllib.request.Request(
-                  url,
-                  headers={
-                      "User-Agent": "Mozilla/5.0 ARENA24"
+              with open(
+                  archivo,
+                  "r",
+                  encoding="utf-8"
+              ) as f:
+
+                  datos = json.load(f)
+
+          except Exception:
+
+              datos = {
+                  "noticias": []
+              }
+
+
+          datos["actualizado"] = (
+              datetime.now(timezone.utc)
+              .astimezone()
+              .isoformat()
+          )
+
+
+          if not datos.get("noticias"):
+
+              datos["noticias"] = [
+
+                  {
+                      "categoria": "La Rioja",
+                      "titulo": "ARENA 24 Noticias",
+                      "descripcion": "Información de La Rioja."
+                  },
+
+                  {
+                      "categoria": "Argentina",
+                      "titulo": "Actualidad nacional",
+                      "descripcion": "Noticias de Argentina."
+                  },
+
+                  {
+                      "categoria": "Mundo",
+                      "titulo": "Actualidad internacional",
+                      "descripcion": "Las principales noticias del mundo."
+                  },
+
+                  {
+                      "categoria": "Deportes",
+                      "titulo": "ARENA 24 Deportes",
+                      "descripcion": "Toda la actualidad deportiva."
+                  },
+
+                  {
+                      "categoria": "Policiales",
+                      "titulo": "Policiales",
+                      "descripcion": "Información policial."
                   }
-              )
 
-              with urllib.request.urlopen(
-                  req,
-                  timeout=30
-              ) as respuesta:
-
-                  return respuesta.read()
-
-
-          def api_json(url):
-
-              return json.loads(
-                  descargar(url).decode("utf-8")
-              )
-
-
-          def rss(url, categoria, limite=5):
-
-              resultados = []
-
-              try:
-
-                  xml = descargar(url)
-
-                  raiz = ET.fromstring(xml)
-
-                  items = raiz.findall(".//item")
-
-                  for item in items[:limite]:
-
-                      titulo = item.findtext(
-                          "title",
-                          ""
-                      ).strip()
-
-                      descripcion = item.findtext(
-                          "description",
-                          ""
-                      ).strip()
-
-                      enlace = item.findtext(
-                          "link",
-                          ""
-                      ).strip()
-
-                      if titulo:
-
-                          resultados.append({
-
-                              "categoria": categoria,
-
-                              "titulo": titulo,
-
-                              "resumen": descripcion,
-
-                              "url": enlace
-
-                          })
-
-              except Exception as error:
-
-                  print(
-                      "RSS error:",
-                      categoria,
-                      error
-                  )
-
-              return resultados
-
-
-          noticias = []
-
-
-          # ======================================
-          # LA RIOJA
-          # ======================================
-
-          consultas = [
-
-              (
-                  "La Rioja Argentina",
-                  "LA RIOJA"
-              ),
-
-              (
-                  "La Rioja Argentina policiales",
-                  "POLICIALES"
-              ),
-
-              (
-                  "Argentina noticias",
-                  "ARGENTINA"
-              ),
-
-              (
-                  "mundo noticias",
-                  "MUNDO"
-              ),
-
-              (
-                  "futbol deportes Argentina",
-                  "DEPORTES"
-              )
-
-          ]
-
-
-          for consulta, categoria in consultas:
-
-              query = urllib.parse.quote(consulta)
-
-              url = (
-                  "https://news.google.com/rss/search?"
-                  "q=" + query +
-                  "&hl=es-419"
-                  "&gl=AR"
-                  "&ceid=AR:es-419"
-              )
-
-              noticias.extend(
-                  rss(
-                      url,
-                      categoria,
-                      6
-                  )
-              )
-
-
-          # ======================================
-          # DÓLAR
-          # ======================================
-
-          dolar = {}
-
-          try:
-
-              oficial = api_json(
-                  "https://dolarapi.com/v1/dolares/oficial"
-              )
-
-              dolar["oficial"] = {
-
-                  "compra": oficial.get(
-                      "compra",
-                      0
-                  ),
-
-                  "venta": oficial.get(
-                      "venta",
-                      0
-                  )
-
-              }
-
-          except Exception as error:
-
-              print(
-                  "Error dólar oficial:",
-                  error
-              )
-
-
-          try:
-
-              blue = api_json(
-                  "https://dolarapi.com/v1/dolares/blue"
-              )
-
-              dolar["blue"] = {
-
-                  "compra": blue.get(
-                      "compra",
-                      0
-                  ),
-
-                  "venta": blue.get(
-                      "venta",
-                      0
-                  )
-
-              }
-
-          except Exception as error:
-
-              print(
-                  "Error dólar blue:",
-                  error
-              )
-
-
-          try:
-
-              mep = api_json(
-                  "https://dolarapi.com/v1/dolares/bolsa"
-              )
-
-              dolar["mep"] = {
-
-                  "compra": mep.get(
-                      "compra",
-                      0
-                  ),
-
-                  "venta": mep.get(
-                      "venta",
-                      0
-                  )
-
-              }
-
-          except Exception as error:
-
-              print(
-                  "Error dólar MEP:",
-                  error
-              )
-
-
-          # ======================================
-          # CLIMA LA RIOJA CAPITAL
-          # ======================================
-
-          clima = {}
-
-          try:
-
-              url_clima = (
-                  "https://api.open-meteo.com/v1/forecast?"
-                  "latitude=-29.4131"
-                  "&longitude=-66.8558"
-                  "&current="
-                  "temperature_2m,"
-                  "apparent_temperature,"
-                  "relative_humidity_2m,"
-                  "wind_speed_10m,"
-                  "weather_code"
-                  "&timezone=America%2FArgentina%2FLa_Rioja"
-              )
-
-              datos_clima = api_json(
-                  url_clima
-              )
-
-              actual = datos_clima[
-                  "current"
               ]
-
-              clima = {
-
-                  "temperatura":
-                      actual.get(
-                          "temperature_2m",
-                          0
-                      ),
-
-                  "sensacion":
-                      actual.get(
-                          "apparent_temperature",
-                          0
-                      ),
-
-                  "humedad":
-                      actual.get(
-                          "relative_humidity_2m",
-                          0
-                      ),
-
-                  "viento":
-                      actual.get(
-                          "wind_speed_10m",
-                          0
-                      ),
-
-                  "codigo":
-                      actual.get(
-                          "weather_code",
-                          0
-                      )
-
-              }
-
-          except Exception as error:
-
-              print(
-                  "Error clima:",
-                  error
-              )
-
-
-          # ======================================
-          # GUARDAR JSON
-          # ======================================
-
-          datos = {
-
-              "actualizado":
-                  datetime.now(
-                      timezone.utc
-                  ).isoformat(),
-
-              "noticias":
-                  noticias,
-
-              "dolar":
-                  dolar,
-
-              "clima":
-                  clima
-
-          }
 
 
           with open(
-              "noticias.json",
+              archivo,
               "w",
               encoding="utf-8"
-          ) as archivo:
+          ) as f:
 
               json.dump(
                   datos,
-                  archivo,
+                  f,
                   ensure_ascii=False,
                   indent=2
               )
 
-
-          print(
-              "================================"
-          )
-
-          print(
-              "ARENA 24 ACTUALIZADO"
-          )
-
-          print(
-              "Noticias:",
-              len(noticias)
-          )
-
-          print(
-              "Dólar:",
-              bool(dolar)
-          )
-
-          print(
-              "Clima:",
-              bool(clima)
-          )
-
-          print(
-              "================================"
-          )
-
           PY
 
 
-      - name: Guardar cambios
+      - name: Guardar actualización
         run: |
 
           git config user.name "ARENA 24 Bot"
 
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.email "actions@users.noreply.github.com"
 
           git add noticias.json
 
-          if git diff --cached --quiet; then
+          git diff --cached --quiet || \
+          git commit -m "Actualizar noticias ARENA 24"
 
-            echo "No hay cambios."
-
-          else
-
-            git commit \
-              -m "ARENA 24 - actualización automática"
-
-            git push
-
-          fi
+          git push
