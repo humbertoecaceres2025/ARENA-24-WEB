@@ -2,197 +2,238 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <meta name="description"
-        content="ARENA 24 — Radio online desde La Rioja, Argentina. Noticias, deportes, música, dólar y clima. Siempre con vos.">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
-  <meta name="theme-color" content="#080b12">
+  <meta
+    name="description"
+    content="ARENA 24 — Radio online de La Rioja. Noticias, deportes, policiales, dólar, clima y música."
+  >
 
-  <title>ARENA 24 | Radio Online La Rioja</title>
+  <meta name="theme-color" content="#07090f">
+
+  <title>ARENA 24 | Siempre con vos</title>
 
   <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
 
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
 <header class="site-header">
 
-  <a href="#inicio" class="brand">
-    <span class="brand-logo">A24</span>
+  <div class="header-inner">
 
-    <span>
-      <strong>ARENA 24</strong>
-      <small>SIEMPRE CON VOS</small>
-    </span>
-  </a>
+    <a href="#inicio" class="brand">
 
-  <nav class="main-nav">
-    <a href="#inicio">Inicio</a>
-    <a href="#programacion">Programación</a>
-    <a href="#noticias">Noticias</a>
-    <a href="#deportes">Deportes</a>
-    <a href="#contacto">Contacto</a>
-  </nav>
+      <span class="brand-mark">A24</span>
+
+      <span class="brand-info">
+        <strong>ARENA 24</strong>
+        <small>SIEMPRE CON VOS</small>
+      </span>
+
+    </a>
+
+    <nav class="main-nav">
+
+      <a href="#noticias">Noticias</a>
+      <a href="#policiales">Policiales</a>
+      <a href="#deportes">Deportes</a>
+      <a href="#dolar">Dólar</a>
+      <a href="#clima">Clima</a>
+
+    </nav>
+
+    <a href="#radio" class="header-live">
+      <span></span>
+      EN VIVO
+    </a>
+
+  </div>
 
 </header>
 
 
-<main id="inicio">
+<!-- =====================================================
+     HERO
+===================================================== -->
 
-  <!-- HERO -->
+<main id="inicio">
 
   <section class="hero">
 
-    <div class="hero-content">
+    <div class="hero-background"></div>
 
-      <span class="eyebrow">
-        RADIO ONLINE · LA RIOJA · ARGENTINA
-      </span>
+    <div class="container hero-grid">
 
-      <h1>
-        ARENA <span>24</span>
-      </h1>
+      <div class="hero-copy">
 
-      <h2>Siempre con vos.</h2>
+        <div class="live-label">
+          <span></span>
+          RADIO ONLINE · LA RIOJA
+        </div>
 
-      <p>
-        Noticias, música, deportes, entretenimiento
-        y toda la actualidad de La Rioja, Argentina y el mundo.
-      </p>
+        <h1>
+          ARENA
+          <em>24</em>
+        </h1>
 
-      <button id="play" class="live-button">
-        ▶ ESCUCHAR EN VIVO
-      </button>
+        <p class="hero-subtitle">
+          Noticias, música, deportes y entretenimiento
+          durante todo el día.
+        </p>
 
-      <audio
-        id="audio"
-        src="https://stream.zeno.fm/zuw6xmmwmd0uv"
-        preload="none">
-      </audio>
+        <div class="hero-actions">
 
-      <div id="status" class="live-status">
-        🔴 ARENA 24 · EN VIVO
+          <a href="#radio" class="primary-button">
+            ▶ ESCUCHAR EN VIVO
+          </a>
+
+          <a href="#noticias" class="secondary-button">
+            VER NOTICIAS
+          </a>
+
+        </div>
+
       </div>
 
-    </div>
 
+      <!-- RADIO -->
 
-    <div class="on-air">
+      <div id="radio" class="radio-card">
 
-      <div class="disc">
-        A24
+        <div class="radio-top">
+
+          <span class="radio-live">
+            ● EN VIVO
+          </span>
+
+          <span>
+            ARENA 24
+          </span>
+
+        </div>
+
+        <div class="radio-disc">
+
+          <div class="disc-center">
+            A24
+          </div>
+
+        </div>
+
+        <div class="radio-info">
+
+          <small>
+            AHORA EN ARENA 24
+          </small>
+
+          <strong>
+            RADIO ONLINE
+          </strong>
+
+          <span>
+            Música · Noticias · Entretenimiento
+          </span>
+
+        </div>
+
+        <button
+          id="play"
+          class="radio-button"
+          type="button"
+        >
+          ▶ ESCUCHAR EN VIVO
+        </button>
+
+        <audio
+          id="audio"
+          src="https://stream.zeno.fm/zuw6xmmwmd0uv"
+          preload="none"
+        ></audio>
+
+        <div id="status" class="radio-status">
+          ● ARENA 24 · EN VIVO
+        </div>
+
       </div>
-
-      <span>🔴 AHORA EN VIVO</span>
-
-      <strong>ARENA 24</strong>
-
-      <p>
-        Música · Noticias · Deportes
-      </p>
 
     </div>
 
   </section>
 
 
-  <!-- FLASH -->
+<!-- =====================================================
+     BREAKING NEWS
+===================================================== -->
 
-  <div class="flash-bar">
+  <div class="breaking-bar">
 
-    <strong>ARENA 24 FLASH</strong>
+    <div class="container breaking-inner">
 
-    <div>
-      Últimas noticias · La Rioja · Argentina · Mundo
+      <strong>
+        ÚLTIMA HORA
+      </strong>
+
+      <div class="breaking-content">
+
+        <span id="breaking-text">
+          Cargando información...
+        </span>
+
+      </div>
+
     </div>
 
   </div>
 
 
-  <!-- PROGRAMACION -->
+<!-- =====================================================
+     NOTICIAS PRINCIPALES
+===================================================== -->
 
-  <section id="programacion" class="section">
+  <section id="noticias" class="content-section">
 
-    <div class="section-heading">
+    <div class="container">
 
-      <span>01</span>
+      <div class="section-heading">
 
-      <div>
-        <h2>Programación</h2>
-        <p>La compañía de ARENA 24 durante todo el día.</p>
+        <div>
+
+          <span class="section-kicker">
+            ACTUALIDAD
+          </span>
+
+          <h2>
+            Noticias
+          </h2>
+
+        </div>
+
+        <span class="section-number">
+          01
+        </span>
+
       </div>
 
-    </div>
 
+      <div
+        id="news-noticias"
+        class="news-grid main-news-grid"
+      >
 
-    <div class="program-grid">
+        <div class="loading-card">
+          <div class="loader"></div>
+          <strong>Cargando noticias...</strong>
+        </div>
 
-      <article>
-        <span>06:00 — 12:00</span>
-        <h3>ARENA 24 NOTICIAS</h3>
-        <p>
-          Actualidad local, nacional e internacional.
-        </p>
-      </article>
-
-      <article>
-        <span>12:00 — 18:00</span>
-        <h3>ENTRETENIMIENTO</h3>
-        <p>
-          Música, información, participación y buena onda.
-        </p>
-      </article>
-
-      <article>
-        <span>18:00 — 21:00</span>
-        <h3>ARENA 24 DEPORTES</h3>
-        <p>
-          Resultados, protagonistas y toda la pasión deportiva.
-        </p>
-      </article>
-
-      <article>
-        <span>21:00 — 06:00</span>
-        <h3>NIGHT & RELAX</h3>
-        <p>
-          Música, clásicos y compañía durante la noche.
-        </p>
-      </article>
-
-    </div>
-
-  </section>
-
-
-  <!-- NOTICIAS AUTOMATICAS -->
-
-  <section id="noticias" class="section dark-section">
-
-    <div class="section-heading">
-
-      <span>02</span>
-
-      <div>
-        <h2>ARENA 24 FLASH</h2>
-        <p>
-          Noticias actualizadas automáticamente.
-        </p>
-      </div>
-
-    </div>
-
-
-    <div class="update-info">
-      🟢 Sistema de noticias automático
-      <span id="lastUpdate">Cargando...</span>
-    </div>
-
-
-    <div class="news-grid" id="newsGrid">
-
-      <div class="loading">
-        Cargando noticias...
       </div>
 
     </div>
@@ -200,126 +241,96 @@
   </section>
 
 
-  <!-- DOLAR -->
+<!-- =====================================================
+     POLICIALES + DEPORTES
+===================================================== -->
 
-  <section class="section">
+  <section class="content-section alternate">
 
-    <div class="section-heading">
+    <div class="container two-columns">
 
-      <span>03</span>
 
-      <div>
-        <h2>💵 Dólar</h2>
-        <p>Cotizaciones actualizadas automáticamente.</p>
+      <!-- POLICIALES -->
+
+      <div id="policiales">
+
+        <div class="section-heading compact">
+
+          <div>
+
+            <span class="section-kicker">
+              ACTUALIDAD
+            </span>
+
+            <h2>
+              🚔 Policiales
+            </h2>
+
+          </div>
+
+          <span class="section-number">
+            02
+          </span>
+
+        </div>
+
+
+        <div
+          id="news-policiales"
+          class="news-list"
+        >
+
+          <div class="loading-card">
+            <div class="loader"></div>
+            <strong>
+              Cargando policiales...
+            </strong>
+          </div>
+
+        </div>
+
       </div>
 
-    </div>
+
+      <!-- DEPORTES -->
+
+      <div id="deportes">
+
+        <div class="section-heading compact">
+
+          <div>
+
+            <span class="section-kicker">
+              ACTUALIDAD
+            </span>
+
+            <h2>
+              ⚽ Deportes
+            </h2>
+
+          </div>
+
+          <span class="section-number">
+            03
+          </span>
+
+        </div>
 
 
-    <div id="dolar" class="data-card">
+        <div
+          id="news-deportes"
+          class="news-list"
+        >
 
-      <div class="loading">
-        Consultando cotización...
-      </div>
+          <div class="loading-card">
+            <div class="loader"></div>
+            <strong>
+              Cargando deportes...
+            </strong>
+          </div>
 
-    </div>
+        </div>
 
-  </section>
-
-
-  <!-- CLIMA -->
-
-  <section class="section weather-section">
-
-    <div class="section-heading">
-
-      <span>04</span>
-
-      <div>
-        <h2>🌦️ Clima</h2>
-        <p>Pronóstico para La Rioja Capital.</p>
-      </div>
-
-    </div>
-
-
-    <div id="clima" class="data-card">
-
-      <div class="loading">
-        Consultando clima...
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <!-- DEPORTES -->
-
-  <section id="deportes" class="section dark-section">
-
-    <div class="section-heading">
-
-      <span>05</span>
-
-      <div>
-        <h2>⚽ Deportes</h2>
-        <p>Las principales noticias deportivas.</p>
-      </div>
-
-    </div>
-
-
-    <div id="sportsGrid" class="news-grid">
-
-      <div class="loading">
-        Cargando deportes...
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <!-- TOP 10 -->
-
-  <section class="section">
-
-    <div class="section-heading">
-
-      <span>06</span>
-
-      <div>
-        <h2>🔥 Top 10 Argentina</h2>
-        <p>El ranking musical de ARENA 24.</p>
-      </div>
-
-    </div>
-
-
-    <div class="ranking">
-
-      <div><b>10</b> Ibuprofeno — Abel Pintos</div>
-
-      <div><b>9</b> Corazón de Cristal — Simon</div>
-
-      <div><b>8</b> Dichavate — Cumbia Rocha</div>
-
-      <div><b>7</b> Flor Amarilla — Campedrinos & Eugenia Quevedo</div>
-
-      <div><b>6</b> No Podré Olvidarme de Ti — La K'onga & Grupo Red</div>
-
-      <div><b>5</b> OA TA TA — Callejero Fino</div>
-
-      <div><b>4</b> Dime Tú — Q' Lokura & Nahuel Pennisi</div>
-
-      <div><b>3</b> 🥉 No Puedo — Luciano Pereyra</div>
-
-      <div><b>2</b> 🥈 Pa' Él — Los Ángeles Azules & TINI</div>
-
-      <div class="number-one">
-        <b>1</b>
-        🥇 Enséñame A Vivir Sin Ti — Luciano Pereyra & Karina
       </div>
 
     </div>
@@ -327,117 +338,371 @@
   </section>
 
 
-  <!-- VOCES -->
+<!-- =====================================================
+     INFORMACIÓN EN TIEMPO REAL
+===================================================== -->
 
-  <section class="section dark-section">
+  <section class="data-section">
 
-    <div class="section-heading">
+    <div class="container">
 
-      <span>07</span>
+      <div class="section-heading">
 
-      <div>
-        <h2>Las voces de ARENA 24</h2>
-        <p>La gente que te acompaña todos los días.</p>
+        <div>
+
+          <span class="section-kicker">
+            INFORMACIÓN
+          </span>
+
+          <h2>
+            Datos en tiempo real
+          </h2>
+
+        </div>
+
+        <span class="section-number">
+          04
+        </span>
+
       </div>
 
-    </div>
+
+      <div class="data-layout">
 
 
-    <div class="voices">
+        <!-- DÓLAR -->
 
-      <article>
-        <strong>E</strong>
-        <h3>ENR</h3>
-        <p>Noticias</p>
-      </article>
+        <div id="dolar" class="info-panel">
 
-      <article>
-        <strong>A</strong>
-        <h3>ANA</h3>
-        <p>Entretenimiento</p>
-      </article>
+          <div class="panel-header">
 
-      <article>
-        <strong>N</strong>
-        <h3>NIC</h3>
-        <p>Deportes</p>
-      </article>
+            <div>
+              <span>ECONOMÍA</span>
+              <h3>💵 Dólar</h3>
+            </div>
 
-      <article>
-        <strong>M</strong>
-        <h3>MAR</h3>
-        <p>Night & Relax</p>
-      </article>
+            <span class="panel-live">
+              ACTUALIZADO
+            </span>
 
-    </div>
-
-  </section>
+          </div>
 
 
-  <!-- VIDEO -->
+          <div
+            id="dolar-data"
+            class="data-grid"
+          >
 
-  <section class="section">
+            <div class="data-card">
 
-    <div class="video-card">
+              <span>
+                DÓLAR OFICIAL
+              </span>
 
-      <span class="video-badge">
-        🎧 ARENA 24 VIDEO
-      </span>
+              <strong>
+                Cargando...
+              </strong>
 
-      <h2>
-        Música y entretenimiento
-      </h2>
+              <small>
+                Consultando cotización
+              </small>
 
-      <p>
-        Mirá nuestros contenidos y videos.
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- CLIMA -->
+
+        <div id="clima" class="info-panel">
+
+          <div class="panel-header">
+
+            <div>
+              <span>LA RIOJA</span>
+              <h3>🌤️ Clima</h3>
+            </div>
+
+            <span class="panel-live">
+              EN VIVO
+            </span>
+
+          </div>
+
+
+          <div
+            id="clima-data"
+            class="weather-container"
+          >
+
+            <div class="weather-card">
+
+              <div class="weather-icon">
+                🌤️
+              </div>
+
+              <div>
+
+                <span>
+                  LA RIOJA
+                </span>
+
+                <strong>
+                  ...
+                </strong>
+
+                <p>
+                  Cargando condiciones...
+                </p>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <p
+        id="ultima-actualizacion"
+        class="last-update"
+      >
+        Esperando actualización...
       </p>
 
-      <a
-        href="https://www.youtube.com/@ARENA24LARIOJA"
-        target="_blank"
-        rel="noopener"
-        class="video-button">
+    </div>
 
-        ▶ VER EN YOUTUBE
+  </section>
 
-      </a>
+
+<!-- =====================================================
+     TOP 10
+===================================================== -->
+
+  <section class="top-section">
+
+    <div class="container">
+
+      <div class="section-heading light">
+
+        <div>
+
+          <span class="section-kicker">
+            MÚSICA
+          </span>
+
+          <h2>
+            🔥 ARENA 24 TOP 10
+          </h2>
+
+        </div>
+
+        <span class="section-number">
+          05
+        </span>
+
+      </div>
+
+
+      <div class="ranking">
+
+        <div class="rank-item">
+          <b>10</b>
+          <span>Ibuprofeno — Abel Pintos</span>
+        </div>
+
+        <div class="rank-item">
+          <b>9</b>
+          <span>Corazón De Cristal — Simon</span>
+        </div>
+
+        <div class="rank-item">
+          <b>8</b>
+          <span>Dichavate — Cumbia Rocha</span>
+        </div>
+
+        <div class="rank-item">
+          <b>7</b>
+          <span>Flor Amarilla — Campedrinos</span>
+        </div>
+
+        <div class="rank-item">
+          <b>6</b>
+          <span>No Podré Olvidarme de Ti — La K'onga</span>
+        </div>
+
+        <div class="rank-item">
+          <b>5</b>
+          <span>OA TA TA — Callejero Fino</span>
+        </div>
+
+        <div class="rank-item">
+          <b>4</b>
+          <span>Dime Tú — Q' Lokura</span>
+        </div>
+
+        <div class="rank-item">
+          <b>3</b>
+          <span>🥉 No Puedo — Luciano Pereyra</span>
+        </div>
+
+        <div class="rank-item">
+          <b>2</b>
+          <span>🥈 Pa' Él — TINI</span>
+        </div>
+
+        <div class="rank-item rank-first">
+          <b>1</b>
+          <span>
+            🥇 Enséñame A Vivir Sin Ti —
+            Luciano Pereyra & Karina
+          </span>
+        </div>
+
+      </div>
 
     </div>
 
   </section>
 
 
-  <!-- CONTACTO -->
+<!-- =====================================================
+     VIDEO
+===================================================== -->
 
-  <section id="contacto" class="section contact-section">
+  <section class="content-section">
 
-    <div class="section-heading">
+    <div class="container">
 
-      <span>08</span>
+      <div class="section-heading">
 
-      <div>
-        <h2>Contacto</h2>
-        <p>ARENA 24 · Siempre con vos.</p>
+        <div>
+
+          <span class="section-kicker">
+            MULTIMEDIA
+          </span>
+
+          <h2>
+            Videos
+          </h2>
+
+        </div>
+
+        <span class="section-number">
+          06
+        </span>
+
+      </div>
+
+
+      <div class="video-card">
+
+        <div class="video-header">
+
+          <div class="video-brand">
+            <strong>ARENA</strong>
+            <span>24</span>
+          </div>
+
+          <div>
+
+            <strong>
+              ARENA 24 · MULTIMEDIA
+            </strong>
+
+            <small>
+              MÚSICA · ENTRETENIMIENTO
+            </small>
+
+          </div>
+
+        </div>
+
+
+        <div class="video-wrapper">
+
+          <div class="video-placeholder">
+
+            <div class="video-icon">
+              ▶
+            </div>
+
+            <h3>
+              ARENA 24
+            </h3>
+
+            <p>
+              Videos, música y contenido
+              exclusivo.
+            </p>
+
+            <a
+              href="https://www.youtube.com/@ARENA24LARIOJA"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="video-button"
+            >
+              ▶ VER CANAL
+            </a>
+
+          </div>
+
+        </div>
+
+
+        <div class="video-footer">
+          ARENA 24 · LA RIOJA · ARGENTINA
+        </div>
+
       </div>
 
     </div>
 
+  </section>
 
-    <div class="contact-card">
 
-      <h3>ARENA 24</h3>
+<!-- =====================================================
+     CONTACTO
+===================================================== -->
 
-      <p>
-        📍 La Rioja, Argentina
-      </p>
+  <section id="contacto" class="contact-section">
 
-      <p>
-        📻 Radio online 24/7
-      </p>
+    <div class="container">
 
-      <p>
-        Noticias · Música · Deportes · Entretenimiento
-      </p>
+      <div class="contact-card">
+
+        <div>
+
+          <span class="section-kicker">
+            CONTACTO
+          </span>
+
+          <h2>
+            ARENA 24
+          </h2>
+
+          <p>
+            Radio online desde La Rioja,
+            siempre con vos.
+          </p>
+
+        </div>
+
+        <a
+          href="https://www.youtube.com/@ARENA24LARIOJA"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="primary-button"
+        >
+          YOUTUBE →
+        </a>
+
+      </div>
 
     </div>
 
@@ -446,17 +711,31 @@
 </main>
 
 
-<footer>
+<!-- =====================================================
+     FOOTER
+===================================================== -->
 
-  <strong>ARENA 24</strong>
+<footer class="site-footer">
 
-  <span>
-    MÚSICA · NOTICIAS · DEPORTES · ENTRETENIMIENTO
-  </span>
+  <div class="container footer-inner">
 
-  <small>
-    La Rioja, Argentina · Siempre con vos.
-  </small>
+    <div>
+
+      <div class="footer-brand">
+        ARENA <span>24</span>
+      </div>
+
+      <p>
+        Radio online · La Rioja · Argentina
+      </p>
+
+    </div>
+
+    <div class="footer-right">
+      SIEMPRE CON VOS
+    </div>
+
+  </div>
 
 </footer>
 
