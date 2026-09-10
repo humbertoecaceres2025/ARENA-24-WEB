@@ -1,131 +1,278 @@
-name: ARENA 24 - Actualizar noticias
+import json
+import re
+import html
+from datetime import datetime, timezone
+from urllib.parse import urljoin
+from urllib.request import Request, urlopen
 
-on:
+FUENTES = [
+    {
+        "nombre": "Medios Rioja",
+        "url": "https://mediosrioja.com.ar/",
+        "categoria": "La Rioja"
+    },
+    {
+        "nombre": "Medios Rioja - Locales",
+        "url": "https://mediosrioja.com.ar/locales/",
+        "categoria": "La Rioja"
+    },
+    {
+        "nombre": "Medios Rioja - Nacionales",
+        "url": "https://mediosrioja.com.ar/nacionales/",
+        "categoria": "Argentina"
+    },
+    {
+        "nombre": "Medios Rioja - Economía",
+        "url": "https://mediosrioja.com.ar/economia/",
+        "categoria": "Economía"
+    },
+    {
+        "nombre": "Olé",
+        "url": "https://www.ole.com.ar/",
+        "categoria": "Deportes"
+    }
+]
 
-  schedule:
-    - cron: "*/30 * * * *"
-
-  workflow_dispatch:
-
-permissions:
-  contents: write
-
-
-jobs:
-
-  actualizar:
-
-    runs-on: ubuntu-latest
-
-    steps:
-
-      - name: Descargar repositorio
-        uses: actions/checkout@v4
-
-
-      - name: Configurar Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.x"
-
-
-      - name: Actualizar noticias
-        run: |
-
-          python - <<'PY'
-
-          import json
-          from datetime import datetime, timezone
-
-          archivo = "noticias.json"
-
-          try:
-
-              with open(
-                  archivo,
-                  "r",
-                  encoding="utf-8"
-              ) as f:
-
-                  datos = json.load(f)
-
-          except Exception:
-
-              datos = {
-                  "noticias": []
-              }
+MAX_NOTICIAS = 40
 
 
-          datos["actualizado"] = (
-              datetime.now(timezone.utc)
-              .astimezone()
-              .isoformat()
-          )
+def descargar(url):
+
+    request = Request(
+        url,
+        headers={
+            "User-Agent":
+            "Mozilla/5.0 ARENA24 News Bot"
+        }
+    )
+
+    with urlopen(request, timeout=20) as response:
+
+        contenido = response.read()
+
+        return contenido.decode(
+            "utf-8",
+            errors="ignore"
+        )
 
 
-          if not datos.get("noticias"):
+def limpiar(texto):
 
-              datos["noticias"] = [
+    texto = re.sub(
+        r"<[^>]+>",
+        "",
+        texto
+    )
 
-                  {
-                      "categoria": "La Rioja",
-                      "titulo": "ARENA 24 Noticias",
-                      "descripcion": "Información de La Rioja."
-                  },
+    texto = html.unescape(texto)
 
-                  {
-                      "categoria": "Argentina",
-                      "titulo": "Actualidad nacional",
-                      "descripcion": "Noticias de Argentina."
-                  },
+    texto = re.sub(
+        r"\s+",
+        " ",
+        texto
+    )
 
-                  {
-                      "categoria": "Mundo",
-                      "titulo": "Actualidad internacional",
-                      "descripcion": "Las principales noticias del mundo."
-                  },
-
-                  {
-                      "categoria": "Deportes",
-                      "titulo": "ARENA 24 Deportes",
-                      "descripcion": "Toda la actualidad deportiva."
-                  },
-
-                  {
-                      "categoria": "Policiales",
-                      "titulo": "Policiales",
-                      "descripcion": "Información policial."
-                  }
-
-              ]
+    return texto.strip()
 
 
-          with open(
-              archivo,
-              "w",
-              encoding="utf-8"
-          ) as f:
+def extraer_noticias(pagina, fuente):
 
-              json.dump(
-                  datos,
-                  f,
-                  ensure_ascii=False,
-                  indent=2
-              )
+    noticias = []
 
-          PY
+    patron = re.compile(
+        r'<h[1-6][^>]*>\s*'
+        r'<a[^>]+href=["\']([^"\']+)["\'][^>]*>'
+        r'(.*?)'
+        r'</a>\s*</h[1-6]>',
+        re.I | re.S
+    )
+
+    encontrados = patron.findall(pagina)
+
+    for enlace, titulo in encontrados:
+
+        titulo = limpiar(titulo)
+
+        if not titulo:
+            continue
+
+        if len(titulo) < 20:
+            continue
+
+        if len(titulo) > 180:
+            titulo = titulo[:177] + "..."
+
+        enlace = urljoin(
+            fuente["url"],
+            enlace
+        )
+
+        noticias.append({
+
+            "categoria":
+                fuente["categoria"],
+
+            "titulo":
+                titulo,
+
+            "descripcion":
+                "Información publicada por "
+                + fuente["nombre"]
+                + ".",
+
+            "fuente":
+                fuente["nombre"],
+
+            "url":
+                enlace,
+
+            "fecha":
+                datetime.now(
+                    timezone.utc
+                ).isoformat()
+
+        })
+
+    return noticias
 
 
-      - name: Guardar actualización
-        run: |
+def cargar_anterior():
 
-          git config user.name "ARENA 24 Bot"
+    try:
 
-          git config user.email "actions@users.noreply.github.com"
+        with open(
+            "noticias.json",
+            "r",
+            encoding="utf-8"
+        ) as archivo:
 
-          git add noticias.json
+            datos = json.load(archivo)
 
-          git diff --cached --quiet || \
-          git commit -m "Actualizar noticias ARENA 24"
+            return datos.get(
+                "noticias",
+                []
+            )
 
-          git push
+    except Exception:
+
+        return []
+
+
+def main():
+
+    todas = []
+
+    for fuente in FUENTES:
+
+        print(
+            "Consultando:",
+            fuente["nombre"]
+        )
+
+        try:
+
+            pagina = descargar(
+                fuente["url"]
+            )
+
+            noticias = extraer_noticias(
+                pagina,
+                fuente
+            )
+
+            print(
+                "Encontradas:",
+                len(noticias)
+            )
+
+            todas.extend(noticias)
+
+        except Exception as error:
+
+            print(
+                "ERROR:",
+                fuente["nombre"],
+                error
+            )
+
+
+    # Si todas las fuentes fallan,
+    # conservamos las noticias anteriores.
+
+    if not todas:
+
+        print(
+            "No se obtuvieron noticias nuevas."
+        )
+
+        anteriores = cargar_anterior()
+
+        salida = {
+
+            "actualizado":
+                datetime.now(
+                    timezone.utc
+                ).isoformat(),
+
+            "noticias":
+                anteriores
+
+        }
+
+    else:
+
+        noticias_finales = []
+
+        urls = set()
+
+        for noticia in todas:
+
+            url = noticia["url"]
+
+            if url in urls:
+                continue
+
+            urls.add(url)
+
+            noticias_finales.append(
+                noticia
+            )
+
+            if len(noticias_finales) >= MAX_NOTICIAS:
+                break
+
+        salida = {
+
+            "actualizado":
+                datetime.now(
+                    timezone.utc
+                ).isoformat(),
+
+            "noticias":
+                noticias_finales
+
+        }
+
+
+    with open(
+        "noticias.json",
+        "w",
+        encoding="utf-8"
+    ) as archivo:
+
+        json.dump(
+            salida,
+            archivo,
+            ensure_ascii=False,
+            indent=2
+        )
+
+
+    print(
+        "Noticias guardadas:",
+        len(salida["noticias"])
+    )
+
+
+if __name__ == "__main__":
+    main()
