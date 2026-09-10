@@ -1,20 +1,91 @@
 import json
-import urllib.request
-import urllib.parse
-import xml.etree.ElementTree as ET
-from datetime import datetime, timezone
-import html
 import re
+from datetime import datetime, timezone
+
+import requests
+import feedparser
 
 
-OUTPUT = "noticias.json"
+# =========================================================
+# ARENA 24
+# ACTUALIZADOR AUTOMÁTICO DE NOTICIAS
+# =========================================================
+
+SALIDA = "noticias.json"
+
+HEADERS = {
+    "User-Agent": (
+        "Mozilla/5.0 "
+        "(compatible; ARENA24-NewsBot/1.0)"
+    )
+}
 
 
-def limpiar(texto):
+# =========================================================
+# FUENTES RSS
+# =========================================================
+
+FUENTES = [
+
+    {
+        "categoria": "Noticias",
+        "nombre": "Google Noticias - La Rioja",
+        "url": (
+            "https://news.google.com/rss/"
+            "search?q=La+Rioja+Argentina"
+            "&hl=es-419"
+            "&gl=AR"
+            "&ceid=AR:es-419"
+        )
+    },
+
+    {
+        "categoria": "Noticias",
+        "nombre": "Google Noticias - Argentina",
+        "url": (
+            "https://news.google.com/rss/"
+            "search?q=Argentina"
+            "&hl=es-419"
+            "&gl=AR"
+            "&ceid=AR:es-419"
+        )
+    },
+
+    {
+        "categoria": "Policiales",
+        "nombre": "Google Noticias - Policiales La Rioja",
+        "url": (
+            "https://news.google.com/rss/"
+            "search?q=policiales+La+Rioja+Argentina"
+            "&hl=es-419"
+            "&gl=AR"
+            "&ceid=AR:es-419"
+        )
+    },
+
+    {
+        "categoria": "Deportes",
+        "nombre": "Google Noticias - Deportes Argentina",
+        "url": (
+            "https://news.google.com/rss/"
+            "search?q=deportes+Argentina"
+            "&hl=es-419"
+            "&gl=AR"
+            "&ceid=AR:es-419"
+        )
+    }
+
+]
+
+
+# =========================================================
+# LIMPIAR HTML
+# =========================================================
+
+def limpiar_html(texto):
+
     if not texto:
         return ""
-
-    texto = html.unescape(texto)
 
     texto = re.sub(
         r"<[^>]+>",
@@ -22,158 +93,373 @@ def limpiar(texto):
         texto
     )
 
-    texto = re.sub(
-        r"\s+",
-        " ",
+    texto = (
         texto
+        .replace("&nbsp;", " ")
+        .replace("&amp;", "&")
+        .replace("&quot;", '"')
+        .replace("&#39;", "'")
     )
 
-    return texto.strip()
-
-
-def obtener_rss(consulta, cantidad=8):
-
-    query = urllib.parse.quote(
-        consulta
+    return " ".join(
+        texto.split()
     )
 
-    url = (
-        "https://news.google.com/rss/search?"
-        f"q={query}&hl=es-419&gl=AR&ceid=AR:es-419"
-    )
 
-    request = urllib.request.Request(
-        url,
-        headers={
-            "User-Agent":
-            "Mozilla/5.0 ARENA24 NewsBot"
-        }
-    )
+# =========================================================
+# OBTENER RSS
+# =========================================================
+
+def obtener_feed(url):
 
     try:
 
-        with urllib.request.urlopen(
-            request,
-            timeout=30
-        ) as response:
+        respuesta = requests.get(
+            url,
+            headers=HEADERS,
+            timeout=20
+        )
 
-            contenido = response.read()
+        respuesta.raise_for_status()
 
-        root = ET.fromstring(contenido)
+        return feedparser.parse(
+            respuesta.content
+        )
 
     except Exception as error:
 
         print(
-            f"Error RSS {consulta}: {error}"
+            "Error RSS:",
+            error
         )
 
-        return []
+        return None
 
+
+# =========================================================
+# EXTRAER NOTICIAS
+# =========================================================
+
+def obtener_noticias():
 
     resultado = []
 
-    for item in root.findall(
-        ".//item"
-    )[:cantidad]:
+    urls_vistas = set()
 
-        titulo = limpiar(
-            item.findtext("title")
+    for fuente in FUENTES:
+
+        print(
+            "Consultando:",
+            fuente["nombre"]
         )
 
-        descripcion = limpiar(
-            item.findtext("description")
+        feed = obtener_feed(
+            fuente["url"]
         )
 
-        fuente = limpiar(
-            item.findtext("source")
-        )
-
-        fecha = limpiar(
-            item.findtext("pubDate")
-        )
-
-        link = limpiar(
-            item.findtext("link")
-        )
-
-
-        if not titulo:
+        if not feed:
             continue
 
+        for item in feed.entries[:12]:
 
-        resultado.append({
+            titulo = limpiar_html(
+                item.get(
+                    "title",
+                    ""
+                )
+            )
 
-            "title": titulo,
+            descripcion = limpiar_html(
+                item.get(
+                    "summary",
+                    ""
+                )
+            )
 
-            "description":
-                descripcion[:300],
+            enlace = (
+                item.get(
+                    "link",
+                    ""
+                )
+            )
 
-            "source":
-                fuente or "Google News",
+            if not titulo:
+                continue
 
-            "date":
-                fecha,
+            if enlace in urls_vistas:
+                continue
 
-            "url":
-                link
+            urls_vistas.add(
+                enlace
+            )
 
-        })
+            fecha = (
+                item.get(
+                    "published",
+                    ""
+                )
+                or
+                item.get(
+                    "updated",
+                    ""
+                )
+            )
+
+            resultado.append({
+
+                "categoria":
+                    fuente["categoria"],
+
+                "titulo":
+                    titulo,
+
+                "descripcion":
+                    descripcion[:350],
+
+                "fuente":
+                    fuente["nombre"],
+
+                "fecha":
+                    fecha,
+
+                "url":
+                    enlace
+
+            })
 
 
     return resultado
 
 
-def quitar_duplicados(articulos):
+# =========================================================
+# DÓLAR
+# =========================================================
 
-    vistos = set()
+def obtener_dolar():
 
-    resultado = []
+    try:
 
-    for articulo in articulos:
+        url = (
+            "https://dolarapi.com/"
+            "v1/dolares/oficial"
+        )
 
-        clave = articulo["title"].lower()
+        respuesta = requests.get(
+            url,
+            timeout=15
+        )
 
-        if clave in vistos:
-            continue
+        respuesta.raise_for_status()
 
-        vistos.add(clave)
+        data = respuesta.json()
 
-        resultado.append(articulo)
+        return {
 
-    return resultado
+            "compra":
+                data.get(
+                    "compra",
+                    "--"
+                ),
+
+            "venta":
+                data.get(
+                    "venta",
+                    "--"
+                )
+
+        }
+
+    except Exception as error:
+
+        print(
+            "Error dólar:",
+            error
+        )
+
+        return {
+
+            "compra": "--",
+            "venta": "--"
+
+        }
 
 
-def main():
+# =========================================================
+# CLIMA
+# =========================================================
 
-    print("ARENA 24 — actualizador de noticias")
+def obtener_clima():
 
-    noticias = obtener_rss(
-        "La Rioja Argentina noticias",
-        10
+    try:
+
+        # Coordenadas aproximadas de La Rioja Capital
+        lat = -29.4131
+        lon = -66.8558
+
+        url = (
+            "https://api.open-meteo.com/"
+            "v1/forecast"
+        )
+
+        parametros = {
+
+            "latitude":
+                lat,
+
+            "longitude":
+                lon,
+
+            "current":
+                "temperature_2m,"
+                "weather_code",
+
+            "timezone":
+                "America/Argentina/La_Rioja"
+
+        }
+
+        respuesta = requests.get(
+            url,
+            params=parametros,
+            timeout=15
+        )
+
+        respuesta.raise_for_status()
+
+        data = respuesta.json()
+
+        actual =
+            data.get(
+                "current",
+                {}
+            )
+
+        temperatura =
+            actual.get(
+                "temperature_2m",
+                "--"
+            )
+
+        codigo =
+            actual.get(
+                "weather_code",
+                0
+            )
+
+        descripcion, icono = \
+            interpretar_clima(
+                codigo
+            )
+
+        return {
+
+            "ciudad":
+                "La Rioja",
+
+            "temperatura":
+                temperatura,
+
+            "descripcion":
+                descripcion,
+
+            "icono":
+                icono
+
+        }
+
+    except Exception as error:
+
+        print(
+            "Error clima:",
+            error
+        )
+
+        return {
+
+            "ciudad":
+                "La Rioja",
+
+            "temperatura":
+                "--",
+
+            "descripcion":
+                "No disponible",
+
+            "icono":
+                "🌤️"
+
+        }
+
+
+# =========================================================
+# INTERPRETAR CLIMA
+# =========================================================
+
+def interpretar_clima(codigo):
+
+    if codigo == 0:
+        return "Despejado", "☀️"
+
+    if codigo in [1, 2]:
+        return "Parcialmente nublado", "🌤️"
+
+    if codigo == 3:
+        return "Nublado", "☁️"
+
+    if codigo in [45, 48]:
+        return "Niebla", "🌫️"
+
+    if codigo in [51, 53, 55]:
+        return "Llovizna", "🌦️"
+
+    if codigo in [61, 63, 65]:
+        return "Lluvia", "🌧️"
+
+    if codigo in [71, 73, 75]:
+        return "Nieve", "❄️"
+
+    if codigo in [80, 81, 82]:
+        return "Chaparrones", "🌦️"
+
+    if codigo in [95, 96, 99]:
+        return "Tormenta", "⛈️"
+
+    return "Condiciones variables", "🌤️"
+
+
+# =========================================================
+# GENERAR JSON
+# =========================================================
+
+def guardar():
+
+    print(
+        "================================"
     )
 
-    policiales = obtener_rss(
-        "La Rioja Argentina policiales OR seguridad OR justicia",
-        10
+    print(
+        "ARENA 24"
     )
 
-    deportes = obtener_rss(
-        "Argentina deportes fútbol",
-        10
+    print(
+        "Actualización automática"
+    )
+
+    print(
+        "================================"
     )
 
 
-    noticias = quitar_duplicados(
-        noticias
-    )
+    noticias =
+        obtener_noticias()
 
-    policiales = quitar_duplicados(
-        policiales
-    )
 
-    deportes = quitar_duplicados(
-        deportes
-    )
+    dolar =
+        obtener_dolar()
+
+
+    clima =
+        obtener_clima()
 
 
     datos = {
@@ -184,19 +470,19 @@ def main():
             ).isoformat(),
 
         "noticias":
-            noticias[:8],
+            noticias,
 
-        "policiales":
-            policiales[:8],
+        "dolar":
+            dolar,
 
-        "deportes":
-            deportes[:8]
+        "clima":
+            clima
 
     }
 
 
     with open(
-        OUTPUT,
+        SALIDA,
         "w",
         encoding="utf-8"
     ) as archivo:
@@ -210,20 +496,29 @@ def main():
 
 
     print(
-        "Noticias:",
-        len(noticias)
+        f"Noticias obtenidas: {len(noticias)}"
     )
 
     print(
-        "Policiales:",
-        len(policiales)
+        "Dólar:",
+        dolar
     )
 
     print(
-        "Deportes:",
-        len(deportes)
+        "Clima:",
+        clima
     )
 
+    print(
+        "Archivo generado:",
+        SALIDA
+    )
+
+
+# =========================================================
+# EJECUTAR
+# =========================================================
 
 if __name__ == "__main__":
-    main()
+
+    guardar()
