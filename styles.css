@@ -1755,31 +1755,34 @@ button {
 
 }
 /* =========================================================
-   CONTACTO — ARENA 24
+   CONTACTO PREMIUM
 ========================================================= */
 
 .contact-section {
 
   position: relative;
 
-  padding: 90px 0;
+  padding: 100px 0 35px;
 
   overflow: hidden;
 
   background:
-    radial-gradient(
-      circle at 15% 20%,
-      rgba(246,206,84,.08),
-      transparent 28%
-    ),
-    radial-gradient(
-      circle at 85% 70%,
-      rgba(227,6,19,.06),
-      transparent 28%
-    ),
-    #0a0c11;
 
-  color: white;
+    radial-gradient(
+      circle at 10% 15%,
+      rgba(246,206,84,.08),
+      transparent 27%
+    ),
+
+    radial-gradient(
+      circle at 90% 55%,
+      rgba(227,6,19,.07),
+      transparent 30%
+    ),
+
+    #080a0f;
+
+  color: #fff;
 
 }
 
@@ -1794,12 +1797,26 @@ button {
 
   pointer-events: none;
 
-  background:
+  background-image:
+
+    linear-gradient(
+      rgba(255,255,255,.025) 1px,
+      transparent 1px
+    ),
+
     linear-gradient(
       90deg,
-      transparent,
-      rgba(255,255,255,.025),
-      transparent
+      rgba(255,255,255,.025) 1px,
+      transparent 1px
+    );
+
+  background-size: 55px 55px;
+
+  mask-image:
+    linear-gradient(
+      to bottom,
+      black,
+      transparent 90%
     );
 
 }
@@ -1809,95 +1826,250 @@ button {
 
   position: relative;
 
-  z-index: 1;
+  z-index: 2;
 
 }
 
 
-/* =========================================================
-   TÍTULO
-========================================================= */
-
 .contact-heading {
 
-  margin-bottom: 35px;
+  margin-bottom: 38px;
 
 }
 
 
 .contact-heading h2 {
 
-  color: white;
+  color: #fff;
 
 }
 
 
-.contact-heading .section-number {
+.contact-heading-text {
 
-  color: #515866;
+  max-width: 600px;
+
+  margin: 10px 0 0;
+
+  color: #7f8895;
+
+  font-size: 12px;
+
+  line-height: 1.6;
 
 }
 
 
 /* =========================================================
-   ESTRUCTURA
+   TARJETAS
 ========================================================= */
 
-.contact-layout {
+.contact-cards {
 
   display: grid;
 
   grid-template-columns:
-    .9fr
-    1.1fr;
+    repeat(4, 1fr);
 
-  gap: 20px;
+  gap: 14px;
 
 }
 
 
-/* =========================================================
-   PRESENTACIÓN
-========================================================= */
+.contact-card {
 
-.contact-intro {
+  min-height: 205px;
 
-  min-height: 370px;
-
-  padding: 38px;
+  padding: 21px;
 
   display: flex;
 
   flex-direction: column;
 
-  justify-content: center;
-
   border:
-    1px solid rgba(255,255,255,.09);
+    1px solid rgba(255,255,255,.08);
 
-  border-radius: 20px;
+  border-radius: 15px;
 
   background:
     linear-gradient(
       145deg,
-      #171b24,
-      #0d1016
+      rgba(255,255,255,.045),
+      rgba(255,255,255,.015)
+    );
+
+  color: white;
+
+  text-decoration: none;
+
+  transition:
+    transform .25s ease,
+    border-color .25s ease,
+    background .25s ease;
+
+}
+
+
+.contact-card:hover {
+
+  transform: translateY(-5px);
+
+  border-color:
+    rgba(246,206,84,.35);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255,255,255,.07),
+      rgba(255,255,255,.025)
     );
 
 }
 
 
-.contact-logo {
+.contact-card-top {
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  margin-bottom: 28px;
+
+}
+
+
+.contact-card-icon {
+
+  width: 43px;
+
+  height: 43px;
+
+  display: grid;
+
+  place-items: center;
+
+  border-radius: 10px;
+
+  background:
+    rgba(246,206,84,.10);
+
+  color: #f6ce54;
+
+  font-size: 17px;
+
+  font-weight: 900;
+
+}
+
+
+.contact-card-arrow {
+
+  color: #555e6b;
+
+  font-size: 18px;
+
+}
+
+
+.contact-card-label {
+
+  color: #f6ce54;
+
+  font-size: 8px;
+
+  font-weight: 900;
+
+  letter-spacing: 1.7px;
+
+}
+
+
+.contact-card h3 {
+
+  margin: 5px 0 6px;
+
+  font-size: 16px;
+
+}
+
+
+.contact-card p {
+
+  margin: 0;
+
+  color: #777f8c;
+
+  font-size: 10px;
+
+  line-height: 1.55;
+
+}
+
+
+.contact-whatsapp:hover .contact-card-icon {
+
+  background: rgba(37,211,102,.13);
+
+  color: #25d366;
+
+}
+
+
+.contact-youtube:hover .contact-card-icon {
+
+  background: rgba(227,6,19,.14);
+
+  color: #ff3e4a;
+
+}
+
+
+/* =========================================================
+   BLOQUE PRINCIPAL
+========================================================= */
+
+.contact-main {
+
+  margin-top: 18px;
+
+  display: grid;
+
+  grid-template-columns:
+    1fr
+    1fr;
+
+  gap: 18px;
+
+}
+
+
+.contact-brand,
+.contact-social-box {
+
+  padding: 32px;
+
+  border:
+    1px solid rgba(255,255,255,.08);
+
+  border-radius: 17px;
+
+  background:
+    rgba(255,255,255,.025);
+
+}
+
+
+.contact-big-logo {
 
   display: flex;
 
   align-items: baseline;
 
-  gap: 5px;
+  gap: 4px;
 
-  font-size: 43px;
-
-  line-height: 1;
+  font-size: 42px;
 
   font-weight: 950;
 
@@ -1906,78 +2078,68 @@ button {
 }
 
 
-.contact-logo span {
-
-  color: white;
-
-}
-
-
-.contact-logo strong {
+.contact-big-logo strong {
 
   color: #f6ce54;
 
 }
 
 
-.contact-intro h3 {
+.contact-brand-line {
 
-  margin: 25px 0 8px;
+  width: 45px;
 
-  font-size: 29px;
+  height: 3px;
 
-  line-height: 1;
+  margin: 18px 0;
+
+  background: #e30613;
 
 }
 
 
-.contact-intro p {
-
-  max-width: 480px;
+.contact-brand h3 {
 
   margin: 0;
 
-  color: #929aa7;
-
-  font-size: 13px;
-
-  line-height: 1.7;
+  font-size: 17px;
 
 }
 
 
-/* =========================================================
-   UBICACIÓN
-========================================================= */
+.contact-brand > p {
+
+  max-width: 460px;
+
+  margin: 10px 0 20px;
+
+  color: #7c8592;
+
+  font-size: 11px;
+
+  line-height: 1.65;
+
+}
+
 
 .contact-location {
 
   width: fit-content;
 
-  margin-top: 28px;
-
-  padding: 11px 14px;
-
   display: flex;
 
   align-items: center;
 
-  gap: 11px;
-
-  border:
-    1px solid rgba(255,255,255,.08);
-
-  border-radius: 10px;
-
-  background:
-    rgba(255,255,255,.025);
+  gap: 9px;
 
 }
 
 
 .contact-location > span {
 
-  font-size: 19px;
+  color: #f6ce54;
+
+  font-size: 12px;
 
 }
 
@@ -1986,7 +2148,7 @@ button {
 
   display: block;
 
-  font-size: 11px;
+  font-size: 10px;
 
 }
 
@@ -1997,196 +2159,9 @@ button {
 
   margin-top: 2px;
 
-  color: #727b88;
-
-  font-size: 9px;
-
-}
-
-
-/* =========================================================
-   PANEL CONTACTO
-========================================================= */
-
-.contact-info {
-
-  padding: 28px;
-
-  border:
-    1px solid rgba(255,255,255,.09);
-
-  border-radius: 20px;
-
-  background:
-    rgba(255,255,255,.025);
-
-}
-
-
-.contact-info-title {
-
-  padding-bottom: 18px;
-
-  border-bottom:
-    1px solid rgba(255,255,255,.08);
-
-}
-
-
-.contact-info-title span {
-
-  display: block;
-
-  color: #f6ce54;
-
-  font-size: 9px;
-
-  font-weight: 900;
-
-  letter-spacing: 2px;
-
-}
-
-
-.contact-info-title strong {
-
-  display: block;
-
-  margin-top: 5px;
-
-  font-size: 22px;
-
-}
-
-
-/* =========================================================
-   ITEMS
-========================================================= */
-
-.contact-item {
-
-  min-height: 80px;
-
-  padding: 13px 0;
-
-  display: flex;
-
-  align-items: center;
-
-  gap: 13px;
-
-  border-bottom:
-    1px solid rgba(255,255,255,.07);
-
-  color: white;
-
-  text-decoration: none;
-
-  transition:
-    transform .2s ease;
-
-}
-
-
-.contact-item:hover {
-
-  transform: translateX(5px);
-
-}
-
-
-.contact-icon {
-
-  width: 45px;
-
-  height: 45px;
-
-  flex-shrink: 0;
-
-  display: grid;
-
-  place-items: center;
-
-  border-radius: 10px;
-
-  font-size: 16px;
-
-}
-
-
-.contact-icon.whatsapp {
-
-  background:
-    rgba(37,211,102,.13);
-
-  color: #25d366;
-
-}
-
-
-.contact-icon.youtube {
-
-  background:
-    rgba(227,6,19,.13);
-
-  color: #ff3b47;
-
-}
-
-
-.contact-item div:nth-child(2) {
-
-  min-width: 0;
-
-  flex: 1;
-
-}
-
-
-.contact-item span {
-
-  display: block;
-
-  color: #f6ce54;
+  color: #646d79;
 
   font-size: 8px;
-
-  font-weight: 900;
-
-  letter-spacing: 1.5px;
-
-}
-
-
-.contact-item strong {
-
-  display: block;
-
-  margin-top: 2px;
-
-  font-size: 13px;
-
-}
-
-
-.contact-item small {
-
-  display: block;
-
-  margin-top: 2px;
-
-  color: #747d89;
-
-  font-size: 9px;
-
-}
-
-
-.contact-item > b {
-
-  color: #68717e;
-
-  font-size: 17px;
 
 }
 
@@ -2195,67 +2170,481 @@ button {
    REDES
 ========================================================= */
 
-.contact-socials {
+.contact-box-kicker {
 
-  padding-top: 20px;
-
-}
-
-
-.contact-socials > span {
-
-  color: #68717e;
+  color: #f6ce54;
 
   font-size: 8px;
 
   font-weight: 900;
 
-  letter-spacing: 1.5px;
+  letter-spacing: 2px;
 
 }
 
 
-.contact-socials > div {
+.contact-social-box h3 {
+
+  margin: 5px 0 5px;
+
+  font-size: 20px;
+
+}
+
+
+.contact-social-box > p {
+
+  margin: 0 0 18px;
+
+  color: #707986;
+
+  font-size: 10px;
+
+}
+
+
+.contact-social-list {
+
+  display: grid;
+
+  gap: 7px;
+
+}
+
+
+.contact-social-list a {
+
+  min-height: 54px;
+
+  padding: 8px 11px;
 
   display: flex;
 
-  flex-wrap: wrap;
+  align-items: center;
 
-  gap: 8px;
+  gap: 11px;
 
-  margin-top: 10px;
+  border:
+    1px solid rgba(255,255,255,.07);
+
+  border-radius: 9px;
+
+  color: white;
+
+  text-decoration: none;
+
+  transition:
+    border-color .2s ease,
+    background .2s ease;
 
 }
 
 
-.contact-socials a {
+.contact-social-list a:hover {
 
-  padding: 8px 12px;
+  border-color:
+    rgba(246,206,84,.3);
 
-  border:
-    1px solid rgba(255,255,255,.09);
+  background:
+    rgba(255,255,255,.025);
+
+}
+
+
+.contact-social-list a > span {
+
+  width: 32px;
+
+  height: 32px;
+
+  display: grid;
+
+  place-items: center;
 
   border-radius: 7px;
 
-  color: #c4cad3;
+  background:
+    rgba(255,255,255,.06);
+
+  color: #f6ce54;
+
+  font-weight: 900;
+
+}
+
+
+.contact-social-list a div {
+
+  flex: 1;
+
+}
+
+
+.contact-social-list strong {
+
+  display: block;
+
+  font-size: 10px;
+
+}
+
+
+.contact-social-list small {
+
+  display: block;
+
+  margin-top: 2px;
+
+  color: #626b78;
+
+  font-size: 8px;
+
+}
+
+
+.contact-social-list b {
+
+  color: #59616e;
+
+}
+
+
+/* =========================================================
+   CTA
+========================================================= */
+
+.contact-cta {
+
+  margin-top: 18px;
+
+  padding: 25px 30px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 25px;
+
+  border:
+    1px solid rgba(246,206,84,.20);
+
+  border-radius: 15px;
+
+  background:
+
+    linear-gradient(
+      100deg,
+      rgba(246,206,84,.07),
+      rgba(227,6,19,.045)
+    );
+
+}
+
+
+.contact-cta > div > span {
+
+  color: #f6ce54;
+
+  font-size: 8px;
+
+  font-weight: 900;
+
+  letter-spacing: 1.7px;
+
+}
+
+
+.contact-cta h3 {
+
+  margin: 5px 0;
+
+  font-size: 18px;
+
+}
+
+
+.contact-cta p {
+
+  margin: 0;
+
+  color: #747d89;
+
+  font-size: 10px;
+
+}
+
+
+.contact-cta > a {
+
+  flex-shrink: 0;
+
+  min-height: 43px;
+
+  padding: 0 17px;
+
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  border-radius: 8px;
+
+  background: #f6ce54;
+
+  color: #111;
 
   text-decoration: none;
 
   font-size: 9px;
 
-  font-weight: 750;
+  font-weight: 950;
 
 }
 
 
-.contact-socials a:hover {
+.contact-cta > a:hover {
 
-  border-color: #f6ce54;
+  background: #ffe27c;
+
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.contact-footer {
+
+  margin-top: 45px;
+
+  padding: 22px 0;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 25px;
+
+  border-top:
+    1px solid rgba(255,255,255,.08);
+
+}
+
+
+.contact-footer-brand strong {
+
+  display: block;
+
+  font-size: 20px;
+
+  font-weight: 950;
+
+  letter-spacing: -1px;
+
+}
+
+
+.contact-footer-brand strong span {
 
   color: #f6ce54;
 
 }
 
+
+.contact-footer-brand small {
+
+  display: block;
+
+  margin-top: 3px;
+
+  color: #59616d;
+
+  font-size: 7px;
+
+  letter-spacing: 1px;
+
+}
+
+
+.contact-footer-nav {
+
+  display: flex;
+
+  flex-wrap: wrap;
+
+  justify-content: center;
+
+  gap: 14px;
+
+}
+
+
+.contact-footer-nav a {
+
+  color: #727b87;
+
+  text-decoration: none;
+
+  font-size: 8px;
+
+  font-weight: 700;
+
+}
+
+
+.contact-footer-nav a:hover {
+
+  color: #f6ce54;
+
+}
+
+
+.contact-live-button {
+
+  min-height: 38px;
+
+  padding: 0 13px;
+
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 6px;
+
+  border:
+    1px solid rgba(227,6,19,.35);
+
+  border-radius: 7px;
+
+  color: white;
+
+  text-decoration: none;
+
+  font-size: 8px;
+
+  font-weight: 900;
+
+}
+
+
+.contact-live-button span {
+
+  color: #e30613;
+
+}
+
+
+.contact-copyright {
+
+  padding-top: 12px;
+
+  display: flex;
+
+  justify-content: space-between;
+
+  color: #414954;
+
+  font-size: 7px;
+
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 950px) {
+
+  .contact-cards {
+
+    grid-template-columns:
+      repeat(2, 1fr);
+
+  }
+
+}
+
+
+@media (max-width: 750px) {
+
+  .contact-main {
+
+    grid-template-columns: 1fr;
+
+  }
+
+  .contact-cta {
+
+    flex-direction: column;
+
+    align-items: flex-start;
+
+  }
+
+  .contact-cta > a {
+
+    width: 100%;
+
+  }
+
+  .contact-footer {
+
+    flex-direction: column;
+
+    align-items: flex-start;
+
+  }
+
+}
+
+
+@media (max-width: 520px) {
+
+  .contact-section {
+
+    padding: 70px 0 25px;
+
+  }
+
+  .contact-cards {
+
+    grid-template-columns: 1fr;
+
+  }
+
+  .contact-card {
+
+    min-height: 170px;
+
+  }
+
+  .contact-brand,
+  .contact-social-box {
+
+    padding: 23px;
+
+  }
+
+  .contact-big-logo {
+
+    font-size: 35px;
+
+  }
+
+  .contact-copyright {
+
+    flex-direction: column;
+
+    gap: 5px;
+
+  }
+
+}
 
 /* =========================================================
    BARRA INFERIOR
