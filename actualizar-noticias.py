@@ -328,29 +328,10 @@ def obtener_clima():
 
         data = respuesta.json()
 
-        actual =
-            data.get(
-                "current",
-                {}
-            )
-
-        temperatura =
-            actual.get(
-                "temperature_2m",
-                "--"
-            )
-
-        codigo =
-            actual.get(
-                "weather_code",
-                0
-            )
-
-        descripcion, icono = \
-            interpretar_clima(
-                codigo
-            )
-
+       actual = data.get("current", {})
+temperatura = actual.get("temperature_2m", "--")
+codigo = actual.get("weather_code", 0)
+descripcion, icono = interpretar_clima(codigo)
         return {
 
             "ciudad":
