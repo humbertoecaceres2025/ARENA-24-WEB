@@ -1754,4 +1754,652 @@ button {
   }
 
 }
+/* =========================================================
+   CONTACTO — ARENA 24
+========================================================= */
+
+.contact-section {
+
+  position: relative;
+
+  padding: 90px 0;
+
+  overflow: hidden;
+
+  background:
+    radial-gradient(
+      circle at 15% 20%,
+      rgba(246,206,84,.08),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 85% 70%,
+      rgba(227,6,19,.06),
+      transparent 28%
+    ),
+    #0a0c11;
+
+  color: white;
+
+}
+
+
+.contact-section::before {
+
+  content: "";
+
+  position: absolute;
+
+  inset: 0;
+
+  pointer-events: none;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(255,255,255,.025),
+      transparent
+    );
+
+}
+
+
+.contact-section .container {
+
+  position: relative;
+
+  z-index: 1;
+
+}
+
+
+/* =========================================================
+   TÍTULO
+========================================================= */
+
+.contact-heading {
+
+  margin-bottom: 35px;
+
+}
+
+
+.contact-heading h2 {
+
+  color: white;
+
+}
+
+
+.contact-heading .section-number {
+
+  color: #515866;
+
+}
+
+
+/* =========================================================
+   ESTRUCTURA
+========================================================= */
+
+.contact-layout {
+
+  display: grid;
+
+  grid-template-columns:
+    .9fr
+    1.1fr;
+
+  gap: 20px;
+
+}
+
+
+/* =========================================================
+   PRESENTACIÓN
+========================================================= */
+
+.contact-intro {
+
+  min-height: 370px;
+
+  padding: 38px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: center;
+
+  border:
+    1px solid rgba(255,255,255,.09);
+
+  border-radius: 20px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #171b24,
+      #0d1016
+    );
+
+}
+
+
+.contact-logo {
+
+  display: flex;
+
+  align-items: baseline;
+
+  gap: 5px;
+
+  font-size: 43px;
+
+  line-height: 1;
+
+  font-weight: 950;
+
+  letter-spacing: -3px;
+
+}
+
+
+.contact-logo span {
+
+  color: white;
+
+}
+
+
+.contact-logo strong {
+
+  color: #f6ce54;
+
+}
+
+
+.contact-intro h3 {
+
+  margin: 25px 0 8px;
+
+  font-size: 29px;
+
+  line-height: 1;
+
+}
+
+
+.contact-intro p {
+
+  max-width: 480px;
+
+  margin: 0;
+
+  color: #929aa7;
+
+  font-size: 13px;
+
+  line-height: 1.7;
+
+}
+
+
+/* =========================================================
+   UBICACIÓN
+========================================================= */
+
+.contact-location {
+
+  width: fit-content;
+
+  margin-top: 28px;
+
+  padding: 11px 14px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 11px;
+
+  border:
+    1px solid rgba(255,255,255,.08);
+
+  border-radius: 10px;
+
+  background:
+    rgba(255,255,255,.025);
+
+}
+
+
+.contact-location > span {
+
+  font-size: 19px;
+
+}
+
+
+.contact-location strong {
+
+  display: block;
+
+  font-size: 11px;
+
+}
+
+
+.contact-location small {
+
+  display: block;
+
+  margin-top: 2px;
+
+  color: #727b88;
+
+  font-size: 9px;
+
+}
+
+
+/* =========================================================
+   PANEL CONTACTO
+========================================================= */
+
+.contact-info {
+
+  padding: 28px;
+
+  border:
+    1px solid rgba(255,255,255,.09);
+
+  border-radius: 20px;
+
+  background:
+    rgba(255,255,255,.025);
+
+}
+
+
+.contact-info-title {
+
+  padding-bottom: 18px;
+
+  border-bottom:
+    1px solid rgba(255,255,255,.08);
+
+}
+
+
+.contact-info-title span {
+
+  display: block;
+
+  color: #f6ce54;
+
+  font-size: 9px;
+
+  font-weight: 900;
+
+  letter-spacing: 2px;
+
+}
+
+
+.contact-info-title strong {
+
+  display: block;
+
+  margin-top: 5px;
+
+  font-size: 22px;
+
+}
+
+
+/* =========================================================
+   ITEMS
+========================================================= */
+
+.contact-item {
+
+  min-height: 80px;
+
+  padding: 13px 0;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 13px;
+
+  border-bottom:
+    1px solid rgba(255,255,255,.07);
+
+  color: white;
+
+  text-decoration: none;
+
+  transition:
+    transform .2s ease;
+
+}
+
+
+.contact-item:hover {
+
+  transform: translateX(5px);
+
+}
+
+
+.contact-icon {
+
+  width: 45px;
+
+  height: 45px;
+
+  flex-shrink: 0;
+
+  display: grid;
+
+  place-items: center;
+
+  border-radius: 10px;
+
+  font-size: 16px;
+
+}
+
+
+.contact-icon.whatsapp {
+
+  background:
+    rgba(37,211,102,.13);
+
+  color: #25d366;
+
+}
+
+
+.contact-icon.youtube {
+
+  background:
+    rgba(227,6,19,.13);
+
+  color: #ff3b47;
+
+}
+
+
+.contact-item div:nth-child(2) {
+
+  min-width: 0;
+
+  flex: 1;
+
+}
+
+
+.contact-item span {
+
+  display: block;
+
+  color: #f6ce54;
+
+  font-size: 8px;
+
+  font-weight: 900;
+
+  letter-spacing: 1.5px;
+
+}
+
+
+.contact-item strong {
+
+  display: block;
+
+  margin-top: 2px;
+
+  font-size: 13px;
+
+}
+
+
+.contact-item small {
+
+  display: block;
+
+  margin-top: 2px;
+
+  color: #747d89;
+
+  font-size: 9px;
+
+}
+
+
+.contact-item > b {
+
+  color: #68717e;
+
+  font-size: 17px;
+
+}
+
+
+/* =========================================================
+   REDES
+========================================================= */
+
+.contact-socials {
+
+  padding-top: 20px;
+
+}
+
+
+.contact-socials > span {
+
+  color: #68717e;
+
+  font-size: 8px;
+
+  font-weight: 900;
+
+  letter-spacing: 1.5px;
+
+}
+
+
+.contact-socials > div {
+
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 8px;
+
+  margin-top: 10px;
+
+}
+
+
+.contact-socials a {
+
+  padding: 8px 12px;
+
+  border:
+    1px solid rgba(255,255,255,.09);
+
+  border-radius: 7px;
+
+  color: #c4cad3;
+
+  text-decoration: none;
+
+  font-size: 9px;
+
+  font-weight: 750;
+
+}
+
+
+.contact-socials a:hover {
+
+  border-color: #f6ce54;
+
+  color: #f6ce54;
+
+}
+
+
+/* =========================================================
+   BARRA INFERIOR
+========================================================= */
+
+.contact-bottom {
+
+  min-height: 75px;
+
+  margin-top: 20px;
+
+  padding: 15px 22px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 20px;
+
+  border:
+    1px solid rgba(246,206,84,.16);
+
+  border-radius: 13px;
+
+  background:
+    rgba(246,206,84,.045);
+
+}
+
+
+.contact-bottom span {
+
+  display: block;
+
+  color: #f6ce54;
+
+  font-size: 8px;
+
+  font-weight: 900;
+
+  letter-spacing: 2px;
+
+}
+
+
+.contact-bottom strong {
+
+  display: block;
+
+  margin-top: 3px;
+
+  color: #a2aab5;
+
+  font-size: 9px;
+
+}
+
+
+.contact-bottom > a {
+
+  min-height: 42px;
+
+  padding: 0 17px;
+
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  border-radius: 8px;
+
+  background: #f6ce54;
+
+  color: #111;
+
+  text-decoration: none;
+
+  font-size: 9px;
+
+  font-weight: 950;
+
+}
+
+
+.contact-bottom > a:hover {
+
+  background: #ffe17a;
+
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 800px) {
+
+  .contact-layout {
+
+    grid-template-columns: 1fr;
+
+  }
+
+  .contact-intro {
+
+    min-height: auto;
+
+  }
+
+}
+
+
+@media (max-width: 550px) {
+
+  .contact-section {
+
+    padding: 60px 0;
+
+  }
+
+  .contact-intro,
+  .contact-info {
+
+    padding: 24px;
+
+  }
+
+  .contact-bottom {
+
+    flex-direction: column;
+
+    align-items: flex-start;
+
+  }
+
+  .contact-bottom > a {
+
+    width: 100%;
+
+  }
+
+}
+
 
