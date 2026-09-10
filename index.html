@@ -1,276 +1,673 @@
-<!doctype html>
-<html lang="es">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="ARENA 24 — Radio online desde La Rioja, Argentina. Música, noticias, entretenimiento y deportes. Siempre con vos.">
-<meta name="theme-color" content="#090b12">
-<title>ARENA 24 — Siempre con vos</title>
-<link rel="stylesheet" href="styles.css">
-</head>
-<body>
-<header>
-  <a class="logo" href="#inicio"><b>A24</b><span>ARENA 24<small>SIEMPRE CON VOS</small></span></a>
-  <nav><a href="#programacion">Programación</a><a href="#top10">Top 10</a><a href="#noticias">Noticias</a><a href="#voces">Voces</a><a href="#contacto">Contacto</a></nav>
-</header>
+<!doctype html> <html lang="es"> <head> <meta charset="utf-8">
 
-<main>
-<section id="inicio" class="hero">
-  <div>
-    <small class="eyebrow">RADIO ONLINE · LA RIOJA · ARGENTINA</small>
-    <h1>ARENA <i>24</i></h1>
-    <h2>Siempre con vos.</h2>
-    <p>Música, noticias, entretenimiento y deportes las 24 horas.</p>
-    <button id="play">▶ ESCUCHAR EN VIVO</button>
-    <audio id="audio" src="https://stream.zeno.fm/zuw6xmmwmd0uv" preload="none"></audio>
-    <div id="status">● ARENA 24 · EN VIVO</div>
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1"
+
+<meta
+name="description"
+content="ARENA 24 — Radio online desde La Rioja, Argentina. Noticias, música, deportes, entretenimiento y actualidad."
+
+<meta name="theme-color" content="#07080c">
+
+<meta
+property="og:title"
+content="ARENA 24 — Siempre con vos"
+
+<meta
+property="og:description"
+content="Radio online desde La Rioja, Argentina."
+
+<title>ARENA 24 | Radio Online · La Rioja</title> <link rel="stylesheet" href="styles.css"> </head> <body> <!-- ===================================================== HEADER ===================================================== --> <header class="site-header"> <div class="header-inner">
+<a href="#inicio" class="logo">
+
+  <span class="logo-mark">A24</span>
+
+  <span class="logo-text">
+    ARENA <strong>24</strong>
+    <small>SIEMPRE CON VOS</small>
+  </span>
+
+</a>
+
+<nav class="main-nav">
+
+  <a href="#programacion">Programación</a>
+  <a href="#noticias">Noticias</a>
+  <a href="#policiales">Policiales</a>
+  <a href="#deportes">Deportes</a>
+  <a href="#top10">Top 10</a>
+  <a href="#contacto">Contacto</a>
+
+</nav>
+
+</div> </header> <!-- ===================================================== HERO ===================================================== --> <main> <section id="inicio" class="hero"> <div class="hero-content">
+<span class="eyebrow">
+  🔴 RADIO ONLINE · LA RIOJA · ARGENTINA
+</span>
+
+<h1>
+  ARENA <span>24</span>
+</h1>
+
+<h2>
+  Siempre con vos.
+</h2>
+
+<p>
+  Música, noticias, deportes y entretenimiento
+  durante todo el día.
+</p>
+
+
+<div class="live-player">
+
+  <div class="live-info">
+
+    <span class="live-dot"></span>
+
+    <div>
+      <strong>ARENA 24 EN VIVO</strong>
+      <small>RADIO ONLINE · 24 HORAS</small>
+    </div>
+
   </div>
-  <div class="onair"><div class="disc">A24</div><small>AHORA EN VIVO</small><strong>ARENA 24</strong><p>Música · Noticias · Entretenimiento</p></div>
-</section>
-
-<div class="ticker"><b>ARENA 24 FLASH</b><span>Información, música y compañía desde La Rioja para el mundo.</span></div>
-
-<section id="programacion">
-<h2>01 · PROGRAMACIÓN 24/7</h2>
-<div class="cards">
-<article><small>06:00 — 12:00</small><h3>ENR · NOTICIAS</h3><p>ARENA 24 FLASH, actualidad local, nacional e internacional.</p></article>
-<article><small>12:00 — 18:00</small><h3>ANA · ENTRETENIMIENTO</h3><p>Música, curiosidades, participación y buena onda.</p></article>
-<article><small>18:00 — 21:00</small><h3>NIC · DEPORTES</h3><p>Resultados, agenda y toda la pasión deportiva.</p></article>
-<article><small>21:00 — 06:00</small><h3>MAR · NIGHT & RELAX</h3><p>Música actual, clásicos, chill y compañía nocturna.</p></article>
-</div>
-</section>
-  <!-- =====================================
-     ARENA 24 · TOP TEN ARGENTINA
-     ===================================== -->
-
-<section class="arena24-ranking">
-
-    <div class="ranking-header">
-        <span>🔥 ARENA 24</span>
-        <h2>TOP TEN ARGENTINA</h2>
-        <p>MÚSICA · NOTICIAS · ENTRETENIMIENTO</p>
-    </div>
-
-    <div class="ranking-image">
-        <img
-            src="img/arena24-top-ten.jpg"
-            alt="ARENA 24 Top Ten Argentina"
-            loading="lazy">
-    </div>
-
-</section>
-
-<section id="top10" class="dark">
-
-<h2>02 · 🔥 ARENA 24 — TOP 10 MIX ARGENTINA</h2>
-<p>El ranking semanal de la música que elegís.</p>
-<div class="ranking">
-<div><b>10</b> Ibuprofeno — Abel Pintos
-</div><div><b>9</b>Corazón De Cristal (En Vivo)- Simon </div><div><b>8</b> Dichavate — Cumbia Rocha — </div><div><b>7</b> Flor Amarilla — Campedrinos & Eugenia Quevedo</div><div><b>6</b> No Podré Olvidarme de Ti — En Vivo — La K'onga & Grupo Red
-</div>
-<div><b>5</b> OA TA TA — Callejero Fino & Lea in the Mix</div><div><b>4</b> Dime Tú — En Vivo Movistar Arena — Q' Lokura & Nahuel Pennisi
-</div><div><b>3</b> 🥉 No Puedo — Versión Cumbia — Luciano Pereyra, Rodrigo Tapari, Un Poco de Ruido & Pinky SD</div><div><b>2</b> 🥈 Pa' Él — Los Ángeles Azules & TINI </div><div class="one"><b>1</b>🥇 Enséñame A Vivir Sin Ti — Versión Cumbia — Luciano Pereyra, Karina, Un Poco de Ruido & Pinky SD ⭐ NÚMERO 1 DE ARENA 24</div>
-</div>
-</section>
 
 
-<section id="noticias">
-<h2>03 · ARENA 24 FLASH</h2><div class="ticker-container">
-  <div class="ticker-label">ÚLTIMA HORA</div>
-  <div class="ticker-wrapper">
-    <div class="ticker-track">
-      <span class="ticker-item">🔥 Álbum sorpresa del año rompe récords de reproducción.</span>
-      <span class="ticker-item">🎬 Se anuncia la secuela del éxito de taquilla de este verano.</span>
-      <span class="ticker-item">🎧 Revelan el cartel de artistas para el próximo festival internacional.</span>
-      <span class="ticker-item">🎧 Policiales.</span>🚨 Capturaron a un hombre buscado por homicidio 
-      <span class="ticker-item">🎧 Internacionales.</span>🛢️ Petróleo: supera los US$100 
-      <span class="ticker-item">🎧 Deportes.</span>🏆 Messi, candidato al Balón de Oro 
-      <span class="ticker-item">🎧 El tiempo.</span>🌡️   En La Rioja capital, esta tarde está parcialmente soleado y agradable, con unos 25 °C. 
-      <span class="ticker-item">🎧 arena 24.</span>ARENA 24 · SIEMPRE CON VOS  La Rioja, Argentina · Radio online 24/7
-    </div>
+  <button
+    id="play"
+    class="play-button"
+    type="button"
+  >
+    ▶ ESCUCHAR EN VIVO
+  </button>
+
+
+  <audio
+    id="audio"
+    src="https://stream.zeno.fm/zuw6xmmwmd0uv"
+    preload="none"
+  ></audio>
+
+
+  <div
+    id="status"
+    class="player-status"
+    aria-live="polite"
+  >
+    ● ARENA 24 · LISTA PARA TRANSMITIR
   </div>
+
 </div>
-<div class="cards"><meta name="theme-color" content="#090b12">
-<article><small>LA RIOJA</small><h3>Información local</h3><p>Noticias y acontecimientos de nuestra provincia.</p></article>🟠 LA RIOJA
- Estas son las principales noticias de **La Rioja, Argentina y el mundo**
-ARENA 24 
-📰 La Rioja 
-Educación: la provincia analiza cambios en el uso de pantallas en las escuelas. El debate se intensificó tras los malos resultados educativos y la preocupación por el impacto del uso excesivo de dispositivos. 
 
-Deudas: un informe difundido hoy señala que La Rioja tiene 70.633 deudores, de los cuales 45.582 aparecen como irrecuperables. 
-
-Parlamento del Norte Grande: La Rioja es sede, entre hoy y mañana, de una reunión del Parlamento del Norte Grande, con participación de representantes de las provincias de la región. 
-
-Política: continúa el enfrentamiento entre el gobernador Ricardo Quintela y el Gobierno de Javier Milei por cuestiones económicas y políticas provinciales. Milei ya había cuestionado públicamente la política monetaria provincial. 
-
-Minería: la provincia continúa promoviendo su modelo de desarrollo minero y su participación en proyectos vinculados a sus recursos naturales. 
-
-Turismo: el Nevado de Famatina fue seleccionado para representar a Argentina en un certamen internacional de montaña turística. 
-
-Seguridad: semanas atrás se produjo un operativo contra una presunta situación de trata laboral en una finca próxima a la capital riojana, donde fueron rescatadas cuatro personas. 
-
-Nuevo sistema de iluminación en el acceso norte de Capital. El Municipio, EDELAR y el Gobierno provincial inauguraron iluminación sobre las avenidas 2 de Abril y Felipe Varela. La obra incorporó 6 jirafas, 13 postes, 35 pantallas LED y unos 400 metros de cableado. 
-
-Quintela y la agenda política nacional. El gobernador continúa desarrollando contactos con dirigentes de otras provincias, en una estrategia que busca fortalecer acuerdos políticos de cara al escenario nacional.
-Parlamento del Norte Grande: La Rioja continúa teniendo protagonismo en la agenda regional, con actividades que reúnen a representantes legislativos de las provincias del Norte Grande.
-Servicios: continúan apareciendo avisos sobre obras de infraestructura y cortes programados de energía en distintos sectores de la provincia.
-  **Arena 24: información, noticias y todo lo que necesitás saber, siempre cerca tuyo.**
-💰 Economía y bolsillo
-Canasta Básica Alimentaria: el relevamiento difundido por Libres del Sur ubicó en $723.792,61 el costo de la CBA para una familia tipo en La Rioja durante agosto, un aumento del 2,27% respecto de julio. 
-Chachos: continúa el proceso de rescate para los comercios que recibieron la cuasimoneda provincial. Hay bocas de atención en Capital, Chilecito, Chamical, Chepes, Villa Unión y Aimogasta. 
-🚧 Obras y tránsito
-Ruta Nacional 75: durante este miércoles se realiza una voladura de testeo en el Túnel 2, en el tramo entre Las Padercitas y el Dique Los Sauces. La medida implica restricciones de tránsito durante los trabajos. 
-
-También continúan las intervenciones y trabajos de infraestructura en distintos puntos de Capital y del interior.
-🎓 Educación
-50.494 estudiantes comenzaron el ciclo lectivo en La Rioja, un 1,5% menos que el año anterior.
-Al mismo tiempo, la provincia alcanzó un récord de 6.191 docentes.
-La Formación Profesional continúa creciendo y ya supera los 8.700 alumnos, con expectativa de superar los 10.000. 
-
-  🚔 POLICIALES — LA RIOJA
-⚠️ Investigan la muerte de Pamela Luna Villafañe
-Pamela Luna Villafañe murió el martes después de permanecer internada en grave estado en el Hospital Vera Barros tras una agresión que habría ocurrido en agosto, en el barrio Alpes Riojanos. La Justicia espera el resultado de la autopsia para determinar la causa exacta de muerte y definir la carátula definitiva. Si se confirma como femicidio, sería el segundo caso de este tipo registrado en La Rioja durante 2026. 
-
-🚨 Capturaron a un hombre buscado por homicidio
-La Policía detuvo en una vivienda del barrio Juan Domingo Perón a un hombre que tenía pedido de captura por un homicidio ocurrido en Córdoba. El procedimiento forma parte de las noticias policiales destacadas de la jornada. 
-
-🏍️ Accidente con una moto
-Otro de los hechos policiales registrados hoy: una motocicleta sufrió un accidente después de que se trabaran los frenos. Los ocupantes derraparon y chocaron. El hecho está siendo investigado para determinar las circunstancias. 
-
-
-⚖️ Chilecito: drogas y detenidos
-En Chilecito, un operativo realizado en un boliche terminó con tres personas detenidas y el secuestro de drogas, según el resumen policial. 
-
-🎙️ **ARENA24**
-La Rioja, Argentina y el mundo, con toda la información que necesitás para comenzar el día.
-
-<article><small>ARGENTINA</small><h3>Actualidad nacional</h3><p>Las principales noticias del país.</p></article>🇦🇷 ARGENTINA
-Congreso: la oposición consiguió llevar al debate parlamentario la situación de las personas con discapacidad y el aumento del endeudamiento de las familias. Según el informe citado, más de 20 millones de argentinos tienen deudas y la morosidad alcanza el 26,1%. 
-
-Derechos humanos: comenzó el juicio contra un exjefe de personal de Molinos Río de la Plata, acusado de colaborar con la desaparición de trabajadores durante la última dictadura. 
-
-Economía: el Gobierno de Javier Milei continúa con su programa de apertura económica y desregulación. Hay crecimiento de inversiones en energía y minería, pero también preocupación por el cierre de fábricas y la pérdida de empleos industriales.
-Vaca Muerta: el Gobierno busca convertir al yacimiento neuquino en una alternativa cada vez más importante para la inversión petrolera internacional, en un contexto de fuerte tensión energética mundial. 
-
-Educación: los resultados de PISA vuelven a generar preocupación en Argentina por el bajo porcentaje de estudiantes que alcanza niveles mínimos en lectura, matemática y ciencias. 
-💵 Dólar
-La referencia cambiaria que puedo confirmar en tiempo real marca aproximadamente:
-
-US$1 = $1.513,72 argentinos.
-
-Es una cotización de referencia del mercado y no equivale necesariamente al dólar blue, oficial, MEP o tarjeta.
-  <article><small>MUNDO</small><h3>Actualidad internacional</h3><p>Lo más importante del mundo.</p></article>🌎 EL MUNDO
-Medio Oriente: el conflicto entre Irán, Israel y Estados Unidos mantiene elevada la tensión internacional y está repercutiendo en el precio del petróleo.
-Petróleo: el Brent ronda los US$101 por barril, aumentando el temor a nuevas presiones inflacionarias. 
-
-Europa: los mercados están pendientes de la decisión del Banco Central Europeo sobre las tasas de interés. El petróleo caro complica la lucha contra la inflación.
-
-  <article><small>DEPORTES</small><h3>La pasión deportiva</h3><p>Resultados, protagonistas y agenda.</p></article>🏆 DEPORTES
-⚽🏀🏑 
-Champions League: hoy se completa la primera jornada con partidos como PSV–Shakhtar, Fenerbahçe–Roma, Manchester United–Sabah, Bayern–Bodø/Glimt y Como–Leipzig. 
-
-Ayer: Barcelona goleó 5-1 al Feyenoord, PSG venció 6-1 al Slovan, Arsenal ganó 1-0 al Napoli y Liverpool derrotó 2-1 al Atlético de Madrid. 
-
-Tenis: hoy se disputan las semifinales femeninas del US Open: Aryna Sabalenka–Jessica Pegula y Coco Gauff–Elena Rybakina. 
-🏆 Messi, candidato al Balón de Oro
-En el plano internacional con fuerte interés argentino, Lionel Messi fue nominado nuevamente al Balón de Oro, premio que podría ganar por novena vez.
-  
-
-📢 **ARENA24** 
-<article><small>POLICIALES</small><h3>Actualidad </h3><p>Las principales noticias.</p></article>🚔 POLICIALES
-  Aimogasta: la Policía secuestró siete envoltorios con sustancias durante un procedimiento realizado en el sector del Parque La Gota. La investigación continúa para determinar el tipo de sustancia y las circunstancias del hecho. 
-
-
-Capital — accidente: se informó un choque entre dos motos luego de que una de ellas intentara esquivar un bache. Un padre y su hijo terminaron trasladados al hospital. 
-
-
-Capital — ciclista herida: en la Avenida Circunvalación, un automóvil chocó a una ciclista y posteriormente volcó. La mujer sufrió heridas de consideración. 
-
-
-Investigación por presunta usura: en distintos allanamientos realizados en La Rioja fueron detenidas cuatro personas: tres hombres de nacionalidad colombiana y una mujer argentina. El procedimiento estuvo a cargo de Delitos Económicos y quedaron a disposición de la Justicia. 
-
-
-Violencia de género: continúa la investigación por la muerte de Pamela Luna Villafañe, quien falleció después de permanecer internada en grave estado tras sufrir una agresión. La Justicia aguardaba el resultado de la autopsia*Arena 24: noticias, deportes y actualidad, siempre cerca tuyo.**
+</div> <aside class="hero-card">
+<div class="radio-disc">
+  A24
 </div>
-</section><section id="NOTICIAS">...🌡️ Para hoy: tiempo agradable, parcialmente soleado, con una máxima cercana a 24 °C.
 
-⚠️ Atención: hay una advertencia amarilla por tormentas para el área desde esta tarde hasta la mañana del viernes. Podrían producirse ráfagas fuertes, actividad eléctrica y ocasional caída de granizo.
+<span>AHORA EN VIVO</span>
 
-📅 Próximos días
-Viernes 11: todavía templado, alrededor de 23 °C.
-Sábado 12: cambio importante: lluvias y descenso marcado de temperatura.
-Domingo 13: jornada bastante fresca, con mínima cercana a 3 °C.
-Lunes 14: comienza una recuperación de las temperaturas. 
-ARENA 24… siempre con vos.
+<strong>ARENA 24</strong>
 
-<section id="voces" class="dark">
-<h2>04 · LAS VOCES DE ARENA 24</h2>
-<div class="cards voices">
-<article><strong>E</strong><h3>ENR</h3><p>Noticias</p></article>
-<article><strong>V</strong><h3>ANA</h3><p>Entretenimiento</p></article>
-<article><strong>N</strong><h3>NIC</h3><p>Deportes</p></article>
-<article><strong>M</strong><h3>MAR</h3><p>Night · Relax</p></article>
- 
-  <section id="video" class="dark">
-  </div><iframe
-  width="360" 
-  height="215" 
-  
-  title="Reproductor de video" 
-  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-  allowfullscreen>
-</iframe>
-        <div class="arena24-video-wrapper">
+<p>
+  Música · Noticias · Deportes
+</p>
 
-            <video
-                controls
-                preload="metadata"
-                playsinline
-                poster="img/arena24-poster.jpg">
+</aside> </section> <!-- ===================================================== ÚLTIMO MOMENTO ===================================================== --> <div class="breaking-news"> <div class="breaking-title"> 🔴 ÚLTIMO MOMENTO </div> <div class="breaking-text"> ARENA 24 · Información, música y compañía desde La Rioja para todo el mundo. </div> </div> <!-- ===================================================== PROGRAMACIÓN ===================================================== --> <section id="programacion" class="section"> <div class="section-heading">
+<span>01</span>
 
-                <source
-                    src="videos/
-                    type="video/mp4">🎧 DJ MIX HCpro
-              
-      
-            </video>
-
-        </div>
-            <span class="arena24-badge">
-                🎧 DJ MIX HCpro
-            </span>
-
-            <h2>
-                PRESENTAMOS LOS VIDEOS DEL MOMENTO EN ARENA 24
-            </h2>
-
-            <p>
-                Música · Entretenimiento
-            </p>
-
-            <a
-                href=https://www.youtube.com/@ARENA24LARIOJA
-                target="_blank"
-                rel="noopener"
-                class="arena24-open-button">
-
-                ▶ ABRIR VIDEO
-
-            </a>
-    </div>
-
-</section><!-- Botones de filtro -->
-<div class="filter-buttons">
-  
+<div>
+  <small>ARENA 24</small>
+  <h2>Programación</h2>
 </div>
-   
-  
-<section id="contacto">
-<h2>05 · CONTACTO</h2>
-<div class="contact"><h3>ARENA 24 · SIEMPRE CON VOS</h3><p>La Rioja, Argentina · Radio online 24/7</p><p> redes sociales y  contacto .</p></div>
-</section> HC pro La Rioja Argentina
-</main>
-<footer><b>ARENA 24</b> · MÚSICA · NOTICIAS · ENTRETENIMIENTO · DEPORTES · <span>SIEMPRE CON VOS</span></footer>
-<script src="script.js"></script>
-</body>
-</html>
+
+</div> <p class="section-intro"> Una programación pensada para acompañarte durante todo el día. </p> <div class="program-grid">
+<article class="program-card">
+
+  <span>06:00 — 12:00</span>
+
+  <h3>ENR · NOTICIAS</h3>
+
+  <p>
+    Información local, nacional e internacional,
+    actualidad y ARENA 24 FLASH.
+  </p>
+
+</article>
+
+
+<article class="program-card">
+
+  <span>12:00 — 18:00</span>
+
+  <h3>ANA · ENTRETENIMIENTO</h3>
+
+  <p>
+    Música, participación, curiosidades y
+    entretenimiento para toda la audiencia.
+  </p>
+
+</article>
+
+
+<article class="program-card">
+
+  <span>18:00 — 21:00</span>
+
+  <h3>NIC · DEPORTES</h3>
+
+  <p>
+    Fútbol, resultados, protagonistas,
+    agenda deportiva y toda la pasión.
+  </p>
+
+</article>
+
+
+<article class="program-card">
+
+  <span>21:00 — 06:00</span>
+
+  <h3>MAR · NIGHT & RELAX</h3>
+
+  <p>
+    Música actual, clásicos y compañía
+    durante la noche.
+  </p>
+
+</article>
+
+</div> </section> <!-- ===================================================== NOTICIAS ===================================================== --> <section id="noticias" class="section news-section"> <div class="section-heading">
+<span>02</span>
+
+<div>
+  <small>ARENA 24 FLASH</small>
+  <h2>Noticias</h2>
+</div>
+
+</div> <p class="section-intro"> La información de La Rioja, Argentina y el mundo. </p> <div class="news-grid">
+<article class="news-card news-main">
+
+  <span class="category">
+    🟠 LA RIOJA
+  </span>
+
+  <h3>
+    Actualidad riojana
+  </h3>
+
+  <p>
+    Información de la ciudad Capital, municipios,
+    provincia, servicios, política, economía y comunidad.
+  </p>
+
+  <a href="#contacto">
+    LEER / INFORMAR →
+  </a>
+
+</article>
+
+
+<article class="news-card">
+
+  <span class="category">
+    🇦🇷 ARGENTINA
+  </span>
+
+  <h3>
+    Actualidad nacional
+  </h3>
+
+  <p>
+    Las noticias más importantes del país,
+    economía, política y sociedad.
+  </p>
+
+</article>
+
+
+<article class="news-card">
+
+  <span class="category">
+    🌎 MUNDO
+  </span>
+
+  <h3>
+    Información internacional
+  </h3>
+
+  <p>
+    Los acontecimientos internacionales
+    que impactan en Argentina y el mundo.
+  </p>
+
+</article>
+
+</div> <div class="article-list">
+<article>
+
+  <span>LA RIOJA</span>
+
+  <h3>
+    Información local
+  </h3>
+
+  <p>
+    Noticias, servicios, tránsito, obras,
+    barrios y acontecimientos de la provincia.
+  </p>
+
+</article>
+
+
+<article>
+
+  <span>ECONOMÍA</span>
+
+  <h3>
+    Economía y bolsillo
+  </h3>
+
+  <p>
+    Dólar, precios, empleo, actividad económica
+    y temas que afectan a los riojanos.
+  </p>
+
+</article>
+
+
+<article>
+
+  <span>SERVICIOS</span>
+
+  <h3>
+    Información útil
+  </h3>
+
+  <p>
+    Clima, cortes, tránsito, teléfonos útiles
+    y recomendaciones para la comunidad.
+  </p>
+
+</article>
+
+</div> </section> <!-- ===================================================== POLICIALES ===================================================== --> <section id="policiales" class="section dark-section"> <div class="section-heading">
+<span>03</span>
+
+<div>
+  <small>ARENA 24</small>
+  <h2>Policiales</h2>
+</div>
+
+</div> <p class="section-intro"> Información policial y judicial de La Rioja. </p> <div class="police-grid">
+<article class="police-card featured">
+
+  <span>🚨 INFORMACIÓN</span>
+
+  <h3>
+    Policiales La Rioja
+  </h3>
+
+  <p>
+    Espacio destinado a las noticias policiales,
+    judiciales y de seguridad de Capital e interior.
+    Información confirmada antes de ser publicada.
+  </p>
+
+</article>
+
+
+<article class="police-card">
+
+  <span>CAPITAL</span>
+
+  <h3>
+    Seguridad
+  </h3>
+
+  <p>
+    Operativos, accidentes, investigaciones
+    y novedades de la ciudad.
+  </p>
+
+</article>
+
+
+<article class="police-card">
+
+  <span>INTERIOR</span>
+
+  <h3>
+    Departamentos
+  </h3>
+
+  <p>
+    Información policial de Chilecito,
+    Aimogasta, Chamical, Chepes y otras localidades.
+  </p>
+
+</article>
+
+</div> </section> <!-- ===================================================== DEPORTES ===================================================== --> <section id="deportes" class="section"> <div class="section-heading">
+<span>04</span>
+
+<div>
+  <small>ARENA 24 SPORTS</small>
+  <h2>Deportes</h2>
+</div>
+
+</div> <div class="sports-grid">
+<article>
+
+  <span>⚽ FÚTBOL</span>
+
+  <h3>
+    Toda la pasión
+  </h3>
+
+  <p>
+    Resultados, partidos, protagonistas,
+    fútbol argentino e internacional.
+  </p>
+
+</article>
+
+
+<article>
+
+  <span>🏀 BÁSQUET</span>
+
+  <h3>
+    Deportes riojanos
+  </h3>
+
+  <p>
+    Noticias y resultados de los equipos
+    y protagonistas de La Rioja.
+  </p>
+
+</article>
+
+
+<article>
+
+  <span>🏆 AGENDA</span>
+
+  <h3>
+    Lo que viene
+  </h3>
+
+  <p>
+    La agenda deportiva y los acontecimientos
+    que no te podés perder.
+  </p>
+
+</article>
+
+</div> </section> <!-- ===================================================== ECONOMÍA / DÓLAR ===================================================== --> <section class="section economy-section"> <div class="section-heading">
+<span>05</span>
+
+<div>
+  <small>ARENA 24 ECONOMÍA</small>
+  <h2>Dólar & Economía</h2>
+</div>
+
+</div> <div class="economy-grid">
+<article>
+
+  <span>💵 DÓLAR</span>
+
+  <h3>
+    Cotización
+  </h3>
+
+  <p>
+    Consultá las cotizaciones actualizadas
+    antes de publicar los valores al aire.
+  </p>
+
+</article>
+
+
+<article>
+
+  <span>📊 ECONOMÍA</span>
+
+  <h3>
+    Tu bolsillo
+  </h3>
+
+  <p>
+    Precios, inflación, empleo, consumo
+    y las principales noticias económicas.
+  </p>
+
+</article>
+
+</div> </section> <!-- ===================================================== CLIMA ===================================================== --> <section class="section weather-section"> <div class="section-heading">
+<span>06</span>
+
+<div>
+  <small>ARENA 24 SERVICIOS</small>
+  <h2>Clima</h2>
+</div>
+
+</div> <div class="weather-card">
+<h3>
+  🌦️ La Rioja Capital
+</h3>
+
+<p>
+  Información meteorológica para organizar
+  tu día.
+</p>
+
+<div class="weather-info">
+  Actualizá este bloque con el pronóstico
+  vigente antes de emitirlo.
+</div>
+
+</div> </section> <!-- ===================================================== TOP 10 ===================================================== --> <section id="top10" class="section dark-section"> <div class="section-heading">
+<span>07</span>
+
+<div>
+  <small>ARENA 24 MUSIC</small>
+  <h2>Top 10 Argentina</h2>
+</div>
+
+</div> <p class="section-intro"> El ranking musical de ARENA 24. </p> <div class="ranking-list">
+<div>
+  <b>10</b>
+  Ibuprofeno — Abel Pintos
+</div>
+
+<div>
+  <b>9</b>
+  Corazón de Cristal — Simón
+</div>
+
+<div>
+  <b>8</b>
+  Dichavate — Cumbia Rocha
+</div>
+
+<div>
+  <b>7</b>
+  Flor Amarilla — Campedrinos & Eugenia Quevedo
+</div>
+
+<div>
+  <b>6</b>
+  No Podré Olvidarme de Ti — La K'onga & Grupo Red
+</div>
+
+<div>
+  <b>5</b>
+  OA TA TA — Callejero Fino & Lea in the Mix
+</div>
+
+<div>
+  <b>4</b>
+  Dime Tú — Q' Lokura & Nahuel Pennisi
+</div>
+
+<div>
+  <b>3</b>
+  🥉 No Puedo — Luciano Pereyra
+</div>
+
+<div>
+  <b>2</b>
+  🥈 Pa' Él — Los Ángeles Azules & TINI
+</div>
+
+<div class="number-one">
+
+  <b>1</b>
+
+  🥇 Enséñame A Vivir Sin Ti
+
+  <strong>
+    ⭐ NÚMERO 1 DE ARENA 24
+  </strong>
+
+</div>
+
+</div> </section> <!-- ===================================================== VOCES ===================================================== --> <section class="section"> <div class="section-heading">
+<span>08</span>
+
+<div>
+  <small>ARENA 24</small>
+  <h2>Las voces</h2>
+</div>
+
+</div> <div class="voices-grid">
+<article>
+
+  <strong>E</strong>
+
+  <h3>ENR</h3>
+
+  <p>Noticias</p>
+
+</article>
+
+
+<article>
+
+  <strong>A</strong>
+
+  <h3>ANA</h3>
+
+  <p>Entretenimiento</p>
+
+</article>
+
+
+<article>
+
+  <strong>N</strong>
+
+  <h3>NIC</h3>
+
+  <p>Deportes</p>
+
+</article>
+
+
+<article>
+
+  <strong>M</strong>
+
+  <h3>MAR</h3>
+
+  <p>Night · Relax</p>
+
+</article>
+
+</div> </section> <!-- ===================================================== VIDEO ===================================================== --> <section class="section dark-section"> <div class="video-card">
+<span>
+  🎧 ARENA 24 VIDEO
+</span>
+
+<h3>
+  Videos y música del momento
+</h3>
+
+<p>
+  Mirá el contenido de ARENA 24 y descubrí
+  nuestras producciones audiovisuales.
+</p>
+
+<a
+  href="https://www.youtube.com/@ARENA24LARIOJA"
+  target="_blank"
+  rel="noopener noreferrer"
+  class="video-button"
+>
+  ▶ ABRIR CANAL DE YOUTUBE
+</a>
+
+</div> </section> <!-- ===================================================== CONTACTO ===================================================== --> <section id="contacto" class="section contact-section"> <div class="section-heading">
+<span>09</span>
+
+<div>
+  <small>ARENA 24</small>
+  <h2>Contacto</h2>
+</div>
+
+</div> <div class="contact-card">
+<h3>
+  ARENA 24 · SIEMPRE CON VOS
+</h3>
+
+<p>
+  📍 La Rioja, Argentina
+</p>
+
+<p>
+  📻 Radio online · 24/7
+</p>
+
+<p>
+  📰 Noticias · Música · Deportes · Entretenimiento
+</p>
+
+
+<div class="social-links">
+
+  <a
+    href="https://www.youtube.com/@ARENA24LARIOJA"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    ▶ YOUTUBE
+  </a>
+
+</div>
+
+</div> </section> </main> <!-- ===================================================== FOOTER ===================================================== --> <footer class="site-footer"> <div>
+<strong>ARENA 24</strong>
+
+<p>
+  Radio online desde La Rioja, Argentina.
+</p>
+
+<p>
+  Música · Noticias · Deportes · Entretenimiento
+</p>
+
+</div> <div class="footer-copy">
+©HC pro 2026 ARENA 24 · Todos los derechos reservados.
+
+</div> </footer> <!-- ===================================================== BOTÓN FLOTANTE ===================================================== -->
+
+<button
+id="floatingPlay"
+class="floating-player"
+type="button"
+
+🔴 ESCUCHAR ARENA 24
+</button>
+
+<script src="script.js"></script> </body> </html>
