@@ -207,12 +207,12 @@ jobs:
 
               for feed_url in urls:
 
-                  xml_data =
-                  download(feed_url)
+                 xml_data = download(feed_url)
 
 
-                  items =
-                  parse_feed(xml_data)
+
+                items = parse_feed(xml_data)
+
 
 
                   for item in items:
