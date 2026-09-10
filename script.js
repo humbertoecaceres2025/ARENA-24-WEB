@@ -1,931 +1,1143 @@
-/* =========================================================
-   ARENA 24
-   SISTEMA AUTOMÁTICO DE NOTICIAS + DÓLAR + CLIMA
-   Compatible con GitHub Pages
-   ========================================================= */
+/* ============================================================
+   ARENA 24 RADIO
+   NOTICIAS + POLICIALES + DEPORTES + DÓLAR + CLIMA
+   FUNCIONA EN GITHUB PAGES SIN PHP
+   ============================================================ */
+
+"use strict";
 
 
-/* =========================================================
+/* ============================================================
    CONFIGURACIÓN
-   ========================================================= */
+   ============================================================ */
 
-const CONFIG = {
+const ARENA24 = {
 
-  /* Actualizar cada 5 minutos */
-  refresh: 5 * 60 * 1000,
+    actualizarCada: 5 * 60 * 1000,
 
-  /* La Rioja Capital */
-  latitude: -29.4135,
-  longitude: -66.8568,
+    clima: {
+        latitud: -29.4135,
+        longitud: -66.8568
+    },
 
-  /*
-    RSS de Google News convertido mediante RSS2JSON.
-    No necesita PHP.
-  */
+    rss: {
 
-  feeds: {
+        rioja:
+        "https://news.google.com/rss/search?q=%22La+Rioja%22+Argentina&hl=es-419&gl=AR&ceid=AR:es-419",
 
-    rioja:
-      "https://news.google.com/rss/search?q=La+Rioja+Argentina&hl=es-419&gl=AR&ceid=AR:es-419",
+        policiales:
+        "https://news.google.com/rss/search?q=policiales+%22La+Rioja%22+Argentina&hl=es-419&gl=AR&ceid=AR:es-419",
 
-    policiales:
-      "https://news.google.com/rss/search?q=policiales+La+Rioja+Argentina&hl=es-419&gl=AR&ceid=AR:es-419",
-
-    deportes:
-      "https://news.google.com/rss/search?q=deportes+Argentina&hl=es-419&gl=AR&ceid=AR:es-419"
-
-  }
+        deportes:
+        "https://news.google.com/rss/search?q=deportes+Argentina&hl=es-419&gl=AR&ceid=AR:es-419"
+    }
 
 };
 
 
-/* =========================================================
-   RADIO
-   ========================================================= */
+/* ============================================================
+   ELEMENTOS
+   ============================================================ */
 
 const playButton =
-  document.getElementById("play");
+    document.getElementById("play");
 
 const audio =
-  document.getElementById("audio");
+    document.getElementById("audio");
 
 const status =
-  document.getElementById("status");
+    document.getElementById("status");
 
+
+/* ============================================================
+   RADIO EN VIVO
+   ============================================================ */
 
 if (playButton && audio) {
 
-  playButton.addEventListener("click", async () => {
+    playButton.addEventListener("click", async () => {
 
-    try {
+        try {
 
-      if (audio.paused) {
+            if (audio.paused) {
 
-        await audio.play();
+                await audio.play();
 
-        playButton.textContent =
-          "⏸ PAUSAR RADIO";
+                playButton.textContent =
+                    "⏸ PAUSAR RADIO";
 
-        status.textContent =
-          "● ARENA 24 · REPRODUCIENDO EN VIVO";
+                if (status) {
 
-      } else {
+                    status.textContent =
+                        "● ARENA 24 · REPRODUCIENDO EN VIVO";
 
-        audio.pause();
+                }
 
-        playButton.textContent =
-          "▶ ESCUCHAR EN VIVO";
+            } else {
 
-        status.textContent =
-          "● ARENA 24 · RADIO PAUSADA";
+                audio.pause();
 
-      }
+                playButton.textContent =
+                    "▶ ESCUCHAR EN VIVO";
 
-    } catch (error) {
+                if (status) {
 
-      status.textContent =
-        "● Tocá nuevamente para iniciar la radio.";
+                    status.textContent =
+                        "● ARENA 24 · RADIO PAUSADA";
 
-    }
+                }
 
-  });
+            }
+
+        } catch (error) {
+
+            console.error(
+                "Radio:",
+                error
+            );
+
+            if (status) {
+
+                status.textContent =
+                    "● Tocá nuevamente para iniciar la radio.";
+
+            }
+
+        }
+
+    });
 
 }
 
 
-/* =========================================================
-   SEGURIDAD HTML
-   ========================================================= */
+/* ============================================================
+   SEGURIDAD
+   ============================================================ */
 
-function escapeHTML(value) {
+function safe(text) {
 
-  const div =
-    document.createElement("div");
+    const div =
+        document.createElement("div");
 
-  div.textContent =
-    value || "";
+    div.textContent =
+        text || "";
 
-  return div.innerHTML;
+    return div.innerHTML;
 
 }
 
 
-/* =========================================================
-   LIMPIAR DESCRIPCIONES RSS
-   ========================================================= */
+/* ============================================================
+   LIMPIAR HTML DEL RSS
+   ============================================================ */
 
-function cleanDescription(text) {
+function cleanText(text) {
 
-  if (!text) return "";
+    if (!text)
+        return "";
 
-  const div =
-    document.createElement("div");
+    const div =
+        document.createElement("div");
 
-  div.innerHTML = text;
+    div.innerHTML =
+        text;
 
-  const result =
-    div.textContent ||
-    div.innerText ||
-    "";
-
-  return result
+    return (
+        div.textContent ||
+        div.innerText ||
+        ""
+    )
     .replace(/\s+/g, " ")
-    .trim()
-    .substring(0, 180);
+    .trim();
 
 }
 
 
-/* =========================================================
-   RSS → JSON
-   ========================================================= */
-
-async function getRSS(feedURL) {
-
-  const api =
-    "https://api.rss2json.com/v1/api.json?rss_url=" +
-    encodeURIComponent(feedURL);
-
-  const response =
-    await fetch(api);
-
-  if (!response.ok) {
-
-    throw new Error(
-      "No se pudo consultar el RSS"
-    );
-
-  }
-
-  const data =
-    await response.json();
-
-  if (data.status !== "ok") {
-
-    throw new Error(
-      data.message ||
-      "RSS no disponible"
-    );
-
-  }
-
-  return data.items || [];
-
-}
-
-
-/* =========================================================
-   FORMATEAR FECHA
-   ========================================================= */
-
-function formatDate(dateString) {
-
-  if (!dateString)
-    return "";
-
-  const date =
-    new Date(dateString);
-
-  if (Number.isNaN(date.getTime()))
-    return "";
-
-  return date.toLocaleString(
-    "es-AR",
-    {
-      day: "2-digit",
-      month: "2-digit",
-      hour: "2-digit",
-      minute: "2-digit"
-    }
-  );
-
-}
-
-
-/* =========================================================
-   CREAR TARJETA
-   ========================================================= */
-
-function createCard(
-  item,
-  category
-) {
-
-  const title =
-    item.title ||
-    "Sin título";
-
-  const description =
-    cleanDescription(
-      item.description
-    );
-
-  const link =
-    item.link || "#";
-
-  const date =
-    formatDate(
-      item.pubDate
-    );
-
-  return `
-
-    <article class="news-card">
-
-      <div class="news-content">
-
-        <span class="news-category">
-          ${escapeHTML(category)}
-        </span>
-
-        <h3>
-          ${escapeHTML(title)}
-        </h3>
-
-        ${
-          description
-          ?
-          `<p>
-            ${escapeHTML(description)}
-          </p>`
-          :
-          ""
-        }
-
-        ${
-          date
-          ?
-          `<small>
-            🕐 ${escapeHTML(date)}
-          </small>`
-          :
-          ""
-        }
-
-        <a
-          class="news-link"
-          href="${escapeHTML(link)}"
-          target="_blank"
-          rel="noopener noreferrer">
-
-          LEER NOTICIA →
-
-        </a>
-
-      </div>
-
-    </article>
-
-  `;
-
-}
-
-
-/* =========================================================
-   MOSTRAR ERROR
-   ========================================================= */
-
-function showError(
-  element,
-  message
-) {
-
-  if (!element)
-    return;
-
-  element.innerHTML = `
-
-    <article class="loading-card">
-
-      <p>
-        ⚠️ ${escapeHTML(message)}
-      </p>
-
-    </article>
-
-  `;
-
-}
-
-
-/* =========================================================
-   CARGAR UNA SECCIÓN RSS
-   ========================================================= */
-
-async function loadFeed(
-  elementID,
-  feedURL,
-  category
-) {
-
-  const container =
-    document.getElementById(elementID);
-
-  if (!container)
-    return [];
-
-  try {
-
-    const items =
-      await getRSS(feedURL);
-
-    if (!items.length) {
-
-      throw new Error(
-        "No hay noticias disponibles."
-      );
-
-    }
-
-    const selected =
-      items.slice(0, 6);
-
-    container.innerHTML =
-      selected
-        .map(item =>
-          createCard(
-            item,
-            category
-          )
-        )
-        .join("");
-
-    return selected;
-
-  } catch (error) {
-
-    console.error(
-      category,
-      error
-    );
-
-    showError(
-      container,
-      `No se pudieron actualizar ${category.toLowerCase()}.`
-    );
-
-    return [];
-
-  }
-
-}
-
-
-/* =========================================================
-   NOTICIAS
-   ========================================================= */
-
-async function loadNews() {
-
-  return await loadFeed(
-    "newsGrid",
-    CONFIG.feeds.rioja,
-    "LA RIOJA"
-  );
-
-}
-
-
-/* =========================================================
-   POLICIALES
-   ========================================================= */
-
-async function loadPolice() {
-
-  return await loadFeed(
-    "policeGrid",
-    CONFIG.feeds.policiales,
-    "POLICIALES"
-  );
-
-}
-
-
-/* =========================================================
-   DEPORTES
-   ========================================================= */
-
-async function loadSports() {
-
-  return await loadFeed(
-    "sportsGrid",
-    CONFIG.feeds.deportes,
-    "DEPORTES"
-  );
-
-}
-
-
-/* =========================================================
-   FLASH
-   ========================================================= */
-
-function updateFlash(
-  news,
-  police,
-  sports
-) {
-
-  const element =
-    document.getElementById(
-      "breakingNews"
-    );
-
-  if (!element)
-    return;
-
-  const all = [
-    ...news,
-    ...police,
-    ...sports
-  ];
-
-  if (!all.length) {
-
-    element.textContent =
-      "ARENA 24 · Siempre con vos.";
-
-    return;
-
-  }
-
-  element.textContent =
-    all
-      .slice(0, 8)
-      .map(item =>
-        item.title
-      )
-      .join("   •   ");
-
-}
-
-
-/* =========================================================
-   DÓLAR
-   ========================================================= */
-
-async function loadDollar() {
-
-  const container =
-    document.getElementById(
-      "dollarGrid"
-    );
-
-  if (!container)
-    return;
-
-
-  try {
+/* ============================================================
+   RSS2JSON
+   ============================================================ */
+
+async function consultarRSS(rss) {
+
+    const url =
+        "https://api.rss2json.com/v1/api.json?rss_url=" +
+        encodeURIComponent(rss);
 
     const response =
-      await fetch(
-        "https://dolarapi.com/v1/dolares"
-      );
+        await fetch(
+            url,
+            {
+                cache: "no-store"
+            }
+        );
 
-    if (!response.ok)
-      throw new Error(
-        "API dólar no disponible"
-      );
+    if (!response.ok) {
+
+        throw new Error(
+            "RSS2JSON respondió " +
+            response.status
+        );
+
+    }
 
     const data =
-      await response.json();
+        await response.json();
+
+    if (data.status !== "ok") {
+
+        throw new Error(
+            data.message ||
+            "RSS no disponible"
+        );
+
+    }
+
+    return data.items || [];
+
+}
 
 
-    const wanted = [
-      "Oficial",
-      "Blue",
-      "Bolsa",
-      "Contado con liqui",
-      "Tarjeta"
-    ];
+/* ============================================================
+   FECHA
+   ============================================================ */
 
+function fechaNoticia(fecha) {
 
-    const filtered =
-      data.filter(item =>
-        wanted.some(name =>
-          (
-            item.nombre ||
-            ""
-          )
-          .toLowerCase()
-          .includes(
-            name.toLowerCase()
-          )
+    if (!fecha)
+        return "";
+
+    const d =
+        new Date(fecha);
+
+    if (
+        Number.isNaN(
+            d.getTime()
         )
-      );
+    ) {
+
+        return "";
+
+    }
+
+    return d.toLocaleString(
+        "es-AR",
+        {
+            day: "2-digit",
+            month: "2-digit",
+            hour: "2-digit",
+            minute: "2-digit"
+        }
+    );
+
+}
 
 
-    container.innerHTML =
-      filtered
-        .slice(0, 5)
-        .map(item => `
+/* ============================================================
+   TARJETA DE NOTICIA
+   ============================================================ */
 
-          <article class="dollar-card">
+function tarjetaNoticia(
+    noticia,
+    categoria
+) {
 
-            <small>
-              ${escapeHTML(
-                item.nombre ||
-                item.casa ||
-                "DÓLAR"
-              )}
-            </small>
+    const titulo =
+        noticia.title ||
+        "Noticia sin título";
 
-            <strong>
-              $${Number(
-                item.venta || 0
-              ).toLocaleString(
-                "es-AR"
-              )}
-            </strong>
+    const descripcion =
+        cleanText(
+            noticia.description ||
+            noticia.content ||
+            ""
+        );
 
-            <span>
-              Compra:
-              $${Number(
-                item.compra || 0
-              ).toLocaleString(
-                "es-AR"
-              )}
-            </span>
+    const enlace =
+        noticia.link ||
+        "#";
 
-            <span>
-              Actualizado:
-              ${escapeHTML(
-                item.fechaActualizacion ||
-                ""
-              )}
-            </span>
+    const fecha =
+        fechaNoticia(
+            noticia.pubDate
+        );
 
-          </article>
+    return `
 
-        `)
-        .join("");
+        <article class="news-card">
 
+            <div class="news-content">
 
-    if (!filtered.length) {
+                <span class="news-category">
+                    ${safe(categoria)}
+                </span>
 
-      container.innerHTML = `
+                <h3>
+                    ${safe(titulo)}
+                </h3>
 
-        <article class="dollar-card">
+                ${
+                    descripcion
+                    ?
+                    `
+                    <p>
+                        ${safe(
+                            descripcion.substring(
+                                0,
+                                190
+                            )
+                        )}
+                    </p>
+                    `
+                    :
+                    ""
+                }
 
-          <small>DÓLAR</small>
+                ${
+                    fecha
+                    ?
+                    `
+                    <small>
+                        🕐 ${safe(fecha)}
+                    </small>
+                    `
+                    :
+                    ""
+                }
 
-          <strong>
-            Sin datos
-          </strong>
+                <a
+                    class="news-link"
+                    href="${safe(enlace)}"
+                    target="_blank"
+                    rel="noopener noreferrer">
+
+                    LEER NOTICIA →
+
+                </a>
+
+            </div>
 
         </article>
 
-      `;
+    `;
+
+}
+
+
+/* ============================================================
+   MOSTRAR FECHA DE ACTUALIZACIÓN
+   ============================================================ */
+
+function mostrarActualizacion() {
+
+    const ahora =
+        new Date();
+
+    const texto =
+        ahora.toLocaleString(
+            "es-AR",
+            {
+                day: "2-digit",
+                month: "2-digit",
+                year: "numeric",
+                hour: "2-digit",
+                minute: "2-digit"
+            }
+        );
+
+    console.log(
+        "ARENA 24 · Actualizado:",
+        texto
+    );
+
+}
+
+
+/* ============================================================
+   CARGAR NOTICIAS
+   ============================================================ */
+
+async function cargarNoticias() {
+
+    const contenedor =
+        document.getElementById(
+            "newsGrid"
+        );
+
+    if (!contenedor)
+        return [];
+
+    try {
+
+        const noticias =
+            await consultarRSS(
+                ARENA24.rss.rioja
+            );
+
+        if (!noticias.length) {
+
+            throw new Error(
+                "El RSS no devolvió noticias."
+            );
+
+        }
+
+        contenedor.innerHTML =
+            noticias
+            .slice(0, 6)
+            .map(
+                noticia =>
+                    tarjetaNoticia(
+                        noticia,
+                        "LA RIOJA"
+                    )
+            )
+            .join("");
+
+        return noticias.slice(0, 8);
+
+    } catch (error) {
+
+        console.error(
+            "Noticias:",
+            error
+        );
+
+        contenedor.innerHTML = `
+
+            <article class="loading-card">
+
+                <p>
+                    ⚠️ No se pudieron actualizar
+                    las noticias de La Rioja.
+                </p>
+
+            </article>
+
+        `;
+
+        return [];
 
     }
 
+}
 
-  } catch (error) {
 
-    console.error(
-      "Dólar:",
-      error
-    );
+/* ============================================================
+   POLICIALES
+   ============================================================ */
 
-    container.innerHTML = `
+async function cargarPoliciales() {
 
-      <article class="dollar-card">
+    const contenedor =
+        document.getElementById(
+            "policeGrid"
+        );
 
-        <small>DÓLAR</small>
+    if (!contenedor)
+        return [];
 
-        <strong>
-          No disponible
-        </strong>
+    try {
 
-        <span>
-          Reintentando automáticamente.
-        </span>
+        const noticias =
+            await consultarRSS(
+                ARENA24.rss.policiales
+            );
 
-      </article>
+        if (!noticias.length) {
 
-    `;
+            throw new Error(
+                "No hay policiales."
+            );
 
-  }
+        }
+
+        contenedor.innerHTML =
+            noticias
+            .slice(0, 6)
+            .map(
+                noticia =>
+                    tarjetaNoticia(
+                        noticia,
+                        "POLICIALES"
+                    )
+            )
+            .join("");
+
+        return noticias.slice(0, 8);
+
+    } catch (error) {
+
+        console.error(
+            "Policiales:",
+            error
+        );
+
+        contenedor.innerHTML = `
+
+            <article class="loading-card dark-card">
+
+                <p>
+                    ⚠️ No se pudieron actualizar
+                    los policiales.
+                </p>
+
+            </article>
+
+        `;
+
+        return [];
+
+    }
 
 }
 
 
-/* =========================================================
-   CLIMA
-   ========================================================= */
+/* ============================================================
+   DEPORTES
+   ============================================================ */
 
-async function loadWeather() {
+async function cargarDeportes() {
 
-  const container =
-    document.getElementById(
-      "weatherCard"
-    );
+    const contenedor =
+        document.getElementById(
+            "sportsGrid"
+        );
 
-  if (!container)
-    return;
+    if (!contenedor)
+        return [];
 
+    try {
 
-  const url =
-    "https://api.open-meteo.com/v1/forecast" +
-    "?latitude=" +
-    CONFIG.latitude +
-    "&longitude=" +
-    CONFIG.longitude +
-    "&current=temperature_2m,relative_humidity_2m,apparent_temperature,wind_speed_10m,weather_code" +
-    "&timezone=America%2FArgentina%2FLa_Rioja";
+        const noticias =
+            await consultarRSS(
+                ARENA24.rss.deportes
+            );
 
+        if (!noticias.length) {
 
-  try {
+            throw new Error(
+                "No hay deportes."
+            );
 
-    const response =
-      await fetch(url);
+        }
 
-    if (!response.ok)
-      throw new Error(
-        "Clima no disponible"
-      );
+        contenedor.innerHTML =
+            noticias
+            .slice(0, 6)
+            .map(
+                noticia =>
+                    tarjetaNoticia(
+                        noticia,
+                        "DEPORTES"
+                    )
+            )
+            .join("");
 
-    const data =
-      await response.json();
+        return noticias.slice(0, 8);
 
-    const current =
-      data.current;
+    } catch (error) {
 
+        console.error(
+            "Deportes:",
+            error
+        );
 
-    const weatherText =
-      getWeatherDescription(
-        current.weather_code
-      );
+        contenedor.innerHTML = `
 
+            <article class="loading-card">
 
-    container.innerHTML = `
+                <p>
+                    ⚠️ No se pudieron actualizar
+                    los deportes.
+                </p>
 
-      <div class="weather-main">
+            </article>
 
-        <div>
+        `;
 
-          <div class="weather-temperature">
+        return [];
 
-            ${Math.round(
-              current.temperature_2m
-            )}°C
-
-          </div>
-
-          <div class="weather-description">
-
-            ${weatherText}
-
-          </div>
-
-        </div>
-
-
-        <div>
-
-          <h3>
-            🌦️ La Rioja Capital
-          </h3>
-
-          <p>
-            Sensación:
-            ${Math.round(
-              current.apparent_temperature
-            )}°C
-          </p>
-
-        </div>
-
-      </div>
-
-
-      <div class="weather-info">
-
-        <div>
-
-          <small>HUMEDAD</small>
-
-          <strong>
-            ${current.relative_humidity_2m}%
-          </strong>
-
-        </div>
-
-
-        <div>
-
-          <small>VIENTO</small>
-
-          <strong>
-            ${Math.round(
-              current.wind_speed_10m
-            )} km/h
-          </strong>
-
-        </div>
-
-
-        <div>
-
-          <small>ACTUALIZACIÓN</small>
-
-          <strong>
-            Ahora
-          </strong>
-
-        </div>
-
-      </div>
-
-    `;
-
-
-  } catch (error) {
-
-    console.error(
-      "Clima:",
-      error
-    );
-
-    container.innerHTML = `
-
-      <div>
-
-        <h3>
-          🌦️ La Rioja Capital
-        </h3>
-
-        <p>
-          No se pudo actualizar
-          el clima en este momento.
-        </p>
-
-      </div>
-
-    `;
-
-  }
+    }
 
 }
 
 
-/* =========================================================
-   DESCRIPCIÓN DEL CLIMA
-   ========================================================= */
+/* ============================================================
+   ARENA 24 FLASH
+   ============================================================ */
 
-function getWeatherDescription(
-  code
+function actualizarFlash(
+    noticias,
+    policiales,
+    deportes
 ) {
 
-  const descriptions = {
+    const flash =
+        document.getElementById(
+            "breakingNews"
+        );
 
-    0:
-      "☀️ Cielo despejado",
+    if (!flash)
+        return;
 
-    1:
-      "🌤️ Principalmente despejado",
+    const todas = [
 
-    2:
-      "⛅ Parcialmente nublado",
+        ...noticias,
+        ...policiales,
+        ...deportes
 
-    3:
-      "☁️ Nublado",
+    ];
 
-    45:
-      "🌫️ Niebla",
+    if (!todas.length) {
 
-    48:
-      "🌫️ Niebla",
+        flash.textContent =
+            "ARENA 24 · Siempre con vos.";
 
-    51:
-      "🌦️ Llovizna",
+        return;
 
-    53:
-      "🌦️ Llovizna",
+    }
 
-    55:
-      "🌧️ Llovizna intensa",
-
-    61:
-      "🌧️ Lluvia",
-
-    63:
-      "🌧️ Lluvia moderada",
-
-    65:
-      "🌧️ Lluvia intensa",
-
-    71:
-      "❄️ Nieve",
-
-    73:
-      "❄️ Nieve moderada",
-
-    75:
-      "❄️ Nieve intensa",
-
-    80:
-      "🌦️ Chaparrones",
-
-    81:
-      "🌦️ Chaparrones moderados",
-
-    82:
-      "⛈️ Chaparrones fuertes",
-
-    95:
-      "⛈️ Tormenta",
-
-    96:
-      "⛈️ Tormenta con granizo",
-
-    99:
-      "⛈️ Tormenta fuerte con granizo"
-
-  };
-
-  return (
-    descriptions[code] ||
-    "🌤️ Condiciones actuales"
-  );
+    flash.textContent =
+        todas
+        .slice(0, 8)
+        .map(
+            noticia =>
+                noticia.title
+        )
+        .join(
+            "   •   "
+        );
 
 }
 
 
-/* =========================================================
+/* ============================================================
+   DÓLAR
+   ============================================================ */
+
+async function obtenerDolar(
+    endpoint
+) {
+
+    const response =
+        await fetch(
+            "https://dolarapi.com/v1/dolares/" +
+            endpoint +
+            "?_=" +
+            Date.now(),
+            {
+                cache: "no-store"
+            }
+        );
+
+    if (!response.ok) {
+
+        throw new Error(
+            "Dólar API " +
+            response.status
+        );
+
+    }
+
+    return await response.json();
+
+}
+
+
+async function cargarDolar() {
+
+    const contenedor =
+        document.getElementById(
+            "dollarGrid"
+        );
+
+    if (!contenedor)
+        return;
+
+
+    try {
+
+        const [
+            oficial,
+            blue,
+            bolsa,
+            ccl,
+            tarjeta
+        ] =
+        await Promise.all([
+
+            obtenerDolar(
+                "oficial"
+            ),
+
+            obtenerDolar(
+                "blue"
+            ),
+
+            obtenerDolar(
+                "bolsa"
+            ),
+
+            obtenerDolar(
+                "contadoconliqui"
+            ),
+
+            obtenerDolar(
+                "tarjeta"
+            )
+
+        ]);
+
+
+        const dolares = [
+
+            oficial,
+
+            blue,
+
+            bolsa,
+
+            ccl,
+
+            tarjeta
+
+        ];
+
+
+        contenedor.innerHTML =
+            dolares
+            .filter(Boolean)
+            .map(
+                dolar => `
+
+                    <article class="dollar-card">
+
+                        <small>
+                            ${safe(
+                                dolar.nombre ||
+                                dolar.casa ||
+                                "DÓLAR"
+                            )}
+                        </small>
+
+                        <strong>
+                            $${Number(
+                                dolar.venta || 0
+                            ).toLocaleString(
+                                "es-AR"
+                            )}
+                        </strong>
+
+                        <span>
+                            Compra:
+                            $${Number(
+                                dolar.compra || 0
+                            ).toLocaleString(
+                                "es-AR"
+                            )}
+                        </span>
+
+                        <span>
+                            Actualizado:
+                            ${safe(
+                                dolar.fechaActualizacion ||
+                                ""
+                            )}
+                        </span>
+
+                    </article>
+
+                `
+            )
+            .join("");
+
+
+    } catch (error) {
+
+        console.error(
+            "Dólar:",
+            error
+        );
+
+        contenedor.innerHTML = `
+
+            <article class="dollar-card">
+
+                <small>
+                    💵 DÓLAR
+                </small>
+
+                <strong>
+                    No disponible
+                </strong>
+
+                <span>
+                    Reintentando automáticamente.
+                </span>
+
+            </article>
+
+        `;
+
+    }
+
+}
+
+
+/* ============================================================
+   CLIMA
+   ============================================================ */
+
+async function cargarClima() {
+
+    const contenedor =
+        document.getElementById(
+            "weatherCard"
+        );
+
+    if (!contenedor)
+        return;
+
+
+    const url =
+        "https://api.open-meteo.com/v1/forecast" +
+
+        "?latitude=" +
+        ARENA24.clima.latitud +
+
+        "&longitude=" +
+        ARENA24.clima.longitud +
+
+        "&current=" +
+        "temperature_2m," +
+        "relative_humidity_2m," +
+        "apparent_temperature," +
+        "wind_speed_10m," +
+        "weather_code" +
+
+        "&timezone=auto";
+
+
+    try {
+
+        const response =
+            await fetch(
+                url,
+                {
+                    cache: "no-store"
+                }
+            );
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Clima API " +
+                response.status
+            );
+
+        }
+
+        const data =
+            await response.json();
+
+        const actual =
+            data.current;
+
+
+        const descripcion =
+            descripcionClima(
+                actual.weather_code
+            );
+
+
+        contenedor.innerHTML = `
+
+            <div class="weather-main">
+
+                <div>
+
+                    <div class="weather-temperature">
+
+                        ${Math.round(
+                            actual.temperature_2m
+                        )}°C
+
+                    </div>
+
+                    <div class="weather-description">
+
+                        ${descripcion}
+
+                    </div>
+
+                </div>
+
+
+                <div>
+
+                    <h3>
+                        🌦️ La Rioja Capital
+                    </h3>
+
+                    <p>
+                        Sensación:
+                        ${Math.round(
+                            actual.apparent_temperature
+                        )}°C
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="weather-info">
+
+                <div>
+
+                    <small>
+                        HUMEDAD
+                    </small>
+
+                    <strong>
+                        ${actual.relative_humidity_2m}%
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <small>
+                        VIENTO
+                    </small>
+
+                    <strong>
+                        ${Math.round(
+                            actual.wind_speed_10m
+                        )} km/h
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <small>
+                        ACTUALIZADO
+                    </small>
+
+                    <strong>
+                        Ahora
+                    </strong>
+
+                </div>
+
+            </div>
+
+        `;
+
+
+    } catch (error) {
+
+        console.error(
+            "Clima:",
+            error
+        );
+
+        contenedor.innerHTML = `
+
+            <div>
+
+                <h3>
+                    🌦️ La Rioja Capital
+                </h3>
+
+                <p>
+                    No se pudo actualizar
+                    el clima.
+                </p>
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+/* ============================================================
+   CÓDIGOS METEOROLÓGICOS
+   ============================================================ */
+
+function descripcionClima(
+    codigo
+) {
+
+    const mapa = {
+
+        0:
+        "☀️ Cielo despejado",
+
+        1:
+        "🌤️ Principalmente despejado",
+
+        2:
+        "⛅ Parcialmente nublado",
+
+        3:
+        "☁️ Nublado",
+
+        45:
+        "🌫️ Niebla",
+
+        48:
+        "🌫️ Niebla",
+
+        51:
+        "🌦️ Llovizna",
+
+        53:
+        "🌦️ Llovizna",
+
+        55:
+        "🌧️ Llovizna intensa",
+
+        61:
+        "🌧️ Lluvia",
+
+        63:
+        "🌧️ Lluvia moderada",
+
+        65:
+        "🌧️ Lluvia intensa",
+
+        71:
+        "❄️ Nieve",
+
+        73:
+        "❄️ Nieve",
+
+        75:
+        "❄️ Nieve intensa",
+
+        80:
+        "🌦️ Chaparrones",
+
+        81:
+        "🌦️ Chaparrones",
+
+        82:
+        "⛈️ Chaparrones fuertes",
+
+        95:
+        "⛈️ Tormenta",
+
+        96:
+        "⛈️ Tormenta con granizo",
+
+        99:
+        "⛈️ Tormenta fuerte"
+
+    };
+
+
+    return (
+        mapa[codigo] ||
+        "🌤️ Condiciones actuales"
+    );
+
+}
+
+
+/* ============================================================
    ACTUALIZAR TODO
-   ========================================================= */
+   ============================================================ */
 
-async function updateAll() {
+async function actualizarTodo() {
 
-  console.log(
-    "ARENA 24 · Actualizando información..."
-  );
-
-
-  const results =
-    await Promise.all([
-
-      loadNews(),
-
-      loadPolice(),
-
-      loadSports(),
-
-      loadDollar(),
-
-      loadWeather()
-
-    ]);
+    console.log(
+        "🔄 ARENA 24 · Actualizando..."
+    );
 
 
-  updateFlash(
-    results[0],
-    results[1],
-    results[2]
-  );
+    const resultados =
+        await Promise.all([
+
+            cargarNoticias(),
+
+            cargarPoliciales(),
+
+            cargarDeportes(),
+
+            cargarDolar(),
+
+            cargarClima()
+
+        ]);
 
 
-  console.log(
-    "ARENA 24 · Actualización completa."
-  );
+    actualizarFlash(
+
+        resultados[0],
+
+        resultados[1],
+
+        resultados[2]
+
+    );
+
+
+    mostrarActualizacion();
+
+
+    console.log(
+        "✅ ARENA 24 · Actualización terminada."
+    );
 
 }
 
 
-/* =========================================================
-   INICIO
-   ========================================================= */
+/* ============================================================
+   ARRANQUE
+   ============================================================ */
 
-updateAll();
+actualizarTodo();
 
 
-/* =========================================================
+/* ============================================================
    ACTUALIZACIÓN AUTOMÁTICA
-   ========================================================= */
+   ============================================================ */
 
 setInterval(
-  updateAll,
-  CONFIG.refresh
+
+    actualizarTodo,
+
+    ARENA24.actualizarCada
+
 );
 
 
-/* =========================================================
-   ACTUALIZAR AL VOLVER A LA PÁGINA
-   ========================================================= */
+/* ============================================================
+   AL VOLVER A LA PÁGINA
+   ============================================================ */
 
 document.addEventListener(
-  "visibilitychange",
-  () => {
 
-    if (
-      document.visibilityState ===
-      "visible"
-    ) {
+    "visibilitychange",
 
-      updateAll();
+    () => {
+
+        if (
+            document.visibilityState ===
+            "visible"
+        ) {
+
+            actualizarTodo();
+
+        }
 
     }
 
-  }
 );
