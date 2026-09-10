@@ -165,3 +165,321 @@ footer {
   }
 
 }
+/* =========================================
+   ARENA 24 · VIDEO
+========================================= */
+
+.video-section {
+  background:
+    linear-gradient(
+      180deg,
+      #f4f5f7 0%,
+      #ffffff 100%
+    );
+}
+
+
+/* CUADRO PRINCIPAL */
+
+.arena-video-card {
+
+  width: 100%;
+  max-width: 1000px;
+
+  margin: 0 auto;
+
+  overflow: hidden;
+
+  background: #080a10;
+
+  border: 1px solid #252a35;
+
+  border-radius: 24px;
+
+  box-shadow:
+    0 25px 70px rgba(0,0,0,.18);
+
+}
+
+
+/* CABECERA */
+
+.arena-video-top {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 14px;
+
+  padding: 18px 24px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #090b12,
+      #151923,
+      #090b12
+    );
+
+  border-bottom:
+    1px solid rgba(255,255,255,.08);
+
+  color: white;
+
+}
+
+
+.arena-video-logo {
+
+  width: 48px;
+  height: 48px;
+
+  display: grid;
+
+  place-items: center;
+
+  border-radius: 12px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #f6ce54,
+      #ff7040
+    );
+
+  color: #111;
+
+  font-weight: 900;
+
+}
+
+
+.arena-video-top strong {
+
+  display: block;
+
+  font-size: 18px;
+
+}
+
+
+.arena-video-top small {
+
+  display: block;
+
+  margin-top: 2px;
+
+  color: #9098a6;
+
+  font-size: 9px;
+
+  letter-spacing: 2px;
+
+}
+
+
+/* AREA DEL VIDEO */
+
+.arena-video-content {
+
+  width: 100%;
+
+  aspect-ratio: 16 / 9;
+
+  min-height: 320px;
+
+  background:
+    radial-gradient(
+      circle at center,
+      #202633 0%,
+      #0a0c12 65%
+    );
+
+}
+
+
+/* PLACEHOLDER */
+
+.arena-video-placeholder {
+
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+  padding: 30px;
+
+  text-align: center;
+
+  color: white;
+
+}
+
+
+.video-play-icon {
+
+  width: 76px;
+  height: 76px;
+
+  display: grid;
+
+  place-items: center;
+
+  margin-bottom: 18px;
+
+  border-radius: 50%;
+
+  background: #e30613;
+
+  color: white;
+
+  font-size: 28px;
+
+  box-shadow:
+    0 10px 35px rgba(227,6,19,.35);
+
+}
+
+
+.arena-video-placeholder h3 {
+
+  margin: 0;
+
+  font-size: 27px;
+
+  letter-spacing: .5px;
+
+}
+
+
+.arena-video-placeholder p {
+
+  margin: 8px 0 20px;
+
+  color: #9da5b3;
+
+}
+
+
+/* BOTON */
+
+.arena-video-button {
+
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  padding: 13px 23px;
+
+  border-radius: 9px;
+
+  background: #e30613;
+
+  color: white;
+
+  text-decoration: none;
+
+  font-size: 13px;
+
+  font-weight: 900;
+
+  transition:
+    background .2s,
+    transform .2s;
+
+}
+
+
+.arena-video-button:hover {
+
+  background: #ff1825;
+
+  transform: translateY(-2px);
+
+}
+
+
+/* PIE */
+
+.arena-video-footer {
+
+  display: flex;
+
+  justify-content: center;
+
+  flex-wrap: wrap;
+
+  gap: 25px;
+
+  padding: 16px 20px;
+
+  background: #0d1017;
+
+  border-top:
+    1px solid rgba(255,255,255,.07);
+
+  color: #8e97a5;
+
+  font-size: 11px;
+
+}
+
+
+.arena-video-footer span:first-child {
+
+  color: #f6ce54;
+
+  font-weight: 900;
+
+}
+
+
+/* CELULAR */
+
+@media (max-width: 600px) {
+
+  .arena-video-card {
+
+    border-radius: 18px;
+
+  }
+
+  .arena-video-content {
+
+    min-height: 260px;
+
+  }
+
+  .arena-video-placeholder h3 {
+
+    font-size: 21px;
+
+  }
+
+  .video-play-icon {
+
+    width: 62px;
+    height: 62px;
+
+    font-size: 23px;
+
+  }
+
+  .arena-video-footer {
+
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 7px;
+
+  }
