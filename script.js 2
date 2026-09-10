@@ -1,44 +1,722 @@
-const player = document.getElementById("player");
-const playTop = document.getElementById("playTop");
+/* =========================================================
+   ARENA 24
+   SCRIPT PRINCIPAL
+   Radio + Noticias + Dólar + Clima + Actualización automática
+   ========================================================= */
 
-playTop.addEventListener("click", async () => {
+document.addEventListener("DOMContentLoaded", () => {
 
-  try {
+  /* =======================================================
+     RADIO
+     ======================================================= */
 
-    if (player.paused) {
+  const playButton = document.getElementById("play");
+  const audio = document.getElementById("audio");
+  const status = document.getElementById("status");
 
-      await player.play();
+  if (playButton && audio) {
 
-      playTop.textContent = "⏸ PAUSAR";
+    playButton.addEventListener("click", async () => {
 
-    } else {
+      try {
 
-      player.pause();
+        if (audio.paused) {
 
-      playTop.textContent = "▶ ESCUCHAR EN VIVO";
+          await audio.play();
 
-    }
+          playButton.textContent = "⏸ PAUSAR RADIO";
 
-  } catch (error) {
+          if (status) {
+            status.textContent =
+              "● ARENA 24 · REPRODUCIENDO";
+          }
 
-    alert(
-      "No se pudo iniciar la radio. Probá nuevamente."
-    );
+        } else {
+
+          audio.pause();
+
+          playButton.textContent =
+            "▶ ESCUCHAR EN VIVO";
+
+          if (status) {
+            status.textContent =
+              "● ARENA 24 · EN VIVO";
+          }
+        }
+
+      } catch (error) {
+
+        console.error(
+          "Error al reproducir la radio:",
+          error
+        );
+
+        if (status) {
+          status.textContent =
+            "● Tocá nuevamente para iniciar el streaming";
+        }
+      }
+
+    });
 
   }
 
-});
 
-player.addEventListener("pause", () => {
+  /* =======================================================
+     CONFIGURACIÓN
+     ======================================================= */
 
-  playTop.textContent =
-    "▶ ESCUCHAR EN VIVO";
+  const CONFIG = {
 
-});
+    noticias:
+      "noticias.json",
 
-player.addEventListener("play", () => {
+    actualizacion:
+      5 * 60 * 1000
 
-  playTop.textContent =
-    "⏸ PAUSAR";
+  };
+
+
+  /* =======================================================
+     FUNCIONES GENERALES
+     ======================================================= */
+
+  function escapeHTML(text) {
+
+    if (text === null || text === undefined) {
+      return "";
+    }
+
+    return String(text)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+
+  }
+
+
+  function formatearFecha(fecha) {
+
+    if (!fecha) {
+      return "";
+    }
+
+    try {
+
+      const date = new Date(fecha);
+
+      if (Number.isNaN(date.getTime())) {
+        return "";
+      }
+
+      return date.toLocaleString(
+        "es-AR",
+        {
+          dateStyle: "short",
+          timeStyle: "short"
+        }
+      );
+
+    } catch {
+      return "";
+    }
+
+  }
+
+
+  function mostrarError(contenedor, mensaje) {
+
+    if (!contenedor) {
+      return;
+    }
+
+    contenedor.innerHTML = `
+      <div class="loading-card">
+        <div>
+          <strong>⚠️ No se pudo actualizar</strong>
+          <p>${escapeHTML(mensaje)}</p>
+        </div>
+      </div>
+    `;
+
+  }
+
+
+  function mostrarCargando(contenedor) {
+
+    if (!contenedor) {
+      return;
+    }
+
+    contenedor.innerHTML = `
+      <div class="loading-card">
+        <div>
+          <div class="loader"></div>
+          <strong>Actualizando información...</strong>
+        </div>
+      </div>
+    `;
+
+  }
+
+
+  /* =======================================================
+     BUSCAR ELEMENTOS
+     ======================================================= */
+
+  const noticiasContainer =
+    document.getElementById("news-noticias");
+
+  const policialesContainer =
+    document.getElementById("news-policiales");
+
+  const deportesContainer =
+    document.getElementById("news-deportes");
+
+  const dolarContainer =
+    document.getElementById("dolar-data");
+
+  const climaContainer =
+    document.getElementById("clima-data");
+
+  const breakingText =
+    document.getElementById("breaking-text");
+
+
+  /* =======================================================
+     CREAR TARJETAS DE NOTICIAS
+     ======================================================= */
+
+  function crearNoticias(
+    noticias,
+    categoria,
+    limite = 6
+  ) {
+
+    if (!Array.isArray(noticias)) {
+      return `
+        <div class="loading-card">
+          No hay noticias disponibles.
+        </div>
+      `;
+    }
+
+    const filtradas =
+      noticias
+        .filter(noticia => {
+
+          if (!noticia) {
+            return false;
+          }
+
+          if (!categoria) {
+            return true;
+          }
+
+          return String(
+            noticia.categoria || ""
+          ).toLowerCase() ===
+          categoria.toLowerCase();
+
+        })
+        .slice(0, limite);
+
+
+    if (!filtradas.length) {
+
+      return `
+        <div class="loading-card">
+          No hay noticias de ${escapeHTML(categoria)} disponibles.
+        </div>
+      `;
+
+    }
+
+
+    return filtradas.map(noticia => {
+
+      const titulo =
+        noticia.titulo ||
+        noticia.title ||
+        "Sin título";
+
+      const descripcion =
+        noticia.descripcion ||
+        noticia.description ||
+        "";
+
+      const fuente =
+        noticia.fuente ||
+        noticia.source ||
+        "ARENA 24";
+
+      const fecha =
+        formatearFecha(
+          noticia.fecha ||
+          noticia.date ||
+          noticia.pubDate
+        );
+
+      const enlace =
+        noticia.url ||
+        noticia.link ||
+        "";
+
+
+      return `
+        <article class="news-card">
+
+          <span class="news-card-category">
+            ${escapeHTML(categoria)}
+          </span>
+
+          <h3>
+            ${escapeHTML(titulo)}
+          </h3>
+
+          <p>
+            ${escapeHTML(descripcion)}
+          </p>
+
+          <div class="news-card-footer">
+
+            <span class="news-card-source">
+              ${escapeHTML(fuente)}
+              ${fecha ? " · " + escapeHTML(fecha) : ""}
+            </span>
+
+            ${
+              enlace
+                ? `
+                  <a
+                    class="news-card-link"
+                    href="${escapeHTML(enlace)}"
+                    target="_blank"
+                    rel="noopener noreferrer">
+                    LEER →
+                  </a>
+                `
+                : ""
+            }
+
+          </div>
+
+        </article>
+      `;
+
+    }).join("");
+
+  }
+
+
+  /* =======================================================
+     ACTUALIZAR NOTICIAS
+     ======================================================= */
+
+  function actualizarNoticias(data) {
+
+    const noticias =
+      Array.isArray(data.noticias)
+        ? data.noticias
+        : [];
+
+
+    if (noticiasContainer) {
+
+      noticiasContainer.innerHTML =
+        crearNoticias(
+          noticias,
+          "Noticias"
+        );
+
+    }
+
+
+    if (policialesContainer) {
+
+      policialesContainer.innerHTML =
+        crearNoticias(
+          noticias,
+          "Policiales"
+        );
+
+    }
+
+
+    if (deportesContainer) {
+
+      deportesContainer.innerHTML =
+        crearNoticias(
+          noticias,
+          "Deportes"
+        );
+
+    }
+
+
+    /* =====================================================
+       FLASH / ÚLTIMA HORA
+       ===================================================== */
+
+    if (
+      breakingText &&
+      noticias.length
+    ) {
+
+      const titulares =
+        noticias
+          .slice(0, 8)
+          .map(n => {
+
+            return (
+              n.titulo ||
+              n.title ||
+              ""
+            );
+
+          })
+          .filter(Boolean);
+
+
+      if (titulares.length) {
+
+        breakingText.textContent =
+          titulares.join("  •  ");
+
+      }
+
+    }
+
+  }
+
+
+  /* =======================================================
+     DÓLAR
+     ======================================================= */
+
+  function actualizarDolar(data) {
+
+    if (!dolarContainer) {
+      return;
+    }
+
+
+    const dolar =
+      data.dolar ||
+      data.dolares ||
+      data.usd;
+
+
+    if (!dolar) {
+
+      dolarContainer.innerHTML = `
+        <div class="data-card">
+
+          <span>DÓLAR</span>
+
+          <strong>
+            Sin datos
+          </strong>
+
+          <small>
+            Esperando actualización
+          </small>
+
+        </div>
+      `;
+
+      return;
+
+    }
+
+
+    const oficial =
+      dolar.oficial ||
+      dolar.valor ||
+      dolar.price ||
+      dolar.venta ||
+      "--";
+
+
+    const compra =
+      dolar.compra ||
+      "--";
+
+
+    const venta =
+      dolar.venta ||
+      dolar.valor ||
+      "--";
+
+
+    dolarContainer.innerHTML = `
+
+      <div class="data-card">
+
+        <span>DÓLAR ARGENTINA</span>
+
+        <strong>
+          $${escapeHTML(venta)}
+        </strong>
+
+        <small>
+          Compra: $${escapeHTML(compra)}
+          · Venta: $${escapeHTML(venta)}
+        </small>
+
+      </div>
+
+    `;
+
+  }
+
+
+  /* =======================================================
+     CLIMA
+     ======================================================= */
+
+  function actualizarClima(data) {
+
+    if (!climaContainer) {
+      return;
+    }
+
+
+    const clima =
+      data.clima ||
+      data.weather;
+
+
+    if (!clima) {
+
+      climaContainer.innerHTML = `
+        <div class="loading-card">
+          Información meteorológica no disponible.
+        </div>
+      `;
+
+      return;
+
+    }
+
+
+    const temperatura =
+      clima.temperatura ??
+      clima.temp ??
+      clima.temperature ??
+      "--";
+
+
+    const descripcion =
+      clima.descripcion ||
+      clima.description ||
+      clima.estado ||
+      "Condiciones actuales";
+
+
+    const ciudad =
+      clima.ciudad ||
+      clima.city ||
+      "La Rioja";
+
+
+    const icono =
+      clima.icono ||
+      clima.icon ||
+      "🌤️";
+
+
+    climaContainer.innerHTML = `
+
+      <div class="weather-card">
+
+        <div class="weather-icon">
+          ${escapeHTML(icono)}
+        </div>
+
+        <div>
+
+          <span>
+            CLIMA · ${escapeHTML(ciudad)}
+          </span>
+
+          <strong>
+            ${escapeHTML(temperatura)}°C
+          </strong>
+
+          <p>
+            ${escapeHTML(descripcion)}
+          </p>
+
+        </div>
+
+      </div>
+
+    `;
+
+  }
+
+
+  /* =======================================================
+     CARGAR NOTICIAS.JSON
+     ======================================================= */
+
+  async function cargarDatos() {
+
+    try {
+
+      if (
+        noticiasContainer &&
+        !noticiasContainer.innerHTML.trim()
+      ) {
+        mostrarCargando(
+          noticiasContainer
+        );
+      }
+
+
+      const respuesta =
+        await fetch(
+          `${CONFIG.noticias}?t=${Date.now()}`,
+          {
+            cache: "no-store"
+          }
+        );
+
+
+      if (!respuesta.ok) {
+
+        throw new Error(
+          `HTTP ${respuesta.status}`
+        );
+
+      }
+
+
+      const data =
+        await respuesta.json();
+
+
+      console.log(
+        "ARENA 24 · datos actualizados:",
+        data
+      );
+
+
+      actualizarNoticias(data);
+
+      actualizarDolar(data);
+
+      actualizarClima(data);
+
+
+      const actualizacion =
+        document.getElementById(
+          "ultima-actualizacion"
+        );
+
+
+      if (actualizacion) {
+
+        actualizacion.textContent =
+          "Actualizado: " +
+          new Date().toLocaleString(
+            "es-AR"
+          );
+
+      }
+
+
+    } catch (error) {
+
+      console.error(
+        "ARENA 24 · error cargando datos:",
+        error
+      );
+
+
+      mostrarError(
+        noticiasContainer,
+        "Revisá que noticias.json exista en la misma carpeta que index.html."
+      );
+
+
+      if (dolarContainer) {
+
+        dolarContainer.innerHTML = `
+          <div class="loading-card">
+            ⚠️ No se pudo cargar el dólar.
+          </div>
+        `;
+
+      }
+
+
+      if (climaContainer) {
+
+        climaContainer.innerHTML = `
+          <div class="loading-card">
+            ⚠️ No se pudo cargar el clima.
+          </div>
+        `;
+
+      }
+
+    }
+
+  }
+
+
+  /* =======================================================
+     INICIAR
+     ======================================================= */
+
+  cargarDatos();
+
+
+  /* =======================================================
+     ACTUALIZACIÓN AUTOMÁTICA
+     ======================================================= */
+
+  setInterval(
+    cargarDatos,
+    CONFIG.actualizacion
+  );
+
+
+  /* =======================================================
+     ACTUALIZAR AL VOLVER A LA PÁGINA
+     ======================================================= */
+
+  document.addEventListener(
+    "visibilitychange",
+    () => {
+
+      if (
+        document.visibilityState === "visible"
+      ) {
+
+        cargarDatos();
+
+      }
+
+    }
+  );
+
+
+  /* =======================================================
+     CONSOLE
+     ======================================================= */
+
+  console.log(
+    "%c ARENA 24 ",
+    "background:#f6ce54;color:#111;font-weight:bold;padding:5px"
+  );
+
+  console.log(
+    "Sistema iniciado correctamente."
+  );
 
 });
