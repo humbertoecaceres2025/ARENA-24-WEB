@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <meta name="description"
-content="ARENA 24 — Radio online de La Rioja, Argentina. Noticias, policiales, deportes, dólar, clima, música y entretenimiento.">
+content="ARENA 24 Radio — Noticias, policiales, deportes, dólar, clima y música desde La Rioja, Argentina.">
 
 <meta name="theme-color" content="#080b12">
 
@@ -16,17 +16,15 @@ content="ARENA 24 — Radio online de La Rioja, Argentina. Noticias, policiales,
 
 <body>
 
-<header class="site-header">
+<header class="header">
 
-    <a class="logo" href="#inicio">
+    <a href="#inicio" class="logo">
+        <strong>A24</strong>
 
-        <span class="logo-box">A24</span>
-
-        <span class="logo-text">
+        <span>
             ARENA 24
             <small>SIEMPRE CON VOS</small>
         </span>
-
     </a>
 
     <nav>
@@ -34,9 +32,9 @@ content="ARENA 24 — Radio online de La Rioja, Argentina. Noticias, policiales,
         <a href="#noticias">Noticias</a>
         <a href="#policiales">Policiales</a>
         <a href="#deportes">Deportes</a>
-        <a href="#economia">Dólar</a>
+        <a href="#dolar">Dólar</a>
         <a href="#clima">Clima</a>
-        <a href="#programacion">Programación</a>
+        <a href="#contacto">Contacto</a>
     </nav>
 
 </header>
@@ -44,20 +42,18 @@ content="ARENA 24 — Radio online de La Rioja, Argentina. Noticias, policiales,
 
 <main>
 
-<!-- =====================================================
-     HERO
-===================================================== -->
+<!-- HERO -->
 
 <section id="inicio" class="hero">
 
     <div class="hero-content">
 
-        <span class="eyebrow">
-            🔴 RADIO ONLINE · LA RIOJA · ARGENTINA
-        </span>
+        <div class="eyebrow">
+            RADIO ONLINE · LA RIOJA · ARGENTINA
+        </div>
 
         <h1>
-            ARENA <i>24</i>
+            ARENA <span>24</span>
         </h1>
 
         <h2>
@@ -65,11 +61,10 @@ content="ARENA 24 — Radio online de La Rioja, Argentina. Noticias, policiales,
         </h2>
 
         <p>
-            Música, noticias, entretenimiento y deportes
-            las 24 horas.
+            Noticias, música, entretenimiento y deportes las 24 horas.
         </p>
 
-        <button id="play" class="live-button">
+        <button id="play" class="play-button">
             ▶ ESCUCHAR EN VIVO
         </button>
 
@@ -80,25 +75,21 @@ content="ARENA 24 — Radio online de La Rioja, Argentina. Noticias, policiales,
         </audio>
 
         <div id="status" class="live-status">
-            ● ARENA 24 · EN VIVO
+            🔴 ARENA 24 · EN VIVO
         </div>
 
     </div>
 
 
-    <div class="onair-card">
+    <div class="onair">
 
         <div class="disc">
             A24
         </div>
 
-        <span class="onair-label">
-            AHORA EN VIVO
-        </span>
+        <small>AHORA EN VIVO</small>
 
-        <strong>
-            ARENA 24
-        </strong>
+        <strong>ARENA 24</strong>
 
         <p>
             Música · Noticias · Deportes
@@ -109,75 +100,38 @@ content="ARENA 24 — Radio online de La Rioja, Argentina. Noticias, policiales,
 </section>
 
 
-<!-- =====================================================
-     FLASH
-===================================================== -->
+<!-- FLASH -->
 
-<div class="breaking">
+<div class="flash-bar">
 
-    <div class="breaking-label">
-        🔥 ARENA 24 FLASH
-    </div>
+    <strong>ARENA 24 FLASH</strong>
 
-    <div class="breaking-window">
-
-        <div
-            id="breakingNews"
-            class="breaking-track">
-
-            Cargando últimas noticias...
-
-        </div>
-
-    </div>
+    <span id="flashText">
+        Información, música y compañía desde La Rioja para el mundo.
+    </span>
 
 </div>
 
 
-<!-- =====================================================
-     ESTADO DEL SISTEMA
-===================================================== -->
+<!-- NOTICIAS -->
 
-<section class="system-status">
-
-    <div>
-        <span class="status-dot"></span>
-        SISTEMA AUTOMÁTICO
-    </div>
-
-    <span id="lastUpdate">
-        Actualizando información...
-    </span>
-
-</section>
-
-
-<!-- =====================================================
-     NOTICIAS LA RIOJA
-===================================================== -->
-
-<section id="noticias" class="section">
+<section id="noticias">
 
     <div class="section-heading">
 
-        <span>01 · ACTUALIDAD</span>
+        <span>01</span>
 
-        <h2>
-            🟠 Noticias de La Rioja
-        </h2>
-
-        <p>
-            Información local actualizada automáticamente.
-        </p>
+        <div>
+            <h2>Noticias</h2>
+            <p>La actualidad de La Rioja, Argentina y el mundo.</p>
+        </div>
 
     </div>
 
-    <div
-        id="newsGrid"
-        class="news-grid">
+    <div id="newsGrid" class="news-grid">
 
         <div class="loading">
-            Cargando noticias...
+            📰 Cargando noticias...
         </div>
 
     </div>
@@ -185,32 +139,25 @@ content="ARENA 24 — Radio online de La Rioja, Argentina. Noticias, policiales,
 </section>
 
 
-<!-- =====================================================
-     POLICIALES
-===================================================== -->
+<!-- POLICIALES -->
 
-<section id="policiales" class="section dark-section">
+<section id="policiales" class="dark-section">
 
     <div class="section-heading">
 
-        <span>02 · SEGURIDAD</span>
+        <span>02</span>
 
-        <h2>
-            🚔 Policiales
-        </h2>
-
-        <p>
-            La información policial de La Rioja.
-        </p>
+        <div>
+            <h2>🚔 Policiales</h2>
+            <p>Información policial y judicial.</p>
+        </div>
 
     </div>
 
-    <div
-        id="policeGrid"
-        class="news-grid">
+    <div id="policeGrid" class="news-grid">
 
         <div class="loading">
-            Cargando policiales...
+            🚔 Cargando policiales...
         </div>
 
     </div>
@@ -218,32 +165,25 @@ content="ARENA 24 — Radio online de La Rioja, Argentina. Noticias, policiales,
 </section>
 
 
-<!-- =====================================================
-     DEPORTES
-===================================================== -->
+<!-- DEPORTES -->
 
-<section id="deportes" class="section">
+<section id="deportes">
 
     <div class="section-heading">
 
-        <span>03 · PASIÓN</span>
+        <span>03</span>
 
-        <h2>
-            ⚽ Deportes
-        </h2>
-
-        <p>
-            Resultados, protagonistas y actualidad deportiva.
-        </p>
+        <div>
+            <h2>⚽ Deportes</h2>
+            <p>La pasión deportiva de Argentina y el mundo.</p>
+        </div>
 
     </div>
 
-    <div
-        id="sportsGrid"
-        class="news-grid">
+    <div id="sportsGrid" class="news-grid">
 
         <div class="loading">
-            Cargando deportes...
+            ⚽ Cargando deportes...
         </div>
 
     </div>
@@ -251,209 +191,194 @@ content="ARENA 24 — Radio online de La Rioja, Argentina. Noticias, policiales,
 </section>
 
 
-<!-- =====================================================
-     ARGENTINA
-===================================================== -->
+<!-- DOLAR -->
 
-<section class="section dark-section">
+<section id="dolar" class="dark-section">
 
     <div class="section-heading">
 
-        <span>04 · PAÍS</span>
+        <span>04</span>
 
-        <h2>
-            🇦🇷 Argentina
-        </h2>
-
-    </div>
-
-    <div
-        id="argentinaGrid"
-        class="news-grid">
-
-        <div class="loading">
-            Cargando noticias nacionales...
+        <div>
+            <h2>💵 Dólar</h2>
+            <p>Cotizaciones actualizadas automáticamente.</p>
         </div>
 
     </div>
 
-</section>
+
+    <div class="finance-grid">
+
+        <article class="finance-card">
+
+            <div class="finance-icon">
+                💵
+            </div>
+
+            <div>
+
+                <small>DÓLAR OFICIAL</small>
+
+                <h3 id="oficialVenta">
+                    $ --
+                </h3>
+
+                <p>
+                    Compra:
+                    <b id="oficialCompra">$ --</b>
+                </p>
+
+            </div>
+
+        </article>
 
 
-<!-- =====================================================
-     MUNDO
-===================================================== -->
+        <article class="finance-card">
 
-<section class="section">
+            <div class="finance-icon">
+                💲
+            </div>
 
-    <div class="section-heading">
+            <div>
 
-        <span>05 · INTERNACIONAL</span>
+                <small>DÓLAR BLUE</small>
 
-        <h2>
-            🌎 El mundo
-        </h2>
+                <h3 id="blueVenta">
+                    $ --
+                </h3>
 
-    </div>
+                <p>
+                    Compra:
+                    <b id="blueCompra">$ --</b>
+                </p>
 
-    <div
-        id="worldGrid"
-        class="news-grid">
+            </div>
 
-        <div class="loading">
-            Cargando noticias internacionales...
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- =====================================================
-     ECONOMIA / DOLAR
-===================================================== -->
-
-<section id="economia" class="section dark-section">
-
-    <div class="section-heading">
-
-        <span>06 · ECONOMÍA</span>
-
-        <h2>
-            💵 Dólar
-        </h2>
-
-        <p>
-            Cotizaciones actualizadas automáticamente.
-        </p>
-
-    </div>
-
-    <div
-        id="dollarGrid"
-        class="dollar-grid">
-
-        <div class="loading">
-            Consultando cotizaciones...
-        </div>
+        </article>
 
     </div>
 
-    <p
-        id="dollarUpdate"
-        class="data-update">
+    <p id="dolarUpdate" class="update-text">
+        Consultando cotizaciones...
     </p>
 
 </section>
 
 
-<!-- =====================================================
-     CLIMA
-===================================================== -->
+<!-- CLIMA -->
 
-<section id="clima" class="section">
+<section id="clima">
 
     <div class="section-heading">
 
-        <span>07 · SERVICIO</span>
+        <span>05</span>
 
-        <h2>
-            🌦️ Clima en La Rioja Capital
-        </h2>
-
-        <p>
-            Condiciones actuales actualizadas automáticamente.
-        </p>
-
-    </div>
-
-    <div
-        id="weatherCard"
-        class="weather-card">
-
-        <div class="loading">
-            Consultando clima...
+        <div>
+            <h2>🌦️ Clima</h2>
+            <p>Pronóstico para La Rioja Capital.</p>
         </div>
 
     </div>
 
+
+    <div class="weather-card">
+
+        <div class="weather-main">
+
+            <div id="weatherIcon" class="weather-icon">
+                🌤️
+            </div>
+
+            <div>
+
+                <small>
+                    LA RIOJA CAPITAL
+                </small>
+
+                <h3 id="temperature">
+                    -- °C
+                </h3>
+
+                <p id="weatherDescription">
+                    Consultando el clima...
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="weather-details">
+
+            <div>
+                <span>💨 Viento</span>
+                <strong id="wind">-- km/h</strong>
+            </div>
+
+            <div>
+                <span>💧 Humedad</span>
+                <strong id="humidity">-- %</strong>
+            </div>
+
+            <div>
+                <span>🌧️ Lluvia</span>
+                <strong id="rain">-- %</strong>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div id="forecast" class="forecast-grid"></div>
+
+    <p id="weatherUpdate" class="update-text">
+        Actualizando clima...
+    </p>
+
 </section>
 
 
-<!-- =====================================================
-     TOP 10
-===================================================== -->
+<!-- TOP 10 -->
 
-<section id="top10" class="section dark-section">
+<section id="top10" class="dark-section">
 
     <div class="section-heading">
 
-        <span>08 · MÚSICA</span>
+        <span>06</span>
 
-        <h2>
-            🔥 ARENA 24 · TOP 10
-        </h2>
-
-        <p>
-            El ranking musical de ARENA 24.
-        </p>
+        <div>
+            <h2>🔥 ARENA 24 — TOP 10</h2>
+            <p>El ranking musical de ARENA 24.</p>
+        </div>
 
     </div>
 
 
     <div class="ranking">
 
-        <div>
-            <b>10</b>
-            Ibuprofeno — Abel Pintos
-        </div>
+        <div><b>10</b> Ibuprofeno — Abel Pintos</div>
 
-        <div>
-            <b>9</b>
-            Corazón de Cristal — Simon
-        </div>
+        <div><b>9</b> Corazón De Cristal — Simon</div>
 
-        <div>
-            <b>8</b>
-            Dichavate — Cumbia Rocha
-        </div>
+        <div><b>8</b> Dichavate — Cumbia Rocha</div>
 
-        <div>
-            <b>7</b>
-            Flor Amarilla — Campedrinos & Eugenia Quevedo
-        </div>
+        <div><b>7</b> Flor Amarilla — Campedrinos & Eugenia Quevedo</div>
 
-        <div>
-            <b>6</b>
-            No Podré Olvidarme de Ti — La K'onga & Grupo Red
-        </div>
+        <div><b>6</b> No Podré Olvidarme de Ti — La K'onga & Grupo Red</div>
 
-        <div>
-            <b>5</b>
-            OA TA TA — Callejero Fino & Lea in the Mix
-        </div>
+        <div><b>5</b> OA TA TA — Callejero Fino & Lea in the Mix</div>
 
-        <div>
-            <b>4</b>
-            Dime Tú — Q' Lokura & Nahuel Pennisi
-        </div>
+        <div><b>4</b> Dime Tú — Q' Lokura & Nahuel Pennisi</div>
 
-        <div>
-            <b>3</b>
-            🥉 No Puedo — Luciano Pereyra
-        </div>
+        <div><b>3</b> 🥉 No Puedo — Luciano Pereyra</div>
 
-        <div>
-            <b>2</b>
-            🥈 Pa' Él — Los Ángeles Azules & TINI
-        </div>
+        <div><b>2</b> 🥈 Pa' Él — Los Ángeles Azules & TINI</div>
 
         <div class="number-one">
             <b>1</b>
-            🥇 Enséñame A Vivir Sin Ti
-            — Luciano Pereyra, Karina,
-            Un Poco de Ruido & Pinky SD
-            ⭐ NÚMERO 1 ARENA 24
+            🥇 Enséñame A Vivir Sin Ti — Luciano Pereyra & Karina
+            <small>⭐ NÚMERO 1 DE ARENA 24</small>
         </div>
 
     </div>
@@ -461,102 +386,39 @@ content="ARENA 24 — Radio online de La Rioja, Argentina. Noticias, policiales,
 </section>
 
 
-<!-- =====================================================
-     PROGRAMACION
-===================================================== -->
+<!-- VIDEO -->
 
-<section id="programacion" class="section">
-
-    <div class="section-heading">
-
-        <span>09 · RADIO</span>
-
-        <h2>
-            Programación 24/7
-        </h2>
-
-    </div>
-
-    <div class="program-grid">
-
-        <article>
-            <small>06:00 — 12:00</small>
-            <h3>ENR · NOTICIAS</h3>
-            <p>
-                Actualidad local, nacional e internacional.
-            </p>
-        </article>
-
-        <article>
-            <small>12:00 — 18:00</small>
-            <h3>ANA · ENTRETENIMIENTO</h3>
-            <p>
-                Música, curiosidades y participación.
-            </p>
-        </article>
-
-        <article>
-            <small>18:00 — 21:00</small>
-            <h3>NIC · DEPORTES</h3>
-            <p>
-                Resultados y toda la pasión deportiva.
-            </p>
-        </article>
-
-        <article>
-            <small>21:00 — 06:00</small>
-            <h3>MAR · NIGHT & RELAX</h3>
-            <p>
-                Música actual, clásicos y compañía nocturna.
-            </p>
-        </article>
-
-    </div>
-
-</section>
-
-
-<!-- =====================================================
-     VIDEO
-===================================================== -->
-
-<section class="video-section dark-section">
+<section id="video">
 
     <div class="video-card">
 
         <div class="video-header">
 
-            <strong>
-                ARENA <span>24</span>
-            </strong>
+            <span>🎧 ARENA 24</span>
 
             <small>
-                VIDEOS · MÚSICA · ENTRETENIMIENTO
+                VIDEOS Y ENTRETENIMIENTO
             </small>
 
         </div>
 
         <div class="video-content">
 
-            <div class="video-placeholder">
-                🎧
-            </div>
-
             <h2>
-                Videos del momento
+                DJ MIX HCpro
             </h2>
 
             <p>
-                Música y entretenimiento de ARENA 24.
+                Música · Entretenimiento · La Rioja
             </p>
 
             <a
                 href="https://www.youtube.com/@ARENA24LARIOJA"
                 target="_blank"
-                rel="noopener noreferrer"
+                rel="noopener"
                 class="youtube-button">
 
-                ▶ VER EN YOUTUBE
+                ▶ VER VIDEOS EN YOUTUBE
 
             </a>
 
@@ -567,75 +429,34 @@ content="ARENA 24 — Radio online de La Rioja, Argentina. Noticias, policiales,
 </section>
 
 
-<!-- =====================================================
-     VOCES
-===================================================== -->
+<!-- CONTACTO -->
 
-<section class="section">
+<section id="contacto">
 
     <div class="section-heading">
 
-        <span>10 · EQUIPO</span>
+        <span>07</span>
 
-        <h2>
-            Las voces de ARENA 24
-        </h2>
-
-    </div>
-
-    <div class="voices">
-
-        <article>
-            <strong>E</strong>
-            <h3>ENR</h3>
-            <p>Noticias</p>
-        </article>
-
-        <article>
-            <strong>A</strong>
-            <h3>ANA</h3>
-            <p>Entretenimiento</p>
-        </article>
-
-        <article>
-            <strong>N</strong>
-            <h3>NIC</h3>
-            <p>Deportes</p>
-        </article>
-
-        <article>
-            <strong>M</strong>
-            <h3>MAR</h3>
-            <p>Night · Relax</p>
-        </article>
+        <div>
+            <h2>Contacto</h2>
+            <p>ARENA 24 · Siempre con vos.</p>
+        </div>
 
     </div>
 
-</section>
-
-
-<!-- =====================================================
-     CONTACTO
-===================================================== -->
-
-<section id="contacto" class="section contact-section">
 
     <div class="contact-card">
 
-        <span>
+        <h3>
             ARENA 24
-        </span>
-
-        <h2>
-            Siempre con vos.
-        </h2>
+        </h3>
 
         <p>
             La Rioja, Argentina · Radio online 24/7
         </p>
 
         <p>
-            Noticias · Música · Deportes · Entretenimiento
+            Noticias · Policiales · Deportes · Música · Entretenimiento
         </p>
 
     </div>
@@ -650,12 +471,12 @@ content="ARENA 24 — Radio online de La Rioja, Argentina. Noticias, policiales,
     <strong>ARENA 24</strong>
 
     <span>
-        MÚSICA · NOTICIAS · POLICIALES · DEPORTES · ECONOMÍA
+        MÚSICA · NOTICIAS · POLICIALES · DEPORTES · DÓLAR · CLIMA
     </span>
 
-    <b>
-        SIEMPRE CON VOS
-    </b>
+    <small>
+        SIEMPRE CON VOS · LA RIOJA · ARGENTINA
+    </small>
 
 </footer>
 
