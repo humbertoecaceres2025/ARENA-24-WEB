@@ -1,462 +1,424 @@
-{
-box-sizing: border-box;
-}
-
-html {
-scroll-behavior: smooth;
-}
-
-body {
-margin: 0;
-font-family: Arial, Helvetica, sans-serif;
-background: #f4f5f7;
-color: #11141b;
-line-height: 1.5;
-}
-
-.header {
-position: sticky;
-top: 0;
-z-index: 100;
-padding: 13px 6%;
-display: flex;
-justify-content: space-between;
-align-items: center;
-background: rgba(8,11,18,.95);
-backdrop-filter: blur(15px);
-}
-
-.logo {
-display: flex;
-align-items: center;
-gap: 10px;
-color: white;
-text-decoration: none;
-}
-
-.logo-box {
-padding: 11px;
-border-radius: 12px;
-color: #111;
-font-weight: 900;
-background: linear-gradient(135deg,#f6ce54,#ff7040);
-}
-
-.logo strong {
-display: block;
-font-size: 16px;
-}
-
-.logo small {
-display: block;
-color: #aeb5c2;
-font-size: 8px;
-letter-spacing: 2px;
-}
-
-nav {
-display: flex;
-gap: 20px;
-}
-
-nav a {
-color: #ddd;
-text-decoration: none;
-font-size: 14px;
-}
-
-nav a:hover {
-color: #f6ce54;
-}
-
-.hero {
-min-height: 650px;
-padding: 90px 7%;
-display: grid;
-grid-template-columns: 1.4fr .8fr;
-gap: 50px;
-align-items: center;
-color: white;
-background:
-radial-gradient(circle at 80% 40%,#352737,#090b12 48%,#050609);
-}
-
-.eyebrow {
-color: #f6ce54;
-letter-spacing: 2px;
-font-size: 12px;
-font-weight: 900;
-}
-
-.hero h1 {
-margin: 25px 0 10px;
-font-size: clamp(70px,12vw,150px);
-line-height: .85;
-letter-spacing: -7px;
-}
-
-.hero h1 i {
-color: #f6ce54;
-font-style: normal;
-}
-
-.hero h2 {
-margin: 0;
-font-size: clamp(30px,4vw,55px);
-}
-
-.hero p {
-max-width: 650px;
-color: #b9c0cb;
-font-size: 19px;
-}
-
-.play-button,
-.refresh-button {
-border: 0;
-cursor: pointer;
-border-radius: 30px;
-padding: 15px 24px;
-background: #f6ce54;
-color: #111;
-font-weight: 900;
-}
-
-.play-button:hover,
-.refresh-button:hover {
-background: #ffdd72;
-transform: translateY(-2px);
-}
-
-.radio-status {
-margin-top: 10px;
-color: #f6ce54;
-font-size: 12px;
-}
-
-.onair {
-padding: 40px;
-text-align: center;
-background: #151923;
-border: 1px solid #303642;
-border-radius: 28px;
-}
-
-.disc {
-width: 180px;
-height: 180px;
-margin: auto;
-display: grid;
-place-items: center;
-border-radius: 50%;
-background: radial-gradient(
-circle,
-#f6ce54 0 8%,
-#ff7040 9% 13%,
-#171b24 14%
-);
-font-size: 35px;
-font-weight: 900;
-}
-
-.onair > span {
-display: block;
-margin-top: 25px;
-color: #f6ce54;
-letter-spacing: 2px;
-font-size: 11px;
-}
-
-.onair strong {
-display: block;
-font-size: 30px;
-color: white;
-}
-
-.onair p {
-color: #aeb5c2;
-}
-
-.breaking {
-display: flex;
-gap: 20px;
-padding: 14px 7%;
-background: #f6ce54;
-color: #111;
-}
-
-.breaking strong {
-white-space: nowrap;
-}
-
-.section {
-padding: 80px 7%;
-}
-
-.dark {
-background: #0b0e15;
-color: white;
-}
-
-.section-heading {
-margin-bottom: 35px;
-}
-
-.section-heading h2 {
-margin: 8px 0;
-font-size: 38px;
-}
-
-.section-heading p {
-color: #68707d;
-}
-
-.dark .section-heading p {
-color: #9ca3af;
-}
-
-.news-grid {
-display: grid;
-grid-template-columns: repeat(3,1fr);
-gap: 18px;
-}
-
-.news-card {
-padding: 24px;
-min-height: 190px;
-background: white;
-border: 1px solid #e0e3e8;
-border-radius: 18px;
-transition: .25s;
-}
-
-.dark .news-card {
-background: #151923;
-border-color: #292f3b;
-}
-
-.news-card:hover {
-transform: translateY(-5px);
-border-color: #f6ce54;
-}
-
-.news-card .category {
-color: #c48600;
-font-size: 11px;
-font-weight: 900;
-letter-spacing: 1px;
-}
-
-.dark .news-card .category {
-color: #f6ce54;
-}
-
-.news-card h3 {
-margin: 10px 0;
-font-size: 19px;
-}
-
-.news-card p {
-color: #68707d;
-}
-
-.dark .news-card p {
-color: #aeb5c2;
-}
-
-.news-card a {
-color: #c48600;
-font-weight: 700;
-text-decoration: none;
-}
-
-.loading {
-grid-column: 1/-1;
-padding: 40px;
-text-align: center;
-color: #888;
-}
-
-.money-grid {
-display: grid;
-grid-template-columns: repeat(3,1fr);
-gap: 18px;
-}
-
-.money-card {
-padding: 25px;
-border-radius: 18px;
-background: #151923;
-border: 1px solid #292f3b;
-}
-
-.money-card h3 {
-margin-top: 0;
-}
-
-.money-values {
-display: flex;
-justify-content: space-between;
-gap: 20px;
-}
-
-.money-values strong {
-display: block;
-color: #f6ce54;
-font-size: 25px;
-}
-
-.money-values small {
-color: #9ca3af;
-}
-
-.weather-card {
-max-width: 700px;
-padding: 35px;
-border-radius: 25px;
-color: white;
-background: linear-gradient(135deg,#172554,#0f172a);
-box-shadow: 0 20px 50px rgba(0,0,0,.15);
-}
-
-.weather-main {
-display: flex;
-align-items: center;
-gap: 25px;
-}
-
-.weather-icon {
-font-size: 65px;
-}
-
-.weather-temp {
-font-size: 55px;
-font-weight: 900;
-}
-
-.weather-details {
-display: grid;
-grid-template-columns: repeat(3,1fr);
-gap: 10px;
-margin-top: 25px;
-}
-
-.weather-details div {
-padding: 12px;
-border-radius: 12px;
-background: rgba(255,255,255,.08);
-}
-
-.ranking {
-max-width: 900px;
-}
-
-.ranking > div {
-padding: 15px 10px;
-border-bottom: 1px solid #292f3b;
-}
-
-.ranking b {
-display: inline-block;
-width: 45px;
-color: #f6ce54;
-font-size: 22px;
-}
-
-.number-one {
-margin-top: 10px;
-border-radius: 14px;
-background: #171d29;
-}
-
-.number-one span {
-display: block;
-margin-left: 45px;
-color: #f6ce54;
-font-size: 11px;
-font-weight: 900;
-}
-
-.system-status {
-max-width: 900px;
-padding: 25px;
-display: flex;
-align-items: center;
-justify-content: space-between;
-gap: 20px;
-border-radius: 18px;
-background: white;
-border: 1px solid #e0e3e8;
-}
-
-.system-status div strong,
-.system-status div span {
-display: block;
-}
-
-.system-status div strong {
-color: #16a34a;
-}
-
-.system-status div span {
-color: #777;
-font-size: 12px;
-}
-
-footer {
-padding: 30px 7%;
-background: #080b12;
-color: #9ca3af;
-}
-
-footer strong,
-footer span {
-color: #f6ce54;
-}
-
-@media(max-width:850px) {
-
-nav {
-display: none;
-}
-
-.hero {
-grid-template-columns: 1fr;
-}
-
-.news-grid,
-.money-grid {
-grid-template-columns: 1fr 1fr;
-}
-
-}
-
-@media(max-width:550px) {
-
-.hero {
-padding: 60px 5%;
-}
-
-.section {
-padding: 60px 5%;
-}
-
-.news-grid,
-.money-grid {
-grid-template-columns: 1fr;
-}
-
-.weather-details {
-grid-template-columns: 1fr;
-}
-
-.system-status {
-flex-direction: column;
-align-items: stretch;
-}
-
-.hero h1 {
-letter-spacing: -4px;
-}
-
-}
+name: ARENA 24 - Actualizar información
+
+on:
+  schedule:
+    - cron: "*/30 * * * *"
+
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+
+  actualizar:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Descargar repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Actualizar noticias, dólar y clima
+        run: |
+
+          python - <<'PY'
+
+          import json
+          import urllib.request
+          import urllib.parse
+          import xml.etree.ElementTree as ET
+          from datetime import datetime, timezone
+
+
+          def descargar(url):
+
+              req = urllib.request.Request(
+                  url,
+                  headers={
+                      "User-Agent": "Mozilla/5.0 ARENA24"
+                  }
+              )
+
+              with urllib.request.urlopen(
+                  req,
+                  timeout=30
+              ) as respuesta:
+
+                  return respuesta.read()
+
+
+          def api_json(url):
+
+              return json.loads(
+                  descargar(url).decode("utf-8")
+              )
+
+
+          def rss(url, categoria, limite=5):
+
+              resultados = []
+
+              try:
+
+                  xml = descargar(url)
+
+                  raiz = ET.fromstring(xml)
+
+                  items = raiz.findall(".//item")
+
+                  for item in items[:limite]:
+
+                      titulo = item.findtext(
+                          "title",
+                          ""
+                      ).strip()
+
+                      descripcion = item.findtext(
+                          "description",
+                          ""
+                      ).strip()
+
+                      enlace = item.findtext(
+                          "link",
+                          ""
+                      ).strip()
+
+                      if titulo:
+
+                          resultados.append({
+
+                              "categoria": categoria,
+
+                              "titulo": titulo,
+
+                              "resumen": descripcion,
+
+                              "url": enlace
+
+                          })
+
+              except Exception as error:
+
+                  print(
+                      "RSS error:",
+                      categoria,
+                      error
+                  )
+
+              return resultados
+
+
+          noticias = []
+
+
+          # ======================================
+          # LA RIOJA
+          # ======================================
+
+          consultas = [
+
+              (
+                  "La Rioja Argentina",
+                  "LA RIOJA"
+              ),
+
+              (
+                  "La Rioja Argentina policiales",
+                  "POLICIALES"
+              ),
+
+              (
+                  "Argentina noticias",
+                  "ARGENTINA"
+              ),
+
+              (
+                  "mundo noticias",
+                  "MUNDO"
+              ),
+
+              (
+                  "futbol deportes Argentina",
+                  "DEPORTES"
+              )
+
+          ]
+
+
+          for consulta, categoria in consultas:
+
+              query = urllib.parse.quote(consulta)
+
+              url = (
+                  "https://news.google.com/rss/search?"
+                  "q=" + query +
+                  "&hl=es-419"
+                  "&gl=AR"
+                  "&ceid=AR:es-419"
+              )
+
+              noticias.extend(
+                  rss(
+                      url,
+                      categoria,
+                      6
+                  )
+              )
+
+
+          # ======================================
+          # DÓLAR
+          # ======================================
+
+          dolar = {}
+
+          try:
+
+              oficial = api_json(
+                  "https://dolarapi.com/v1/dolares/oficial"
+              )
+
+              dolar["oficial"] = {
+
+                  "compra": oficial.get(
+                      "compra",
+                      0
+                  ),
+
+                  "venta": oficial.get(
+                      "venta",
+                      0
+                  )
+
+              }
+
+          except Exception as error:
+
+              print(
+                  "Error dólar oficial:",
+                  error
+              )
+
+
+          try:
+
+              blue = api_json(
+                  "https://dolarapi.com/v1/dolares/blue"
+              )
+
+              dolar["blue"] = {
+
+                  "compra": blue.get(
+                      "compra",
+                      0
+                  ),
+
+                  "venta": blue.get(
+                      "venta",
+                      0
+                  )
+
+              }
+
+          except Exception as error:
+
+              print(
+                  "Error dólar blue:",
+                  error
+              )
+
+
+          try:
+
+              mep = api_json(
+                  "https://dolarapi.com/v1/dolares/bolsa"
+              )
+
+              dolar["mep"] = {
+
+                  "compra": mep.get(
+                      "compra",
+                      0
+                  ),
+
+                  "venta": mep.get(
+                      "venta",
+                      0
+                  )
+
+              }
+
+          except Exception as error:
+
+              print(
+                  "Error dólar MEP:",
+                  error
+              )
+
+
+          # ======================================
+          # CLIMA LA RIOJA CAPITAL
+          # ======================================
+
+          clima = {}
+
+          try:
+
+              url_clima = (
+                  "https://api.open-meteo.com/v1/forecast?"
+                  "latitude=-29.4131"
+                  "&longitude=-66.8558"
+                  "&current="
+                  "temperature_2m,"
+                  "apparent_temperature,"
+                  "relative_humidity_2m,"
+                  "wind_speed_10m,"
+                  "weather_code"
+                  "&timezone=America%2FArgentina%2FLa_Rioja"
+              )
+
+              datos_clima = api_json(
+                  url_clima
+              )
+
+              actual = datos_clima[
+                  "current"
+              ]
+
+              clima = {
+
+                  "temperatura":
+                      actual.get(
+                          "temperature_2m",
+                          0
+                      ),
+
+                  "sensacion":
+                      actual.get(
+                          "apparent_temperature",
+                          0
+                      ),
+
+                  "humedad":
+                      actual.get(
+                          "relative_humidity_2m",
+                          0
+                      ),
+
+                  "viento":
+                      actual.get(
+                          "wind_speed_10m",
+                          0
+                      ),
+
+                  "codigo":
+                      actual.get(
+                          "weather_code",
+                          0
+                      )
+
+              }
+
+          except Exception as error:
+
+              print(
+                  "Error clima:",
+                  error
+              )
+
+
+          # ======================================
+          # GUARDAR JSON
+          # ======================================
+
+          datos = {
+
+              "actualizado":
+                  datetime.now(
+                      timezone.utc
+                  ).isoformat(),
+
+              "noticias":
+                  noticias,
+
+              "dolar":
+                  dolar,
+
+              "clima":
+                  clima
+
+          }
+
+
+          with open(
+              "noticias.json",
+              "w",
+              encoding="utf-8"
+          ) as archivo:
+
+              json.dump(
+                  datos,
+                  archivo,
+                  ensure_ascii=False,
+                  indent=2
+              )
+
+
+          print(
+              "================================"
+          )
+
+          print(
+              "ARENA 24 ACTUALIZADO"
+          )
+
+          print(
+              "Noticias:",
+              len(noticias)
+          )
+
+          print(
+              "Dólar:",
+              bool(dolar)
+          )
+
+          print(
+              "Clima:",
+              bool(clima)
+          )
+
+          print(
+              "================================"
+          )
+
+          PY
+
+
+      - name: Guardar cambios
+        run: |
+
+          git config user.name "ARENA 24 Bot"
+
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add noticias.json
+
+          if git diff --cached --quiet; then
+
+            echo "No hay cambios."
+
+          else
+
+            git commit \
+              -m "ARENA 24 - actualización automática"
+
+            git push
+
+          fi
