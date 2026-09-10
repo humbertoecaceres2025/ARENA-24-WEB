@@ -1,56 +1,27 @@
 {
-  "actualizado": "2026-09-10T00:00:00Z",
+  "actualizado": "Esperando primera actualización automática",
   "noticias": [
     {
-      "categoria": "LA RIOJA",
-      "titulo": "ARENA 24",
-      "resumen": "Información de La Rioja Capital y la provincia.",
-      "url": ""
-    },
-    {
-      "categoria": "POLICIALES",
-      "titulo": "Información policial",
-      "resumen": "Las principales noticias policiales.",
-      "url": ""
-    },
-    {
-      "categoria": "DEPORTES",
-      "titulo": "Actualidad deportiva",
-      "resumen": "Resultados y novedades deportivas.",
-      "url": ""
-    },
-    {
-      "categoria": "ARGENTINA",
-      "titulo": "Actualidad nacional",
-      "resumen": "Las principales noticias de Argentina.",
-      "url": ""
-    },
-    {
-      "categoria": "MUNDO",
-      "titulo": "Actualidad internacional",
-      "resumen": "Las noticias más importantes del mundo.",
-      "url": ""
+      "titulo": "ARENA 24 prepara su sistema automático de noticias",
+      "descripcion": "La página de ARENA 24 está preparada para recibir automáticamente información de La Rioja, Argentina y el mundo.",
+      "fuente": "ARENA 24",
+      "url": "#"
     }
   ],
-  "dolar": {
-    "oficial": {
-      "compra": 0,
-      "venta": 0
-    },
-    "blue": {
-      "compra": 0,
-      "venta": 0
-    },
-    "mep": {
-      "compra": 0,
-      "venta": 0
+  "policiales": [
+    {
+      "titulo": "Información policial de La Rioja",
+      "descripcion": "Las noticias policiales serán incorporadas automáticamente mediante el sistema de actualización.",
+      "fuente": "ARENA 24",
+      "url": "#"
     }
-  },
-  "clima": {
-    "temperatura": 0,
-    "sensacion": 0,
-    "humedad": 0,
-    "viento": 0,
-    "codigo": 0
-  }
+  ],
+  "deportes": [
+    {
+      "titulo": "Actualidad deportiva",
+      "descripcion": "ARENA 24 incorporará automáticamente las principales noticias deportivas.",
+      "fuente": "ARENA 24",
+      "url": "#"
+    }
+  ]
 }
