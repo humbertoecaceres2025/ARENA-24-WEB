@@ -1,453 +1,61 @@
-import json
-import re
-from datetime import datetime, timezone
-
-import requests
-import feedparser
-
-
-# =========================================================
-# ARENA 24
-# ACTUALIZADOR AUTOMÁTICO
-# Noticias + Dólar + Clima
-# =========================================================
-
-SALIDA = "noticias.json"
-
-HEADERS = {
-    "User-Agent": "ARENA24-NewsBot/1.0"
-}
-
-
-# =========================================================
-# FUENTES RSS
-# =========================================================
-
-FUENTES = [
-    {
-        "categoria": "Noticias",
-        "nombre": "Google Noticias",
-        "url": (
-            "https://news.google.com/rss/"
-            "search?q=La+Rioja+Argentina"
-            "&hl=es-419"
-            "&gl=AR"
-            "&ceid=AR:es-419"
-        )
-    },
-    {
-        "categoria": "Noticias",
-        "nombre": "Google Noticias Argentina",
-        "url": (
-            "https://news.google.com/rss/"
-            "search?q=Argentina"
-            "&hl=es-419"
-            "&gl=AR"
-            "&ceid=AR:es-419"
-        )
-    },
-    {
-        "categoria": "Policiales",
-        "nombre": "Google Noticias Policiales",
-        "url": (
-            "https://news.google.com/rss/"
-            "search?q=policiales+La+Rioja"
-            "&hl=es-419"
-            "&gl=AR"
-            "&ceid=AR:es-419"
-        )
-    },
-    {
-        "categoria": "Deportes",
-        "nombre": "Google Noticias Deportes",
-        "url": (
-            "https://news.google.com/rss/"
-            "search?q=deportes+Argentina"
-            "&hl=es-419"
-            "&gl=AR"
-            "&ceid=AR:es-419"
-        )
-    }
-]
-
-
-# =========================================================
-# LIMPIAR TEXTO
-# =========================================================
-
-def limpiar(texto):
-
-    if not texto:
-        return ""
-
-    texto = re.sub(
-        r"<[^>]*>",
-        "",
-        str(texto)
-    )
-
-    reemplazos = {
-        "&nbsp;": " ",
-        "&amp;": "&",
-        "&quot;": '"',
-        "&#39;": "'",
-        "&apos;": "'"
-    }
-
-    for viejo, nuevo in reemplazos.items():
-        texto = texto.replace(viejo, nuevo)
-
-    return " ".join(texto.split())
-
+name: ARENA 24 - Actualizar información
 
-# =========================================================
-# OBTENER RSS
-# =========================================================
+on:
 
-def obtener_feed(url):
+  schedule:
+    - cron: "*/30 * * * *"
 
-    try:
+  workflow_dispatch:
 
-        respuesta = requests.get(
-            url,
-            headers=HEADERS,
-            timeout=20
-        )
+permissions:
+  contents: write
 
-        respuesta.raise_for_status()
+jobs:
 
-        feed = feedparser.parse(
-            respuesta.content
-        )
+  actualizar:
 
-        if getattr(feed, "bozo", False):
-            print(
-                "Advertencia: RSS con formato irregular."
-            )
+    runs-on: ubuntu-latest
 
-        return feed
+    steps:
 
-    except Exception as error:
+      - name: Descargar repositorio
+        uses: actions/checkout@v4
 
-        print(
-            f"ERROR RSS: {error}"
-        )
 
-        return None
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
 
 
-# =========================================================
-# NOTICIAS
-# =========================================================
+      - name: Instalar dependencias
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests feedparser
 
-def obtener_noticias():
 
-    noticias = []
-    enlaces = set()
+      - name: Actualizar noticias, dólar y clima
+        run: |
+          python actualizar_noticias.py
 
-    for fuente in FUENTES:
 
-        print(
-            f"Consultando: {fuente['nombre']}"
-        )
+      - name: Guardar noticias.json
+        run: |
 
-        feed = obtener_feed(
-            fuente["url"]
-        )
+          git config user.name "ARENA 24 Bot"
 
-        if feed is None:
-            continue
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-        entradas = getattr(
-            feed,
-            "entries",
-            []
-        )
+          git add noticias.json
 
-        for item in entradas[:15]:
+          if git diff --cached --quiet; then
 
-            titulo = limpiar(
-                item.get(
-                    "title",
-                    ""
-                )
-            )
+            echo "No hay cambios para guardar."
 
-            descripcion = limpiar(
-                item.get(
-                    "summary",
-                    ""
-                )
-            )
+          else
 
-            enlace = item.get(
-                "link",
-                ""
-            )
+            git commit -m "Actualización automática ARENA 24"
 
-            fecha = (
-                item.get(
-                    "published",
-                    ""
-                )
-                or
-                item.get(
-                    "updated",
-                    ""
-                )
-            )
+            git push
 
-            if not titulo:
-                continue
-
-            if enlace and enlace in enlaces:
-                continue
-
-            if enlace:
-                enlaces.add(enlace)
-
-            noticias.append({
-                "categoria": fuente["categoria"],
-                "titulo": titulo,
-                "descripcion": descripcion[:400],
-                "fuente": fuente["nombre"],
-                "fecha": fecha,
-                "url": enlace
-            })
-
-    return noticias
-
-
-# =========================================================
-# DÓLAR
-# =========================================================
-
-def obtener_dolar():
-
-    url = "https://dolarapi.com/v1/dolares/oficial"
-
-    try:
-
-        respuesta = requests.get(
-            url,
-            headers=HEADERS,
-            timeout=20
-        )
-
-        respuesta.raise_for_status()
-
-        data = respuesta.json()
-
-        return {
-            "compra": data.get(
-                "compra",
-                "--"
-            ),
-            "venta": data.get(
-                "venta",
-                "--"
-            )
-        }
-
-    except Exception as error:
-
-        print(
-            f"ERROR DÓLAR: {error}"
-        )
-
-        return {
-            "compra": "--",
-            "venta": "--"
-        }
-
-
-# =========================================================
-# CLIMA
-# =========================================================
-
-def interpretar_clima(codigo):
-
-    equivalencias = {
-
-        0: ("Despejado", "☀️"),
-
-        1: ("Principalmente despejado", "🌤️"),
-
-        2: ("Parcialmente nublado", "⛅"),
-
-        3: ("Nublado", "☁️"),
-
-        45: ("Niebla", "🌫️"),
-        48: ("Niebla", "🌫️"),
-
-        51: ("Llovizna", "🌦️"),
-        53: ("Llovizna", "🌦️"),
-        55: ("Llovizna", "🌦️"),
-
-        61: ("Lluvia", "🌧️"),
-        63: ("Lluvia", "🌧️"),
-        65: ("Lluvia fuerte", "🌧️"),
-
-        71: ("Nieve", "❄️"),
-        73: ("Nieve", "❄️"),
-        75: ("Nieve fuerte", "❄️"),
-
-        80: ("Chaparrones", "🌦️"),
-        81: ("Chaparrones", "🌦️"),
-        82: ("Chaparrones fuertes", "🌧️"),
-
-        95: ("Tormenta", "⛈️"),
-        96: ("Tormenta", "⛈️"),
-        99: ("Tormenta fuerte", "⛈️")
-    }
-
-    return equivalencias.get(
-        codigo,
-        ("Condiciones variables", "🌤️")
-    )
-
-
-def obtener_clima():
-
-    # La Rioja Capital
-    latitud = -29.4131
-    longitud = -66.8558
-
-    url = (
-        "https://api.open-meteo.com/v1/forecast"
-    )
-
-    parametros = {
-        "latitude": latitud,
-        "longitude": longitud,
-        "current": "temperature_2m,weather_code",
-        "timezone": "America/Argentina/La_Rioja"
-    }
-
-    try:
-
-        respuesta = requests.get(
-            url,
-            params=parametros,
-            headers=HEADERS,
-            timeout=20
-        )
-
-        respuesta.raise_for_status()
-
-        data = respuesta.json()
-
-        current = data.get(
-            "current",
-            {}
-        )
-
-        temperatura = current.get(
-            "temperature_2m",
-            "--"
-        )
-
-        codigo = current.get(
-            "weather_code",
-            0
-        )
-
-        descripcion, icono = interpretar_clima(
-            codigo
-        )
-
-        return {
-            "ciudad": "La Rioja",
-            "temperatura": temperatura,
-            "descripcion": descripcion,
-            "icono": icono
-        }
-
-    except Exception as error:
-
-        print(
-            f"ERROR CLIMA: {error}"
-        )
-
-        return {
-            "ciudad": "La Rioja",
-            "temperatura": "--",
-            "descripcion": "No disponible",
-            "icono": "🌤️"
-        }
-
-
-# =========================================================
-# GUARDAR JSON
-# =========================================================
-
-def guardar_json():
-
-    print("")
-    print("=" * 50)
-    print("ARENA 24 - ACTUALIZACIÓN AUTOMÁTICA")
-    print("=" * 50)
-    print("")
-
-    noticias = obtener_noticias()
-
-    print(
-        f"Noticias encontradas: {len(noticias)}"
-    )
-
-    dolar = obtener_dolar()
-
-    print(
-        f"Dólar compra: {dolar['compra']}"
-    )
-
-    print(
-        f"Dólar venta: {dolar['venta']}"
-    )
-
-    clima = obtener_clima()
-
-    print(
-        f"Clima: {clima['temperatura']}°C - "
-        f"{clima['descripcion']}"
-    )
-
-    datos = {
-        "actualizado": datetime.now(
-            timezone.utc
-        ).isoformat(),
-
-        "noticias": noticias,
-
-        "dolar": dolar,
-
-        "clima": clima
-    }
-
-    with open(
-        SALIDA,
-        "w",
-        encoding="utf-8"
-    ) as archivo:
-
-        json.dump(
-            datos,
-            archivo,
-            ensure_ascii=False,
-            indent=2
-        )
-
-    print("")
-    print(
-        f"OK: {SALIDA} generado correctamente."
-    )
-    print("")
-
-
-# =========================================================
-# EJECUCIÓN
-# =========================================================
-
-if __name__ == "__main__":
-
-    guardar_json()
+          fi
