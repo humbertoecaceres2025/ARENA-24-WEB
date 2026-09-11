@@ -1454,6 +1454,859 @@
 </body>
 
 </html>
+/* =========================================================
+   ARENA 24 RADIO
+   PLAYER MODERNO
+========================================================= */
+
+.modern-radio-section {
+    position: relative;
+
+    padding: 24px 0 30px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #080a0f 0%,
+            #0d1119 100%
+        );
+
+    overflow: hidden;
+}
+
+
+/* PLAYER */
+
+.modern-radio-player {
+
+    position: relative;
+
+    min-height: 150px;
+
+    display: grid;
+
+    grid-template-columns:
+        240px
+        1fr
+        190px;
+
+    align-items: center;
+
+    gap: 28px;
+
+    padding: 24px 28px;
+
+    overflow: hidden;
+
+    background:
+        linear-gradient(
+            135deg,
+            #141a24,
+            #0d1119
+        );
+
+    border:
+        1px solid rgba(255,255,255,.10);
+
+    border-radius: 20px;
+
+    box-shadow:
+        0 20px 60px rgba(0,0,0,.4);
+}
+
+
+/* LÍNEA ROJA */
+
+.modern-radio-player::before {
+
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+    right: 0;
+
+    height: 3px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            #e21b2d,
+            #ff4052,
+            #e21b2d,
+            transparent
+        );
+
+}
+
+
+/* BRILLO */
+
+.radio-glow {
+
+    position: absolute;
+
+    width: 300px;
+    height: 300px;
+
+    left: -120px;
+    top: -170px;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(226,27,45,.22),
+            transparent 70%
+        );
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   BRAND
+========================================================= */
+
+.modern-radio-brand {
+
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    z-index: 2;
+}
+
+
+.modern-radio-logo {
+
+    position: relative;
+
+    width: 66px;
+    height: 66px;
+
+    flex: 0 0 66px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ef2638,
+            #a60e1c
+        );
+
+    border-radius: 16px;
+
+    box-shadow:
+        0 10px 30px rgba(226,27,45,.25);
+}
+
+
+.radio-mic {
+
+    position: relative;
+
+    z-index: 3;
+
+    font-size: 27px;
+}
+
+
+.radio-waves {
+
+    position: absolute;
+
+    right: 7px;
+    bottom: 8px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 2px;
+
+    height: 18px;
+}
+
+
+.radio-waves i {
+
+    display: block;
+
+    width: 2px;
+
+    height: 7px;
+
+    background:
+        rgba(255,255,255,.65);
+
+    border-radius: 2px;
+}
+
+
+.radio-waves i:nth-child(1) {
+    height: 7px;
+}
+
+.radio-waves i:nth-child(2) {
+    height: 11px;
+}
+
+.radio-waves i:nth-child(3) {
+    height: 16px;
+}
+
+.radio-waves i:nth-child(4) {
+    height: 11px;
+}
+
+.radio-waves i:nth-child(5) {
+    height: 7px;
+}
+
+
+/* BRAND TEXTO */
+
+.modern-radio-info {
+
+    line-height: 1;
+}
+
+
+.modern-live {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    margin-bottom: 7px;
+
+    color:
+        #ff4b5c;
+
+    font-size: 9px;
+
+    font-weight: 900;
+
+    letter-spacing: 1.5px;
+}
+
+
+.modern-live span {
+
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background:
+        #ff3044;
+
+    box-shadow:
+        0 0 0 4px rgba(226,27,45,.12);
+
+    animation:
+        modernRadioPulse 1.3s infinite;
+}
+
+
+@keyframes modernRadioPulse {
+
+    50% {
+        opacity: .35;
+        transform: scale(.75);
+    }
+
+}
+
+
+.modern-radio-info h2 {
+
+    color: white;
+
+    font-size: 25px;
+
+    font-weight: 900;
+
+    letter-spacing: -1px;
+}
+
+
+.modern-radio-info p {
+
+    margin-top: 4px;
+
+    color:
+        #7d8796;
+
+    font-size: 9px;
+
+    font-weight: 900;
+
+    letter-spacing: 3px;
+}
+
+
+/* =========================================================
+   CENTRO
+========================================================= */
+
+.modern-radio-center {
+
+    min-width: 0;
+
+    padding-left: 25px;
+
+    border-left:
+        1px solid rgba(255,255,255,.08);
+}
+
+
+.modern-radio-label {
+
+    margin-bottom: 5px;
+
+    color:
+        #697484;
+
+    font-size: 8px;
+
+    font-weight: 900;
+
+    letter-spacing: 1.4px;
+}
+
+
+.modern-radio-title {
+
+    color: white;
+
+    font-size: 18px;
+
+    font-weight: 800;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+}
+
+
+.modern-radio-description {
+
+    margin-top: 4px;
+
+    color:
+        #8b95a4;
+
+    font-size: 10px;
+}
+
+
+/* =========================================================
+   VISUALIZADOR
+========================================================= */
+
+.radio-visualizer {
+
+    height: 30px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 3px;
+
+    margin-top: 13px;
+}
+
+
+.radio-visualizer span {
+
+    width: 3px;
+
+    height: 8px;
+
+    background:
+        #e21b2d;
+
+    border-radius: 5px;
+
+    opacity: .35;
+}
+
+
+.radio-visualizer span:nth-child(1) {
+    height: 8px;
+}
+
+.radio-visualizer span:nth-child(2) {
+    height: 15px;
+}
+
+.radio-visualizer span:nth-child(3) {
+    height: 23px;
+}
+
+.radio-visualizer span:nth-child(4) {
+    height: 13px;
+}
+
+.radio-visualizer span:nth-child(5) {
+    height: 27px;
+}
+
+.radio-visualizer span:nth-child(6) {
+    height: 18px;
+}
+
+.radio-visualizer span:nth-child(7) {
+    height: 10px;
+}
+
+.radio-visualizer span:nth-child(8) {
+    height: 22px;
+}
+
+.radio-visualizer span:nth-child(9) {
+    height: 28px;
+}
+
+.radio-visualizer span:nth-child(10) {
+    height: 14px;
+}
+
+.radio-visualizer span:nth-child(11) {
+    height: 24px;
+}
+
+.radio-visualizer span:nth-child(12) {
+    height: 17px;
+}
+
+.radio-visualizer span:nth-child(13) {
+    height: 9px;
+}
+
+.radio-visualizer span:nth-child(14) {
+    height: 20px;
+}
+
+.radio-visualizer span:nth-child(15) {
+    height: 13px;
+}
+
+
+/* ANIMACIÓN SOLO CUANDO SUENA */
+
+.modern-radio-player.is-playing
+.radio-visualizer span {
+
+    opacity: 1;
+
+    animation:
+        radioBars .65s ease-in-out infinite alternate;
+}
+
+
+.modern-radio-player.is-playing
+.radio-visualizer span:nth-child(2) {
+    animation-delay: -.2s;
+}
+
+.modern-radio-player.is-playing
+.radio-visualizer span:nth-child(3) {
+    animation-delay: -.45s;
+}
+
+.modern-radio-player.is-playing
+.radio-visualizer span:nth-child(4) {
+    animation-delay: -.15s;
+}
+
+.modern-radio-player.is-playing
+.radio-visualizer span:nth-child(5) {
+    animation-delay: -.4s;
+}
+
+.modern-radio-player.is-playing
+.radio-visualizer span:nth-child(6) {
+    animation-delay: -.25s;
+}
+
+
+@keyframes radioBars {
+
+    from {
+        transform: scaleY(.35);
+    }
+
+    to {
+        transform: scaleY(1.2);
+    }
+
+}
+
+
+/* =========================================================
+   CONTROLES
+========================================================= */
+
+.modern-radio-controls {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: flex-end;
+
+    gap: 16px;
+
+    z-index: 2;
+}
+
+
+.modern-play-button {
+
+    width: 65px;
+    height: 65px;
+
+    flex: 0 0 65px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    color: white;
+
+    background:
+        #e21b2d;
+
+    border: 0;
+
+    border-radius: 50%;
+
+    box-shadow:
+        0 8px 25px rgba(226,27,45,.32);
+
+    transition:
+        transform .2s ease,
+        background .2s ease,
+        box-shadow .2s ease;
+}
+
+
+.modern-play-button:hover {
+
+    background:
+        #ff3548;
+
+    transform:
+        scale(1.06);
+
+    box-shadow:
+        0 10px 35px rgba(226,27,45,.45);
+}
+
+
+.modern-play-button:active {
+
+    transform:
+        scale(.96);
+}
+
+
+#modern-play-icon {
+
+    font-size: 19px;
+
+    margin-left: 3px;
+}
+
+
+/* VOLUMEN */
+
+.modern-volume {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+}
+
+
+.modern-volume span {
+
+    font-size: 13px;
+}
+
+
+.modern-volume input {
+
+    width: 75px;
+
+    height: 4px;
+
+    accent-color:
+        #e21b2d;
+
+    cursor: pointer;
+}
+
+
+/* =========================================================
+   ESTADO
+========================================================= */
+
+.modern-radio-status {
+
+    position: absolute;
+
+    left: 28px;
+    bottom: 9px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    color:
+        #626d7c;
+
+    font-size: 8px;
+
+    font-weight: 800;
+
+    letter-spacing: .8px;
+}
+
+
+.status-dot {
+
+    width: 5px;
+    height: 5px;
+
+    border-radius: 50%;
+
+    background:
+        #4e5867;
+}
+
+
+/* ESTADO ACTIVO */
+
+.modern-radio-player.is-playing
+.status-dot {
+
+    background:
+        #16d47b;
+
+    box-shadow:
+        0 0 8px rgba(22,212,123,.8);
+}
+
+
+.modern-radio-player.is-playing
+.modern-radio-status {
+
+    color:
+        #16d47b;
+}
+
+
+/* AUDIO OCULTO */
+
+#modern-arena-radio {
+
+    display: none;
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 950px) {
+
+    .modern-radio-player {
+
+        grid-template-columns:
+            210px
+            1fr
+            150px;
+
+        gap: 18px;
+
+        padding:
+            22px;
+    }
+
+    .modern-radio-center {
+
+        padding-left:
+            18px;
+    }
+
+}
+
+
+/* =========================================================
+   MÓVIL
+========================================================= */
+
+@media (max-width: 720px) {
+
+    .modern-radio-section {
+
+        padding:
+            16px 0 22px;
+    }
+
+
+    .modern-radio-player {
+
+        grid-template-columns:
+            1fr;
+
+        gap:
+            20px;
+
+        padding:
+            21px;
+
+        padding-bottom:
+            35px;
+
+        border-radius:
+            16px;
+    }
+
+
+    .modern-radio-brand {
+
+        justify-content:
+            flex-start;
+    }
+
+
+    .modern-radio-logo {
+
+        width:
+            58px;
+
+        height:
+            58px;
+
+        flex-basis:
+            58px;
+    }
+
+
+    .modern-radio-info h2 {
+
+        font-size:
+            22px;
+    }
+
+
+    .modern-radio-center {
+
+        padding:
+            16px 0 0;
+
+        border-left:
+            0;
+
+        border-top:
+            1px solid rgba(255,255,255,.08);
+    }
+
+
+    .modern-radio-controls {
+
+        justify-content:
+            flex-start;
+    }
+
+
+    .modern-play-button {
+
+        width:
+            58px;
+
+        height:
+            58px;
+
+        flex-basis:
+            58px;
+    }
+
+
+    .modern-radio-status {
+
+        left:
+            21px;
+
+        bottom:
+            9px;
+    }
+
+}
+
+
+/* =========================================================
+   MÓVIL PEQUEÑO
+========================================================= */
+
+@media (max-width: 400px) {
+
+    .modern-radio-player {
+
+        padding:
+            17px;
+
+        padding-bottom:
+            34px;
+    }
+
+
+    .modern-radio-title {
+
+        font-size:
+            16px;
+    }
+
+
+    .modern-radio-description {
+
+        font-size:
+            9px;
+    }
+
+
+    .modern-volume input {
+
+        width:
+            60px;
+    }
+
+}
+
 
 
 
