@@ -2944,4 +2944,481 @@ section {
     }
 
 }
+/* =====================================================
+   ESTADOS DEL PLAYER ARENA 24
+===================================================== */
+
+.arena-radio-status span {
+    width: 7px;
+    height: 7px;
+
+    display: inline-block;
+
+    border-radius: 50%;
+
+    background: #596372;
+}
+
+
+/* CONECTANDO */
+
+.arena-radio-status span.connecting {
+
+    background: #f5b83d;
+
+    box-shadow:
+        0 0 8px rgba(245,184,61,.8);
+
+    animation:
+        radioConnecting 1s infinite;
+}
+
+
+/* ONLINE */
+
+.arena-radio-status span.online {
+
+    background: #16d47b;
+
+    box-shadow:
+        0 0 10px rgba(22,212,123,.9);
+}
+
+
+/* ERROR */
+
+.arena-radio-status span.error {
+
+    background: #ff3044;
+
+    box-shadow:
+        0 0 9px rgba(255,48,68,.8);
+}
+
+
+.arena-radio-player.playing {
+
+    border-color:
+        rgba(22,212,123,.25);
+
+    box-shadow:
+        0 20px 65px rgba(22,212,123,.08);
+}
+
+
+@keyframes radioConnecting {
+
+    50% {
+        opacity: .3;
+    }
+
+}
+
+
+/* VISUALIZADOR ACTIVO */
+
+.arena-radio-player.playing
+.arena-radio-bars i {
+
+    opacity: 1;
+
+    animation:
+        arenaRadioSound .6s
+        ease-in-out
+        infinite alternate;
+}
+
+
+.arena-radio-player.playing
+.arena-radio-bars i:nth-child(2) {
+    animation-delay: -.15s;
+}
+
+.arena-radio-player.playing
+.arena-radio-bars i:nth-child(4) {
+    animation-delay: -.3s;
+}
+
+.arena-radio-player.playing
+.arena-radio-bars i:nth-child(6) {
+    animation-delay: -.45s;
+}
+
+.arena-radio-player.playing
+.arena-radio-bars i:nth-child(9) {
+    animation-delay: -.2s;
+}
+
+
+@keyframes arenaRadioSound {
+
+    from {
+        transform:
+            scaleY(.3);
+    }
+
+    to {
+        transform:
+            scaleY(1);
+    }
+
+}
+/* =====================================================
+   ESTADOS DEL PLAYER ARENA 24
+===================================================== */
+
+.arena-radio-status span {
+    width: 7px;
+    height: 7px;
+
+    display: inline-block;
+
+    border-radius: 50%;
+
+    background: #596372;
+}
+
+
+/* CONECTANDO */
+
+.arena-radio-status span.connecting {
+
+    background: #f5b83d;
+
+    box-shadow:
+        0 0 8px rgba(245,184,61,.8);
+
+    animation:
+        radioConnecting 1s infinite;
+}
+
+
+/* ONLINE */
+
+.arena-radio-status span.online {
+
+    background: #16d47b;
+
+    box-shadow:
+        0 0 10px rgba(22,212,123,.9);
+}
+
+
+/* ERROR */
+
+.arena-radio-status span.error {
+
+    background: #ff3044;
+
+    box-shadow:
+        0 0 9px rgba(255,48,68,.8);
+}
+
+
+.arena-radio-player.playing {
+
+    border-color:
+        rgba(22,212,123,.25);
+
+    box-shadow:
+        0 20px 65px rgba(22,212,123,.08);
+}
+
+
+@keyframes radioConnecting {
+
+    50% {
+        opacity: .3;
+    }
+
+}
+
+
+/* VISUALIZADOR ACTIVO */
+
+.arena-radio-player.playing
+.arena-radio-bars i {
+
+    opacity: 1;
+
+    animation:
+        arenaRadioSound .6s
+        ease-in-out
+        infinite alternate;
+}
+
+
+.arena-radio-player.playing
+.arena-radio-bars i:nth-child(2) {
+    animation-delay: -.15s;
+}
+
+.arena-radio-player.playing
+.arena-radio-bars i:nth-child(4) {
+    animation-delay: -.3s;
+}
+
+.arena-radio-player.playing
+.arena-radio-bars i:nth-child(6) {
+    animation-delay: -.45s;
+}
+
+.arena-radio-player.playing
+.arena-radio-bars i:nth-child(9) {
+    animation-delay: -.2s;
+}
+
+
+@keyframes arenaRadioSound {
+
+    from {
+        transform:
+            scaleY(.3);
+    }
+
+    to {
+        transform:
+            scaleY(1);
+    }
+
+}
+/* =====================================================
+   ESTADOS DEL PLAYER ARENA 24
+===================================================== */
+
+.arena-radio-status span {
+    width: 7px;
+    height: 7px;
+
+    display: inline-block;
+
+    border-radius: 50%;
+
+    background: #596372;
+}
+
+
+/* CONECTANDO */
+
+.arena-radio-status span.connecting {
+
+    background: #f5b83d;
+
+    box-shadow:
+        0 0 8px rgba(245,184,61,.8);
+
+    animation:
+        radioConnecting 1s infinite;
+}
+
+
+/* ONLINE */
+
+.arena-radio-status span.online {
+
+    background: #16d47b;
+
+    box-shadow:
+        0 0 10px rgba(22,212,123,.9);
+}
+
+
+/* ERROR */
+
+.arena-radio-status span.error {
+
+    background: #ff3044;
+
+    box-shadow:
+        0 0 9px rgba(255,48,68,.8);
+}
+
+
+.arena-radio-player.playing {
+
+    border-color:
+        rgba(22,212,123,.25);
+
+    box-shadow:
+        0 20px 65px rgba(22,212,123,.08);
+}
+
+
+@keyframes radioConnecting {
+
+    50% {
+        opacity: .3;
+    }
+
+}
+
+
+/* VISUALIZADOR ACTIVO */
+
+.arena-radio-player.playing
+.arena-radio-bars i {
+
+    opacity: 1;
+
+    animation:
+        arenaRadioSound .6s
+        ease-in-out
+        infinite alternate;
+}
+
+
+.arena-radio-player.playing
+.arena-radio-bars i:nth-child(2) {
+    animation-delay: -.15s;
+}
+
+.arena-radio-player.playing
+.arena-radio-bars i:nth-child(4) {
+    animation-delay: -.3s;
+}
+
+.arena-radio-player.playing
+.arena-radio-bars i:nth-child(6) {
+    animation-delay: -.45s;
+}
+
+.arena-radio-player.playing
+.arena-radio-bars i:nth-child(9) {
+    animation-delay: -.2s;
+}
+
+
+@keyframes arenaRadioSound {
+
+    from {
+        transform:
+            scaleY(.3);
+    }
+
+    to {
+        transform:
+            scaleY(1);
+    }
+
+}
+/* =====================================================
+   ESTADOS DEL PLAYER ARENA 24
+===================================================== */
+
+.arena-radio-status span {
+    width: 7px;
+    height: 7px;
+
+    display: inline-block;
+
+    border-radius: 50%;
+
+    background: #596372;
+}
+
+
+/* CONECTANDO */
+
+.arena-radio-status span.connecting {
+
+    background: #f5b83d;
+
+    box-shadow:
+        0 0 8px rgba(245,184,61,.8);
+
+    animation:
+        radioConnecting 1s infinite;
+}
+
+
+/* ONLINE */
+
+.arena-radio-status span.online {
+
+    background: #16d47b;
+
+    box-shadow:
+        0 0 10px rgba(22,212,123,.9);
+}
+
+
+/* ERROR */
+
+.arena-radio-status span.error {
+
+    background: #ff3044;
+
+    box-shadow:
+        0 0 9px rgba(255,48,68,.8);
+}
+
+
+.arena-radio-player.playing {
+
+    border-color:
+        rgba(22,212,123,.25);
+
+    box-shadow:
+        0 20px 65px rgba(22,212,123,.08);
+}
+
+
+@keyframes radioConnecting {
+
+    50% {
+        opacity: .3;
+    }
+
+}
+
+
+/* VISUALIZADOR ACTIVO */
+
+.arena-radio-player.playing
+.arena-radio-bars i {
+
+    opacity: 1;
+
+    animation:
+        arenaRadioSound .6s
+        ease-in-out
+        infinite alternate;
+}
+
+
+.arena-radio-player.playing
+.arena-radio-bars i:nth-child(2) {
+    animation-delay: -.15s;
+}
+
+.arena-radio-player.playing
+.arena-radio-bars i:nth-child(4) {
+    animation-delay: -.3s;
+}
+
+.arena-radio-player.playing
+.arena-radio-bars i:nth-child(6) {
+    animation-delay: -.45s;
+}
+
+.arena-radio-player.playing
+.arena-radio-bars i:nth-child(9) {
+    animation-delay: -.2s;
+}
+
+
+@keyframes arenaRadioSound {
+
+    from {
+        transform:
+            scaleY(.3);
+    }
+
+    to {
+        transform:
+            scaleY(1);
+    }
+
+}
+
 
