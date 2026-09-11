@@ -189,49 +189,205 @@
 </div>
 
 
-<!-- ==================================================
+<!-- =====================================================
      NOTICIAS
-================================================== -->
+===================================================== -->
 
-<section
-  id="noticias"
-  class="section"
->
+<section id="noticias" class="news-section">
 
-  <div class="section-title">
+  <div class="container">
 
-    <span>01</span>
+    <div class="section-heading">
 
-    <div>
-      <h2>📰 Noticias</h2>
+      <div>
+        <span class="section-kicker">
+          ACTUALIDAD
+        </span>
 
-      <p>
-        La actualidad de La Rioja, Argentina y el mundo.
-      </p>
+        <h2>
+          Últimas Noticias
+        </h2>
+
+        <p class="news-heading-text">
+          Toda la información de La Rioja y el país,
+          actualizada permanentemente.
+        </p>
+      </div>
+
+      <span class="section-number">
+        01
+      </span>
+
+    </div>
+
+
+    <!-- =================================================
+         ESTADO DE ACTUALIZACIÓN
+    ================================================== -->
+
+    <div class="news-status">
+
+      <div class="news-status-live">
+        <span></span>
+        EN VIVO
+      </div>
+
+      <div id="news-update-status">
+        Actualizando información...
+      </div>
+
+    </div>
+
+
+    <!-- =================================================
+         NOTICIA DESTACADA
+    ================================================== -->
+
+    <div id="featured-news" class="featured-news">
+
+      <div class="featured-news-image">
+
+        <img
+          id="featured-news-img"
+          src=""
+          alt="Noticia destacada"
+          loading="eager"
+        >
+
+        <div class="featured-news-category">
+          ÚLTIMA HORA
+        </div>
+
+      </div>
+
+
+      <div class="featured-news-content">
+
+        <span id="featured-news-source">
+          ARENA 24
+        </span>
+
+        <h3 id="featured-news-title">
+          Cargando las últimas noticias...
+        </h3>
+
+        <p id="featured-news-description">
+          Estamos actualizando la información.
+        </p>
+
+        <div class="featured-news-footer">
+
+          <span id="featured-news-time">
+            Actualizando...
+          </span>
+
+          <a
+            id="featured-news-link"
+            href="#"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            LEER NOTICIA →
+          </a>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- =================================================
+         GRID DE NOTICIAS
+    ================================================== -->
+
+    <div
+      id="news-grid"
+      class="news-grid"
+      aria-live="polite"
+    >
+
+      <article class="news-loading">
+        <div class="news-loading-image"></div>
+
+        <div class="news-loading-line"></div>
+        <div class="news-loading-line short"></div>
+        <div class="news-loading-line tiny"></div>
+      </article>
+
+      <article class="news-loading">
+        <div class="news-loading-image"></div>
+
+        <div class="news-loading-line"></div>
+        <div class="news-loading-line short"></div>
+        <div class="news-loading-line tiny"></div>
+      </article>
+
+      <article class="news-loading">
+        <div class="news-loading-image"></div>
+
+        <div class="news-loading-line"></div>
+        <div class="news-loading-line short"></div>
+        <div class="news-loading-line tiny"></div>
+      </article>
+
+    </div>
+
+
+    <!-- =================================================
+         ERROR / RESPALDO
+    ================================================== -->
+
+    <div
+      id="news-error"
+      class="news-error"
+      hidden
+    >
+
+      <div class="news-error-icon">
+        !
+      </div>
+
+      <div>
+        <strong>
+          Información temporalmente no disponible
+        </strong>
+
+        <p>
+          Estamos intentando actualizar las noticias.
+          Volvé a consultar en unos minutos.
+        </p>
+      </div>
+
+      <button
+        id="news-retry"
+        type="button"
+      >
+        REINTENTAR
+      </button>
+
+    </div>
+
+
+    <!-- =================================================
+         VER MÁS
+    ================================================== -->
+
+    <div class="news-more">
+
+      <button
+        id="load-more-news"
+        type="button"
+      >
+        VER MÁS NOTICIAS
+        <span>→</span>
+      </button>
+
     </div>
 
   </div>
 
-
-  <div
-    id="news-grid"
-    class="news-grid"
-  >
-
-    <article class="loading-card">
-
-      <div class="loader"></div>
-
-      <p>
-        Cargando noticias...
-      </p>
-
-    </article>
-
-  </div>
-
 </section>
-
 
 <!-- ==================================================
      POLICIALES
