@@ -2,14 +2,9 @@ name: ARENA 24 - Actualizar noticias
 
 on:
   schedule:
-    # Cada 60 minutos
-    - cron: "*/60 * * * *"
+    - cron: "*/30 * * * *"
 
   workflow_dispatch:
-
-  push:
-    paths:
-      - ".github/workflows/actualizar-datos.yml"
 
 permissions:
   contents: write
@@ -22,38 +17,20 @@ jobs:
 
     steps:
 
-      # ==================================================
-      # 1. DESCARGAR REPOSITORIO
-      # ==================================================
-
       - name: Descargar repositorio
         uses: actions/checkout@v4
-
-      # ==================================================
-      # 2. CONFIGURAR PYTHON
-      # ==================================================
 
       - name: Configurar Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.x"
 
-      # ==================================================
-      # 3. INSTALAR DEPENDENCIAS
-      # ==================================================
-
       - name: Instalar dependencias
         run: |
           python -m pip install --upgrade pip
-          pip install feedparser requests
+          pip install feedparser requests beautifulsoup4
 
-      # ==================================================
-      # 4. ACTUALIZAR NOTICIAS
-      # ==================================================
-
-      - name: Obtener noticias
-        env:
-          PYTHONUNBUFFERED: "1"
+      - name: Obtener noticias RSS directas
         run: |
 
           python <<'PY'
@@ -62,165 +39,127 @@ jobs:
           import os
           import re
           from datetime import datetime, timezone
-          from email.utils import parsedate_to_datetime
 
           import feedparser
           import requests
+          from bs4 import BeautifulSoup
 
-
-          # ==================================================
-          # FUENTES RSS
-          # ==================================================
-
-          FEEDS = [
-
-              {
-                  "name": "Google News - La Rioja",
-                  "url":
-                      "https://news.google.com/rss/search?q=La+Rioja+Argentina&hl=es-419&gl=AR&ceid=AR:es-419",
-                  "category": "LA RIOJA"
-              },
-
-              {
-                  "name": "Google News - Argentina",
-                  "url":
-                      "https://news.google.com/rss/search?q=Argentina&hl=es-419&gl=AR&ceid=AR:es-419",
-                  "category": "ARGENTINA"
-              },
-
-              {
-                  "name": "Google News - Deportes",
-                  "url":
-                      "https://news.google.com/rss/search?q=Deportes+Argentina&hl=es-419&gl=AR&ceid=AR:es-419",
-                  "category": "DEPORTES"
-              },
-
-              {
-                  "name": "Google News - Policiales",
-                  "url":
-                      "https://news.google.com/rss/search?q=Policiales+Argentina&hl=es-419&gl=AR&ceid=AR:es-419",
-                  "category": "POLICIALES"
-              }
-
-          ]
-
-
-          # ==================================================
-          # CONFIGURACIÓN
-          # ==================================================
 
           OUTPUT = "noticias.json"
 
-          MAX_TOTAL = 30
+          MAX_TOTAL = 50
 
           TIMEOUT = 20
 
 
           # ==================================================
-          # UTILIDADES
+          # FUENTES DIRECTAS
+          #
+          # NO SE UTILIZA GOOGLE NEWS
           # ==================================================
+
+          FEEDS = [
+
+              # ==============================================
+              # LA RIOJA
+              # ==============================================
+
+              {
+                  "name": "El Independiente",
+                  "url": "https://www.elindependiente.com.ar/",
+                  "category": "LA RIOJA",
+                  "type": "website"
+              },
+
+              {
+                  "name": "Nueva Rioja",
+                  "url": "https://www.nuevarioja.com.ar/",
+                  "category": "LA RIOJA",
+                  "type": "website"
+              },
+
+
+              # ==============================================
+              # NACIONALES
+              # ==============================================
+
+              {
+                  "name": "Clarín",
+                  "url": "https://www.clarin.com/rss/lo-ultimo/",
+                  "category": "NACIONALES",
+                  "type": "rss"
+              },
+
+              {
+                  "name": "LA NACION",
+                  "url": "https://www.lanacion.com.ar/arc/outboundfeeds/rss/?outputType=xml",
+                  "category": "NACIONALES",
+                  "type": "rss"
+              },
+
+              {
+                  "name": "Infobae",
+                  "url": "https://www.infobae.com/arc/outboundfeeds/rss/",
+                  "category": "NACIONALES",
+                  "type": "rss"
+              }
+
+          ]
+
+
+          HEADERS = {
+              "User-Agent":
+                  "Mozilla/5.0 ARENA24 News Reader"
+          }
+
 
           def clean_text(value):
 
               if not value:
                   return ""
 
-              value = str(value)
-
-              value = re.sub(
-                  r"<[^>]+>",
-                  " ",
-                  value
+              soup = BeautifulSoup(
+                  str(value),
+                  "html.parser"
               )
 
-              value = re.sub(
+              text = soup.get_text(
+                  " ",
+                  strip=True
+              )
+
+              text = re.sub(
                   r"\s+",
                   " ",
-                  value
+                  text
               )
 
-              return value.strip()
-
-
-          def get_date(entry):
-
-              value = (
-                  entry.get("published")
-                  or entry.get("updated")
-                  or entry.get("created")
-              )
-
-              if not value:
-                  return datetime.now(
-                      timezone.utc
-                  ).isoformat()
-
-              try:
-
-                  date = parsedate_to_datetime(
-                      value
-                  )
-
-                  if date.tzinfo is None:
-
-                      date = date.replace(
-                          tzinfo=timezone.utc
-                      )
-
-                  return date.astimezone(
-                      timezone.utc
-                  ).isoformat()
-
-              except Exception:
-
-                  return datetime.now(
-                      timezone.utc
-                  ).isoformat()
+              return text.strip()
 
 
           def get_image(entry):
 
-              # ------------------------------------------
-              # media_content
-              # ------------------------------------------
-
-              media_content = entry.get(
+              media = entry.get(
                   "media_content",
                   []
               )
 
-              if media_content:
+              for item in media:
 
-                  for media in media_content:
-
-                      url = media.get("url")
-
-                      if url:
-                          return url
+                  if item.get("url"):
+                      return item["url"]
 
 
-              # ------------------------------------------
-              # media_thumbnail
-              # ------------------------------------------
-
-              thumbnails = entry.get(
+              media = entry.get(
                   "media_thumbnail",
                   []
               )
 
-              if thumbnails:
+              for item in media:
 
-                  for media in thumbnails:
+                  if item.get("url"):
+                      return item["url"]
 
-                      url = media.get("url")
-
-                      if url:
-                          return url
-
-
-              # ------------------------------------------
-              # imagen dentro del HTML
-              # ------------------------------------------
 
               html = (
                   entry.get("summary")
@@ -231,130 +170,263 @@ jobs:
               match = re.search(
                   r'<img[^>]+src=["\']([^"\']+)["\']',
                   html,
-                  re.IGNORECASE
+                  re.I
               )
 
               if match:
-
                   return match.group(1)
+
 
               return ""
 
 
-          def get_link(entry):
+          def get_date(entry):
 
-              link = entry.get(
-                  "link",
-                  ""
+              value = (
+                  entry.get("published")
+                  or entry.get("updated")
+                  or ""
               )
 
-              return str(link).strip()
+              if value:
+                  try:
+
+                      parsed = entry.get(
+                          "published_parsed"
+                      ) or entry.get(
+                          "updated_parsed"
+                      )
+
+                      if parsed:
+
+                          from email.utils import format_datetime
+                          from datetime import datetime
+
+                          dt = datetime(
+                              parsed.tm_year,
+                              parsed.tm_mon,
+                              parsed.tm_mday,
+                              parsed.tm_hour,
+                              parsed.tm_min,
+                              parsed.tm_sec,
+                              tzinfo=timezone.utc
+                          )
+
+                          return dt.isoformat()
+
+                  except Exception:
+                      pass
+
+              return datetime.now(
+                  timezone.utc
+              ).isoformat()
 
 
-          def normalize_title(title):
+          def read_rss(feed):
 
-              return re.sub(
-                  r"\s+",
-                  " ",
-                  title.lower()
-              ).strip()
+              print(
+                  "RSS:",
+                  feed["name"]
+              )
+
+              response = requests.get(
+                  feed["url"],
+                  headers=HEADERS,
+                  timeout=TIMEOUT
+              )
+
+              response.raise_for_status()
+
+              parsed = feedparser.parse(
+                  response.content
+              )
+
+              results = []
+
+              for entry in parsed.entries[:20]:
+
+                  title = clean_text(
+                      entry.get("title")
+                  )
+
+                  link = (
+                      entry.get("link")
+                      or ""
+                  ).strip()
+
+                  if not title or not link:
+                      continue
+
+                  description = clean_text(
+                      entry.get(
+                          "summary",
+                          ""
+                      )
+                  )
+
+                  results.append({
+
+                      "title": title,
+
+                      "description":
+                          description,
+
+                      "image":
+                          get_image(entry),
+
+                      "link":
+                          link,
+
+                      "category":
+                          feed["category"],
+
+                      "source":
+                          feed["name"],
+
+                      "date":
+                          get_date(entry)
+
+                  })
+
+              return results
 
 
-          # ==================================================
-          # OBTENER NOTICIAS
-          # ==================================================
+          def read_website(feed):
+
+              print(
+                  "Sitio local:",
+                  feed["name"]
+              )
+
+              response = requests.get(
+                  feed["url"],
+                  headers=HEADERS,
+                  timeout=TIMEOUT
+              )
+
+              response.raise_for_status()
+
+              soup = BeautifulSoup(
+                  response.text,
+                  "html.parser"
+              )
+
+              results = []
+
+              seen = set()
+
+              for article in soup.select(
+                  "article"
+              ):
+
+                  heading = article.select_one(
+                      "h1,h2,h3,h4"
+                  )
+
+                  anchor = article.select_one(
+                      "a[href]"
+                  )
+
+                  if not heading or not anchor:
+                      continue
+
+                  title = clean_text(
+                      heading.get_text()
+                  )
+
+                  link = anchor.get(
+                      "href",
+                      ""
+                  )
+
+                  if not link:
+                      continue
+
+                  if link.startswith("/"):
+                      link = (
+                          feed["url"].rstrip("/")
+                          + link
+                      )
+
+                  if title.lower() in seen:
+                      continue
+
+                  seen.add(
+                      title.lower()
+                  )
+
+                  results.append({
+
+                      "title":
+                          title,
+
+                      "description":
+                          "",
+
+                      "image":
+                          "",
+
+                      "link":
+                          link,
+
+                      "category":
+                          feed["category"],
+
+                      "source":
+                          feed["name"],
+
+                      "date":
+                          datetime.now(
+                              timezone.utc
+                          ).isoformat()
+
+                  })
+
+                  if len(results) >= 15:
+                      break
+
+              return results
+
 
           all_news = []
 
-          for feed in FEEDS:
 
-              print(
-                  f"Consultando: {feed['name']}"
-              )
+          # ==================================================
+          # PROCESAR FUENTES
+          # ==================================================
+
+          for feed in FEEDS:
 
               try:
 
-                  response = requests.get(
-                      feed["url"],
-                      timeout=TIMEOUT,
-                      headers={
-                          "User-Agent":
-                              "ARENA24-NewsBot/1.0"
-                      }
+                  if feed["type"] == "rss":
+
+                      items = read_rss(
+                          feed
+                      )
+
+                  else:
+
+                      items = read_website(
+                          feed
+                      )
+
+                  all_news.extend(
+                      items
                   )
 
-                  response.raise_for_status()
-
-                  parsed = feedparser.parse(
-                      response.content
+                  print(
+                      feed["name"],
+                      "=>",
+                      len(items),
+                      "noticias"
                   )
-
-                  if parsed.bozo:
-
-                      print(
-                          "Advertencia RSS:",
-                          feed["name"]
-                      )
-
-                  entries = parsed.entries[:20]
-
-                  for entry in entries:
-
-                      title = clean_text(
-                          entry.get("title")
-                      )
-
-                      link = get_link(
-                          entry
-                      )
-
-                      if not title or not link:
-                          continue
-
-                      description = clean_text(
-                          entry.get(
-                              "summary",
-                              ""
-                          )
-                      )
-
-                      image = get_image(
-                          entry
-                      )
-
-                      date = get_date(
-                          entry
-                      )
-
-                      item = {
-
-                          "title": title,
-
-                          "description":
-                              description,
-
-                          "image": image,
-
-                          "link": link,
-
-                          "category":
-                              feed["category"],
-
-                          "source":
-                              feed["name"],
-
-                          "date": date
-
-                      }
-
-                      all_news.append(
-                          item
-                      )
 
               except Exception as error:
 
                   print(
-                      f"ERROR en {feed['name']}:",
+                      "ERROR:",
+                      feed["name"],
                       error
                   )
 
@@ -367,9 +439,10 @@ jobs:
 
           for item in all_news:
 
-              key = normalize_title(
-                  item["title"]
-              )
+              key = (
+                  item["link"]
+                  or item["title"]
+              ).strip().lower()
 
               if key not in unique:
 
@@ -382,28 +455,45 @@ jobs:
 
 
           # ==================================================
-          # ORDENAR POR FECHA
+          # ORDENAR
           # ==================================================
 
           news.sort(
-              key=lambda item:
-                  item.get("date", ""),
+              key=lambda x:
+                  x.get("date", ""),
               reverse=True
           )
 
-
-          # ==================================================
-          # LIMITAR RESULTADOS
-          # ==================================================
 
           news = news[:MAX_TOTAL]
 
 
           # ==================================================
-          # RESULTADO FINAL
+          # RESPALDO
           # ==================================================
 
-          output = {
+          if not news:
+
+              print(
+                  "No hubo noticias nuevas."
+              )
+
+              if os.path.exists(
+                  OUTPUT
+              ):
+
+                  print(
+                      "Se conserva el JSON anterior."
+                  )
+
+                  raise SystemExit(0)
+
+
+          # ==================================================
+          # GUARDAR
+          # ==================================================
+
+          data = {
 
               "updated":
                   datetime.now(
@@ -419,48 +509,6 @@ jobs:
           }
 
 
-          # ==================================================
-          # RESPALDO
-          #
-          # Si ninguna fuente respondió,
-          # NO destruimos las noticias existentes.
-          # ==================================================
-
-          if not news:
-
-              print(
-                  "No se obtuvieron noticias."
-              )
-
-              if os.path.exists(
-                  OUTPUT
-              ):
-
-                  print(
-                      "Se conserva noticias.json anterior."
-                  )
-
-                  raise SystemExit(0)
-
-              output = {
-
-                  "updated":
-                      datetime.now(
-                          timezone.utc
-                      ).isoformat(),
-
-                  "source":
-                      "ARENA 24",
-
-                  "noticias": []
-
-              }
-
-
-          # ==================================================
-          # GUARDAR JSON
-          # ==================================================
-
           with open(
               OUTPUT,
               "w",
@@ -468,7 +516,7 @@ jobs:
           ) as file:
 
               json.dump(
-                  output,
+                  data,
                   file,
                   ensure_ascii=False,
                   indent=2
@@ -476,14 +524,16 @@ jobs:
 
 
           print(
-              f"Noticias guardadas: {len(news)}"
+              "TOTAL:",
+              len(news)
+          )
+
+          print(
+              "JSON generado correctamente."
           )
 
           PY
 
-      # ==================================================
-      # 5. VALIDAR JSON
-      # ==================================================
 
       - name: Validar noticias.json
         run: |
@@ -494,52 +544,31 @@ jobs:
 
           with open(
               "noticias.json",
-              "r",
               encoding="utf-8"
-          ) as file:
+          ) as f:
 
-              data = json.load(file)
+              data = json.load(f)
 
-          if not isinstance(
+          assert isinstance(
               data,
               dict
-          ):
+          )
 
-              raise SystemExit(
-                  "noticias.json no es un objeto JSON válido."
-              )
-
-          if "noticias" not in data:
-
-              raise SystemExit(
-                  "Falta la propiedad 'noticias'."
-              )
-
-          if not isinstance(
-              data["noticias"],
+          assert isinstance(
+              data.get("noticias"),
               list
-          ):
-
-              raise SystemExit(
-                  "'noticias' debe ser un array."
-              )
-
-          print(
-              "JSON válido."
           )
 
           print(
-              "Cantidad:",
-              len(data["noticias"])
+              "JSON OK:",
+              len(data["noticias"]),
+              "noticias"
           )
 
           PY
 
-      # ==================================================
-      # 6. GUARDAR CAMBIOS
-      # ==================================================
 
-      - name: Guardar noticias actualizadas
+      - name: Guardar cambios
         run: |
 
           git config user.name \
@@ -552,7 +581,7 @@ jobs:
 
           if git diff --cached --quiet; then
 
-            echo "No hay cambios para guardar."
+            echo "Sin cambios."
 
           else
 
