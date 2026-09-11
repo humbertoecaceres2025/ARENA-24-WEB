@@ -194,11 +194,10 @@
 ====================================================== -->
 
 <section
-    <!-- =====================================================
-     ARENA 24 RADIO — PLAYER MODERNO
+<!-- =====================================================
+     ARENA 24 RADIO
+     REPRODUCTOR EN VIVO
 ===================================================== -->
-
-<!-- ARENA 24 RADIO DEFINITIVA -->
 
 <section id="radio" class="arena-radio">
 
@@ -209,56 +208,76 @@
             <div class="arena-radio-brand">
 
                 <div class="arena-radio-logo">
-                    <span>🎙</span>
+                    <span>🎙️</span>
                 </div>
 
-                <div>
+                <div class="arena-radio-brand-text">
+
                     <div class="arena-radio-live">
-                        <i></i>
+                        <span></span>
                         EN VIVO
                     </div>
 
                     <h2>ARENA 24</h2>
 
                     <p>RADIO</p>
+
                 </div>
 
             </div>
 
 
-            <div class="arena-radio-content">
+            <div class="arena-radio-info">
 
-                <span>ESTÁS ESCUCHANDO</span>
+                <small>TRANSMISIÓN EN VIVO</small>
 
-                <strong>
+                <strong id="arena-radio-program">
                     ARENA 24 RADIO
                 </strong>
 
-                <small>
-                    Noticias, información y actualidad
-                </small>
+                <p id="arena-radio-message">
+                    Presioná el botón para escuchar la radio
+                </p>
+
 
                 <div
                     id="arena-radio-bars"
                     class="arena-radio-bars"
                 >
-                    <i></i><i></i><i></i><i></i><i></i>
-                    <i></i><i></i><i></i><i></i><i></i>
-                    <i></i><i></i><i></i><i></i><i></i>
+
+                    <i></i>
+                    <i></i>
+                    <i></i>
+                    <i></i>
+                    <i></i>
+                    <i></i>
+                    <i></i>
+                    <i></i>
+                    <i></i>
+                    <i></i>
+                    <i></i>
+                    <i></i>
+                    <i></i>
+                    <i></i>
+
                 </div>
 
             </div>
 
 
-            <div class="arena-radio-controls">
+            <div class="arena-radio-actions">
 
                 <button
                     id="arena-radio-play"
                     type="button"
-                    aria-label="Reproducir radio"
+                    class="arena-radio-play"
+                    aria-label="Reproducir ARENA 24 Radio"
                 >
-                    ▶
+                    <span id="arena-radio-play-icon">
+                        ▶
+                    </span>
                 </button>
+
 
                 <div class="arena-radio-volume">
 
@@ -271,6 +290,7 @@
                         max="1"
                         step="0.01"
                         value="0.8"
+                        aria-label="Volumen"
                     >
 
                 </div>
@@ -278,32 +298,34 @@
             </div>
 
 
-            <div class="arena-radio-state">
+            <div
+                id="arena-radio-status"
+                class="arena-radio-status"
+            >
 
-                <i></i>
+                <span></span>
 
-                <span id="arena-radio-state">
+                <b>
                     RADIO EN ESPERA
-                </span>
+                </b>
 
             </div>
 
 
+            <!-- STREAM OFICIAL DE ZENO -->
+
             <audio
                 id="arena-radio-audio"
                 preload="none"
-            >
-                <source
-                    src="https://stream.zeno.fm/zuw6xmmwmd0uv"
-                    type="audio/mpeg"
-                >
-            </audio>
+                playsinline
+            ></audio>
 
         </div>
 
     </div>
 
 </section>
+
 
 </section>
 
