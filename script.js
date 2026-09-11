@@ -1655,3 +1655,192 @@ if (
     initArena24();
 
 }
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const radio = document.getElementById("arena-radio");
+    const playButton = document.getElementById("radio-play");
+    const playIcon = document.getElementById("radio-play-icon");
+    const statusText = document.getElementById("radio-status-text");
+    const statusDetail = document.getElementById("radio-status-detail");
+    const volume = document.getElementById("radio-volume");
+    const errorBox = document.getElementById("radio-error");
+    const player = document.querySelector(".radio-player");
+
+    if (!radio) return;
+
+
+    radio.volume = 0.8;
+
+
+    function radioPlaying() {
+
+        if (playIcon) {
+            playIcon.textContent = "❚❚";
+        }
+
+        if (playButton) {
+            playButton.setAttribute(
+                "aria-label",
+                "Pausar ARENA 24 Radio"
+            );
+
+            playButton.setAttribute(
+                "aria-pressed",
+                "true"
+            );
+        }
+
+        if (statusText) {
+            statusText.textContent =
+                "ARENA 24 RADIO — EN VIVO";
+        }
+
+        if (statusDetail) {
+            statusDetail.textContent =
+                "Transmitiendo ahora";
+        }
+
+        if (player) {
+            player.classList.add("radio-playing");
+        }
+
+        if (errorBox) {
+            errorBox.hidden = true;
+        }
+    }
+
+
+    function radioStopped() {
+
+        if (playIcon) {
+            playIcon.textContent = "▶";
+        }
+
+        if (playButton) {
+            playButton.setAttribute(
+                "aria-label",
+                "Reproducir ARENA 24 Radio"
+            );
+
+            playButton.setAttribute(
+                "aria-pressed",
+                "false"
+            );
+        }
+
+        if (statusText) {
+            statusText.textContent =
+                "ARENA 24 RADIO";
+        }
+
+        if (statusDetail) {
+            statusDetail.textContent =
+                "Presioná reproducir para escuchar en vivo";
+        }
+
+        if (player) {
+            player.classList.remove("radio-playing");
+        }
+    }
+
+
+    if (playButton) {
+
+        playButton.addEventListener(
+            "click",
+            async function () {
+
+                if (radio.paused) {
+
+                    try {
+
+                        await radio.play();
+
+                    } catch (error) {
+
+                        console.error(
+                            "Error al iniciar ARENA 24 Radio:",
+                            error
+                        );
+
+                        if (errorBox) {
+                            errorBox.hidden = false;
+                        }
+
+                        if (statusText) {
+                            statusText.textContent =
+                                "No se pudo iniciar la radio";
+                        }
+
+                    }
+
+                } else {
+
+                    radio.pause();
+
+                }
+
+            }
+        );
+
+    }
+
+
+    if (volume) {
+
+        volume.addEventListener(
+            "input",
+            function () {
+
+                radio.volume =
+                    Number(this.value);
+
+            }
+        );
+
+    }
+
+
+    radio.addEventListener(
+        "playing",
+        radioPlaying
+    );
+
+
+    radio.addEventListener(
+        "pause",
+        radioStopped
+    );
+
+
+    radio.addEventListener(
+        "error",
+        function () {
+
+            console.error(
+                "Error en el stream de ARENA 24 Radio"
+            );
+
+            if (errorBox) {
+                errorBox.hidden = false;
+            }
+
+            if (statusText) {
+                statusText.textContent =
+                    "Problema con la transmisión";
+            }
+
+            if (statusDetail) {
+                statusDetail.textContent =
+                    "Intentá nuevamente";
+            }
+
+            radioStopped();
+
+        }
+    );
+
+});
+</script>
+
