@@ -89,6 +89,11 @@
 
             <a href="#inicio">
                 Inicio
+                 </a>
+
+            <a href="#radio">
+                ARENA 24
+            </a>
             </a>
 
             <a href="#rioja">
@@ -184,6 +189,126 @@
     </div>
 
 </section>
+    <!-- =====================================================
+     ARENA 24 RADIO — EN VIVO
+====================================================== -->
+
+<section
+    id="radio"
+    class="radio-section"
+    aria-labelledby="radio-title"
+>
+
+    <div class="container">
+
+        <div class="radio-player">
+
+            <div class="radio-brand">
+
+                <div class="radio-icon">
+                    🎙️
+                </div>
+
+                <div class="radio-title">
+
+                    <div class="radio-live">
+                        <span class="radio-live-dot"></span>
+                        EN VIVO
+                    </div>
+
+                    <h2 id="radio-title">
+                        ARENA 24 RADIO
+                    </h2>
+
+                    <p>
+                        Noticias, información y actualidad de La Rioja
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="radio-controls">
+
+                <button
+                    id="radio-play"
+                    class="radio-play-button"
+                    type="button"
+                    aria-label="Reproducir ARENA 24 Radio"
+                    aria-pressed="false"
+                >
+                    <span id="radio-play-icon">
+                        ▶
+                    </span>
+                </button>
+
+
+                <div class="radio-status">
+
+                    <strong id="radio-status-text">
+                        ARENA 24 RADIO
+                    </strong>
+
+                    <span id="radio-status-detail">
+                        Presioná reproducir para escuchar en vivo
+                    </span>
+
+                </div>
+
+
+                <div class="radio-volume">
+
+                    <span>🔊</span>
+
+                    <input
+                        id="radio-volume"
+                        type="range"
+                        min="0"
+                        max="1"
+                        step="0.01"
+                        value="0.8"
+                        aria-label="Volumen de la radio"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <!-- REPRODUCTOR REAL -->
+
+            <audio
+                id="arena-radio"
+                preload="none"
+                controls
+                playsinline
+            >
+
+                <source
+                    src="https://stream.zeno.fm/zuw6xmmwmd0uv"
+                >
+
+                Tu navegador no puede reproducir esta transmisión.
+
+            </audio>
+
+
+            <div
+                id="radio-error"
+                class="radio-error"
+                hidden
+            >
+                ⚠️ No se pudo conectar con la radio.
+                Presioná reproducir nuevamente.
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
 
 
 
