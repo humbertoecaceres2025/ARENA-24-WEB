@@ -2480,89 +2480,468 @@ section {
     }
 
 }
-/* =========================================================
-   REPRODUCTOR REAL ARENA 24 RADIO
-========================================================= */
+/* =====================================================
+   ARENA 24 RADIO — PLAYER DEFINITIVO
+===================================================== */
 
-.radio-player audio {
-    position: absolute;
-
-    left: 26px;
-    right: 26px;
-    bottom: 8px;
-
-    width: calc(100% - 52px);
-
-    height: 28px;
-
-    opacity: .85;
-
-    accent-color: #e21b2d;
+.arena-radio {
+    position: relative;
+    padding: 24px 0;
+    background: #07090e;
 }
 
+.arena-radio-player {
+    position: relative;
 
-/* Reservamos espacio para el reproductor */
+    min-height: 145px;
 
-.radio-player {
-    padding-bottom: 50px;
-}
+    display: grid;
+    grid-template-columns: 230px 1fr 170px;
 
+    align-items: center;
+    gap: 28px;
 
-/* En navegadores WebKit */
+    padding: 24px 28px 34px;
 
-.radio-player audio::-webkit-media-controls-panel {
-    background-color: #151b25;
-}
+    overflow: hidden;
 
-.radio-player audio::-webkit-media-controls-play-button {
-    filter: invert(1);
-}
+    background:
+        linear-gradient(
+            135deg,
+            #171d28,
+            #0b0f16
+        );
 
-.radio-player audio::-webkit-media-controls-timeline {
-    accent-color: #e21b2d;
-}
+    border: 1px solid rgba(255,255,255,.10);
 
-.radio-player audio::-webkit-media-controls-current-time-display,
-.radio-player audio::-webkit-media-controls-time-remaining-display {
-    color: white;
-}
-
-
-/* Estado reproduciendo */
-
-.radio-player.radio-playing {
-    border-color:
-        rgba(226, 27, 45, .55);
+    border-radius: 18px;
 
     box-shadow:
-        0 15px 50px rgba(226, 27, 45, .12);
+        0 18px 55px rgba(0,0,0,.45);
+}
+
+.arena-radio-player::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+    right: 0;
+
+    height: 3px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            #e21b2d,
+            #ff4656,
+            #e21b2d,
+            transparent
+        );
 }
 
 
-/* Móvil */
+/* LOGO */
 
-@media (max-width: 720px) {
+.arena-radio-brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
 
-    .radio-player audio {
-        position: relative;
+.arena-radio-logo {
+    width: 62px;
+    height: 62px;
 
-        left: auto;
-        right: auto;
-        bottom: auto;
+    flex: 0 0 62px;
 
-        width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-        height: 34px;
+    background:
+        linear-gradient(
+            135deg,
+            #ed2639,
+            #a50d1c
+        );
 
-        margin-top: 8px;
+    border-radius: 15px;
+
+    box-shadow:
+        0 8px 28px rgba(226,27,45,.3);
+}
+
+.arena-radio-logo span {
+    font-size: 27px;
+}
+
+.arena-radio-live {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+
+    margin-bottom: 5px;
+
+    color: #ff4658;
+
+    font-size: 9px;
+    font-weight: 900;
+    letter-spacing: 1.5px;
+}
+
+.arena-radio-live i {
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: #ff3044;
+
+    animation: arenaRadioPulse 1.2s infinite;
+}
+
+@keyframes arenaRadioPulse {
+    50% {
+        opacity: .3;
+        transform: scale(.7);
+    }
+}
+
+.arena-radio-brand h2 {
+    color: white;
+
+    font-size: 25px;
+    line-height: 1;
+
+    letter-spacing: -1px;
+}
+
+.arena-radio-brand p {
+    margin-top: 4px;
+
+    color: #778191;
+
+    font-size: 9px;
+    font-weight: 900;
+
+    letter-spacing: 3px;
+}
+
+
+/* INFORMACIÓN */
+
+.arena-radio-content {
+    padding-left: 25px;
+
+    border-left:
+        1px solid rgba(255,255,255,.08);
+}
+
+.arena-radio-content > span {
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: #687382;
+
+    font-size: 8px;
+    font-weight: 900;
+
+    letter-spacing: 1.4px;
+}
+
+.arena-radio-content strong {
+    display: block;
+
+    color: white;
+
+    font-size: 18px;
+}
+
+.arena-radio-content small {
+    display: block;
+
+    margin-top: 4px;
+
+    color: #8993a1;
+
+    font-size: 10px;
+}
+
+
+/* VISUALIZADOR */
+
+.arena-radio-bars {
+    height: 27px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 3px;
+
+    margin-top: 12px;
+}
+
+.arena-radio-bars i {
+    display: block;
+
+    width: 3px;
+
+    height: 8px;
+
+    background: #e21b2d;
+
+    border-radius: 4px;
+
+    opacity: .35;
+}
+
+.arena-radio-bars i:nth-child(2) { height: 16px; }
+.arena-radio-bars i:nth-child(3) { height: 23px; }
+.arena-radio-bars i:nth-child(4) { height: 12px; }
+.arena-radio-bars i:nth-child(5) { height: 27px; }
+.arena-radio-bars i:nth-child(6) { height: 17px; }
+.arena-radio-bars i:nth-child(7) { height: 10px; }
+.arena-radio-bars i:nth-child(8) { height: 22px; }
+.arena-radio-bars i:nth-child(9) { height: 28px; }
+.arena-radio-bars i:nth-child(10) { height: 14px; }
+.arena-radio-bars i:nth-child(11) { height: 24px; }
+.arena-radio-bars i:nth-child(12) { height: 17px; }
+.arena-radio-bars i:nth-child(13) { height: 9px; }
+.arena-radio-bars i:nth-child(14) { height: 20px; }
+.arena-radio-bars i:nth-child(15) { height: 13px; }
+
+.arena-radio-player.playing
+.arena-radio-bars i {
+    opacity: 1;
+
+    animation:
+        arenaRadioBars .65s
+        ease-in-out
+        infinite alternate;
+}
+
+.arena-radio-player.playing
+.arena-radio-bars i:nth-child(2) {
+    animation-delay: -.15s;
+}
+
+.arena-radio-player.playing
+.arena-radio-bars i:nth-child(4) {
+    animation-delay: -.35s;
+}
+
+.arena-radio-player.playing
+.arena-radio-bars i:nth-child(6) {
+    animation-delay: -.25s;
+}
+
+.arena-radio-player.playing
+.arena-radio-bars i:nth-child(9) {
+    animation-delay: -.45s;
+}
+
+@keyframes arenaRadioBars {
+    from {
+        transform: scaleY(.3);
     }
 
-    .radio-player {
-        padding-bottom: 19px;
+    to {
+        transform: scaleY(1.1);
+    }
+}
+
+
+/* CONTROLES */
+
+.arena-radio-controls {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    gap: 15px;
+}
+
+#arena-radio-play {
+    width: 62px;
+    height: 62px;
+
+    flex: 0 0 62px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: white;
+
+    background: #e21b2d;
+
+    border: 0;
+    border-radius: 50%;
+
+    font-size: 18px;
+
+    box-shadow:
+        0 8px 28px rgba(226,27,45,.35);
+
+    transition:
+        transform .2s ease,
+        background .2s ease;
+}
+
+#arena-radio-play:hover {
+    background: #ff3548;
+    transform: scale(1.06);
+}
+
+#arena-radio-play:active {
+    transform: scale(.96);
+}
+
+.arena-radio-volume {
+    display: flex;
+    align-items: center;
+
+    gap: 7px;
+}
+
+.arena-radio-volume span {
+    font-size: 13px;
+}
+
+#arena-radio-volume {
+    width: 70px;
+
+    accent-color: #e21b2d;
+}
+
+
+/* ESTADO */
+
+.arena-radio-state {
+    position: absolute;
+
+    left: 28px;
+    bottom: 8px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 6px;
+
+    color: #626c7a;
+
+    font-size: 8px;
+    font-weight: 900;
+
+    letter-spacing: .8px;
+}
+
+.arena-radio-state i {
+    width: 5px;
+    height: 5px;
+
+    border-radius: 50%;
+
+    background: #515b69;
+}
+
+.arena-radio-player.playing
+.arena-radio-state {
+    color: #16d47b;
+}
+
+.arena-radio-player.playing
+.arena-radio-state i {
+    background: #16d47b;
+
+    box-shadow:
+        0 0 8px rgba(22,212,123,.9);
+}
+
+
+/* AUDIO OCULTO */
+
+#arena-radio-audio {
+    display: none;
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 850px) {
+
+    .arena-radio-player {
+        grid-template-columns:
+            200px 1fr 145px;
+
+        gap: 18px;
+
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .arena-radio-content {
+        padding-left: 18px;
     }
 
 }
 
 
+@media (max-width: 700px) {
 
+    .arena-radio {
+        padding: 16px 0 22px;
+    }
+
+    .arena-radio-player {
+        grid-template-columns: 1fr;
+
+        gap: 18px;
+
+        padding:
+            20px 20px 34px;
+    }
+
+    .arena-radio-content {
+        padding:
+            15px 0 0;
+
+        border-left: 0;
+
+        border-top:
+            1px solid rgba(255,255,255,.08);
+    }
+
+    .arena-radio-controls {
+        justify-content:
+            flex-start;
+    }
+
+    .arena-radio-state {
+        left: 20px;
+    }
+
+}
+
+
+@media (max-width: 400px) {
+
+    .arena-radio-brand h2 {
+        font-size: 21px;
+    }
+
+    .arena-radio-logo {
+        width: 56px;
+        height: 56px;
+
+        flex-basis: 56px;
+    }
+
+}
 
