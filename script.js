@@ -4,6 +4,7 @@
 =========================================================
  ARENA 24
  SCRIPT PRINCIPAL
+ RADIO
  Noticias:
    - LA RIOJA
    - NACIONALES
