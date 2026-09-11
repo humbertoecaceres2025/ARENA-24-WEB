@@ -1576,145 +1576,421 @@ function setupNewsButtons() {
 ===================================================== */
 
 function setupVisibility() {
-
-   /* =====================================================
-   ARENA 24 RADIO — PLAYER DEFINITIVO
+/* =====================================================
+   ARENA 24 RADIO
+   REPRODUCTOR ZENO.FM
 ===================================================== */
 
-document.addEventListener("DOMContentLoaded", function () {
+(function () {
 
-    const audio =
-        document.getElementById("arena-radio-audio");
-
-    const button =
-        document.getElementById("arena-radio-play");
-
-    const volume =
-        document.getElementById("arena-radio-volume");
-
-    const player =
-        document.querySelector(".arena-radio-player");
-
-    const state =
-        document.getElementById("arena-radio-state");
+    "use strict";
 
 
-    if (!audio || !button || !player) {
-
-        console.error(
-            "ARENA 24: no se encontró el reproductor de radio."
-        );
-
-        return;
-    }
+    const STREAM_URL =
+        "https://stream.zeno.fm/zuw6xmmwmd0uv";
 
 
-    /* VOLUMEN INICIAL */
+    function initArenaRadio() {
 
-    audio.volume = 0.8;
+        const audio =
+            document.getElementById(
+                "arena-radio-audio"
+            );
+
+        const playButton =
+            document.getElementById(
+                "arena-radio-play"
+            );
+
+        const playIcon =
+            document.getElementById(
+                "arena-radio-play-icon"
+            );
+
+        const volume =
+            document.getElementById(
+                "arena-radio-volume"
+            );
+
+        const player =
+            document.querySelector(
+                ".arena-radio-player"
+            );
+
+        const status =
+            document.getElementById(
+                "arena-radio-status"
+            );
+
+        const message =
+            document.getElementById(
+                "arena-radio-message"
+            );
 
 
-    /* PLAY / PAUSE */
+        if (
+            !audio ||
+            !playButton ||
+            !player
+        ) {
 
-    button.addEventListener("click", async function () {
+            console.error(
+                "ARENA 24 RADIO: elementos no encontrados."
+            );
 
-        if (audio.paused) {
+            return;
+
+        }
+
+
+        /*
+         * Configuramos el stream.
+         */
+
+        audio.src = STREAM_URL;
+
+        audio.preload = "none";
+
+        audio.volume = 0.8;
+
+
+        /*
+         * Estado visual.
+         */
+
+        function setStatus(
+            text,
+            type
+        ) {
+
+            if (status) {
+
+                const textElement =
+                    status.querySelector("b");
+
+                const dot =
+                    status.querySelector("span");
+
+
+                if (textElement) {
+
+                    textElement.textContent =
+                        text;
+
+                }
+
+
+                if (dot) {
+
+                    dot.className =
+                        type || "";
+
+                }
+
+            }
+
+        }
+
+
+        /*
+         * REPRODUCIR
+         */
+
+        async function playRadio() {
+
+            setStatus(
+                "CONECTANDO...",
+                "connecting"
+            );
+
+
+            if (message) {
+
+                message.textContent =
+                    "Conectando con ARENA 24 Radio...";
+
+            }
+
 
             try {
 
+                /*
+                 * Recargamos el stream para evitar
+                 * conexiones antiguas o fallidas.
+                 */
+
+                audio.pause();
+
+                audio.load();
+
+
                 await audio.play();
+
 
             } catch (error) {
 
                 console.error(
-                    "ARENA 24 Radio:",
+                    "ARENA 24 RADIO — ERROR:",
                     error
                 );
 
-                state.textContent =
-                    "NO SE PUDO CONECTAR";
+
+                setStatus(
+                    "NO SE PUDO CONECTAR",
+                    "error"
+                );
+
+
+                if (message) {
+
+                    message.textContent =
+                        "El servidor de radio no respondió. Intentá nuevamente.";
+
+                }
+
+
+                player.classList.remove(
+                    "playing"
+                );
 
             }
 
-        } else {
+        }
+
+
+        /*
+         * PAUSAR
+         */
+
+        function pauseRadio() {
 
             audio.pause();
 
-        }
-
-    });
-
-
-    /* REPRODUCIENDO */
-
-    audio.addEventListener(
-        "playing",
-        function () {
-
-            player.classList.add("playing");
-
-            button.textContent = "❚❚";
-
-            state.textContent =
-                "TRANSMITIENDO EN VIVO";
-
-        }
-    );
+            setStatus(
+                "RADIO EN PAUSA",
+                ""
+            );
 
 
-    /* PAUSA */
+            if (message) {
 
-    audio.addEventListener(
-        "pause",
-        function () {
+                message.textContent =
+                    "Presioná reproducir para volver a escuchar.";
 
-            player.classList.remove("playing");
+            }
 
-            button.textContent = "▶";
 
-            state.textContent =
-                "RADIO EN ESPERA";
+            player.classList.remove(
+                "playing"
+            );
+
+
+            if (playIcon) {
+
+                playIcon.textContent =
+                    "▶";
+
+            }
 
         }
-    );
 
 
-    /* ERROR */
+        /*
+         * BOTÓN
+         */
 
-    audio.addEventListener(
-        "error",
-        function () {
+        playButton.addEventListener(
+            "click",
+            function () {
 
-            player.classList.remove("playing");
+                if (audio.paused) {
 
-            button.textContent = "▶";
+                    playRadio();
 
-            state.textContent =
-                "ERROR DE CONEXIÓN";
+                } else {
 
-            console.error(
-                "ARENA 24: error al cargar el stream."
+                    pauseRadio();
+
+                }
+
+            }
+        );
+
+
+        /*
+         * STREAM INICIADO
+         */
+
+        audio.addEventListener(
+            "playing",
+            function () {
+
+                player.classList.add(
+                    "playing"
+                );
+
+
+                if (playIcon) {
+
+                    playIcon.textContent =
+                        "❚❚";
+
+                }
+
+
+                setStatus(
+                    "TRANSMITIENDO EN VIVO",
+                    "online"
+                );
+
+
+                if (message) {
+
+                    message.textContent =
+                        "Estás escuchando ARENA 24 Radio.";
+
+                }
+
+            }
+        );
+
+
+        /*
+         * PAUSA
+         */
+
+        audio.addEventListener(
+            "pause",
+            function () {
+
+                if (
+                    !audio.ended
+                ) {
+
+                    player.classList.remove(
+                        "playing"
+                    );
+
+
+                    if (playIcon) {
+
+                        playIcon.textContent =
+                            "▶";
+
+                    }
+
+                }
+
+            }
+        );
+
+
+        /*
+         * ERROR DEL STREAM
+         */
+
+        audio.addEventListener(
+            "error",
+            function () {
+
+                console.error(
+                    "ARENA 24 RADIO: error del stream.",
+                    audio.error
+                );
+
+
+                player.classList.remove(
+                    "playing"
+                );
+
+
+                if (playIcon) {
+
+                    playIcon.textContent =
+                        "▶";
+
+                }
+
+
+                setStatus(
+                    "ERROR DE CONEXIÓN",
+                    "error"
+                );
+
+
+                if (message) {
+
+                    message.textContent =
+                        "No fue posible recibir la transmisión desde Zeno.FM.";
+
+                }
+
+            }
+        );
+
+
+        /*
+         * VOLUMEN
+         */
+
+        if (volume) {
+
+            volume.addEventListener(
+                "input",
+                function () {
+
+                    audio.volume =
+                        Number(
+                            volume.value
+                        );
+
+                }
             );
 
         }
-    );
 
 
-    /* VOLUMEN */
+        /*
+         * TECLADO
+         */
 
-    if (volume) {
+        playButton.addEventListener(
+            "keydown",
+            function (event) {
 
-        volume.addEventListener(
-            "input",
-            function () {
+                if (
+                    event.key === "Enter" ||
+                    event.key === " "
+                ) {
 
-                audio.volume =
-                    Number(this.value);
+                    event.preventDefault();
+
+                }
 
             }
         );
 
     }
 
-});
 
+    /*
+     * Esperamos al DOM.
+     */
+
+    if (
+        document.readyState ===
+        "loading"
+    ) {
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            initArenaRadio
+        );
+
+    } else {
+
+        initArenaRadio();
+
+    }
+
+})();
