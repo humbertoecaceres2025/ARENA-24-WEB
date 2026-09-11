@@ -1,3 +1,10 @@
+const ARENA24 = {
+    newsFile: "./noticias.json",
+    initialNews: 6,
+    moreNews: 6,
+    refreshTime: 5 * 60 * 1000
+};
+
 {
   "updated": null,
   "source": "ARENA 24",
