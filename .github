@@ -2,81 +2,563 @@ name: ARENA 24 - Actualizar noticias
 
 on:
   schedule:
-    # Ejecutar cada 30 minutos
-    - cron: "*/30 * * * *"
+    # Cada 60 minutos
+    - cron: "*/60 * * * *"
 
-  # Permite ejecutarlo manualmente desde GitHub
   workflow_dispatch:
 
-  # También se ejecuta cuando modificás este archivo
   push:
     paths:
-      - ".github/workflows/actualizar-noticias.yml"
+      - ".github/workflows/actualizar-datos.yml"
 
 permissions:
   contents: write
 
 jobs:
 
-  actualizar:
+  actualizar-noticias:
 
     runs-on: ubuntu-latest
 
     steps:
 
-      # =====================================================
-      # 1. Descargar el repositorio
-      # =====================================================
+      # ==================================================
+      # 1. DESCARGAR REPOSITORIO
+      # ==================================================
 
       - name: Descargar repositorio
         uses: actions/checkout@v4
 
+      # ==================================================
+      # 2. CONFIGURAR PYTHON
+      # ==================================================
 
-      # =====================================================
-      # 2. Preparar Python
-      # =====================================================
-
-      - name: Preparar Python
+      - name: Configurar Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.12"
+          python-version: "3.x"
 
-
-      # =====================================================
-      # 3. Instalar dependencias
-      # =====================================================
+      # ==================================================
+      # 3. INSTALAR DEPENDENCIAS
+      # ==================================================
 
       - name: Instalar dependencias
         run: |
           python -m pip install --upgrade pip
-          pip install requests feedparser
+          pip install feedparser requests
 
+      # ==================================================
+      # 4. ACTUALIZAR NOTICIAS
+      # ==================================================
 
-      # =====================================================
-      # 4. Ejecutar actualizador
-      # =====================================================
-
-      - name: Actualizar noticias
-        run: |
-          python actualizar_noticias.py
-
-
-      # =====================================================
-      # 5. Guardar noticias.json
-      # =====================================================
-
-      - name: Guardar cambios
+      - name: Obtener noticias
+        env:
+          PYTHONUNBUFFERED: "1"
         run: |
 
-          git config user.name "ARENA 24 Bot"
+          python <<'PY'
 
-          git config user.email "actions@github.com"
+          import json
+          import os
+          import re
+          from datetime import datetime, timezone
+          from email.utils import parsedate_to_datetime
+
+          import feedparser
+          import requests
+
+
+          # ==================================================
+          # FUENTES RSS
+          # ==================================================
+
+          FEEDS = [
+
+              {
+                  "name": "Google News - La Rioja",
+                  "url":
+                      "https://news.google.com/rss/search?q=La+Rioja+Argentina&hl=es-419&gl=AR&ceid=AR:es-419",
+                  "category": "LA RIOJA"
+              },
+
+              {
+                  "name": "Google News - Argentina",
+                  "url":
+                      "https://news.google.com/rss/search?q=Argentina&hl=es-419&gl=AR&ceid=AR:es-419",
+                  "category": "ARGENTINA"
+              },
+
+              {
+                  "name": "Google News - Deportes",
+                  "url":
+                      "https://news.google.com/rss/search?q=Deportes+Argentina&hl=es-419&gl=AR&ceid=AR:es-419",
+                  "category": "DEPORTES"
+              },
+
+              {
+                  "name": "Google News - Policiales",
+                  "url":
+                      "https://news.google.com/rss/search?q=Policiales+Argentina&hl=es-419&gl=AR&ceid=AR:es-419",
+                  "category": "POLICIALES"
+              }
+
+          ]
+
+
+          # ==================================================
+          # CONFIGURACIÓN
+          # ==================================================
+
+          OUTPUT = "noticias.json"
+
+          MAX_TOTAL = 30
+
+          TIMEOUT = 20
+
+
+          # ==================================================
+          # UTILIDADES
+          # ==================================================
+
+          def clean_text(value):
+
+              if not value:
+                  return ""
+
+              value = str(value)
+
+              value = re.sub(
+                  r"<[^>]+>",
+                  " ",
+                  value
+              )
+
+              value = re.sub(
+                  r"\s+",
+                  " ",
+                  value
+              )
+
+              return value.strip()
+
+
+          def get_date(entry):
+
+              value = (
+                  entry.get("published")
+                  or entry.get("updated")
+                  or entry.get("created")
+              )
+
+              if not value:
+                  return datetime.now(
+                      timezone.utc
+                  ).isoformat()
+
+              try:
+
+                  date = parsedate_to_datetime(
+                      value
+                  )
+
+                  if date.tzinfo is None:
+
+                      date = date.replace(
+                          tzinfo=timezone.utc
+                      )
+
+                  return date.astimezone(
+                      timezone.utc
+                  ).isoformat()
+
+              except Exception:
+
+                  return datetime.now(
+                      timezone.utc
+                  ).isoformat()
+
+
+          def get_image(entry):
+
+              # ------------------------------------------
+              # media_content
+              # ------------------------------------------
+
+              media_content = entry.get(
+                  "media_content",
+                  []
+              )
+
+              if media_content:
+
+                  for media in media_content:
+
+                      url = media.get("url")
+
+                      if url:
+                          return url
+
+
+              # ------------------------------------------
+              # media_thumbnail
+              # ------------------------------------------
+
+              thumbnails = entry.get(
+                  "media_thumbnail",
+                  []
+              )
+
+              if thumbnails:
+
+                  for media in thumbnails:
+
+                      url = media.get("url")
+
+                      if url:
+                          return url
+
+
+              # ------------------------------------------
+              # imagen dentro del HTML
+              # ------------------------------------------
+
+              html = (
+                  entry.get("summary")
+                  or entry.get("description")
+                  or ""
+              )
+
+              match = re.search(
+                  r'<img[^>]+src=["\']([^"\']+)["\']',
+                  html,
+                  re.IGNORECASE
+              )
+
+              if match:
+
+                  return match.group(1)
+
+              return ""
+
+
+          def get_link(entry):
+
+              link = entry.get(
+                  "link",
+                  ""
+              )
+
+              return str(link).strip()
+
+
+          def normalize_title(title):
+
+              return re.sub(
+                  r"\s+",
+                  " ",
+                  title.lower()
+              ).strip()
+
+
+          # ==================================================
+          # OBTENER NOTICIAS
+          # ==================================================
+
+          all_news = []
+
+          for feed in FEEDS:
+
+              print(
+                  f"Consultando: {feed['name']}"
+              )
+
+              try:
+
+                  response = requests.get(
+                      feed["url"],
+                      timeout=TIMEOUT,
+                      headers={
+                          "User-Agent":
+                              "ARENA24-NewsBot/1.0"
+                      }
+                  )
+
+                  response.raise_for_status()
+
+                  parsed = feedparser.parse(
+                      response.content
+                  )
+
+                  if parsed.bozo:
+
+                      print(
+                          "Advertencia RSS:",
+                          feed["name"]
+                      )
+
+                  entries = parsed.entries[:20]
+
+                  for entry in entries:
+
+                      title = clean_text(
+                          entry.get("title")
+                      )
+
+                      link = get_link(
+                          entry
+                      )
+
+                      if not title or not link:
+                          continue
+
+                      description = clean_text(
+                          entry.get(
+                              "summary",
+                              ""
+                          )
+                      )
+
+                      image = get_image(
+                          entry
+                      )
+
+                      date = get_date(
+                          entry
+                      )
+
+                      item = {
+
+                          "title": title,
+
+                          "description":
+                              description,
+
+                          "image": image,
+
+                          "link": link,
+
+                          "category":
+                              feed["category"],
+
+                          "source":
+                              feed["name"],
+
+                          "date": date
+
+                      }
+
+                      all_news.append(
+                          item
+                      )
+
+              except Exception as error:
+
+                  print(
+                      f"ERROR en {feed['name']}:",
+                      error
+                  )
+
+
+          # ==================================================
+          # ELIMINAR DUPLICADOS
+          # ==================================================
+
+          unique = {}
+
+          for item in all_news:
+
+              key = normalize_title(
+                  item["title"]
+              )
+
+              if key not in unique:
+
+                  unique[key] = item
+
+
+          news = list(
+              unique.values()
+          )
+
+
+          # ==================================================
+          # ORDENAR POR FECHA
+          # ==================================================
+
+          news.sort(
+              key=lambda item:
+                  item.get("date", ""),
+              reverse=True
+          )
+
+
+          # ==================================================
+          # LIMITAR RESULTADOS
+          # ==================================================
+
+          news = news[:MAX_TOTAL]
+
+
+          # ==================================================
+          # RESULTADO FINAL
+          # ==================================================
+
+          output = {
+
+              "updated":
+                  datetime.now(
+                      timezone.utc
+                  ).isoformat(),
+
+              "source":
+                  "ARENA 24",
+
+              "noticias":
+                  news
+
+          }
+
+
+          # ==================================================
+          # RESPALDO
+          #
+          # Si ninguna fuente respondió,
+          # NO destruimos las noticias existentes.
+          # ==================================================
+
+          if not news:
+
+              print(
+                  "No se obtuvieron noticias."
+              )
+
+              if os.path.exists(
+                  OUTPUT
+              ):
+
+                  print(
+                      "Se conserva noticias.json anterior."
+                  )
+
+                  raise SystemExit(0)
+
+              output = {
+
+                  "updated":
+                      datetime.now(
+                          timezone.utc
+                      ).isoformat(),
+
+                  "source":
+                      "ARENA 24",
+
+                  "noticias": []
+
+              }
+
+
+          # ==================================================
+          # GUARDAR JSON
+          # ==================================================
+
+          with open(
+              OUTPUT,
+              "w",
+              encoding="utf-8"
+          ) as file:
+
+              json.dump(
+                  output,
+                  file,
+                  ensure_ascii=False,
+                  indent=2
+              )
+
+
+          print(
+              f"Noticias guardadas: {len(news)}"
+          )
+
+          PY
+
+      # ==================================================
+      # 5. VALIDAR JSON
+      # ==================================================
+
+      - name: Validar noticias.json
+        run: |
+
+          python <<'PY'
+
+          import json
+
+          with open(
+              "noticias.json",
+              "r",
+              encoding="utf-8"
+          ) as file:
+
+              data = json.load(file)
+
+          if not isinstance(
+              data,
+              dict
+          ):
+
+              raise SystemExit(
+                  "noticias.json no es un objeto JSON válido."
+              )
+
+          if "noticias" not in data:
+
+              raise SystemExit(
+                  "Falta la propiedad 'noticias'."
+              )
+
+          if not isinstance(
+              data["noticias"],
+              list
+          ):
+
+              raise SystemExit(
+                  "'noticias' debe ser un array."
+              )
+
+          print(
+              "JSON válido."
+          )
+
+          print(
+              "Cantidad:",
+              len(data["noticias"])
+          )
+
+          PY
+
+      # ==================================================
+      # 6. GUARDAR CAMBIOS
+      # ==================================================
+
+      - name: Guardar noticias actualizadas
+        run: |
+
+          git config user.name \
+            "ARENA 24 Bot"
+
+          git config user.email \
+            "actions@github.com"
 
           git add noticias.json
 
           if git diff --cached --quiet; then
-            echo "No hay cambios en las noticias."
+
+            echo "No hay cambios para guardar."
+
           else
-            git commit -m "ARENA 24 - actualización automática"
+
+            git commit \
+              -m "ARENA 24: actualizar noticias"
+
             git push
+
           fi
