@@ -1576,199 +1576,144 @@ function setupNewsButtons() {
 
 function setupVisibility() {
 
-    document.addEventListener(
-        "visibilitychange",
-        () => {
-
-            if (
-                document.visibilityState ===
-                "visible"
-            ) {
-
-                loadNews();
-
-            }
-
-        }
-    );
-
-}
-
-
-/* =====================================================
-   INICIO
+   /* =====================================================
+   ARENA 24 RADIO — PLAYER DEFINITIVO
 ===================================================== */
 
-async function initArena24() {
-
-    console.log(
-        "ARENA 24 iniciado."
-    );
-
-
-    setupYear();
-
-    startClock();
-
-    setupMenu();
-
-    setupHeader();
-
-    setupSmoothNavigation();
-
-    setupYouTube();
-
-    setupNewsButtons();
-
-    setupVisibility();
-
-
-    await loadNews();
-
-
-    startAutoRefresh();
-
-
-    console.log(
-        "ARENA 24 listo."
-    );
-
-}
-
-
-/* =====================================================
-   ARRANQUE
-===================================================== */
-
-if (
-    document.readyState ===
-    "loading"
-) {
-
-    document.addEventListener(
-        "DOMContentLoaded",
-        initArena24
-    );
-
-} else {
-
-    initArena24();
-
-}
-<script>
-<script>
 document.addEventListener("DOMContentLoaded", function () {
 
-    const radio =
-        document.getElementById("modern-arena-radio");
+    const audio =
+        document.getElementById("arena-radio-audio");
 
-    const play =
-        document.getElementById("modern-radio-play");
-
-    const icon =
-        document.getElementById("modern-play-icon");
+    const button =
+        document.getElementById("arena-radio-play");
 
     const volume =
-        document.getElementById("modern-radio-volume");
+        document.getElementById("arena-radio-volume");
 
     const player =
-        document.querySelector(".modern-radio-player");
+        document.querySelector(".arena-radio-player");
 
-    const status =
-        document.getElementById("modern-status-text");
+    const state =
+        document.getElementById("arena-radio-state");
 
 
-    if (!radio || !play) {
+    if (!audio || !button || !player) {
+
+        console.error(
+            "ARENA 24: no se encontró el reproductor de radio."
+        );
+
         return;
     }
 
 
-    radio.volume = 0.8;
+    /* VOLUMEN INICIAL */
+
+    audio.volume = 0.8;
 
 
-    play.addEventListener("click", async function () {
+    /* PLAY / PAUSE */
 
-        if (radio.paused) {
+    button.addEventListener("click", async function () {
+
+        if (audio.paused) {
 
             try {
 
-                await radio.play();
+                await audio.play();
 
             } catch (error) {
 
                 console.error(
-                    "No se pudo iniciar ARENA 24 Radio:",
+                    "ARENA 24 Radio:",
                     error
                 );
 
-                status.textContent =
+                state.textContent =
                     "NO SE PUDO CONECTAR";
 
             }
 
         } else {
 
-            radio.pause();
+            audio.pause();
 
         }
 
     });
 
 
-    radio.addEventListener("playing", function () {
+    /* REPRODUCIENDO */
 
-        player.classList.add("is-playing");
+    audio.addEventListener(
+        "playing",
+        function () {
 
-        icon.textContent = "❚❚";
+            player.classList.add("playing");
 
-        status.textContent =
-            "TRANSMITIENDO EN VIVO";
+            button.textContent = "❚❚";
 
-        play.setAttribute(
-            "aria-label",
-            "Pausar ARENA 24 Radio"
+            state.textContent =
+                "TRANSMITIENDO EN VIVO";
+
+        }
+    );
+
+
+    /* PAUSA */
+
+    audio.addEventListener(
+        "pause",
+        function () {
+
+            player.classList.remove("playing");
+
+            button.textContent = "▶";
+
+            state.textContent =
+                "RADIO EN ESPERA";
+
+        }
+    );
+
+
+    /* ERROR */
+
+    audio.addEventListener(
+        "error",
+        function () {
+
+            player.classList.remove("playing");
+
+            button.textContent = "▶";
+
+            state.textContent =
+                "ERROR DE CONEXIÓN";
+
+            console.error(
+                "ARENA 24: error al cargar el stream."
+            );
+
+        }
+    );
+
+
+    /* VOLUMEN */
+
+    if (volume) {
+
+        volume.addEventListener(
+            "input",
+            function () {
+
+                audio.volume =
+                    Number(this.value);
+
+            }
         );
 
-    });
-
-
-    radio.addEventListener("pause", function () {
-
-        player.classList.remove("is-playing");
-
-        icon.textContent = "▶";
-
-        status.textContent =
-            "RADIO EN ESPERA";
-
-        play.setAttribute(
-            "aria-label",
-            "Reproducir ARENA 24 Radio"
-        );
-
-    });
-
-
-    radio.addEventListener("error", function () {
-
-        player.classList.remove("is-playing");
-
-        icon.textContent = "▶";
-
-        status.textContent =
-            "ERROR DE CONEXIÓN";
-
-    });
-
-
-    volume.addEventListener("input", function () {
-
-        radio.volume =
-            Number(this.value);
-
-    });
+    }
 
 });
-</script>
-
 
