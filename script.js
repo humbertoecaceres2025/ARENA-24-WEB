@@ -2021,4 +2021,32 @@ if (retryButton) {
         retryNews
     );
 }
+ const refreshTime =
+    Number(ARENA24.refreshTime) > 0
+        ? Number(ARENA24.refreshTime)
+        : 5 * 60 * 1000;
+
+console.log(
+    `ARENA 24: actualización cada ${
+        Math.round(refreshTime / 60000)
+    } minutos`
+);
+
+setInterval(() => {
+
+    if (
+        document.visibilityState === "visible" &&
+        !STATE.loading
+    ) {
+
+        console.log(
+            "ARENA 24: actualizando noticias..."
+        );
+
+        loadNews();
+
+    }
+
+}, refreshTime);
+
 
