@@ -25,12 +25,12 @@
 ===================================================== */
 
 const ARENA24 = {
-
     newsFile: "./noticias.json",
-
-    refreshTime: 5 * 60 * 1000,
-
     initialNews: 6,
+    moreNews: 6,
+    refreshTime: 5 * 60 * 1000
+};
+
 
     moreNews: 3,
 
