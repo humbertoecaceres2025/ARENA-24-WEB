@@ -1,1803 +1,1657 @@
-const playButton = document.getElementById("play");
-const audio = document.getElementById("audio");
-const statusText = document.getElementById("status");
-
-
-// ======================================
-// RADIO
-// ======================================
-
-playButton.addEventListener("click", async () => {
-
-  try {
-
-    if (audio.paused) {
-
-      await audio.play();
-
-      playButton.textContent = "⏸ PAUSAR RADIO";
-
-      statusText.textContent =
-        "🔴 ARENA 24 · REPRODUCIENDO";
-
-    } else {
-
-      audio.pause();
-
-      playButton.textContent =
-        "▶ ESCUCHAR EN VIVO";
-
-      statusText.textContent =
-        "🔴 ARENA 24 · EN VIVO";
-    }
-
-  } catch (error) {
-
-    statusText.textContent =
-      "⚠️ Tocá nuevamente para iniciar la radio.";
-
-  }
-
-});
-
-
-/* =========================================================
-   ARENA 24
-   SCRIPT PRINCIPAL
-   Versión: definitiva
-========================================================= */
-
 "use strict";
 
+/*
+=========================================================
+ ARENA 24
+ SCRIPT PRINCIPAL
+ Noticias:
+   - LA RIOJA
+   - NACIONALES
+   - DEPORTES
+   - POLICIALES
 
-/* =========================================================
+ Fuente:
+   noticias.json
+
+ Compatible con:
+   actualizar-datos.yml
+=========================================================
+*/
+
+
+/* =====================================================
    CONFIGURACIÓN
-========================================================= */
+===================================================== */
 
-const ARENA24_CONFIG = {
+const ARENA24 = {
 
-  // Archivo generado por GitHub Actions
-  newsUrl: "./noticias.json",
+    newsFile: "./noticias.json",
 
-  // Cada cuánto volver a consultar noticias
-  newsRefreshMs: 5 * 60 * 1000,
+    refreshTime: 5 * 60 * 1000,
 
-  // Cantidad inicial de noticias
-  initialNews: 6,
+    initialNews: 6,
 
-  // Cantidad que se agrega con "Ver más"
-  moreNews: 3,
+    moreNews: 3,
 
-  // Video principal de YouTube
-  youtubeVideo:
-    "https://www.youtube.com/embed/fdHhyBCjhGQ",
+    youtubeVideo:
+        "https://www.youtube.com/embed/fdHhyBCjhGQ",
 
-  // Canal oficial
-  youtubeChannel:
-    "https://www.youtube.com/@ARENA24LARIOJA"
+    youtubeChannel:
+        "https://www.youtube.com/@ARENA24LARIOJA"
 
 };
 
 
-/* =========================================================
-   ESTADO GLOBAL
-========================================================= */
+/* =====================================================
+   ESTADO
+===================================================== */
 
-const ARENA24_STATE = {
+const STATE = {
 
-  news: [],
+    news: [],
 
-  visibleNews: ARENA24_CONFIG.initialNews,
+    visible: ARENA24.initialNews,
 
-  loading: false,
+    loading: false,
 
-  lastUpdate: null,
+    lastUpdate: null,
 
-  error: false
+    error: false
 
 };
 
 
-/* =========================================================
-   UTILIDADES DOM
-========================================================= */
+/* =====================================================
+   DOM
+===================================================== */
 
-function $(selector) {
+const $ = selector =>
+    document.querySelector(selector);
 
-  return document.querySelector(selector);
+
+const $$ = selector =>
+    document.querySelectorAll(selector);
+
+
+/* =====================================================
+   TEXTO SEGURO
+===================================================== */
+
+function cleanText(value) {
+
+    if (
+        value === null ||
+        value === undefined
+    ) {
+
+        return "";
+
+    }
+
+    return String(value)
+        .replace(/\s+/g, " ")
+        .trim();
 
 }
 
 
-function $all(selector) {
-
-  return document.querySelectorAll(selector);
-
-}
-
-
-/* =========================================================
-   ESCAPE HTML
-   Evita insertar contenido HTML proveniente del JSON.
-========================================================= */
+/* =====================================================
+   ESCAPAR HTML
+===================================================== */
 
 function escapeHTML(value) {
 
-  if (value === null || value === undefined) {
-    return "";
-  }
-
-  return String(value)
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
+    return cleanText(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
 
 }
 
 
-/* =========================================================
+/* =====================================================
    URL SEGURA
-========================================================= */
+===================================================== */
 
-function safeURL(value, fallback = "#") {
+function safeURL(value) {
 
-  if (!value) {
-    return fallback;
-  }
+    if (!value) {
+        return "#";
+    }
 
-  try {
+    try {
 
-    const url = new URL(value, window.location.href);
+        const url =
+            new URL(
+                value,
+                window.location.href
+            );
+
+        if (
+            url.protocol === "http:" ||
+            url.protocol === "https:"
+        ) {
+
+            return url.href;
+
+        }
+
+    } catch (error) {
+
+        console.warn(
+            "URL inválida:",
+            value
+        );
+
+    }
+
+    return "#";
+
+}
+
+
+/* =====================================================
+   FECHA
+===================================================== */
+
+function formatDate(value) {
+
+    if (!value) {
+        return "";
+    }
+
+    const date =
+        new Date(value);
 
     if (
-      url.protocol === "http:" ||
-      url.protocol === "https:"
+        Number.isNaN(
+            date.getTime()
+        )
     ) {
 
-      return url.href;
+        return cleanText(value);
 
     }
 
-  } catch (error) {
-
-    console.warn(
-      "URL inválida:",
-      value
-    );
-
-  }
-
-  return fallback;
+    return new Intl.DateTimeFormat(
+        "es-AR",
+        {
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit"
+        }
+    ).format(date);
 
 }
 
 
-/* =========================================================
-   FECHA
-========================================================= */
-
-function formatDate(dateValue) {
-
-  if (!dateValue) {
-    return "Actualidad";
-  }
-
-  const date = new Date(dateValue);
-
-  if (Number.isNaN(date.getTime())) {
-    return String(dateValue);
-  }
-
-  return new Intl.DateTimeFormat(
-    "es-AR",
-    {
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
-      hour: "2-digit",
-      minute: "2-digit"
-    }
-  ).format(date);
-
-}
-
-
-/* =========================================================
+/* =====================================================
    TIEMPO RELATIVO
-========================================================= */
+===================================================== */
 
-function timeAgo(dateValue) {
+function timeAgo(value) {
 
-  if (!dateValue) {
-    return "Actualidad";
-  }
+    if (!value) {
+        return "Actualidad";
+    }
 
-  const date = new Date(dateValue);
+    const date =
+        new Date(value);
 
-  if (Number.isNaN(date.getTime())) {
-    return "Actualidad";
-  }
+    if (
+        Number.isNaN(
+            date.getTime()
+        )
+    ) {
 
-  const seconds =
-    Math.floor(
-      (Date.now() - date.getTime()) / 1000
-    );
+        return "Actualidad";
 
-  if (seconds < 60) {
-    return "Hace unos segundos";
-  }
+    }
 
-  const minutes =
-    Math.floor(seconds / 60);
+    const seconds =
+        Math.floor(
+            (
+                Date.now() -
+                date.getTime()
+            ) / 1000
+        );
 
-  if (minutes < 60) {
+    if (seconds < 60) {
 
-    return (
-      "Hace " +
-      minutes +
-      (minutes === 1 ? " minuto" : " minutos")
-    );
+        return "Hace unos segundos";
 
-  }
+    }
 
-  const hours =
-    Math.floor(minutes / 60);
+    const minutes =
+        Math.floor(
+            seconds / 60
+        );
 
-  if (hours < 24) {
+    if (minutes < 60) {
 
-    return (
-      "Hace " +
-      hours +
-      (hours === 1 ? " hora" : " horas")
-    );
+        return `Hace ${minutes} ${
+            minutes === 1
+                ? "minuto"
+                : "minutos"
+        }`;
 
-  }
+    }
 
-  const days =
-    Math.floor(hours / 24);
+    const hours =
+        Math.floor(
+            minutes / 60
+        );
 
-  if (days < 7) {
+    if (hours < 24) {
 
-    return (
-      "Hace " +
-      days +
-      (days === 1 ? " día" : " días")
-    );
+        return `Hace ${hours} ${
+            hours === 1
+                ? "hora"
+                : "horas"
+        }`;
 
-  }
+    }
 
-  return formatDate(dateValue);
+    const days =
+        Math.floor(
+            hours / 24
+        );
 
-}
+    if (days < 7) {
 
+        return `Hace ${days} ${
+            days === 1
+                ? "día"
+                : "días"
+        }`;
 
-/* =========================================================
-   TEXTO
-========================================================= */
+    }
 
-function cleanText(value, fallback = "") {
-
-  if (
-    value === null ||
-    value === undefined
-  ) {
-
-    return fallback;
-
-  }
-
-  return String(value)
-    .replace(/\s+/g, " ")
-    .trim();
+    return formatDate(value);
 
 }
 
 
-/* =========================================================
+/* =====================================================
+   NORMALIZAR CATEGORÍA
+===================================================== */
+
+function normalizeCategory(category) {
+
+    const value =
+        cleanText(category)
+            .toUpperCase()
+            .normalize("NFD")
+            .replace(
+                /[\u0300-\u036f]/g,
+                ""
+            );
+
+    if (
+        value.includes("RIOJA")
+    ) {
+
+        return "LA RIOJA";
+
+    }
+
+    if (
+        value.includes("NACIONAL")
+        ||
+        value === "ARGENTINA"
+    ) {
+
+        return "NACIONALES";
+
+    }
+
+    if (
+        value.includes("DEPORTE")
+    ) {
+
+        return "DEPORTES";
+
+    }
+
+    if (
+        value.includes("POLICIAL")
+    ) {
+
+        return "POLICIALES";
+
+    }
+
+    return "ACTUALIDAD";
+
+}
+
+
+/* =====================================================
    NORMALIZAR NOTICIA
-========================================================= */
+===================================================== */
 
 function normalizeNews(item, index) {
 
-  if (!item || typeof item !== "object") {
-    return null;
-  }
+    if (
+        !item ||
+        typeof item !== "object"
+    ) {
 
-  const title = cleanText(
-    item.title ||
-    item.titulo ||
-    item.name
-  );
+        return null;
 
-  if (!title) {
-    return null;
-  }
+    }
 
-  const description = cleanText(
-    item.description ||
-    item.descripcion ||
-    item.summary ||
-    item.resumen ||
-    ""
-  );
+    const title =
+        cleanText(
+            item.title ||
+            item.titulo
+        );
 
-  const image = safeURL(
-    item.image ||
-    item.imagen ||
-    item.image_url ||
-    item.thumbnail ||
-    item.urlToImage ||
-    "",
-    ""
-  );
+    if (!title) {
+        return null;
+    }
 
-  const link = safeURL(
-    item.link ||
-    item.url ||
-    item.enlace ||
-    "#",
-    "#"
-  );
+    return {
 
-  const category = cleanText(
-    item.category ||
-    item.categoria ||
-    item.section ||
-    item.seccion ||
-    "ACTUALIDAD"
-  );
+        id:
+            item.id ||
+            item.guid ||
+            `${index}-${title}`,
 
-  const source = cleanText(
-    item.source ||
-    item.fuente ||
-    item.author ||
-    "ARENA 24"
-  );
+        title,
 
-  const date =
-    item.date ||
-    item.fecha ||
-    item.publishedAt ||
-    item.published_at ||
-    item.pubDate ||
-    "";
+        description:
+            cleanText(
+                item.description ||
+                item.descripcion ||
+                item.summary ||
+                item.resumen
+            ),
 
-  return {
+        image:
+            safeURL(
+                item.image ||
+                item.imagen ||
+                item.image_url ||
+                item.thumbnail ||
+                item.urlToImage
+            ),
 
-    id:
-      item.id ||
-      item.guid ||
-      `${index}-${title}`,
+        link:
+            safeURL(
+                item.link ||
+                item.url ||
+                item.enlace
+            ),
 
-    title,
+        category:
+            normalizeCategory(
+                item.category ||
+                item.categoria ||
+                item.section ||
+                item.seccion
+            ),
 
-    description,
+        source:
+            cleanText(
+                item.source ||
+                item.fuente ||
+                "ARENA 24"
+            ),
 
-    image,
+        date:
+            item.date ||
+            item.fecha ||
+            item.publishedAt ||
+            item.published_at ||
+            item.pubDate ||
+            ""
 
-    link,
-
-    category,
-
-    source,
-
-    date
-
-  };
+    };
 
 }
 
 
-/* =========================================================
-   VALIDAR JSON
-========================================================= */
+/* =====================================================
+   OBTENER ARRAY DE NOTICIAS
+===================================================== */
 
 function extractNews(data) {
 
-  if (Array.isArray(data)) {
-    return data;
-  }
+    if (
+        Array.isArray(data)
+    ) {
 
-  if (!data || typeof data !== "object") {
+        return data;
+
+    }
+
+    if (
+        !data ||
+        typeof data !== "object"
+    ) {
+
+        return [];
+
+    }
+
+    const keys = [
+
+        "noticias",
+        "news",
+        "articles",
+        "items",
+        "results",
+        "data"
+
+    ];
+
+    for (
+        const key of keys
+    ) {
+
+        if (
+            Array.isArray(
+                data[key]
+            )
+        ) {
+
+            return data[key];
+
+        }
+
+    }
+
     return [];
-  }
-
-  const possibleKeys = [
-
-    "news",
-    "noticias",
-    "articles",
-    "items",
-    "results",
-    "data"
-
-  ];
-
-  for (const key of possibleKeys) {
-
-    if (Array.isArray(data[key])) {
-      return data[key];
-    }
-
-  }
-
-  return [];
 
 }
 
 
-/* =========================================================
+/* =====================================================
    CARGAR NOTICIAS
-========================================================= */
+===================================================== */
 
-async function loadNews(options = {}) {
+async function loadNews() {
 
-  const {
-
-    showLoading = true,
-    retry = 0
-
-  } = options;
-
-  if (ARENA24_STATE.loading) {
-    return;
-  }
-
-  ARENA24_STATE.loading = true;
-
-  if (showLoading && ARENA24_STATE.news.length === 0) {
-
-    showNewsLoading();
-
-  }
-
-  updateNewsStatus(
-    "Actualizando información..."
-  );
-
-  try {
-
-    const cacheBust =
-      `?t=${Date.now()}`;
-
-    const response =
-      await fetch(
-        ARENA24_CONFIG.newsUrl + cacheBust,
-        {
-          method: "GET",
-
-          cache: "no-store",
-
-          headers: {
-            "Accept":
-              "application/json"
-          }
-        }
-      );
-
-    if (!response.ok) {
-
-      throw new Error(
-        `HTTP ${response.status}`
-      );
-
+    if (STATE.loading) {
+        return;
     }
 
-    const data =
-      await response.json();
+    STATE.loading = true;
 
-    const rawNews =
-      extractNews(data);
-
-    const normalized =
-      rawNews
-        .map(normalizeNews)
-        .filter(Boolean);
-
-    if (!normalized.length) {
-
-      throw new Error(
-        "El archivo noticias.json no contiene noticias válidas."
-      );
-
-    }
-
-    ARENA24_STATE.news =
-      removeDuplicates(normalized);
-
-    ARENA24_STATE.error = false;
-
-    ARENA24_STATE.lastUpdate =
-      new Date();
-
-    ARENA24_STATE.visibleNews =
-      Math.min(
-        ARENA24_CONFIG.initialNews,
-        ARENA24_STATE.news.length
-      );
-
-    renderNews();
-
-    updateNewsStatus(
-      "Actualizado " +
-      new Intl.DateTimeFormat(
-        "es-AR",
-        {
-          hour: "2-digit",
-          minute: "2-digit"
-        }
-      ).format(
-        ARENA24_STATE.lastUpdate
-      )
+    updateStatus(
+        "Actualizando noticias..."
     );
 
-    hideNewsError();
+    try {
 
-  } catch (error) {
+        const response =
+            await fetch(
+                `${ARENA24.newsFile}?t=${Date.now()}`,
+                {
+                    cache: "no-store",
+                    headers: {
+                        Accept:
+                            "application/json"
+                    }
+                }
+            );
 
-    console.error(
-      "ARENA 24 - Error cargando noticias:",
-      error
-    );
+        if (!response.ok) {
 
-    ARENA24_STATE.error = true;
+            throw new Error(
+                `HTTP ${response.status}`
+            );
 
-    /*
-      Si ya había noticias cargadas,
-      NO las borramos.
-    */
+        }
 
-    if (ARENA24_STATE.news.length) {
+        const data =
+            await response.json();
 
-      updateNewsStatus(
-        "No se pudo actualizar. Mostrando última información disponible."
-      );
+        const rawNews =
+            extractNews(data);
 
-      showNewsError(false);
+        const normalized =
+            rawNews
+                .map(
+                    normalizeNews
+                )
+                .filter(Boolean);
 
-    } else {
+        if (
+            !normalized.length
+        ) {
 
-      showNewsError(true);
+            throw new Error(
+                "No hay noticias válidas."
+            );
+
+        }
+
+        STATE.news =
+            removeDuplicates(
+                normalized
+            );
+
+        STATE.lastUpdate =
+            new Date();
+
+        STATE.error = false;
+
+        STATE.visible =
+            Math.min(
+                ARENA24.initialNews,
+                STATE.news.length
+            );
+
+        renderEverything();
+
+        hideError();
+
+        updateStatus(
+            `Actualizado ${new Intl.DateTimeFormat(
+                "es-AR",
+                {
+                    hour: "2-digit",
+                    minute: "2-digit"
+                }
+            ).format(
+                STATE.lastUpdate
+            )}`
+        );
+
+    } catch (error) {
+
+        console.error(
+            "ARENA 24 - Noticias:",
+            error
+        );
+
+        STATE.error = true;
+
+        /*
+        No borramos las noticias
+        anteriores si ya existían.
+        */
+
+        if (
+            STATE.news.length
+        ) {
+
+            updateStatus(
+                "No se pudo actualizar. Mostrando información disponible."
+            );
+
+            showError(false);
+
+        } else {
+
+            showError(true);
+
+            updateStatus(
+                "Noticias temporalmente no disponibles."
+            );
+
+        }
+
+    } finally {
+
+        STATE.loading = false;
 
     }
-
-    /*
-      Reintento automático.
-    */
-
-    if (retry < 2) {
-
-      setTimeout(
-        () => {
-
-          ARENA24_STATE.loading = false;
-
-          loadNews({
-            showLoading: false,
-            retry: retry + 1
-          });
-
-        },
-        4000
-      );
-
-      return;
-
-    }
-
-  } finally {
-
-    ARENA24_STATE.loading = false;
-
-  }
 
 }
 
 
-/* =========================================================
-   ELIMINAR DUPLICADOS
-========================================================= */
+/* =====================================================
+   DUPLICADOS
+===================================================== */
 
 function removeDuplicates(news) {
 
-  const seen = new Set();
+    const seen =
+        new Set();
 
-  return news.filter(item => {
+    return news.filter(
+        item => {
 
-    const key =
-      item.link !== "#"
-        ? item.link
-        : item.title.toLowerCase();
+            const key =
+                item.link !== "#"
+                    ? item.link
+                    : item.title
+                        .toLowerCase();
 
-    if (seen.has(key)) {
-      return false;
-    }
+            if (
+                seen.has(key)
+            ) {
 
-    seen.add(key);
+                return false;
 
-    return true;
+            }
 
-  });
+            seen.add(key);
 
-}
+            return true;
 
-
-/* =========================================================
-   LOADING
-========================================================= */
-
-function showNewsLoading() {
-
-  const grid =
-    $("#news-grid");
-
-  if (!grid) {
-    return;
-  }
-
-  grid.innerHTML = `
-
-    <article class="news-loading">
-      <div class="news-loading-image"></div>
-      <div class="news-loading-line"></div>
-      <div class="news-loading-line short"></div>
-      <div class="news-loading-line tiny"></div>
-    </article>
-
-    <article class="news-loading">
-      <div class="news-loading-image"></div>
-      <div class="news-loading-line"></div>
-      <div class="news-loading-line short"></div>
-      <div class="news-loading-line tiny"></div>
-    </article>
-
-    <article class="news-loading">
-      <div class="news-loading-image"></div>
-      <div class="news-loading-line"></div>
-      <div class="news-loading-line short"></div>
-      <div class="news-loading-line tiny"></div>
-    </article>
-
-  `;
-
-}
-
-
-/* =========================================================
-   RENDERIZAR NOTICIAS
-========================================================= */
-
-function renderNews() {
-
-  if (!ARENA24_STATE.news.length) {
-    return;
-  }
-
-  renderFeaturedNews();
-
-  renderNewsGrid();
-
-  updateLoadMoreButton();
-
-}
-
-
-/* =========================================================
-   NOTICIA DESTACADA
-========================================================= */
-
-function renderFeaturedNews() {
-
-  const news =
-    ARENA24_STATE.news[0];
-
-  if (!news) {
-    return;
-  }
-
-  const title =
-    $("#featured-news-title");
-
-  const description =
-    $("#featured-news-description");
-
-  const source =
-    $("#featured-news-source");
-
-  const time =
-    $("#featured-news-time");
-
-  const link =
-    $("#featured-news-link");
-
-  const image =
-    $("#featured-news-img");
-
-
-  if (title) {
-
-    title.textContent =
-      news.title;
-
-  }
-
-
-  if (description) {
-
-    description.textContent =
-      news.description ||
-      "Toda la información en ARENA 24.";
-
-  }
-
-
-  if (source) {
-
-    source.textContent =
-      news.source;
-
-  }
-
-
-  if (time) {
-
-    time.textContent =
-      timeAgo(news.date);
-
-    if (news.date) {
-
-      time.title =
-        formatDate(news.date);
-
-    }
-
-  }
-
-
-  if (link) {
-
-    link.href =
-      safeURL(news.link);
-
-    if (news.link !== "#") {
-
-      link.target = "_blank";
-
-    }
-
-  }
-
-
-  if (image) {
-
-    if (news.image) {
-
-      image.src =
-        news.image;
-
-      image.alt =
-        news.title;
-
-      image.onerror =
-        function () {
-
-          this.style.display =
-            "none";
-
-        };
-
-    } else {
-
-      image.removeAttribute("src");
-
-      image.alt =
-        "";
-
-    }
-
-  }
-
-}
-
-
-/* =========================================================
-   GRID
-========================================================= */
-
-function renderNewsGrid() {
-
-  const grid =
-    $("#news-grid");
-
-  if (!grid) {
-    return;
-  }
-
-  /*
-    La primera noticia se utiliza
-    como destacada.
-  */
-
-  const items =
-    ARENA24_STATE.news
-      .slice(
-        1,
-        ARENA24_STATE.visibleNews
-      );
-
-  if (!items.length) {
-
-    grid.innerHTML = `
-      <div class="news-empty">
-        No hay más noticias disponibles.
-      </div>
-    `;
-
-    return;
-
-  }
-
-  grid.innerHTML =
-    items
-      .map(
-        (news, index) =>
-          createNewsCard(
-            news,
-            index
-          )
-      )
-      .join("");
-
-}
-
-
-/* =========================================================
-   TARJETA
-========================================================= */
-
-function createNewsCard(news, index) {
-
-  const imageHTML =
-    news.image
-      ? `
-        <img
-          src="${escapeHTML(news.image)}"
-          alt="${escapeHTML(news.title)}"
-          loading="lazy"
-          onerror="this.style.display='none'"
-        >
-      `
-      : `
-        <div
-          class="news-card-placeholder"
-          aria-hidden="true"
-        >
-          ARENA <strong>24</strong>
-        </div>
-      `;
-
-  const link =
-    safeURL(news.link);
-
-
-  return `
-
-    <article
-      class="news-card"
-      data-news-index="${index}"
-    >
-
-      <div class="news-card-image">
-
-        ${imageHTML}
-
-      </div>
-
-
-      <div class="news-card-body">
-
-        <div class="news-card-category">
-
-          ${escapeHTML(
-            news.category
-          )}
-
-        </div>
-
-
-        <h3>
-
-          ${escapeHTML(
-            news.title
-          )}
-
-        </h3>
-
-
-        ${
-          news.description
-            ? `
-              <p>
-                ${escapeHTML(
-                  truncate(
-                    news.description,
-                    145
-                  )
-                )}
-              </p>
-            `
-            : ""
         }
-
-
-        <div class="news-card-footer">
-
-          <span
-            class="news-card-time"
-            title="${escapeHTML(
-              formatDate(news.date)
-            )}"
-          >
-
-            ${escapeHTML(
-              timeAgo(news.date)
-            )}
-
-          </span>
-
-
-          <a
-            class="news-card-link"
-            href="${escapeHTML(link)}"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-
-            LEER →
-
-          </a>
-
-        </div>
-
-      </div>
-
-    </article>
-
-  `;
-
-}
-
-
-/* =========================================================
-   TRUNCAR TEXTO
-========================================================= */
-
-function truncate(text, maxLength) {
-
-  const value =
-    cleanText(text);
-
-  if (
-    value.length <= maxLength
-  ) {
-
-    return value;
-
-  }
-
-  return (
-    value
-      .slice(0, maxLength)
-      .trimEnd() +
-    "..."
-  );
-
-}
-
-
-/* =========================================================
-   BOTÓN VER MÁS
-========================================================= */
-
-function updateLoadMoreButton() {
-
-  const button =
-    $("#load-more-news");
-
-  if (!button) {
-    return;
-  }
-
-  const available =
-    ARENA24_STATE.news.length - 1;
-
-  const visible =
-    ARENA24_STATE.visibleNews - 1;
-
-  if (visible >= available) {
-
-    button.style.display =
-      "none";
-
-    return;
-
-  }
-
-  button.style.display =
-    "inline-flex";
-
-  button.innerHTML =
-    `
-      VER MÁS NOTICIAS
-      <span>→</span>
-    `;
-
-}
-
-
-/* =========================================================
-   VER MÁS
-========================================================= */
-
-function loadMoreNews() {
-
-  ARENA24_STATE.visibleNews =
-    Math.min(
-      ARENA24_STATE.visibleNews +
-        ARENA24_CONFIG.moreNews,
-
-      ARENA24_STATE.news.length
     );
 
-  renderNewsGrid();
+}
 
-  updateLoadMoreButton();
+
+/* =====================================================
+   RENDER GENERAL
+===================================================== */
+
+function renderEverything() {
+
+    renderFeatured();
+
+    renderSection(
+        "LA RIOJA",
+        [
+            "#rioja-news",
+            "#news-rioja",
+            "[data-news-category='LA RIOJA']"
+        ]
+    );
+
+    renderSection(
+        "NACIONALES",
+        [
+            "#national-news",
+            "#news-national",
+            "[data-news-category='NACIONALES']"
+        ]
+    );
+
+    renderSection(
+        "DEPORTES",
+        [
+            "#sports-news",
+            "#news-sports",
+            "[data-news-category='DEPORTES']"
+        ]
+    );
+
+    renderSection(
+        "POLICIALES",
+        [
+            "#police-news",
+            "#news-police",
+            "[data-news-category='POLICIALES']"
+        ]
+    );
+
+    renderMainGrid();
+
+    updateMoreButton();
 
 }
 
 
-/* =========================================================
-   ESTADO
-========================================================= */
+/* =====================================================
+   NOTICIA DESTACADA
+===================================================== */
 
-function updateNewsStatus(message) {
+function renderFeatured() {
 
-  const element =
-    $("#news-update-status");
+    const news =
+        STATE.news[0];
 
-  if (!element) {
-    return;
-  }
+    if (!news) {
+        return;
+    }
 
-  element.textContent =
-    message;
+    const title =
+        $("#featured-news-title");
+
+    const description =
+        $("#featured-news-description");
+
+    const source =
+        $("#featured-news-source");
+
+    const time =
+        $("#featured-news-time");
+
+    const link =
+        $("#featured-news-link");
+
+    const image =
+        $("#featured-news-img");
+
+
+    if (title) {
+
+        title.textContent =
+            news.title;
+
+    }
+
+
+    if (description) {
+
+        description.textContent =
+            news.description ||
+            "Toda la información en ARENA 24.";
+
+    }
+
+
+    if (source) {
+
+        source.textContent =
+            news.source;
+
+    }
+
+
+    if (time) {
+
+        time.textContent =
+            timeAgo(
+                news.date
+            );
+
+        time.title =
+            formatDate(
+                news.date
+            );
+
+    }
+
+
+    if (link) {
+
+        link.href =
+            news.link;
+
+        link.target =
+            "_blank";
+
+        link.rel =
+            "noopener noreferrer";
+
+    }
+
+
+    if (image) {
+
+        if (
+            news.image !== "#"
+        ) {
+
+            image.src =
+                news.image;
+
+            image.alt =
+                news.title;
+
+            image.style.display =
+                "block";
+
+        } else {
+
+            image.removeAttribute(
+                "src"
+            );
+
+            image.style.display =
+                "none";
+
+        }
+
+    }
 
 }
 
 
-/* =========================================================
-   ERROR
-========================================================= */
+/* =====================================================
+   RENDER DE SECCIONES
+===================================================== */
 
-function showNewsError(showRetry = true) {
+function renderSection(
+    category,
+    selectors
+) {
 
-  const error =
-    $("#news-error");
+    let container = null;
 
-  if (!error) {
-    return;
-  }
+    for (
+        const selector of selectors
+    ) {
 
-  error.hidden = false;
+        container =
+            $(selector);
 
-  const button =
-    $("#news-retry");
+        if (container) {
+            break;
+        }
 
-  if (button) {
+    }
+
+    if (!container) {
+        return;
+    }
+
+    const news =
+        STATE.news
+            .filter(
+                item =>
+                    item.category ===
+                    category
+            )
+            .slice(0, 6);
+
+    if (!news.length) {
+
+        container.innerHTML = `
+
+            <div class="news-empty">
+
+                <strong>
+                    ${category}
+                </strong>
+
+                <p>
+                    No hay noticias disponibles
+                    en este momento.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+    container.innerHTML =
+        news
+            .map(
+                (item, index) =>
+                    createCard(
+                        item,
+                        index
+                    )
+            )
+            .join("");
+
+}
+
+
+/* =====================================================
+   GRID PRINCIPAL
+===================================================== */
+
+function renderMainGrid() {
+
+    const grid =
+        $("#news-grid");
+
+    if (!grid) {
+        return;
+    }
+
+    /*
+      Excluimos la primera noticia,
+      que se utiliza como destacada.
+    */
+
+    const news =
+        STATE.news.slice(
+            1,
+            STATE.visible
+        );
+
+    if (!news.length) {
+
+        grid.innerHTML = `
+
+            <div class="news-empty">
+
+                No hay más noticias disponibles.
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+    grid.innerHTML =
+        news
+            .map(
+                createCard
+            )
+            .join("");
+
+}
+
+
+/* =====================================================
+   CREAR TARJETA
+===================================================== */
+
+function createCard(
+    news,
+    index
+) {
+
+    const image =
+        news.image !== "#"
+            ? `
+                <img
+                    src="${escapeHTML(
+                        news.image
+                    )}"
+                    alt="${escapeHTML(
+                        news.title
+                    )}"
+                    loading="lazy"
+                    onerror="
+                        this.style.display='none'
+                    "
+                >
+              `
+            : `
+                <div class="news-card-placeholder">
+                    <span>ARENA</span>
+                    <strong>24</strong>
+                </div>
+              `;
+
+
+    return `
+
+        <article
+            class="news-card"
+            data-news-index="${index}"
+        >
+
+            <div class="news-card-image">
+
+                ${image}
+
+                <span class="news-card-tag">
+
+                    ${escapeHTML(
+                        news.category
+                    )}
+
+                </span>
+
+            </div>
+
+
+            <div class="news-card-body">
+
+                <div class="news-card-source">
+
+                    ${escapeHTML(
+                        news.source
+                    )}
+
+                </div>
+
+
+                <h3>
+
+                    ${escapeHTML(
+                        news.title
+                    )}
+
+                </h3>
+
+
+                ${
+                    news.description
+                        ? `
+                            <p>
+                                ${escapeHTML(
+                                    truncate(
+                                        news.description,
+                                        150
+                                    )
+                                )}
+                            </p>
+                          `
+                        : ""
+                }
+
+
+                <div class="news-card-footer">
+
+                    <span
+                        class="news-card-time"
+                        title="${escapeHTML(
+                            formatDate(
+                                news.date
+                            )
+                        )}"
+                    >
+
+                        ${escapeHTML(
+                            timeAgo(
+                                news.date
+                            )
+                        )}
+
+                    </span>
+
+
+                    <a
+                        href="${escapeHTML(
+                            news.link
+                        )}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="news-card-link"
+                    >
+
+                        LEER →
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </article>
+
+    `;
+
+}
+
+
+/* =====================================================
+   TRUNCAR
+===================================================== */
+
+function truncate(
+    text,
+    length
+) {
+
+    const value =
+        cleanText(text);
+
+    if (
+        value.length <= length
+    ) {
+
+        return value;
+
+    }
+
+    return (
+        value
+            .substring(
+                0,
+                length
+            )
+            .trimEnd() +
+        "..."
+    );
+
+}
+
+
+/* =====================================================
+   VER MÁS
+===================================================== */
+
+function updateMoreButton() {
+
+    const button =
+        $("#load-more-news");
+
+    if (!button) {
+        return;
+    }
+
+    const available =
+        Math.max(
+            0,
+            STATE.news.length - 1
+        );
+
+    const visible =
+        Math.max(
+            0,
+            STATE.visible - 1
+        );
+
+    if (
+        visible >= available
+    ) {
+
+        button.style.display =
+            "none";
+
+        return;
+
+    }
 
     button.style.display =
-      showRetry
-        ? "inline-block"
-        : "none";
+        "inline-flex";
 
-  }
-
-}
-
-
-/* =========================================================
-   OCULTAR ERROR
-========================================================= */
-
-function hideNewsError() {
-
-  const error =
-    $("#news-error");
-
-  if (!error) {
-    return;
-  }
-
-  error.hidden = true;
+    button.innerHTML =
+        `
+            VER MÁS NOTICIAS
+            <span>→</span>
+        `;
 
 }
 
 
-/* =========================================================
+/* =====================================================
+   VER MÁS
+===================================================== */
+
+function loadMore() {
+
+    STATE.visible =
+        Math.min(
+            STATE.visible +
+                ARENA24.moreNews,
+
+            STATE.news.length
+        );
+
+    renderMainGrid();
+
+    updateMoreButton();
+
+}
+
+
+/* =====================================================
+   ESTADO
+===================================================== */
+
+function updateStatus(
+    message
+) {
+
+    const element =
+        $("#news-update-status");
+
+    if (element) {
+
+        element.textContent =
+            message;
+
+    }
+
+}
+
+
+/* =====================================================
+   ERROR
+===================================================== */
+
+function showError(
+    showRetry
+) {
+
+    const error =
+        $("#news-error");
+
+    if (!error) {
+        return;
+    }
+
+    error.hidden = false;
+
+    const retry =
+        $("#news-retry");
+
+    if (retry) {
+
+        retry.style.display =
+            showRetry
+                ? "inline-block"
+                : "none";
+
+    }
+
+}
+
+
+function hideError() {
+
+    const error =
+        $("#news-error");
+
+    if (error) {
+
+        error.hidden =
+            true;
+
+    }
+
+}
+
+
+/* =====================================================
    REINTENTAR
-========================================================= */
+===================================================== */
 
 function retryNews() {
 
-  ARENA24_STATE.loading =
-    false;
+    STATE.loading =
+        false;
 
-  loadNews({
-    showLoading:
-      ARENA24_STATE.news.length === 0
-  });
+    loadNews();
 
 }
 
 
-/* =========================================================
+/* =====================================================
    ACTUALIZACIÓN AUTOMÁTICA
-========================================================= */
+===================================================== */
 
-function startNewsAutoRefresh() {
+function startAutoRefresh() {
 
-  setInterval(
-    () => {
+    setInterval(
+        () => {
 
-      if (
-        document.visibilityState ===
-        "visible"
-      ) {
+            if (
+                document.visibilityState ===
+                "visible"
+            ) {
 
-        loadNews({
-          showLoading: false
-        });
+                loadNews();
 
-      }
+            }
 
-    },
-    ARENA24_CONFIG.newsRefreshMs
-  );
+        },
+        ARENA24.refreshTime
+    );
 
 }
 
 
-/* =========================================================
+/* =====================================================
    YOUTUBE
-========================================================= */
+===================================================== */
 
 function setupYouTube() {
 
-  const iframe =
-    document.querySelector(
-      "#youtube-player"
-    );
-
-  if (
-    iframe &&
-    !iframe.src
-  ) {
-
-    iframe.src =
-      ARENA24_CONFIG.youtubeVideo;
-
-  }
-
-
-  /*
-    Si existe algún elemento
-    con data-youtube-channel,
-    se conecta automáticamente.
-  */
-
-  $all(
-    "[data-youtube-channel]"
-  ).forEach(element => {
-
-    element.href =
-      ARENA24_CONFIG.youtubeChannel;
-
-    element.target =
-      "_blank";
-
-    element.rel =
-      "noopener noreferrer";
-
-  });
-
-}
-
-
-/* =========================================================
-   LINKS DE YOUTUBE
-========================================================= */
-
-function setupYouTubeLinks() {
-
-  const youtubeLinks =
-    $all(
-      'a[href*="youtube.com"]'
-    );
-
-  youtubeLinks.forEach(link => {
-
-    /*
-      Si el enlace estaba vacío,
-      lo llevamos al canal oficial.
-    */
-
-    const href =
-      link.getAttribute("href");
+    const player =
+        $("#youtube-player");
 
     if (
-      !href ||
-      href === "#" ||
-      href === "https://youtube.com"
+        player &&
+        !player.src
     ) {
 
-      link.href =
-        ARENA24_CONFIG.youtubeChannel;
+        player.src =
+            ARENA24.youtubeVideo;
 
     }
 
-    link.target =
-      "_blank";
 
-    link.rel =
-      "noopener noreferrer";
+    $$(
+        "[data-youtube-channel]"
+    ).forEach(
+        element => {
 
-  });
+            element.href =
+                ARENA24.youtubeChannel;
 
-}
+            element.target =
+                "_blank";
 
-
-/* =========================================================
-   NAVEGACIÓN SUAVE
-========================================================= */
-
-function setupSmoothNavigation() {
-
-  $all(
-    'a[href^="#"]'
-  ).forEach(link => {
-
-    link.addEventListener(
-      "click",
-      function(event) {
-
-        const targetID =
-          this.getAttribute("href");
-
-        if (
-          !targetID ||
-          targetID === "#"
-        ) {
-
-          return;
+            element.rel =
+                "noopener noreferrer";
 
         }
-
-        const target =
-          document.querySelector(
-            targetID
-          );
-
-        if (!target) {
-          return;
-        }
-
-        event.preventDefault();
-
-        target.scrollIntoView({
-          behavior: "smooth",
-          block: "start"
-        });
-
-      }
     );
-
-  });
 
 }
 
 
-/* =========================================================
-   BOTÓN MENÚ
-========================================================= */
-
-function setupMenu() {
-
-  const toggle =
-    document.querySelector(
-      ".menu-toggle"
-    );
-
-  const nav =
-    document.querySelector(
-      ".main-nav"
-    );
-
-  if (!toggle || !nav) {
-    return;
-  }
-
-  toggle.addEventListener(
-    "click",
-    () => {
-
-      nav.classList.toggle(
-        "active"
-      );
-
-      toggle.classList.toggle(
-        "active"
-      );
-
-    }
-  );
-
-
-  $all(
-    ".main-nav a"
-  ).forEach(link => {
-
-    link.addEventListener(
-      "click",
-      () => {
-
-        nav.classList.remove(
-          "active"
-        );
-
-        toggle.classList.remove(
-          "active"
-        );
-
-      }
-    );
-
-  });
-
-}
-
-
-/* =========================================================
-   FECHA / HORA
-========================================================= */
+/* =====================================================
+   RELOJ
+===================================================== */
 
 function updateClock() {
 
-  const elements =
-    $all(
-      "[data-live-clock]"
+    $$(
+        "[data-live-clock]"
+    ).forEach(
+        element => {
+
+            element.textContent =
+                new Intl.DateTimeFormat(
+                    "es-AR",
+                    {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                        second: "2-digit"
+                    }
+                ).format(
+                    new Date()
+                );
+
+        }
     );
-
-  if (!elements.length) {
-    return;
-  }
-
-  const now =
-    new Date();
-
-  const time =
-    new Intl.DateTimeFormat(
-      "es-AR",
-      {
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit"
-      }
-    ).format(now);
-
-  elements.forEach(
-    element => {
-
-      element.textContent =
-        time;
-
-    }
-  );
 
 }
 
 
 function startClock() {
 
-  updateClock();
+    updateClock();
 
-  setInterval(
-    updateClock,
-    1000
-  );
+    setInterval(
+        updateClock,
+        1000
+    );
 
 }
 
 
-/* =========================================================
-   AÑO AUTOMÁTICO
-========================================================= */
+/* =====================================================
+   AÑO
+===================================================== */
 
 function setupYear() {
 
-  const year =
-    new Date()
-      .getFullYear();
+    const year =
+        new Date()
+            .getFullYear();
 
-  $all(
-    "[data-current-year]"
-  ).forEach(
-    element => {
+    $$(
+        "[data-current-year]"
+    ).forEach(
+        element => {
 
-      element.textContent =
-        year;
+            element.textContent =
+                year;
 
-    }
-  );
+        }
+    );
 
 }
 
 
-/* =========================================================
-   RADIO
-========================================================= */
+/* =====================================================
+   MENÚ
+===================================================== */
 
-function setupRadio() {
+function setupMenu() {
 
-  const buttons =
-    $all(
-      "[data-radio-play]"
-    );
+    const button =
+        $(".menu-toggle");
 
-  buttons.forEach(button => {
+    const nav =
+        $(".main-nav");
+
+    if (
+        !button ||
+        !nav
+    ) {
+
+        return;
+
+    }
 
     button.addEventListener(
-      "click",
-      () => {
+        "click",
+        () => {
 
-        /*
-          No se inventa una URL de streaming.
-          Si ya existe un reproductor de radio
-          en la página, se intenta activar.
-        */
-
-        const radio =
-          document.querySelector(
-            "audio[data-radio]"
-          );
-
-        if (!radio) {
-
-          console.warn(
-            "ARENA 24: no se encontró el reproductor de radio."
-          );
-
-          return;
-
-        }
-
-        if (
-          radio.paused
-        ) {
-
-          radio.play()
-            .catch(
-              error => {
-
-                console.warn(
-                  "El navegador bloqueó la reproducción automática:",
-                  error
-                );
-
-              }
+            nav.classList.toggle(
+                "active"
             );
 
-          button.classList.add(
-            "playing"
-          );
-
-        } else {
-
-          radio.pause();
-
-          button.classList.remove(
-            "playing"
-          );
+            button.classList.toggle(
+                "active"
+            );
 
         }
-
-      }
     );
 
-  });
 
-}
+    $$(".main-nav a")
+        .forEach(
+            link => {
 
+                link.addEventListener(
+                    "click",
+                    () => {
 
-/* =========================================================
-   SCROLL HEADER
-========================================================= */
+                        nav.classList.remove(
+                            "active"
+                        );
 
-function setupHeaderScroll() {
+                        button.classList.remove(
+                            "active"
+                        );
 
-  const header =
-    document.querySelector(
-      "header"
-    );
-
-  if (!header) {
-    return;
-  }
-
-  const update =
-    () => {
-
-      if (
-        window.scrollY > 20
-      ) {
-
-        header.classList.add(
-          "scrolled"
-        );
-
-      } else {
-
-        header.classList.remove(
-          "scrolled"
-        );
-
-      }
-
-    };
-
-  update();
-
-  window.addEventListener(
-    "scroll",
-    update,
-    {
-      passive: true
-    }
-  );
-
-}
-
-
-/* =========================================================
-   LAZY IMAGES
-========================================================= */
-
-function setupLazyImages() {
-
-  const images =
-    $all(
-      "img[data-src]"
-    );
-
-  if (!images.length) {
-    return;
-  }
-
-
-  if (
-    "IntersectionObserver"
-    in window
-  ) {
-
-    const observer =
-      new IntersectionObserver(
-        entries => {
-
-          entries.forEach(
-            entry => {
-
-              if (
-                !entry.isIntersecting
-              ) {
-
-                return;
-
-              }
-
-              const img =
-                entry.target;
-
-              const src =
-                img.dataset.src;
-
-              if (src) {
-
-                img.src =
-                  src;
-
-              }
-
-              img.removeAttribute(
-                "data-src"
-              );
-
-              observer.unobserve(
-                img
-              );
+                    }
+                );
 
             }
-          );
-
-        },
-        {
-          rootMargin:
-            "200px"
-        }
-      );
-
-
-    images.forEach(
-      img => {
-
-        observer.observe(
-          img
         );
 
-      }
+}
+
+
+/* =====================================================
+   NAVEGACIÓN
+===================================================== */
+
+function setupSmoothNavigation() {
+
+    $$(
+        'a[href^="#"]'
+    ).forEach(
+        link => {
+
+            link.addEventListener(
+                "click",
+                event => {
+
+                    const id =
+                        link.getAttribute(
+                            "href"
+                        );
+
+                    if (
+                        !id ||
+                        id === "#"
+                    ) {
+
+                        return;
+
+                    }
+
+                    const target =
+                        $(id);
+
+                    if (!target) {
+                        return;
+                    }
+
+                    event.preventDefault();
+
+                    target.scrollIntoView({
+                        behavior:
+                            "smooth",
+                        block:
+                            "start"
+                    });
+
+                }
+            );
+
+        }
     );
-
-  } else {
-
-    images.forEach(
-      img => {
-
-        img.src =
-          img.dataset.src;
-
-      }
-    );
-
-  }
 
 }
 
 
-/* =========================================================
-   EVENTOS DE NOTICIAS
-========================================================= */
+/* =====================================================
+   HEADER
+===================================================== */
 
-function setupNewsEvents() {
+function setupHeader() {
 
-  const moreButton =
-    $("#load-more-news");
+    const header =
+        $("header");
 
-  if (moreButton) {
+    if (!header) {
+        return;
+    }
 
-    moreButton.addEventListener(
-      "click",
-      loadMoreNews
+    const update =
+        () => {
+
+            header.classList.toggle(
+                "scrolled",
+                window.scrollY > 20
+            );
+
+        };
+
+    update();
+
+    window.addEventListener(
+        "scroll",
+        update,
+        {
+            passive: true
+        }
     );
-
-  }
-
-
-  const retryButton =
-    $("#news-retry");
-
-  if (retryButton) {
-
-    retryButton.addEventListener(
-      "click",
-      retryNews
-    );
-
-  }
 
 }
 
 
-/* =========================================================
-   VISIBILIDAD DE PÁGINA
-========================================================= */
+/* =====================================================
+   BOTÓN NOTICIAS
+===================================================== */
 
-function setupVisibilityRefresh() {
+function setupNewsButtons() {
 
-  document.addEventListener(
-    "visibilitychange",
-    () => {
+    const more =
+        $("#load-more-news");
 
-      if (
-        document.visibilityState ===
-        "visible"
-      ) {
+    if (more) {
 
-        /*
-          Si volvemos a la página,
-          comprobamos las noticias.
-        */
-
-        loadNews({
-          showLoading: false
-        });
-
-      }
+        more.addEventListener(
+            "click",
+            loadMore
+        );
 
     }
-  );
+
+
+    const retry =
+        $("#news-retry");
+
+    if (retry) {
+
+        retry.addEventListener(
+            "click",
+            retryNews
+        );
+
+    }
 
 }
 
 
-/* =========================================================
-   INICIALIZACIÓN
-========================================================= */
+/* =====================================================
+   VISIBILIDAD
+===================================================== */
+
+function setupVisibility() {
+
+    document.addEventListener(
+        "visibilitychange",
+        () => {
+
+            if (
+                document.visibilityState ===
+                "visible"
+            ) {
+
+                loadNews();
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   INICIO
+===================================================== */
 
 async function initArena24() {
 
-  console.log(
-    "ARENA 24 iniciado."
-  );
+    console.log(
+        "ARENA 24 iniciado."
+    );
 
 
-  setupYear();
+    setupYear();
 
-  startClock();
+    startClock();
 
-  setupMenu();
+    setupMenu();
 
-  setupHeaderScroll();
+    setupHeader();
 
-  setupSmoothNavigation();
+    setupSmoothNavigation();
 
-  setupYouTube();
+    setupYouTube();
 
-  setupYouTubeLinks();
+    setupNewsButtons();
 
-  setupRadio();
-
-  setupLazyImages();
-
-  setupNewsEvents();
-
-  setupVisibilityRefresh();
+    setupVisibility();
 
 
-  /*
-    Noticias
-  */
-
-  await loadNews({
-    showLoading: true
-  });
+    await loadNews();
 
 
-  startNewsAutoRefresh();
+    startAutoRefresh();
 
 
-  console.log(
-    "ARENA 24 listo."
-  );
+    console.log(
+        "ARENA 24 listo."
+    );
 
 }
 
 
-/* =========================================================
+/* =====================================================
    ARRANQUE
-========================================================= */
+===================================================== */
 
 if (
-  document.readyState ===
-  "loading"
+    document.readyState ===
+    "loading"
 ) {
 
-  document.addEventListener(
-    "DOMContentLoaded",
-    initArena24
-  );
+    document.addEventListener(
+        "DOMContentLoaded",
+        initArena24
+    );
 
 } else {
 
-  initArena24();
+    initArena24();
 
 }
