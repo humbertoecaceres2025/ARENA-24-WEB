@@ -1994,3 +1994,31 @@ function setupVisibility() {
     }
 
 })();
+ console.log("ARENA 24: iniciando sistema de noticias...");
+
+// Cargar noticias inmediatamente
+loadNews();
+
+// Activar actualización automática
+startAutoRefresh();
+
+// Botón VER MÁS
+const moreButton = $("#load-more-news");
+
+if (moreButton) {
+    moreButton.addEventListener(
+        "click",
+        loadMore
+    );
+}
+
+// Botón REINTENTAR
+const retryButton = $("#news-retry");
+
+if (retryButton) {
+    retryButton.addEventListener(
+        "click",
+        retryNews
+    );
+}
+
