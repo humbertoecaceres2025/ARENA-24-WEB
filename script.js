@@ -1656,191 +1656,119 @@ if (
 
 }
 <script>
+<script>
 document.addEventListener("DOMContentLoaded", function () {
 
-    const radio = document.getElementById("arena-radio");
-    const playButton = document.getElementById("radio-play");
-    const playIcon = document.getElementById("radio-play-icon");
-    const statusText = document.getElementById("radio-status-text");
-    const statusDetail = document.getElementById("radio-status-detail");
-    const volume = document.getElementById("radio-volume");
-    const errorBox = document.getElementById("radio-error");
-    const player = document.querySelector(".radio-player");
+    const radio =
+        document.getElementById("modern-arena-radio");
 
-    if (!radio) return;
+    const play =
+        document.getElementById("modern-radio-play");
+
+    const icon =
+        document.getElementById("modern-play-icon");
+
+    const volume =
+        document.getElementById("modern-radio-volume");
+
+    const player =
+        document.querySelector(".modern-radio-player");
+
+    const status =
+        document.getElementById("modern-status-text");
+
+
+    if (!radio || !play) {
+        return;
+    }
 
 
     radio.volume = 0.8;
 
 
-    function radioPlaying() {
+    play.addEventListener("click", async function () {
 
-        if (playIcon) {
-            playIcon.textContent = "❚❚";
-        }
+        if (radio.paused) {
 
-        if (playButton) {
-            playButton.setAttribute(
-                "aria-label",
-                "Pausar ARENA 24 Radio"
-            );
+            try {
 
-            playButton.setAttribute(
-                "aria-pressed",
-                "true"
-            );
-        }
+                await radio.play();
 
-        if (statusText) {
-            statusText.textContent =
-                "ARENA 24 RADIO — EN VIVO";
-        }
+            } catch (error) {
 
-        if (statusDetail) {
-            statusDetail.textContent =
-                "Transmitiendo ahora";
-        }
+                console.error(
+                    "No se pudo iniciar ARENA 24 Radio:",
+                    error
+                );
 
-        if (player) {
-            player.classList.add("radio-playing");
-        }
-
-        if (errorBox) {
-            errorBox.hidden = true;
-        }
-    }
-
-
-    function radioStopped() {
-
-        if (playIcon) {
-            playIcon.textContent = "▶";
-        }
-
-        if (playButton) {
-            playButton.setAttribute(
-                "aria-label",
-                "Reproducir ARENA 24 Radio"
-            );
-
-            playButton.setAttribute(
-                "aria-pressed",
-                "false"
-            );
-        }
-
-        if (statusText) {
-            statusText.textContent =
-                "ARENA 24 RADIO";
-        }
-
-        if (statusDetail) {
-            statusDetail.textContent =
-                "Presioná reproducir para escuchar en vivo";
-        }
-
-        if (player) {
-            player.classList.remove("radio-playing");
-        }
-    }
-
-
-    if (playButton) {
-
-        playButton.addEventListener(
-            "click",
-            async function () {
-
-                if (radio.paused) {
-
-                    try {
-
-                        await radio.play();
-
-                    } catch (error) {
-
-                        console.error(
-                            "Error al iniciar ARENA 24 Radio:",
-                            error
-                        );
-
-                        if (errorBox) {
-                            errorBox.hidden = false;
-                        }
-
-                        if (statusText) {
-                            statusText.textContent =
-                                "No se pudo iniciar la radio";
-                        }
-
-                    }
-
-                } else {
-
-                    radio.pause();
-
-                }
+                status.textContent =
+                    "NO SE PUDO CONECTAR";
 
             }
+
+        } else {
+
+            radio.pause();
+
+        }
+
+    });
+
+
+    radio.addEventListener("playing", function () {
+
+        player.classList.add("is-playing");
+
+        icon.textContent = "❚❚";
+
+        status.textContent =
+            "TRANSMITIENDO EN VIVO";
+
+        play.setAttribute(
+            "aria-label",
+            "Pausar ARENA 24 Radio"
         );
 
-    }
+    });
 
 
-    if (volume) {
+    radio.addEventListener("pause", function () {
 
-        volume.addEventListener(
-            "input",
-            function () {
+        player.classList.remove("is-playing");
 
-                radio.volume =
-                    Number(this.value);
+        icon.textContent = "▶";
 
-            }
+        status.textContent =
+            "RADIO EN ESPERA";
+
+        play.setAttribute(
+            "aria-label",
+            "Reproducir ARENA 24 Radio"
         );
 
-    }
+    });
 
 
-    radio.addEventListener(
-        "playing",
-        radioPlaying
-    );
+    radio.addEventListener("error", function () {
+
+        player.classList.remove("is-playing");
+
+        icon.textContent = "▶";
+
+        status.textContent =
+            "ERROR DE CONEXIÓN";
+
+    });
 
 
-    radio.addEventListener(
-        "pause",
-        radioStopped
-    );
+    volume.addEventListener("input", function () {
 
+        radio.volume =
+            Number(this.value);
 
-    radio.addEventListener(
-        "error",
-        function () {
-
-            console.error(
-                "Error en el stream de ARENA 24 Radio"
-            );
-
-            if (errorBox) {
-                errorBox.hidden = false;
-            }
-
-            if (statusText) {
-                statusText.textContent =
-                    "Problema con la transmisión";
-            }
-
-            if (statusDetail) {
-                statusDetail.textContent =
-                    "Intentá nuevamente";
-            }
-
-            radioStopped();
-
-        }
-    );
+    });
 
 });
 </script>
+
 
