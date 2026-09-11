@@ -194,34 +194,56 @@
 ====================================================== -->
 
 <section
-    id="radio"
-    class="radio-section"
-    aria-labelledby="radio-title"
->
+    <!-- =====================================================
+     ARENA 24 RADIO — PLAYER MODERNO
+===================================================== -->
+
+<section id="radio" class="modern-radio-section">
 
     <div class="container">
 
-        <div class="radio-player">
+        <div class="modern-radio-player">
 
-            <div class="radio-brand">
+            <!-- DECORACIÓN -->
 
-                <div class="radio-icon">
-                    🎙️
-                </div>
+            <div class="radio-glow"></div>
 
-                <div class="radio-title">
 
-                    <div class="radio-live">
-                        <span class="radio-live-dot"></span>
-                        EN VIVO
+            <!-- IDENTIDAD -->
+
+            <div class="modern-radio-brand">
+
+                <div class="modern-radio-logo">
+
+                    <span class="radio-mic">🎙</span>
+
+                    <div class="radio-waves">
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                        <i></i>
                     </div>
 
-                    <h2 id="radio-title">
-                        ARENA 24 RADIO
+                </div>
+
+
+                <div class="modern-radio-info">
+
+                    <div class="modern-live">
+
+                        <span></span>
+
+                        EN VIVO
+
+                    </div>
+
+                    <h2>
+                        ARENA 24
                     </h2>
 
                     <p>
-                        Noticias, información y actualidad de La Rioja
+                        RADIO
                     </p>
 
                 </div>
@@ -229,84 +251,137 @@
             </div>
 
 
-            <div class="radio-controls">
+            <!-- INFORMACIÓN -->
 
-                <button
-                    id="radio-play"
-                    class="radio-play-button"
-                    type="button"
-                    aria-label="Reproducir ARENA 24 Radio"
-                    aria-pressed="false"
+            <div class="modern-radio-center">
+
+                <div class="modern-radio-label">
+                    ESTÁS ESCUCHANDO
+                </div>
+
+                <div
+                    id="modern-radio-title"
+                    class="modern-radio-title"
                 >
-                    <span id="radio-play-icon">
-                        ▶
-                    </span>
-                </button>
+                    ARENA 24 RADIO
+                </div>
 
-
-                <div class="radio-status">
-
-                    <strong id="radio-status-text">
-                        ARENA 24 RADIO
-                    </strong>
-
-                    <span id="radio-status-detail">
-                        Presioná reproducir para escuchar en vivo
-                    </span>
-
+                <div
+                    id="modern-radio-description"
+                    class="modern-radio-description"
+                >
+                    Noticias, información y actualidad
                 </div>
 
 
-                <div class="radio-volume">
+                <!-- VISUALIZADOR -->
 
-                    <span>🔊</span>
+                <div
+                    id="radio-visualizer"
+                    class="radio-visualizer"
+                >
 
-                    <input
-                        id="radio-volume"
-                        type="range"
-                        min="0"
-                        max="1"
-                        step="0.01"
-                        value="0.8"
-                        aria-label="Volumen de la radio"
-                    >
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
 
                 </div>
 
             </div>
 
 
-            <!-- REPRODUCTOR REAL -->
+            <!-- CONTROLES -->
+
+            <div class="modern-radio-controls">
+
+
+                <button
+                    id="modern-radio-play"
+                    class="modern-play-button"
+                    type="button"
+                    aria-label="Reproducir ARENA 24 Radio"
+                >
+
+                    <span
+                        id="modern-play-icon"
+                    >
+                        ▶
+                    </span>
+
+                </button>
+
+
+                <div class="modern-volume">
+
+                    <span>
+                        🔊
+                    </span>
+
+                    <input
+                        id="modern-radio-volume"
+                        type="range"
+                        min="0"
+                        max="1"
+                        step="0.01"
+                        value="0.8"
+                        aria-label="Volumen"
+                    >
+
+                </div>
+
+
+            </div>
+
+
+            <!-- AUDIO -->
 
             <audio
-                id="arena-radio"
+                id="modern-arena-radio"
                 preload="none"
-                controls
-                playsinline
             >
 
                 <source
                     src="https://stream.zeno.fm/zuw6xmmwmd0uv"
                 >
 
-                Tu navegador no puede reproducir esta transmisión.
+                Tu navegador no soporta audio HTML5.
 
             </audio>
 
 
+            <!-- ESTADO -->
+
             <div
-                id="radio-error"
-                class="radio-error"
-                hidden
+                id="modern-radio-status"
+                class="modern-radio-status"
             >
-                ⚠️ No se pudo conectar con la radio.
-                Presioná reproducir nuevamente.
+
+                <span class="status-dot"></span>
+
+                <span id="modern-status-text">
+                    RADIO EN ESPERA
+                </span>
+
             </div>
+
 
         </div>
 
     </div>
 
+</section>
 </section>
 
 
