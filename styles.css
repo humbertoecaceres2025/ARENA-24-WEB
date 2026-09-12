@@ -5653,6 +5653,262 @@ select {
   }
 
 }
+:root {
+  --admin-bg: #080b0f;
+  --admin-surface: #11161d;
+  --admin-border: #252c34;
+  --admin-text: #f2f4f6;
+  --admin-muted: #8b949e;
+  --admin-red: #e21d2f;
+}
+
+body {
+  background: var(--admin-bg);
+  color: var(--admin-text);
+}
+
+.admin-header {
+  min-height: 70px;
+  padding: 0 5%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--admin-border);
+  background: #0c1015;
+}
+
+.admin-brand strong {
+  display: block;
+  font-size: 20px;
+  font-weight: 950;
+  letter-spacing: -1px;
+}
+
+.admin-brand span {
+  color: var(--admin-muted);
+  font-size: 8px;
+  letter-spacing: 2px;
+}
+
+.admin-site-link {
+  color: var(--admin-muted);
+  text-decoration: none;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.admin-site-link:hover {
+  color: white;
+}
+
+.admin-container {
+  width: min(1200px, 92%);
+  margin: 0 auto;
+  padding: 45px 0 80px;
+}
+
+.admin-title {
+  margin-bottom: 30px;
+}
+
+.admin-title h1 {
+  margin: 7px 0;
+  font-size: clamp(30px, 5vw, 48px);
+  letter-spacing: -2px;
+}
+
+.admin-title p {
+  margin: 0;
+  color: var(--admin-muted);
+  font-size: 12px;
+}
+
+.admin-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(280px, .7fr);
+  gap: 20px;
+}
+
+.admin-card {
+  padding: 28px;
+  border: 1px solid var(--admin-border);
+  border-radius: 12px;
+  background: var(--admin-surface);
+}
+
+.admin-card-header {
+  margin-bottom: 25px;
+}
+
+.admin-card h2 {
+  margin: 6px 0 0;
+  font-size: 22px;
+}
+
+.admin-form-group {
+  margin-bottom: 18px;
+}
+
+.admin-form-group label {
+  display: block;
+  margin-bottom: 7px;
+  color: #dce1e6;
+  font-size: 10px;
+  font-weight: 850;
+}
+
+.admin-form-group input,
+.admin-form-group textarea,
+.admin-form-group select {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--admin-border);
+  border-radius: 7px;
+  outline: none;
+  background: #090d12;
+  color: white;
+  font: inherit;
+  font-size: 11px;
+}
+
+.admin-form-group input:focus,
+.admin-form-group textarea:focus,
+.admin-form-group select:focus {
+  border-color: var(--admin-red);
+}
+
+.admin-form-group textarea {
+  resize: vertical;
+  line-height: 1.55;
+}
+
+.admin-two-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.admin-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 25px;
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 0 16px;
+  border: 1px solid var(--admin-border);
+  border-radius: 6px;
+  background: #1a2028;
+  color: white;
+  font-size: 10px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.admin-status {
+  margin-top: 15px;
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+.admin-status.success {
+  color: #39d98a;
+}
+
+.admin-status.error {
+  color: #ff5965;
+}
+
+.admin-help {
+  align-self: start;
+}
+
+.workflow {
+  margin-top: 25px;
+}
+
+.workflow > div {
+  position: relative;
+  padding: 0 0 25px 45px;
+}
+
+.workflow > div:last-child {
+  padding-bottom: 0;
+}
+
+.workflow strong {
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--admin-red);
+  font-size: 11px;
+}
+
+.workflow span {
+  display: block;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.workflow p {
+  margin: 5px 0 0;
+  color: var(--admin-muted);
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+.admin-warning {
+  margin-top: 30px;
+  padding: 15px;
+  border-left: 3px solid #e3a008;
+  background: rgba(227, 160, 8, .06);
+}
+
+.admin-warning strong {
+  font-size: 10px;
+}
+
+.admin-warning p {
+  margin: 7px 0 0;
+  color: var(--admin-muted);
+  font-size: 9px;
+  line-height: 1.5;
+}
+
+@media (max-width: 800px) {
+
+  .admin-grid {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+@media (max-width: 550px) {
+
+  .admin-container {
+    width: 94%;
+    padding-top: 30px;
+  }
+
+  .admin-card {
+    padding: 20px;
+  }
+
+  .admin-two-columns {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-header {
+    padding: 0 3%;
+  }
+
+}
 
 
 
