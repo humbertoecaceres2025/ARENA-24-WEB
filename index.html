@@ -4990,3 +4990,346 @@ La organización confirmó diferentes actividades y novedades.`
 
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Administración | ARENA 24</title>
+
+  <link rel="stylesheet" href="../css/estilos.css">
+  <link rel="stylesheet" href="admin.css">
+</head>
+
+<body>
+
+<header class="admin-header">
+
+  <div class="admin-brand">
+    <strong>ARENA 24</strong>
+    <span>ADMINISTRACIÓN</span>
+  </div>
+
+  <a href="../index.html" class="admin-site-link">
+    Ver sitio →
+  </a>
+
+</header>
+
+
+<main class="admin-container">
+
+  <section class="admin-title">
+
+    <div>
+      <span class="eyebrow">CMS · ARENA 24</span>
+
+      <h1>Panel de noticias</h1>
+
+      <p>
+        Crear, revisar y publicar información.
+      </p>
+    </div>
+
+  </section>
+
+
+  <section class="admin-grid">
+
+
+    <!-- FORMULARIO -->
+
+    <div class="admin-card">
+
+      <div class="admin-card-header">
+
+        <div>
+          <span class="eyebrow">NUEVA PUBLICACIÓN</span>
+          <h2>Crear noticia</h2>
+        </div>
+
+      </div>
+
+
+      <form id="newsForm">
+
+
+        <div class="admin-form-group">
+
+          <label for="title">
+            Título
+          </label>
+
+          <input
+            id="title"
+            name="title"
+            type="text"
+            placeholder="Título de la noticia"
+            required>
+
+        </div>
+
+
+        <div class="admin-two-columns">
+
+          <div class="admin-form-group">
+
+            <label for="category">
+              Categoría
+            </label>
+
+            <select
+              id="category"
+              name="category"
+              required>
+
+              <option value="">
+                Seleccionar
+              </option>
+
+              <option value="La Rioja">
+                La Rioja
+              </option>
+
+              <option value="Política">
+                Política
+              </option>
+
+              <option value="Economía">
+                Economía
+              </option>
+
+              <option value="Sociedad">
+                Sociedad
+              </option>
+
+              <option value="Seguridad">
+                Seguridad
+              </option>
+
+              <option value="Deportes">
+                Deportes
+              </option>
+
+              <option value="Cultura">
+                Cultura
+              </option>
+
+              <option value="Espectáculos">
+                Espectáculos
+              </option>
+
+              <option value="Nacionales">
+                Nacionales
+              </option>
+
+              <option value="Internacionales">
+                Internacionales
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <div class="admin-form-group">
+
+            <label for="location">
+              Localidad
+            </label>
+
+            <input
+              id="location"
+              name="location"
+              type="text"
+              value="La Rioja">
+
+          </div>
+
+        </div>
+
+
+        <div class="admin-form-group">
+
+          <label for="summary">
+            Bajada / resumen
+          </label>
+
+          <textarea
+            id="summary"
+            name="summary"
+            rows="3"
+            maxlength="300"
+            placeholder="Resumen breve de la noticia"
+            required></textarea>
+
+        </div>
+
+
+        <div class="admin-form-group">
+
+          <label for="content">
+            Contenido
+          </label>
+
+          <textarea
+            id="content"
+            name="content"
+            rows="12"
+            placeholder="Escribí el contenido de la noticia..."
+            required></textarea>
+
+        </div>
+
+
+        <div class="admin-form-group">
+
+          <label for="image">
+            URL de imagen
+          </label>
+
+          <input
+            id="image"
+            name="image"
+            type="url"
+            placeholder="https://...">
+
+        </div>
+
+
+        <div class="admin-form-group">
+
+          <label for="author">
+            Autor
+          </label>
+
+          <input
+            id="author"
+            name="author"
+            type="text"
+            value="ARENA 24">
+
+        </div>
+
+
+        <div class="admin-form-group">
+
+          <label for="status">
+            Estado
+          </label>
+
+          <select
+            id="status"
+            name="status">
+
+            <option value="draft">
+              Borrador
+            </option>
+
+            <option value="review">
+              En revisión
+            </option>
+
+            <option value="published">
+              Publicar ahora
+            </option>
+
+          </select>
+
+        </div>
+
+
+        <div class="admin-actions">
+
+          <button
+            type="submit"
+            class="btn btn-primary"
+            id="saveNews">
+
+            GUARDAR NOTICIA
+
+          </button>
+
+          <button
+            type="reset"
+            class="btn btn-secondary">
+
+            LIMPIAR
+
+          </button>
+
+        </div>
+
+
+        <div
+          id="adminStatus"
+          class="admin-status"
+          aria-live="polite">
+        </div>
+
+      </form>
+
+    </div>
+
+
+    <!-- INFORMACIÓN -->
+
+    <aside class="admin-card admin-help">
+
+      <span class="eyebrow">
+        FLUJO EDITORIAL
+      </span>
+
+      <h2>Cómo funciona</h2>
+
+      <div class="workflow">
+
+        <div>
+          <strong>01</strong>
+          <span>Crear</span>
+          <p>
+            Cargá título, resumen y contenido.
+          </p>
+        </div>
+
+        <div>
+          <strong>02</strong>
+          <span>Revisar</span>
+          <p>
+            Guardá la noticia para revisión editorial.
+          </p>
+        </div>
+
+        <div>
+          <strong>03</strong>
+          <span>Publicar</span>
+          <p>
+            Las noticias publicadas aparecen en el sitio.
+          </p>
+        </div>
+
+      </div>
+
+      <div class="admin-warning">
+
+        <strong>Importante</strong>
+
+        <p>
+          Este panel debe protegerse con autenticación
+          antes de utilizarlo públicamente.
+        </p>
+
+      </div>
+
+    </aside>
+
+  </section>
+
+</main>
+
+
+<script src="admin.js"></script>
+
+</body>
+</html>
