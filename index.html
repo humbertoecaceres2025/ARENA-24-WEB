@@ -1098,68 +1098,1722 @@ arena24Audio.addEventListener(
 );
 
 </script></section>
+    <!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <title>Arena 24 Radio | Noticias</title>
+  <meta name="description" content="Noticias, actualidad y toda la información de La Rioja y Argentina. Arena 24 Radio.">
 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@600;700;800;900&display=swap" rel="stylesheet">
 
+  <style>
+    :root {
+      --red: #e21d2b;
+      --red-dark: #b80f1b;
+      --black: #080a0d;
+      --dark: #101318;
+      --card: #151920;
+      --card-hover: #1b2028;
+      --border: #272d36;
+      --white: #ffffff;
+      --text: #e8eaed;
+      --muted: #969da7;
+      --green: #28c76f;
+      --yellow: #ffb020;
+      --shadow: 0 18px 50px rgba(0,0,0,.25);
+    }
 
-<!--    <div class="section-heading">
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--black);
+      color: var(--text);
+      font-family: Inter, sans-serif;
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font: inherit;
+    }
+
+    img {
+      display: block;
+      width: 100%;
+    }
+
+    .container {
+      width: min(1180px, calc(100% - 32px));
+      margin: auto;
+    }
+
+    /* =========================
+       HEADER
+    ========================= */
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(8,10,13,.96);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(14px);
+    }
+
+    .header-main {
+      min-height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 25px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: Montserrat, sans-serif;
+      font-weight: 900;
+      font-size: 24px;
+      white-space: nowrap;
+    }
+
+    .logo-mark {
+      width: 40px;
+      height: 40px;
+      border-radius: 9px;
+      background: var(--red);
+      display: grid;
+      place-items: center;
+      color: white;
+      font-weight: 900;
+    }
+
+    .logo span {
+      color: var(--red);
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    nav a {
+      color: #cfd3d8;
+      font-size: 14px;
+      font-weight: 600;
+      transition: .2s;
+    }
+
+    nav a:hover,
+    nav a.active {
+      color: white;
+    }
+
+    .live-button {
+      background: var(--red);
+      color: white;
+      padding: 10px 15px;
+      border-radius: 7px;
+      font-size: 13px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      white-space: nowrap;
+    }
+
+    .live-dot {
+      width: 8px;
+      height: 8px;
+      background: white;
+      border-radius: 50%;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      50% {
+        opacity: .3;
+        transform: scale(.7);
+      }
+    }
+
+    .mobile-menu {
+      display: none;
+      background: none;
+      border: 0;
+      color: white;
+      font-size: 27px;
+      cursor: pointer;
+    }
+
+    /* =========================
+       BREAKING
+    ========================= */
+
+    .breaking {
+      background: var(--red);
+      color: white;
+    }
+
+    .breaking-inner {
+      min-height: 42px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      overflow: hidden;
+    }
+
+    .breaking-label {
+      font-size: 12px;
+      font-weight: 900;
+      white-space: nowrap;
+      background: #a70d18;
+      padding: 5px 9px;
+      border-radius: 4px;
+    }
+
+    .breaking-text {
+      font-size: 14px;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* =========================
+       HERO
+    ========================= */
+
+    .hero {
+      padding: 45px 0 25px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.8fr 1fr;
+      gap: 22px;
+    }
+
+    .hero-main {
+      position: relative;
+      min-height: 470px;
+      overflow: hidden;
+      border-radius: 12px;
+      background: #111;
+    }
+
+    .hero-main img {
+      height: 100%;
+      object-fit: cover;
+      opacity: .78;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        transparent 20%,
+        rgba(0,0,0,.25) 40%,
+        rgba(0,0,0,.94) 100%
+      );
+    }
+
+    .hero-content {
+      position: absolute;
+      left: 32px;
+      right: 32px;
+      bottom: 30px;
+    }
+
+    .category {
+      display: inline-block;
+      color: white;
+      background: var(--red);
+      padding: 5px 9px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .hero-content h1 {
+      font-family: Montserrat, sans-serif;
+      font-size: clamp(28px, 4vw, 46px);
+      line-height: 1.08;
+      max-width: 800px;
+      margin-bottom: 13px;
+    }
+
+    .hero-content p {
+      color: #d7d9dc;
+      max-width: 700px;
+      font-size: 15px;
+    }
+
+    .hero-meta {
+      margin-top: 16px;
+      color: #aeb4bc;
+      font-size: 12px;
+    }
+
+    /* =========================
+       SIDE NEWS
+    ========================= */
+
+    .side-news {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .side-title {
+      font-family: Montserrat;
+      font-size: 17px;
+      margin-bottom: 2px;
+    }
+
+    .side-card {
+      display: grid;
+      grid-template-columns: 105px 1fr;
+      gap: 13px;
+      padding: 9px;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      background: var(--card);
+      transition: .2s;
+    }
+
+    .side-card:hover {
+      background: var(--card-hover);
+      transform: translateY(-2px);
+    }
+
+    .side-card img {
+      height: 80px;
+      object-fit: cover;
+      border-radius: 6px;
+    }
+
+    .side-card small {
+      color: var(--red);
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .side-card h3 {
+      font-family: Montserrat;
+      font-size: 14px;
+      line-height: 1.25;
+      margin-top: 4px;
+    }
+
+    /* =========================
+       SEARCH
+    ========================= */
+
+    .search-section {
+      padding: 20px 0;
+    }
+
+    .search-box {
+      display: flex;
+      gap: 10px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 8px;
+      border-radius: 9px;
+    }
+
+    .search-box input {
+      flex: 1;
+      background: transparent;
+      border: 0;
+      outline: 0;
+      color: white;
+      padding: 10px;
+    }
+
+    .search-box button {
+      border: 0;
+      background: var(--red);
+      color: white;
+      padding: 0 20px;
+      border-radius: 6px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    /* =========================
+       CATEGORIES
+    ========================= */
+
+    .categories {
+      padding: 12px 0 35px;
+    }
+
+    .category-list {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 5px;
+    }
+
+    .category-btn {
+      white-space: nowrap;
+      border: 1px solid var(--border);
+      background: var(--card);
+      color: #c9cdd2;
+      padding: 8px 13px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .category-btn:hover,
+    .category-btn.active {
+      background: var(--red);
+      border-color: var(--red);
+      color: white;
+    }
+
+    /* =========================
+       SECTION
+    ========================= */
+
+    .section {
+      padding: 15px 0 50px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 22px;
+      padding-bottom: 12px;
+    }
+
+    .section-title {
+      font-family: Montserrat;
+      font-size: 23px;
+      color: white;
+    }
+
+    .section-title::before {
+      content: "";
+      display: inline-block;
+      width: 5px;
+      height: 23px;
+      background: var(--red);
+      margin-right: 10px;
+      vertical-align: -3px;
+      border-radius: 3px;
+    }
+
+    /* =========================
+       NEWS GRID
+    ========================= */
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 35px;
+    }
+
+    .news-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    .news-card {
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--card);
+      cursor: pointer;
+      transition: .25s;
+    }
+
+    .news-card:hover {
+      transform: translateY(-4px);
+      background: var(--card-hover);
+      box-shadow: var(--shadow);
+    }
+
+    .news-image {
+      height: 205px;
+      object-fit: cover;
+    }
+
+    .news-body {
+      padding: 16px;
+    }
+
+    .news-info {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 10px;
+      text-transform: uppercase;
+      font-weight: 800;
+    }
+
+    .news-info span:first-child {
+      color: var(--red);
+    }
+
+    .news-card h3 {
+      font-family: Montserrat;
+      font-size: 17px;
+      line-height: 1.25;
+      margin: 8px 0;
+      color: white;
+    }
+
+    .news-card p {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    /* =========================
+       MOST READ
+    ========================= */
+
+    .most-read {
+      position: sticky;
+      top: 100px;
+      height: fit-content;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 18px;
+    }
+
+    .most-read h2 {
+      font-family: Montserrat;
+      font-size: 17px;
+      margin-bottom: 12px;
+    }
+
+    .most-item {
+      display: grid;
+      grid-template-columns: 35px 1fr;
+      gap: 10px;
+      padding: 13px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .most-item:last-child {
+      border-bottom: 0;
+    }
+
+    .most-number {
+      font-family: Montserrat;
+      color: var(--red);
+      font-size: 22px;
+      font-weight: 900;
+    }
+
+    .most-item h3 {
+      font-size: 13px;
+      line-height: 1.3;
+    }
+
+    /* =========================
+       ADMIN
+    ========================= */
+
+    .admin {
+      display: none;
+      padding: 50px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .admin.show {
+      display: block;
+    }
+
+    .admin-panel {
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 25px;
+      border-radius: 12px;
+    }
+
+    .admin-panel h2 {
+      font-family: Montserrat;
+      margin-bottom: 20px;
+    }
+
+    .admin-form {
+      display: grid;
+      gap: 12px;
+    }
+
+    .admin-form input,
+    .admin-form textarea,
+    .admin-form select {
+      width: 100%;
+      background: #0c0f13;
+      color: white;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px;
+      outline: none;
+    }
+
+    .admin-form textarea {
+      min-height: 130px;
+      resize: vertical;
+    }
+
+    .admin-form button {
+      background: var(--red);
+      color: white;
+      border: 0;
+      border-radius: 6px;
+      padding: 12px;
+      cursor: pointer;
+      font-weight: 800;
+    }
+
+    .admin-note {
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 10px;
+    }
+
+    /* =========================
+       MODAL
+    ========================= */
+
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      background: rgba(0,0,0,.82);
+      padding: 30px 15px;
+      overflow-y: auto;
+    }
+
+    .modal.open {
+      display: block;
+    }
+
+    .modal-content {
+      width: min(850px, 100%);
+      margin: auto;
+      background: #11151b;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .modal-content img {
+      max-height: 430px;
+      object-fit: cover;
+    }
+
+    .modal-body {
+      padding: 30px;
+    }
+
+    .modal-body h2 {
+      font-family: Montserrat;
+      font-size: clamp(26px, 5vw, 42px);
+      line-height: 1.1;
+      margin-bottom: 15px;
+    }
+
+    .modal-body .lead {
+      color: #bfc4cb;
+      font-size: 17px;
+      margin-bottom: 25px;
+    }
+
+    .modal-text {
+      color: #d8dbe0;
+      white-space: pre-line;
+    }
+
+    .close-modal {
+      position: fixed;
+      right: 25px;
+      top: 20px;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 0;
+      background: white;
+      color: black;
+      cursor: pointer;
+      font-size: 22px;
+      z-index: 2100;
+    }
+
+    /* =========================
+       FOOTER
+    ========================= */
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 0;
+      color: var(--muted);
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 40px;
+    }
+
+    .footer-logo {
+      font-family: Montserrat;
+      font-weight: 900;
+      font-size: 22px;
+      color: white;
+      margin-bottom: 10px;
+    }
+
+    .footer-logo span {
+      color: var(--red);
+    }
+
+    .footer-title {
+      color: white;
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+
+    .footer-links {
+      display: grid;
+      gap: 7px;
+      font-size: 13px;
+    }
+
+    .copyright {
+      border-top: 1px solid var(--border);
+      margin-top: 30px;
+      padding-top: 20px;
+      font-size: 12px;
+    }
+
+    /* =========================
+       EMPTY
+    ========================= */
+
+    .empty {
+      grid-column: 1/-1;
+      padding: 40px;
+      text-align: center;
+      color: var(--muted);
+      border: 1px dashed var(--border);
+      border-radius: 10px;
+    }
+
+    /* =========================
+       RESPONSIVE
+    ========================= */
+
+    @media (max-width: 900px) {
+
+      nav {
+        display: none;
+      }
+
+      .mobile-menu {
+        display: block;
+      }
+
+      nav.mobile-open {
+        display: flex;
+        position: absolute;
+        top: 76px;
+        left: 0;
+        right: 0;
+        background: #0c0f13;
+        flex-direction: column;
+        padding: 20px;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .hero-grid,
+      .content-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .most-read {
+        position: static;
+      }
+
+      .hero-main {
+        min-height: 430px;
+      }
+    }
+
+    @media (max-width: 600px) {
+
+      .container {
+        width: min(100% - 20px, 1180px);
+      }
+
+      .header-main {
+        min-height: 65px;
+      }
+
+      .logo {
+        font-size: 19px;
+      }
+
+      .logo-mark {
+        width: 34px;
+        height: 34px;
+      }
+
+      .live-button {
+        display: none;
+      }
+
+      .hero {
+        padding-top: 20px;
+      }
+
+      .hero-main {
+        min-height: 390px;
+      }
+
+      .hero-content {
+        left: 20px;
+        right: 20px;
+        bottom: 20px;
+      }
+
+      .news-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .news-image {
+        height: 220px;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .side-card {
+        grid-template-columns: 95px 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="container header-main">
+
+      <a href="#" class="logo">
+        <div class="logo-mark">A24</div>
+        ARENA <span>24</span>
+      </a>
+
+      <nav id="mainNav">
+        <a href="#" class="active">Inicio</a>
+        <a href="#noticias">Noticias</a>
+        <a href="#categorias">La Rioja</a>
+        <a href="#noticias">Argentina</a>
+        <a href="#noticias">Deportes</a>
+        <a href="#noticias">Economía</a>
+      </nav>
+
+      <button class="mobile-menu" id="mobileMenu">☰</button>
+
+      <div class="live-button">
+        <span class="live-dot"></span>
+        EN VIVO
+      </div>
+
+    </div>
+  </header>
+
+  <!-- BREAKING -->
+  <div class="breaking">
+    <div class="container breaking-inner">
+      <div class="breaking-label">ÚLTIMO MOMENTO</div>
+      <div class="breaking-text" id="breakingText">
+        Arena 24 Noticias — Toda la actualidad en un solo lugar.
+      </div>
+    </div>
+  </div>
+
+  <main>
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="container hero-grid">
+
+        <article class="hero-main" id="heroNews"></article>
+
+        <aside class="side-news">
+          <h2 class="side-title">Noticias destacadas</h2>
+          <div id="featuredNews"></div>
+        </aside>
+
+      </div>
+    </section>
+
+    <!-- SEARCH -->
+    <section class="search-section">
+      <div class="container">
+
+        <div class="search-box">
+          <input
+            type="search"
+            id="searchInput"
+            placeholder="¿Qué noticia estás buscando?"
+            autocomplete="off"
+          >
+
+          <button id="searchButton">
+            BUSCAR
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- CATEGORIES -->
+    <section class="categories" id="categorias">
+      <div class="container">
+
+        <div class="category-list">
+
+          <button class="category-btn active" data-category="Todas">
+            Todas
+          </button>
+
+          <button class="category-btn" data-category="La Rioja">
+            La Rioja
+          </button>
+
+          <button class="category-btn" data-category="Argentina">
+            Argentina
+          </button>
+
+          <button class="category-btn" data-category="Política">
+            Política
+          </button>
+
+          <button class="category-btn" data-category="Economía">
+            Economía
+          </button>
+
+          <button class="category-btn" data-category="Policiales">
+            Policiales
+          </button>
+
+          <button class="category-btn" data-category="Deportes">
+            Deportes
+          </button>
+
+          <button class="category-btn" data-category="Mundo">
+            Mundo
+          </button>
+
+          <button class="category-btn" data-category="Cultura">
+            Cultura
+          </button>
+
+          <button class="category-btn" data-category="Espectáculos">
+            Espectáculos
+          </button>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- NEWS -->
+    <section class="section" id="noticias">
+
+      <div class="container">
+
+        <div class="section-header">
+          <h2 class="section-title">
+            Últimas noticias
+          </h2>
+
+          <span id="resultCount"></span>
+        </div>
+
+        <div class="content-grid">
+
+          <div class="news-grid" id="newsGrid"></div>
+
+          <aside class="most-read">
+
+            <h2>🔥 Lo más leído</h2>
+
+            <div id="mostRead"></div>
+
+          </aside>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ADMIN -->
+    <section class="admin" id="admin">
+
+      <div class="container">
+
+        <div class="admin-panel">
+
+          <h2>Panel de carga — Arena 24</h2>
+
+          <form class="admin-form" id="newsForm">
+
+            <input
+              type="text"
+              id="newsTitle"
+              placeholder="Título de la noticia"
+              required
+            >
+
+            <input
+              type="text"
+              id="newsImage"
+              placeholder="URL de imagen"
+              required
+            >
+
+            <select id="newsCategory">
+              <option>La Rioja</option>
+              <option>Argentina</option>
+              <option>Política</option>
+              <option>Economía</option>
+              <option>Policiales</option>
+              <option>Deportes</option>
+              <option>Mundo</option>
+              <option>Cultura</option>
+              <option>Espectáculos</option>
+            </select>
+
+            <textarea
+              id="newsSummary"
+              placeholder="Resumen de la noticia"
+              required
+            ></textarea>
+
+            <textarea
+              id="newsBody"
+              placeholder="Contenido completo de la noticia"
+              required
+            ></textarea>
+
+            <button type="submit">
+              PUBLICAR NOTICIA
+            </button>
+
+          </form>
+
+          <p class="admin-note">
+            Este panel es una interfaz local de demostración.
+            Para producción debe conectarse a un CMS, base de datos y sistema de autenticación.
+          </p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- MODAL -->
+  <div class="modal" id="newsModal">
+
+    <button class="close-modal" id="closeModal">
+      ×
+    </button>
+
+    <article class="modal-content">
+
+      <img id="modalImage" src="" alt="">
+
+      <div class="modal-body">
+
+        <div class="category" id="modalCategory"></div>
+
+        <h2 id="modalTitle"></h2>
+
+        <p class="lead" id="modalSummary"></p>
+
+        <div class="modal-text" id="modalBody"></div>
+
+      </div>
+
+    </article>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+
+    <div class="container">
+
+      <div class="footer-grid">
+
         <div>
-            <span class="section-kicker">
-                ACTUALIDAD LOCAL
-            </span>
+          <div class="footer-logo">
+            ARENA <span>24</span> RADIO
+          </div>
 
-            <h2 id="rioja-title">
-                🇦🇷 La Rioja
-            </h2>
+          <p>
+            Noticias, actualidad e información de La Rioja,
+            Argentina y el mundo.
+          </p>
         </div>
 
-        <a
-            href="#rioja"
-            class="section-link"
-        >
-            Ver noticias →
-        </a>
-    </div>
-
-    <div
-        id="rioja-news"
-        class="news-grid"
-        data-news-category="LA RIOJA"
-    >
-        <div class="news-loading">
-            <span class="loading-spinner"></span>
-            Cargando noticias de La Rioja...
-        </div>
-    </div>
-
-</div>
-    <div class="section-heading">
         <div>
-            <span class="section-kicker">
-                ACTUALIDAD ARGENTINA
-            </span>
+          <div class="footer-title">Secciones</div>
 
-            <h2 id="national-title">
-                🇦🇷 Nacionales
-            </h2>
+          <div class="footer-links">
+            <a href="#">La Rioja</a>
+            <a href="#">Argentina</a>
+            <a href="#">Política</a>
+            <a href="#">Deportes</a>
+            <a href="#">Economía</a>
+          </div>
         </div>
 
-        <a
-            href="#nacionales"
-            class="section-link"
-        >
-            Ver noticias →
-        </a>
+        <div>
+          <div class="footer-title">Arena 24</div>
+
+          <div class="footer-links">
+            <a href="#">Quiénes somos</a>
+            <a href="#">Contacto</a>
+            <a href="#">Publicidad</a>
+            <a href="#">Política de privacidad</a>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="copyright">
+        © <span id="year"></span> Arena 24 Radio. Todos los derechos reservados.
+      </div>
+
     </div>
 
-    <div
-        id="national-news"
-        class="news-grid"
-        data-news-category="NACIONALES"
-    >
-        <div class="news-loading">
-            <span class="loading-spinner"></span>
-            Cargando noticias nacionales...
+  </footer>
+
+  <script>
+
+    /* =====================================================
+       ARENA 24 NOTICIAS
+       MOTOR FRONTEND
+    ===================================================== */
+
+    const news = [
+
+      {
+        id: 1,
+        title: "La Rioja se prepara para una nueva jornada de actividad y anuncios",
+        category: "La Rioja",
+        time: "15:42",
+        image: "https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1200&q=80",
+        summary: "Las autoridades dieron a conocer nuevos detalles sobre la agenda prevista para las próximas horas.",
+        body: `La jornada comenzó con diferentes actividades y anuncios que marcan la agenda provincial.
+
+Desde distintos organismos se difundieron detalles sobre las acciones previstas para las próximas horas.
+
+La información continuará actualizándose a medida que se conozcan nuevos datos.`
+      },
+
+      {
+        id: 2,
+        title: "El Gobierno anunció nuevas medidas para los próximos días",
+        category: "Argentina",
+        time: "15:18",
+        image: "https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?auto=format&fit=crop&w=900&q=80",
+        summary: "El anuncio forma parte de una serie de medidas que comenzarán a aplicarse próximamente.",
+        body: `El Gobierno presentó nuevas medidas que tendrán impacto en diferentes sectores.
+
+Durante la presentación se explicaron los principales puntos y los plazos previstos para su implementación.`
+      },
+
+      {
+        id: 3,
+        title: "Nueva jornada deportiva con presencia de equipos riojanos",
+        category: "Deportes",
+        time: "14:56",
+        image: "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=900&q=80",
+        summary: "Los equipos locales ya tienen todo preparado para una nueva fecha de competencia.",
+        body: `La actividad deportiva tendrá una nueva jornada durante este fin de semana.
+
+Los equipos trabajan en los últimos detalles y se espera una importante participación del público.`
+      },
+
+      {
+        id: 4,
+        title: "Mercados y economía: las principales noticias de la jornada",
+        category: "Economía",
+        time: "14:31",
+        image: "https://images.unsplash.com/photo-1559526324-593bc073d938?auto=format&fit=crop&w=900&q=80",
+        summary: "Las principales variables económicas volvieron a estar en el centro de la agenda.",
+        body: `Los mercados siguieron con atención las novedades económicas de la jornada.
+
+Analistas y especialistas evaluaron los diferentes indicadores conocidos durante las últimas horas.`
+      },
+
+      {
+        id: 5,
+        title: "Autoridades difundieron información y recomendaciones a la comunidad",
+        category: "Policiales",
+        time: "13:58",
+        image: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=900&q=80",
+        summary: "El comunicado incluye recomendaciones para la comunidad y detalles del operativo.",
+        body: `Las autoridades difundieron información relacionada con un operativo desarrollado durante las últimas horas.
+
+Desde los organismos correspondientes solicitaron a la comunidad mantenerse informada a través de canales oficiales.`
+      },
+
+      {
+        id: 6,
+        title: "Una propuesta cultural llega con actividades para toda la familia",
+        category: "Cultura",
+        time: "13:22",
+        image: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80",
+        summary: "La propuesta incluye diferentes actividades culturales y recreativas.",
+        body: `Durante los próximos días se desarrollarán diferentes actividades culturales.
+
+La propuesta busca generar espacios de encuentro y participación para vecinos y visitantes.`
+      },
+
+      {
+        id: 7,
+        title: "Las noticias internacionales que marcan la agenda mundial",
+        category: "Mundo",
+        time: "12:47",
+        image: "https://images.unsplash.com/photo-1521295121783-8a321d551ad2?auto=format&fit=crop&w=900&q=80",
+        summary: "Los principales acontecimientos internacionales concentran la atención.",
+        body: `La agenda internacional continúa marcada por diferentes acontecimientos políticos y económicos.
+
+Los principales organismos y gobiernos siguen analizando la evolución de los acontecimientos.`
+      },
+
+      {
+        id: 8,
+        title: "Todo listo para una nueva actividad de entretenimiento",
+        category: "Espectáculos",
+        time: "12:15",
+        image: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=900&q=80",
+        summary: "La propuesta tendrá lugar durante los próximos días y contará con diferentes actividades.",
+        body: `La agenda de espectáculos incorpora una nueva propuesta destinada al público general.
+
+La organización confirmó diferentes actividades y novedades.`
+      }
+
+    ];
+
+
+    /* =====================================================
+       ESTADO
+    ===================================================== */
+
+    let currentCategory = "Todas";
+    let searchTerm = "";
+
+
+    /* =====================================================
+       ELEMENTOS
+    ===================================================== */
+
+    const newsGrid = document.getElementById("newsGrid");
+    const featuredNews = document.getElementById("featuredNews");
+    const heroNews = document.getElementById("heroNews");
+    const mostRead = document.getElementById("mostRead");
+    const resultCount = document.getElementById("resultCount");
+
+    const modal = document.getElementById("newsModal");
+    const modalImage = document.getElementById("modalImage");
+    const modalCategory = document.getElementById("modalCategory");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalSummary = document.getElementById("modalSummary");
+    const modalBody = document.getElementById("modalBody");
+
+
+    /* =====================================================
+       HERO
+    ===================================================== */
+
+    function renderHero() {
+
+      const item = news[0];
+
+      heroNews.innerHTML = `
+        <img
+          src="${item.image}"
+          alt="${item.title}"
+          loading="eager"
+        >
+
+        <div class="hero-overlay"></div>
+
+        <div class="hero-content">
+
+          <span class="category">
+            ${item.category}
+          </span>
+
+          <h1>
+            ${item.title}
+          </h1>
+
+          <p>
+            ${item.summary}
+          </p>
+
+          <div class="hero-meta">
+            Actualizado ${item.time} · Arena 24 Noticias
+          </div>
+
+        </div>
+      `;
+
+      heroNews.onclick = () => openArticle(item);
+
+    }
+
+
+    /* =====================================================
+       DESTACADAS
+    ===================================================== */
+
+    function renderFeatured() {
+
+      featuredNews.innerHTML = "";
+
+      news.slice(1, 5).forEach(item => {
+
+        const element = document.createElement("article");
+
+        element.className = "side-card";
+
+        element.innerHTML = `
+          <img
+            src="${item.image}"
+            alt="${item.title}"
+            loading="lazy"
+          >
+
+          <div>
+            <small>${item.category}</small>
+
+            <h3>${item.title}</h3>
+          </div>
+        `;
+
+        element.onclick = () => openArticle(item);
+
+        featuredNews.appendChild(element);
+
+      });
+
+    }
+
+
+    /* =====================================================
+       NOTICIAS
+    ===================================================== */
+
+    function getFilteredNews() {
+
+      return news.filter(item => {
+
+        const categoryMatch =
+          currentCategory === "Todas" ||
+          item.category === currentCategory;
+
+        const searchMatch =
+          !searchTerm ||
+          item.title.toLowerCase().includes(searchTerm) ||
+          item.summary.toLowerCase().includes(searchTerm) ||
+          item.category.toLowerCase().includes(searchTerm);
+
+        return categoryMatch && searchMatch;
+
+      });
+
+    }
+
+
+    function renderNews() {
+
+      const filtered = getFilteredNews();
+
+      newsGrid.innerHTML = "";
+
+      resultCount.textContent =
+        `${filtered.length} noticias`;
+
+      if (!filtered.length) {
+
+        newsGrid.innerHTML = `
+          <div class="empty">
+            No encontramos noticias para esa búsqueda.
+          </div>
+        `;
+
+        return;
+
+      }
+
+      filtered.forEach(item => {
+
+        const card = document.createElement("article");
+
+        card.className = "news-card";
+
+        card.innerHTML = `
+
+          <img
+            class="news-image"
+            src="${item.image}"
+            alt="${item.title}"
+            loading="lazy"
+          >
+
+          <div class="news-body">
+
+            <div class="news-info">
+              <span>${item.category}</span>
+              <span>${item.time}</span>
+            </div>
+
+            <h3>
+              ${item.title}
+            </h3>
+
+            <p>
+              ${item.summary}
+            </p>
+
+          </div>
+        `;
+
+        card.onclick = () => openArticle(item);
+
+        newsGrid.appendChild(card);
+
+      });
+
+    }
+
+
+    /* =====================================================
+       MÁS LEÍDO
+    ===================================================== */
+
+    function renderMostRead() {
+
+      mostRead.innerHTML = "";
+
+      news.slice(0, 5).forEach((item, index) => {
+
+        const element = document.createElement("div");
+
+        element.className = "most-item";
+
+        element.innerHTML = `
+
+          <div class="most-number">
+            ${String(index + 1).padStart(2, "0")}
+          </div>
+
+          <h3>
+            ${item.title}
+          </h3>
+
+        `;
+
+        element.onclick = () => openArticle(item);
+
+        element.style.cursor = "pointer";
+
+        mostRead.appendChild(element);
+
+      });
+
+    }
+
+
+    /* =====================================================
+       MODAL
+    ===================================================== */
+
+    function openArticle(item) {
+
+      modalImage.src = item.image;
+      modalImage.alt = item.title;
+
+      modalCategory.textContent = item.category;
+      modalTitle.textContent = item.title;
+      modalSummary.textContent = item.summary;
+      modalBody.textContent = item.body;
+
+      modal.classList.add("open");
+
+      document.body.style.overflow = "hidden";
+
+    }
+
+
+    function closeArticle() {
+
+      modal.classList.remove("open");
+
+      document.body.style.overflow = "";
+
+    }
+
+
+    document.getElementById("closeModal")
+      .addEventListener("click", closeArticle);
+
+
+    modal.addEventListener("click", event => {
+
+      if (event.target === modal) {
+        closeArticle();
+      }
+
+    });
+
+
+    document.addEventListener("keydown", event => {
+
+      if (event.key === "Escape") {
+        closeArticle();
+      }
+
+    });
+
+
+    /* =====================================================
+       CATEGORÍAS
+    ===================================================== */
+
+    document.querySelectorAll(".category-btn")
+      .forEach(button => {
+
+        button.addEventListener("click", () => {
+
+          document.querySelectorAll(".category-btn")
+            .forEach(btn => btn.classList.remove("active"));
+
+          button.classList.add("active");
+
+          currentCategory =
+            button.dataset.category;
+
+          renderNews();
+
+          document.getElementById("noticias")
+            .scrollIntoView({
+              behavior: "smooth"
+            });
+
+        });
+
+      });
+
+
+    /* =====================================================
+       BUSCADOR
+    ===================================================== */
+
+    function performSearch() {
+
+      searchTerm =
+        document.getElementById("searchInput")
+          .value
+          .trim()
+          .toLowerCase();
+
+      renderNews();
+
+      document.getElementById("noticias")
+        .scrollIntoView({
+          behavior: "smooth"
+        });
+
+    }
+
+
+    document.getElementById("searchButton")
+      .addEventListener("click", performSearch);
+
+
+    document.getElementById("searchInput")
+      .addEventListener("keydown", event => {
+
+        if (event.key === "Enter") {
+          performSearch();
+        }
+
+      });
+
+
+    /* =====================================================
+       MENÚ MÓVIL
+    ===================================================== */
+
+    document.getElementById("mobileMenu")
+      .addEventListener("click", () => {
+
+        document.getElementById("mainNav")
+          .classList.toggle("mobile-open");
+
+      });
+
+
+    /* =====================================================
+       PANEL ADMINISTRACIÓN
+    ===================================================== */
+
+    document.getElementById("newsForm")
+      .addEventListener("submit", event => {
+
+        event.preventDefault();
+
+        const newNews = {
+
+          id: Date.now(),
+
+          title:
+            document.getElementById("newsTitle").value,
+
+          category:
+            document.getElementById("newsCategory").value,
+
+          time:
+            new Date().toLocaleTimeString("es-AR", {
+              hour: "2-digit",
+              minute: "2-digit"
+            }),
+
+          image:
+            document.getElementById("newsImage").value,
+
+          summary:
+            document.getElementById("newsSummary").value,
+
+          body:
+            document.getElementById("newsBody").value
+
+        };
+
+        news.unshift(newNews);
+
+        renderHero();
+        renderFeatured();
+        renderNews();
+        renderMostRead();
+
+        event.target.reset();
+
+        alert("Noticia agregada correctamente.");
+
+      });
+
+
+    /* =====================================================
+       ÚLTIMO MOMENTO
+    ===================================================== */
+
+    function updateBreaking() {
+
+      const item = news[0];
+
+      document.getElementById("breakingText")
+        .textContent =
+        `${item.title} — ${item.time}`;
+
+    }
+
+
+    /* =====================================================
+       FECHA
+    ===================================================== */
+
+    document.getElementById("year")
+      .textContent = new Date().getFullYear();
+
+
+    /* =====================================================
+       INICIO
+    ===================================================== */
+
+    renderHero();
+    renderFeatured();
+    renderNews();
+    renderMostRead();
+    updateBreaking();
+
+
+  </script>
+
+</body>
+</html>
+
+
+
+
+
+
+        
+   
+      
+    
+
+
+       
+
+   
         </div>
     </div>
 
