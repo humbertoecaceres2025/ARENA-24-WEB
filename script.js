@@ -2976,7 +2976,7 @@ document.addEventListener(
 );
 /*
 |--------------------------------------------------------------------------
-| arena34radioweb
+| arena24radioweb
 | Motor de noticias
 |--------------------------------------------------------------------------
 |
@@ -3360,7 +3360,7 @@ function createNewsCard(news) {
       `
       : `
         <div class="no-image">
-          arena34radioweb
+          arena24radioweb
         </div>
       `;
 
@@ -3812,6 +3812,958 @@ function showStatus(
     type;
 
 }
+require("dotenv").config();
+
+const express = require("express");
+const cors = require("cors");
+const session = require("express-session");
+const bcrypt = require("bcrypt");
+const Database = require("better-sqlite3");
+const path = require("path");
+const fs = require("fs");
+
+const app = express();
+
+const PORT =
+  process.env.PORT || 3000;
+
+const FRONTEND_URL =
+  process.env.FRONTEND_URL ||
+  "https://humbertoecaceres2025.github.io";
+
+
+/*
+|--------------------------------------------------------------------------
+| BASE DE DATOS
+|--------------------------------------------------------------------------
+*/
+
+const DATA_DIR =
+  path.join(__dirname, "data");
+
+fs.mkdirSync(
+  DATA_DIR,
+  { recursive: true }
+);
+
+const db =
+  new Database(
+    path.join(
+      DATA_DIR,
+      "arena24.db"
+    )
+  );
+
+db.pragma(
+  "journal_mode = WAL"
+);
+
+
+db.exec(`
+  CREATE TABLE IF NOT EXISTS noticias (
+
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+
+    title TEXT NOT NULL,
+
+    slug TEXT UNIQUE NOT NULL,
+
+    summary TEXT NOT NULL,
+
+    content TEXT NOT NULL,
+
+    category TEXT NOT NULL,
+
+    location TEXT DEFAULT 'La Rioja',
+
+    image TEXT,
+
+    author TEXT DEFAULT 'ARENA 24',
+
+    status TEXT DEFAULT 'draft',
+
+    source TEXT DEFAULT 'manual',
+
+    created_at TEXT NOT NULL,
+
+    updated_at TEXT NOT NULL,
+
+    published_at TEXT
+
+  );
+
+  CREATE TABLE IF NOT EXISTS contactos (
+
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+
+    nombre TEXT NOT NULL,
+
+    email TEXT NOT NULL,
+
+    tipo TEXT NOT NULL,
+
+    titulo TEXT,
+
+    mensaje TEXT NOT NULL,
+
+    archivo TEXT,
+
+    status TEXT DEFAULT 'new',
+
+    created_at TEXT NOT NULL
+
+  );
+`);
+
+
+/*
+|--------------------------------------------------------------------------
+| MIDDLEWARE
+|--------------------------------------------------------------------------
+*/
+
+app.use(
+  cors({
+    origin: FRONTEND_URL,
+    credentials: true
+  })
+);
+
+app.use(
+  express.json({
+    limit: "2mb"
+  })
+);
+
+app.use(
+  express.urlencoded({
+    extended: true
+  })
+);
+
+
+/*
+|--------------------------------------------------------------------------
+| SESIONES
+|--------------------------------------------------------------------------
+*/
+
+app.use(
+  session({
+    secret:
+      process.env.SESSION_SECRET,
+
+    resave: false,
+
+    saveUninitialized: false,
+
+    cookie: {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+      maxAge:
+        1000 *
+        60 *
+        60 *
+        8
+    }
+  })
+);
+
+
+/*
+|--------------------------------------------------------------------------
+| UTILIDADES
+|--------------------------------------------------------------------------
+*/
+
+function now() {
+  return new Date()
+    .toISOString();
+}
+
+
+function slugify(text) {
+
+  return text
+    .normalize("NFD")
+    .replace(
+      /[\u0300-\u036f]/g,
+      ""
+    )
+    .toLowerCase()
+    .trim()
+    .replace(
+      /[^a-z0-9]+/g,
+      "-"
+    )
+    .replace(
+      /^-+|-+$/g,
+      "");
+}
+
+
+function publicNews(row) {
+
+  return {
+    id: row.id,
+    title: row.title,
+    slug: row.slug,
+    summary: row.summary,
+    content: row.content,
+    category: row.category,
+    location: row.location,
+    image: row.image,
+    author: row.author,
+    date:
+      row.published_at ||
+      row.created_at
+  };
+
+}
+
+
+function requireAuth(
+  req,
+  res,
+  next
+) {
+
+  if (
+    req.session &&
+    req.session.admin
+  ) {
+
+    return next();
+
+  }
+
+  return res
+    .status(401)
+    .json({
+      error:
+        "No autorizado."
+    });
+
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| SALUD DE LA API
+|--------------------------------------------------------------------------
+*/
+
+app.get(
+  "/api/health",
+  (_, res) => {
+
+    res.json({
+      ok: true,
+      service: "ARENA 24 API"
+    });
+
+  }
+);
+
+
+/*
+|--------------------------------------------------------------------------
+| LOGIN
+|--------------------------------------------------------------------------
+*/
+
+app.post(
+  "/api/auth/login",
+  async (req, res) => {
+
+    const {
+      username,
+      password
+    } = req.body;
+
+
+    if (
+      !username ||
+      !password
+    ) {
+
+      return res
+        .status(400)
+        .json({
+          error:
+            "Usuario y contraseña son obligatorios."
+        });
+
+    }
+
+
+    const validUser =
+      username ===
+      process.env.ADMIN_USER;
+
+
+    if (!validUser) {
+
+      return res
+        .status(401)
+        .json({
+          error:
+            "Credenciales incorrectas."
+        });
+
+    }
+
+
+    const validPassword =
+      await bcrypt.compare(
+        password,
+        process.env.ADMIN_PASSWORD_HASH
+      );
+
+
+    if (!validPassword) {
+
+      return res
+        .status(401)
+        .json({
+          error:
+            "Credenciales incorrectas."
+        });
+
+    }
+
+
+    req.session.admin = {
+      username
+    };
+
+
+    res.json({
+      ok: true,
+      username
+    });
+
+  }
+);
+
+
+/*
+|--------------------------------------------------------------------------
+| COMPROBAR SESIÓN
+|--------------------------------------------------------------------------
+*/
+
+app.get(
+  "/api/auth/me",
+  (req, res) => {
+
+    if (
+      !req.session ||
+      !req.session.admin
+    ) {
+
+      return res
+        .status(401)
+        .json({
+          authenticated: false
+        });
+
+    }
+
+
+    res.json({
+      authenticated: true,
+      username:
+        req.session.admin.username
+    });
+
+  }
+);
+
+
+/*
+|--------------------------------------------------------------------------
+| LOGOUT
+|--------------------------------------------------------------------------
+*/
+
+app.post(
+  "/api/auth/logout",
+  (req, res) => {
+
+    req.session.destroy(
+      error => {
+
+        if (error) {
+
+          return res
+            .status(500)
+            .json({
+              error:
+                "No se pudo cerrar la sesión."
+            });
+
+        }
+
+
+        res.clearCookie(
+          "connect.sid"
+        );
+
+
+        res.json({
+          ok: true
+        });
+
+      }
+    );
+
+  }
+);
+
+
+/*
+|--------------------------------------------------------------------------
+| NOTICIAS PÚBLICAS
+|--------------------------------------------------------------------------
+*/
+
+app.get(
+  "/api/noticias",
+  (req, res) => {
+
+    const search =
+      String(
+        req.query.search || ""
+      ).trim();
+
+    const category =
+      String(
+        req.query.category || ""
+      ).trim();
+
+
+    let sql = `
+      SELECT *
+      FROM noticias
+      WHERE status = 'published'
+    `;
+
+
+    const params = [];
+
+
+    if (category) {
+
+      sql +=
+        " AND category = ?";
+
+      params.push(category);
+
+    }
+
+
+    if (search) {
+
+      sql += `
+        AND (
+          title LIKE ?
+          OR summary LIKE ?
+          OR content LIKE ?
+          OR location LIKE ?
+        )
+      `;
+
+
+      const value =
+        `%${search}%`;
+
+
+      params.push(
+        value,
+        value,
+        value,
+        value
+      );
+
+    }
+
+
+    sql +=
+      " ORDER BY published_at DESC LIMIT 100";
+
+
+    const rows =
+      db.prepare(sql)
+        .all(...params);
+
+
+    res.json(
+      rows.map(
+        publicNews
+      )
+    );
+
+  }
+);
+
+
+/*
+|--------------------------------------------------------------------------
+| NOTICIA PÚBLICA
+|--------------------------------------------------------------------------
+*/
+
+app.get(
+  "/api/noticias/:id",
+  (req, res) => {
+
+    const row =
+      db.prepare(`
+        SELECT *
+        FROM noticias
+        WHERE id = ?
+        AND status = 'published'
+      `)
+      .get(
+        req.params.id
+      );
+
+
+    if (!row) {
+
+      return res
+        .status(404)
+        .json({
+          error:
+            "Noticia no encontrada."
+        });
+
+    }
+
+
+    res.json(
+      publicNews(row)
+    );
+
+  }
+);
+
+
+/*
+|--------------------------------------------------------------------------
+| LISTADO ADMINISTRATIVO
+|--------------------------------------------------------------------------
+*/
+
+app.get(
+  "/api/admin/noticias",
+  requireAuth,
+  (req, res) => {
+
+    const rows =
+      db.prepare(`
+        SELECT *
+        FROM noticias
+        ORDER BY created_at DESC
+      `)
+      .all();
+
+
+    res.json(rows);
+
+  }
+);
+
+
+/*
+|--------------------------------------------------------------------------
+| CREAR NOTICIA
+|--------------------------------------------------------------------------
+*/
+
+app.post(
+  "/api/admin/noticias",
+  requireAuth,
+  (req, res) => {
+
+    const {
+      title,
+      summary,
+      content,
+      category,
+      location,
+      image,
+      author,
+      status
+    } = req.body;
+
+
+    if (
+      !title ||
+      !summary ||
+      !content ||
+      !category
+    ) {
+
+      return res
+        .status(400)
+        .json({
+          error:
+            "Completá los campos obligatorios."
+        });
+
+    }
+
+
+    const timestamp =
+      now();
+
+
+    const finalStatus =
+      [
+        "draft",
+        "review",
+        "published"
+      ].includes(status)
+        ? status
+        : "draft";
+
+
+    const publishedAt =
+      finalStatus === "published"
+        ? timestamp
+        : null;
+
+
+    const slug =
+      slugify(title) +
+      "-" +
+      Date.now();
+
+
+    const result =
+      db.prepare(`
+        INSERT INTO noticias
+        (
+          title,
+          slug,
+          summary,
+          content,
+          category,
+          location,
+          image,
+          author,
+          status,
+          source,
+          created_at,
+          updated_at,
+          published_at
+        )
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      `)
+      .run(
+        title,
+        slug,
+        summary,
+        content,
+        category,
+        location ||
+          "La Rioja",
+        image || null,
+        author ||
+          "ARENA 24",
+        finalStatus,
+        "manual",
+        timestamp,
+        timestamp,
+        publishedAt
+      );
+
+
+    res.status(201).json({
+      ok: true,
+      id:
+        result.lastInsertRowid
+    });
+
+  }
+);
+
+
+/*
+|--------------------------------------------------------------------------
+| EDITAR NOTICIA
+|--------------------------------------------------------------------------
+*/
+
+app.put(
+  "/api/admin/noticias/:id",
+  requireAuth,
+  (req, res) => {
+
+    const {
+      title,
+      summary,
+      content,
+      category,
+      location,
+      image,
+      author,
+      status
+    } = req.body;
+
+
+    const existing =
+      db.prepare(`
+        SELECT *
+        FROM noticias
+        WHERE id = ?
+      `)
+      .get(
+        req.params.id
+      );
+
+
+    if (!existing) {
+
+      return res
+        .status(404)
+        .json({
+          error:
+            "Noticia no encontrada."
+        });
+
+    }
+
+
+    const finalStatus =
+      [
+        "draft",
+        "review",
+        "published"
+      ].includes(status)
+        ? status
+        : existing.status;
+
+
+    let publishedAt =
+      existing.published_at;
+
+
+    if (
+      finalStatus === "published" &&
+      !publishedAt
+    ) {
+
+      publishedAt =
+        now();
+
+    }
+
+
+    if (
+      finalStatus !== "published"
+    ) {
+
+      publishedAt = null;
+
+    }
+
+
+    db.prepare(`
+      UPDATE noticias
+
+      SET
+        title = ?,
+        summary = ?,
+        content = ?,
+        category = ?,
+        location = ?,
+        image = ?,
+        author = ?,
+        status = ?,
+        updated_at = ?,
+        published_at = ?
+
+      WHERE id = ?
+    `)
+    .run(
+      title,
+      summary,
+      content,
+      category,
+      location ||
+        "La Rioja",
+      image || null,
+      author ||
+        "ARENA 24",
+      finalStatus,
+      now(),
+      publishedAt,
+      req.params.id
+    );
+
+
+    res.json({
+      ok: true
+    });
+
+  }
+);
+
+
+/*
+|--------------------------------------------------------------------------
+| ELIMINAR NOTICIA
+|--------------------------------------------------------------------------
+*/
+
+app.delete(
+  "/api/admin/noticias/:id",
+  requireAuth,
+  (req, res) => {
+
+    const result =
+      db.prepare(`
+        DELETE FROM noticias
+        WHERE id = ?
+      `)
+      .run(
+        req.params.id
+      );
+
+
+    if (
+      result.changes === 0
+    ) {
+
+      return res
+        .status(404)
+        .json({
+          error:
+            "Noticia no encontrada."
+        });
+
+    }
+
+
+    res.json({
+      ok: true
+    });
+
+  }
+);
+
+
+/*
+|--------------------------------------------------------------------------
+| CONTACTO
+|--------------------------------------------------------------------------
+*/
+
+app.post(
+  "/api/contacto",
+  (req, res) => {
+
+    const {
+      nombre,
+      email,
+      tipo,
+      titulo,
+      mensaje
+    } = req.body;
+
+
+    if (
+      !nombre ||
+      !email ||
+      !tipo ||
+      !mensaje
+    ) {
+
+      return res
+        .status(400)
+        .json({
+          error:
+            "Faltan campos obligatorios."
+        });
+
+    }
+
+
+    const result =
+      db.prepare(`
+        INSERT INTO contactos
+        (
+          nombre,
+          email,
+          tipo,
+          titulo,
+          mensaje,
+          created_at
+        )
+        VALUES (?, ?, ?, ?, ?, ?)
+      `)
+      .run(
+        nombre,
+        email,
+        tipo,
+        titulo || "",
+        mensaje,
+        now()
+      );
+
+
+    res.status(201).json({
+      ok: true,
+      id:
+        result.lastInsertRowid
+    });
+
+  }
+);
+
+
+/*
+|--------------------------------------------------------------------------
+| ERROR
+|--------------------------------------------------------------------------
+*/
+
+app.use(
+  (error, req, res, next) => {
+
+    console.error(error);
+
+    res
+      .status(500)
+      .json({
+        error:
+          "Error interno del servidor."
+      });
+
+  }
+);
+
+
+/*
+|--------------------------------------------------------------------------
+| SERVIDOR
+|--------------------------------------------------------------------------
+*/
+
+app.listen(
+  PORT,
+  () => {
+
+    console.log(
+      `ARENA 24 API escuchando en ${PORT}`
+    );
+
+  }
+);
 
  
 
