@@ -2649,6 +2649,101 @@ setInterval(
   loadWeather,
   30 * 60 * 1000
 );
+/* ==========================================
+   ARENA 24
+   FORMULARIO DE CONTACTO
+========================================== */
+
+const contactForm =
+  document.getElementById("arenaContactForm");
+
+const contactMessage =
+  document.getElementById("contactFormMessage");
+
+
+if (contactForm) {
+
+  contactForm.addEventListener(
+    "submit",
+    async function(event) {
+
+      event.preventDefault();
+
+
+      const submitButton =
+        contactForm.querySelector(
+          ".contact-submit"
+        );
+
+
+      submitButton.disabled = true;
+
+      submitButton.textContent =
+        "Enviando...";
+
+
+      const formData =
+        new FormData(contactForm);
+
+
+      /*
+       * Cuando conectemos el backend,
+       * este bloque enviará los datos
+       * al servidor.
+       *
+       * Ejemplo:
+       *
+       * fetch("/api/contacto", {
+       *   method: "POST",
+       *   body: formData
+       * })
+       */
+
+
+      try {
+
+        /*
+         * DEMO
+         *
+         * Reemplazar por fetch()
+         * cuando esté conectado
+         * el backend.
+         */
+
+        await new Promise(
+          resolve =>
+            setTimeout(resolve, 900)
+        );
+
+
+        contactMessage.textContent =
+          "✓ Mensaje enviado correctamente. Gracias por comunicarte con Arena 24.";
+
+
+        contactForm.reset();
+
+
+      } catch (error) {
+
+        contactMessage.style.color =
+          "#ff6873";
+
+        contactMessage.textContent =
+          "No pudimos enviar el mensaje. Intentá nuevamente.";
+
+      } finally {
+
+        submitButton.disabled = false;
+
+        submitButton.textContent =
+          "Enviar mensaje";
+
+      }
+
+    }
+  );
+
+}
 
 
 
