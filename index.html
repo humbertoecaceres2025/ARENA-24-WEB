@@ -3640,6 +3640,324 @@ La organización confirmó diferentes actividades y novedades.`
 
 
 </footer>
+    <section class="send-news-section" id="envia-tu-noticia">
+
+  <div class="container">
+
+    <div class="send-news-header">
+      <span class="section-label">ARENA 24 PARTICIPÁ</span>
+      <h2>Enviá tu noticia</h2>
+      <p>
+        Si tenés información de interés, fotos o videos,
+        podés enviarlos a nuestra redacción.
+      </p>
+    </div>
+
+
+    <div class="send-news-layout">
+
+      <!-- INFORMACIÓN -->
+      <aside class="send-news-info">
+
+        <div class="news-info-box">
+          <span class="news-info-icon">📰</span>
+
+          <h3>Tu información puede ser noticia</h3>
+
+          <p>
+            Contanos qué pasó, dónde ocurrió y cuándo.
+            Nuestro equipo revisará el material antes
+            de su publicación.
+          </p>
+        </div>
+
+
+        <div class="news-process">
+
+          <h4>¿Cómo funciona?</h4>
+
+          <div class="process-item">
+            <span>01</span>
+            <div>
+              <strong>Enviás</strong>
+              <small>
+                Completás el formulario.
+              </small>
+            </div>
+          </div>
+
+          <div class="process-item">
+            <span>02</span>
+            <div>
+              <strong>Revisamos</strong>
+              <small>
+                La redacción verifica la información.
+              </small>
+            </div>
+          </div>
+
+          <div class="process-item">
+            <span>03</span>
+            <div>
+              <strong>Publicamos</strong>
+              <small>
+                Si corresponde, se convierte en noticia.
+              </small>
+            </div>
+          </div>
+
+        </div>
+
+
+        <div class="news-whatsapp-box">
+
+          <strong>¿Preferís WhatsApp?</strong>
+
+          <p>
+            También podés enviarnos la información
+            directamente.
+          </p>
+
+          <a
+            href="https://wa.me/5493804844124?text=Hola%20Arena%2024%2C%20quiero%20enviar%20una%20noticia."
+            target="_blank"
+            rel="noopener noreferrer">
+
+            📱 Enviar por WhatsApp
+
+          </a>
+
+        </div>
+
+      </aside>
+
+
+      <!-- FORMULARIO -->
+      <div class="send-news-form-wrapper">
+
+        <form
+          id="sendNewsForm"
+          class="send-news-form"
+          enctype="multipart/form-data">
+
+
+          <div class="form-row">
+
+            <div class="form-group">
+
+              <label for="newsName">
+                Nombre
+              </label>
+
+              <input
+                type="text"
+                id="newsName"
+                name="nombre"
+                placeholder="Tu nombre"
+                required>
+
+            </div>
+
+
+            <div class="form-group">
+
+              <label for="newsPhone">
+                Teléfono / WhatsApp
+              </label>
+
+              <input
+                type="tel"
+                id="newsPhone"
+                name="telefono"
+                placeholder="380..."
+                required>
+
+            </div>
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label for="newsEmail">
+              Email
+            </label>
+
+            <input
+              type="email"
+              id="newsEmail"
+              name="email"
+              placeholder="tu@email.com">
+
+          </div>
+
+
+          <div class="form-row">
+
+            <div class="form-group">
+
+              <label for="newsCategory">
+                Categoría
+              </label>
+
+              <select
+                id="newsCategory"
+                name="categoria"
+                required>
+
+                <option value="">
+                  Seleccioná una categoría
+                </option>
+
+                <option>La Rioja</option>
+                <option>Policiales</option>
+                <option>Sociedad</option>
+                <option>Política</option>
+                <option>Economía</option>
+                <option>Deportes</option>
+                <option>Espectáculos</option>
+                <option>Servicios</option>
+                <option>Otro</option>
+
+              </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+              <label for="newsLocation">
+                Lugar
+              </label>
+
+              <input
+                type="text"
+                id="newsLocation"
+                name="lugar"
+                placeholder="Ciudad / barrio">
+
+            </div>
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label for="newsTitle">
+              Título de la noticia
+            </label>
+
+            <input
+              type="text"
+              id="newsTitle"
+              name="titulo"
+              placeholder="¿Qué ocurrió?"
+              required>
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label for="newsDescription">
+              Contanos qué pasó
+            </label>
+
+            <textarea
+              id="newsDescription"
+              name="descripcion"
+              rows="7"
+              placeholder="Escribí todos los detalles que consideres importantes..."
+              required></textarea>
+
+          </div>
+
+
+          <!-- ARCHIVOS -->
+
+          <div class="form-group">
+
+            <label>
+              Fotos o videos
+            </label>
+
+            <label
+              class="file-upload"
+              for="newsFiles">
+
+              <span class="file-upload-icon">
+                📎
+              </span>
+
+              <strong>
+                Adjuntar archivos
+              </strong>
+
+              <small>
+                JPG, PNG, WEBP, MP4 · Máximo 10 archivos
+              </small>
+
+            </label>
+
+            <input
+              type="file"
+              id="newsFiles"
+              name="archivos"
+              accept="image/jpeg,image/png,image/webp,video/mp4"
+              multiple
+              hidden>
+
+            <div
+              id="filePreview"
+              class="file-preview">
+            </div>
+
+          </div>
+
+
+          <!-- AUTORIZACIÓN -->
+
+          <label class="news-consent">
+
+            <input
+              type="checkbox"
+              name="autorizacion"
+              required>
+
+            <span>
+              Confirmo que la información enviada es
+              correcta según mi conocimiento y autorizo
+              a Arena 24 a utilizar el material para
+              fines periodísticos.
+            </span>
+
+          </label>
+
+
+          <button
+            type="submit"
+            class="send-news-button">
+
+            Enviar noticia
+
+          </button>
+
+
+          <div
+            id="sendNewsMessage"
+            class="send-news-message">
+          </div>
+
+        </form>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
 
 
 
