@@ -3761,5 +3761,304 @@ section {
   }
 
 }
+/* ==========================================
+   CONTACTO ARENA 24
+========================================== */
+
+.contact-section {
+  padding: 55px 0 70px;
+  background: #0d1014;
+}
+
+.section-label {
+  display: block;
+  margin-bottom: 6px;
+  color: #e21d2b;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+}
+
+.contact-title h2 {
+  margin: 0;
+  color: #fff;
+  font-family: Montserrat, sans-serif;
+  font-size: 30px;
+}
+
+.contact-title p {
+  margin-top: 6px;
+  color: #858c95;
+  font-size: 13px;
+}
+
+
+/* TARJETAS */
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  margin-top: 25px;
+}
+
+.contact-card {
+  display: flex;
+  gap: 16px;
+  padding: 23px;
+
+  background: #151920;
+  border: 1px solid #272d36;
+  border-radius: 12px;
+
+  transition:
+    transform .2s ease,
+    border-color .2s ease,
+    background .2s ease;
+}
+
+.contact-card:hover {
+  transform: translateY(-3px);
+  background: #191e25;
+  border-color: #3a414b;
+}
+
+.contact-card-icon {
+  flex: 0 0 45px;
+  width: 45px;
+  height: 45px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 9px;
+  background: #e21d2b;
+
+  color: #fff;
+  font-size: 20px;
+}
+
+.contact-card-label {
+  color: #e21d2b;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.contact-card h3 {
+  margin: 4px 0 7px;
+  color: #fff;
+  font-family: Montserrat, sans-serif;
+  font-size: 17px;
+}
+
+.contact-card p {
+  margin: 0 0 13px;
+  color: #858c95;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.contact-link,
+.contact-action {
+  color: #fff;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.contact-link:hover,
+.contact-action:hover {
+  color: #e21d2b;
+}
+
+
+/* WHATSAPP */
+
+.whatsapp-card .contact-card-icon {
+  background: #20c66a;
+}
+
+.whatsapp-action {
+  color: #25d366;
+}
+
+
+/* PUBLICIDAD */
+
+.advertising-card .contact-card-icon {
+  background: #252b34;
+}
+
+
+/* FORMULARIO */
+
+.contact-form-wrapper {
+  display: grid;
+  grid-template-columns: .7fr 1.3fr;
+  gap: 35px;
+
+  margin-top: 30px;
+  padding: 30px;
+
+  background: #151920;
+  border: 1px solid #272d36;
+  border-radius: 12px;
+}
+
+.form-intro h3 {
+  margin: 0;
+  color: #fff;
+  font-family: Montserrat, sans-serif;
+  font-size: 23px;
+}
+
+.form-intro p {
+  color: #858c95;
+  font-size: 12px;
+  line-height: 1.6;
+  max-width: 300px;
+}
+
+
+/* CAMPOS */
+
+.arena-contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group label {
+  color: #c9ced5;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  box-sizing: border-box;
+
+  padding: 12px;
+
+  background: #0e1115;
+  border: 1px solid #303640;
+  border-radius: 7px;
+
+  color: #fff;
+  outline: none;
+
+  font-family: inherit;
+  font-size: 12px;
+
+  transition: border-color .2s;
+}
+
+.form-group textarea {
+  resize: vertical;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: #e21d2b;
+}
+
+
+/* FOOTER FORM */
+
+.form-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+}
+
+.form-footer small {
+  max-width: 350px;
+  color: #686f78;
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+.contact-submit {
+  border: 0;
+  border-radius: 7px;
+
+  padding: 12px 20px;
+
+  background: #e21d2b;
+  color: #fff;
+
+  font-size: 12px;
+  font-weight: 800;
+
+  cursor: pointer;
+  transition: .2s;
+}
+
+.contact-submit:hover {
+  background: #bd1521;
+  transform: translateY(-1px);
+}
+
+.contact-submit:disabled {
+  opacity: .6;
+  cursor: wait;
+}
+
+.contact-form-message {
+  min-height: 18px;
+  color: #29d477;
+  font-size: 11px;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 750px) {
+
+  .contact-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-form-wrapper {
+    grid-template-columns: 1fr;
+    padding: 20px;
+  }
+
+}
+
+@media (max-width: 500px) {
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .form-footer {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .contact-submit {
+    width: 100%;
+  }
+
+}
+
 
 
