@@ -2149,12 +2149,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
       /* =========================
-         TELEGRAM
+         INSTAGRAM
       ========================= */
 
-      if (network === "telegram") {
+      if (network === "Instagram") {
 
-        const telegramUrl =
+        const instagramUrl =
           `https://t.me/share/url?url=${encodeURIComponent(
             url
           )}&text=${encodeURIComponent(
@@ -2162,7 +2162,7 @@ document.addEventListener("DOMContentLoaded", () => {
           )}`;
 
         window.open(
-          telegramUrl,
+          instagramUrl,
           "_blank",
           "noopener,noreferrer"
         );
@@ -2224,5 +2224,431 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
 });
+ /* ==========================================
+   ARENA 24
+   CLIMA LA RIOJA
+========================================== */
+
+const WEATHER = {
+
+  latitude: -29.4135,
+  longitude: -66.8568,
+
+  api:
+    "https://api.open-meteo.com/v1/forecast"
+
+};
+
+
+/* ==========================================
+   ELEMENTOS
+========================================== */
+
+const currentTemp =
+  document.getElementById("currentTemp");
+
+const maxTemp =
+  document.getElementById("maxTemp");
+
+const minTemp =
+  document.getElementById("minTemp");
+
+const humidity =
+  document.getElementById("humidity");
+
+const wind =
+  document.getElementById("wind");
+
+const rain =
+  document.getElementById("rain");
+
+const feelsLike =
+  document.getElementById("feelsLike");
+
+const weatherDescription =
+  document.getElementById("weatherDescription");
+
+const weatherIcon =
+  document.getElementById("weatherIcon");
+
+const weatherDate =
+  document.getElementById("weatherDate");
+
+const forecastGrid =
+  document.getElementById("forecastGrid");
+
+const weatherUpdated =
+  document.getElementById("weatherUpdated");
+
+const refreshButton =
+  document.getElementById("weatherRefresh");
+
+
+/* ==========================================
+   CÓDIGOS METEOROLÓGICOS
+========================================== */
+
+function weatherCode(code) {
+
+  const conditions = {
+
+    0: ["☀️", "Despejado"],
+
+    1: ["🌤️", "Mayormente despejado"],
+
+    2: ["⛅", "Parcialmente nublado"],
+
+    3: ["☁️", "Nublado"],
+
+    45: ["🌫️", "Niebla"],
+
+    48: ["🌫️", "Niebla"],
+
+    51: ["🌦️", "Llovizna"],
+
+    53: ["🌦️", "Llovizna"],
+
+    55: ["🌧️", "Llovizna intensa"],
+
+    61: ["🌦️", "Lluvia"],
+
+    63: ["🌧️", "Lluvia moderada"],
+
+    65: ["🌧️", "Lluvia intensa"],
+
+    71: ["🌨️", "Nieve"],
+
+    73: ["🌨️", "Nieve moderada"],
+
+    75: ["❄️", "Nieve intensa"],
+
+    80: ["🌦️", "Chaparrones"],
+
+    81: ["🌧️", "Chaparrones"],
+
+    82: ["⛈️", "Chaparrones fuertes"],
+
+    95: ["⛈️", "Tormenta"],
+
+    96: ["⛈️", "Tormenta con granizo"],
+
+    99: ["⛈️", "Tormenta fuerte"]
+
+  };
+
+  return conditions[code] ||
+    ["🌡️", "Condiciones variables"];
+
+}
+
+
+/* ==========================================
+   FECHA
+========================================== */
+
+function formatDate(dateString) {
+
+  const date =
+    new Date(`${dateString}T12:00:00`);
+
+  return date.toLocaleDateString(
+    "es-AR",
+    {
+      weekday: "long",
+      day: "numeric",
+      month: "long"
+    }
+  );
+
+}
+
+
+/* ==========================================
+   CARGAR CLIMA
+========================================== */
+
+async function loadWeather() {
+
+  try {
+
+    refreshButton.classList.add("loading");
+
+    refreshButton.textContent =
+      "↻ Actualizando...";
+
+
+    const url =
+      `${WEATHER.api}` +
+      `?latitude=${WEATHER.latitude}` +
+      `&longitude=${WEATHER.longitude}` +
+      `&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m` +
+      `&hourly=precipitation_probability` +
+      `&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max` +
+      `&timezone=America%2FArgentina%2FLa_Rioja` +
+      `&forecast_days=7`;
+
+
+    const response =
+      await fetch(url);
+
+
+    if (!response.ok) {
+      throw new Error(
+        "No se pudo obtener el clima."
+      );
+    }
+
+
+    const data =
+      await response.json();
+
+
+    updateCurrentWeather(data);
+
+    updateForecast(data);
+
+
+    const now =
+      new Date();
+
+    weatherUpdated.textContent =
+      `Actualizado ${now.toLocaleTimeString(
+        "es-AR",
+        {
+          hour: "2-digit",
+          minute: "2-digit"
+        }
+      )}`;
+
+
+  } catch (error) {
+
+    console.error(error);
+
+    document.querySelector(".weather-main")
+      .innerHTML = `
+
+        <div class="weather-error">
+          No fue posible actualizar el clima
+          en este momento.
+          Intentá nuevamente en unos minutos.
+        </div>
+
+      `;
+
+  } finally {
+
+    refreshButton.classList.remove("loading");
+
+    refreshButton.textContent =
+      "↻ Actualizar";
+
+  }
+
+}
+
+
+/* ==========================================
+   ACTUAL
+========================================== */
+
+function updateCurrentWeather(data) {
+
+  const current =
+    data.current;
+
+  const daily =
+    data.daily;
+
+  const [
+    icon,
+    description
+  ] =
+    weatherCode(
+      current.weather_code
+    );
+
+
+  currentTemp.textContent =
+    Math.round(
+      current.temperature_2m
+    );
+
+
+  maxTemp.textContent =
+    Math.round(
+      daily.temperature_2m_max[0]
+    );
+
+
+  minTemp.textContent =
+    Math.round(
+      daily.temperature_2m_min[0]
+    );
+
+
+  humidity.textContent =
+    `${current.relative_humidity_2m}%`;
+
+
+  wind.textContent =
+    `${Math.round(
+      current.wind_speed_10m
+    )} km/h`;
+
+
+  feelsLike.textContent =
+    `${Math.round(
+      current.apparent_temperature
+    )}°`;
+
+
+  weatherDescription.textContent =
+    description;
+
+
+  weatherIcon.textContent =
+    icon;
+
+
+  weatherDate.textContent =
+    formatDate(
+      daily.time[0]
+    );
+
+}
+
+
+/* ==========================================
+   PRONÓSTICO
+========================================== */
+
+function updateForecast(data) {
+
+  const daily =
+    data.daily;
+
+  forecastGrid.innerHTML = "";
+
+
+  daily.time.forEach(
+    (date, index) => {
+
+      const [
+        icon,
+        description
+      ] =
+        weatherCode(
+          daily.weather_code[index]
+        );
+
+
+      const card =
+        document.createElement("article");
+
+
+      card.className =
+        "forecast-card";
+
+
+      card.innerHTML = `
+
+        <div class="forecast-day">
+          ${formatDay(date)}
+        </div>
+
+        <div class="forecast-icon">
+          ${icon}
+        </div>
+
+        <div class="forecast-condition">
+          ${description}
+        </div>
+
+        <div class="forecast-temperatures">
+
+          <span class="forecast-high">
+            ${Math.round(
+              daily.temperature_2m_max[index]
+            )}°
+          </span>
+
+          <span class="forecast-low">
+            ${Math.round(
+              daily.temperature_2m_min[index]
+            )}°
+          </span>
+
+        </div>
+
+        <div class="forecast-rain">
+          💧 ${
+            daily.precipitation_probability_max[index]
+          }%
+        </div>
+
+      `;
+
+
+      forecastGrid.appendChild(card);
+
+    }
+  );
+
+}
+
+
+/* ==========================================
+   DÍA CORTO
+========================================== */
+
+function formatDay(dateString) {
+
+  const date =
+    new Date(
+      `${dateString}T12:00:00`
+    );
+
+  return date
+    .toLocaleDateString(
+      "es-AR",
+      {
+        weekday: "short"
+      }
+    )
+    .replace(".", "")
+    .toUpperCase();
+
+}
+
+
+/* ==========================================
+   ACTUALIZAR MANUALMENTE
+========================================== */
+
+refreshButton
+  .addEventListener(
+    "click",
+    loadWeather
+  );
+
+
+/* ==========================================
+   CARGA INICIAL
+========================================== */
+
+loadWeather();
+
+
+/* ==========================================
+   ACTUALIZACIÓN AUTOMÁTICA
+   CADA 30 MINUTOS
+========================================== */
+
+setInterval(
+  loadWeather,
+  30 * 60 * 1000
+);
+
 
 
