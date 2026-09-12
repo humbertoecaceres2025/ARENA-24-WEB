@@ -4302,4 +4302,196 @@ La organización confirmó diferentes actividades y novedades.`
 
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Noticias | arena34radioweb</title>
+
+  <meta
+    name="description"
+    content="Últimas noticias y actualidad de La Rioja en arena34radioweb."
+  >
+
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+
+<body>
+
+<header class="site-header">
+  <div class="container header-inner">
+
+    <a href="index.html" class="brand">
+      <strong>arena34radioweb</strong>
+      <span>LA RIOJA · ACTUALIDAD</span>
+    </a>
+
+    <button
+      class="menu-toggle"
+      id="menuToggle"
+      aria-label="Abrir menú">
+      ☰
+    </button>
+
+    <nav class="main-nav" id="mainNav">
+      <a href="index.html">Inicio</a>
+      <a class="active" href="noticias.html">Noticias</a>
+      <a href="clima.html">Clima</a>
+      <a href="contacto.html">Contacto</a>
+    </nav>
+
+  </div>
+</header>
+
+
+<main>
+
+<section class="section">
+
+  <div class="container">
+
+    <span class="eyebrow">
+      ACTUALIDAD
+    </span>
+
+    <h1>
+      Noticias
+    </h1>
+
+    <p class="page-intro">
+      Toda la información de La Rioja y las
+      principales noticias de actualidad.
+    </p>
+
+
+    <!-- BUSCADOR -->
+
+    <form
+      class="search-box"
+      id="newsSearch">
+
+      <input
+        type="search"
+        id="searchInput"
+        placeholder="Buscar noticias..."
+        autocomplete="off">
+
+      <button type="submit">
+        BUSCAR
+      </button>
+
+    </form>
+
+
+    <!-- CATEGORÍAS -->
+
+    <div
+      class="categories"
+      id="categories">
+
+      <button
+        class="category active"
+        data-category="Todas">
+        Todas
+      </button>
+
+      <button
+        class="category"
+        data-category="La Rioja">
+        La Rioja
+      </button>
+
+      <button
+        class="category"
+        data-category="Policiales">
+        Policiales
+      </button>
+
+      <button
+        class="category"
+        data-category="Política">
+        Política
+      </button>
+
+      <button
+        class="category"
+        data-category="Economía">
+        Economía
+      </button>
+
+      <button
+        class="category"
+        data-category="Deportes">
+        Deportes
+      </button>
+
+      <button
+        class="category"
+        data-category="Sociedad">
+        Sociedad
+      </button>
+
+    </div>
+
+
+    <!-- CONTENEDOR DE NOTICIAS -->
+
+    <div
+      class="news-grid"
+      id="newsGrid">
+
+      <div class="empty">
+        <strong>
+          Cargando noticias...
+        </strong>
+
+        <p>
+          Estamos actualizando la información.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+</main>
+
+
+<footer class="site-footer">
+
+  <div class="container footer-inner">
+
+    <div>
+      <strong>arena34radioweb</strong>
+
+      <p>
+        Información y actualidad de La Rioja.
+      </p>
+    </div>
+
+    <div class="footer-links">
+      <a href="noticias.html">Noticias</a>
+      <a href="clima.html">Clima</a>
+      <a href="contacto.html">Contacto</a>
+    </div>
+
+  </div>
+
+  <div class="container footer-bottom">
+    © <span id="currentYear"></span>
+    arena34radioweb
+  </div>
+
+</footer>
+
+
+<script src="js/app.js"></script>
+<script src="js/noticias.js"></script>
+
+</body>
+</html>
 
