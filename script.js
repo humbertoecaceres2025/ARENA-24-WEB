@@ -2744,6 +2744,179 @@ if (contactForm) {
   );
 
 }
+/* ==========================================
+   ARENA 24
+   ENVÍO DE NOTICIAS
+========================================== */
+
+const newsForm =
+  document.getElementById("sendNewsForm");
+
+const newsFiles =
+  document.getElementById("newsFiles");
+
+const filePreview =
+  document.getElementById("filePreview");
+
+const newsMessage =
+  document.getElementById("sendNewsMessage");
+
+
+/* ==========================================
+   MOSTRAR ARCHIVOS
+========================================== */
+
+if (newsFiles) {
+
+  newsFiles.addEventListener(
+    "change",
+    () => {
+
+      filePreview.innerHTML = "";
+
+      const files =
+        Array.from(newsFiles.files);
+
+
+      if (files.length > 10) {
+
+        newsMessage.style.color =
+          "#ff6873";
+
+        newsMessage.textContent =
+          "Podés adjuntar un máximo de 10 archivos.";
+
+        newsFiles.value = "";
+
+        return;
+      }
+
+
+      files.forEach(file => {
+
+        const item =
+          document.createElement("div");
+
+        item.className =
+          "file-preview-item";
+
+        const size =
+          (file.size / 1024 / 1024)
+            .toFixed(1);
+
+
+        item.textContent =
+          `${file.name} · ${size} MB`;
+
+
+        filePreview.appendChild(item);
+
+      });
+
+    }
+  );
+
+}
+
+
+/* ==========================================
+   ENVÍO
+========================================== */
+
+if (newsForm) {
+
+  newsForm.addEventListener(
+    "submit",
+    async event => {
+
+      event.preventDefault();
+
+
+      const button =
+        newsForm.querySelector(
+          ".send-news-button"
+        );
+
+
+      button.disabled = true;
+
+      button.textContent =
+        "Enviando...";
+
+
+      const formData =
+        new FormData(newsForm);
+
+
+      try {
+
+        /*
+         * PRODUCCIÓN
+         *
+         * Acá conectaremos:
+         *
+         * POST /api/noticias/enviar
+         *
+         * El servidor recibirá:
+         *
+         * - datos del usuario
+         * - noticia
+         * - categoría
+         * - ubicación
+         * - fotografías
+         * - videos
+         *
+         * y notificará a:
+         *
+         * arena24radio@gmail.com
+         */
+
+
+        /*
+         * DEMO TEMPORAL
+         */
+
+        await new Promise(
+          resolve =>
+            setTimeout(resolve, 1000)
+        );
+
+
+        newsMessage.style.color =
+          "#28d477";
+
+        newsMessage.textContent =
+          "✓ Recibimos tu noticia. Nuestro equipo la revisará antes de publicarla.";
+
+
+        newsForm.reset();
+
+        filePreview.innerHTML = "";
+
+
+      } catch (error) {
+
+        console.error(error);
+
+        newsMessage.style.color =
+          "#ff6873";
+
+        newsMessage.textContent =
+          "No pudimos enviar la noticia. Intentá nuevamente.";
+
+      } finally {
+
+        button.disabled = false;
+
+        button.textContent =
+          "Enviar noticia";
+
+      }
+
+    }
+  );
+
+}
 
 
 
