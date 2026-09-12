@@ -3519,6 +3519,148 @@ function escapeHTML(value) {
     .replaceAll("'", "&#039;");
 
 }
+/*
+|--------------------------------------------------------------------------
+| ARENA 24
+| FORMULARIO DE CONTACTO
+|--------------------------------------------------------------------------
+|
+| Esta versión funciona en modo demostración.
+|
+| Para producción:
+| cambiar USE_API a true y colocar la URL del backend.
+|
+|--------------------------------------------------------------------------
+*/
+
+const CONTACT_USE_API = false;
+
+const CONTACT_API_URL =
+  "https://TU-BACKEND/api/contacto";
+
+
+document.addEventListener(
+  "DOMContentLoaded",
+  () => {
+
+    const form =
+      document.getElementById(
+        "contactForm"
+      );
+
+    if (!form) {
+      return;
+    }
+
+    form.addEventListener(
+      "submit",
+      sendContact
+    );
+
+  }
+);
+
+
+async function sendContact(event) {
+
+  event.preventDefault();
+
+
+  const form =
+    event.currentTarget;
+
+  const status =
+    document.getElementById(
+      "formStatus"
+    );
+
+  const button =
+    form.querySelector(
+      ".form-submit"
+    );
+
+
+  const formData =
+    new FormData(form);
+
+
+  button.disabled = true;
+
+  button.textContent =
+    "ENVIANDO...";
+
+
+  try {
+
+    if (CONTACT_USE_API) {
+
+      const response =
+        await fetch(
+          CONTACT_API_URL,
+          {
+            method: "POST",
+            body: formData
+          }
+        );
+
+
+      if (!response.ok) {
+        throw new Error(
+          "No se pudo enviar el formulario."
+        );
+      }
+
+    } else {
+
+      /*
+       * Modo demostración.
+       *
+       * No envía información a un servidor.
+       * El backend se conectará posteriormente.
+       */
+
+      await new Promise(
+        resolve =>
+          setTimeout(
+            resolve,
+            800
+          )
+      );
+
+    }
+
+
+    status.className =
+      "form-status success";
+
+    status.textContent =
+      "¡Gracias! Recibimos tu información. " +
+      "Nuestro equipo la revisará antes de publicarla.";
+
+    form.reset();
+
+
+  } catch (error) {
+
+    console.error(error);
+
+    status.className =
+      "form-status error";
+
+    status.textContent =
+      "No pudimos enviar el formulario. " +
+      "También podés escribirnos a arena24radio@gmail.com.";
+
+  } finally {
+
+    button.disabled = false;
+
+    button.textContent =
+      "ENVIAR INFORMACIÓN";
+
+  }
+
+}
 
  
 
