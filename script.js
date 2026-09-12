@@ -2048,5 +2048,181 @@ setInterval(() => {
     }
 
 }, refreshTime);
+/* =========================================
+   ARENA 24
+   SISTEMA DE COMPARTIR
+========================================= */
+
+document.addEventListener("DOMContentLoaded", () => {
+
+  const shareButtons =
+    document.querySelectorAll("[data-share]");
+
+  const shareMessage =
+    document.getElementById("shareMessage");
+
+  /*
+   * Obtiene la información actual
+   * directamente de la página.
+   */
+
+  const title =
+    document.querySelector("h1")?.textContent.trim()
+    || document.title;
+
+  const url =
+    window.location.href;
+
+  const shareText =
+    `${title} — Arena 24 Noticias`;
+
+
+  shareButtons.forEach(button => {
+
+    button.addEventListener("click", async () => {
+
+      const network =
+        button.dataset.share;
+
+
+      /* =========================
+         WHATSAPP
+      ========================= */
+
+      if (network === "whatsapp") {
+
+        const whatsappUrl =
+          `https://wa.me/?text=${encodeURIComponent(
+            shareText + "\n" + url
+          )}`;
+
+        window.open(
+          whatsappUrl,
+          "_blank",
+          "noopener,noreferrer"
+        );
+
+        return;
+      }
+
+
+      /* =========================
+         FACEBOOK
+      ========================= */
+
+      if (network === "facebook") {
+
+        const facebookUrl =
+          `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+            url
+          )}`;
+
+        window.open(
+          facebookUrl,
+          "_blank",
+          "noopener,noreferrer,width=600,height=500"
+        );
+
+        return;
+      }
+
+
+      /* =========================
+         X
+      ========================= */
+
+      if (network === "x") {
+
+        const xUrl =
+          `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+            shareText
+          )}&url=${encodeURIComponent(url)}`;
+
+        window.open(
+          xUrl,
+          "_blank",
+          "noopener,noreferrer,width=600,height=500"
+        );
+
+        return;
+      }
+
+
+      /* =========================
+         TELEGRAM
+      ========================= */
+
+      if (network === "telegram") {
+
+        const telegramUrl =
+          `https://t.me/share/url?url=${encodeURIComponent(
+            url
+          )}&text=${encodeURIComponent(
+            shareText
+          )}`;
+
+        window.open(
+          telegramUrl,
+          "_blank",
+          "noopener,noreferrer"
+        );
+
+        return;
+      }
+
+
+      /* =========================
+         COPIAR ENLACE
+      ========================= */
+
+      if (network === "copy") {
+
+        try {
+
+          await navigator.clipboard.writeText(url);
+
+          shareMessage.textContent =
+            "✓ Enlace copiado correctamente.";
+
+          setTimeout(() => {
+            shareMessage.textContent = "";
+          }, 3000);
+
+        } catch (error) {
+
+          /*
+           * Fallback para navegadores
+           * que no permiten Clipboard API.
+           */
+
+          const temporary =
+            document.createElement("input");
+
+          temporary.value = url;
+
+          document.body.appendChild(temporary);
+
+          temporary.select();
+
+          document.execCommand("copy");
+
+          temporary.remove();
+
+          shareMessage.textContent =
+            "✓ Enlace copiado correctamente.";
+
+          setTimeout(() => {
+            shareMessage.textContent = "";
+          }, 3000);
+
+        }
+
+      }
+
+    });
+
+  });
+
+});
 
 
