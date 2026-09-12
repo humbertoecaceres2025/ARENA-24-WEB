@@ -2974,6 +2974,551 @@ document.addEventListener(
 
   }
 );
+/*
+|--------------------------------------------------------------------------
+| arena34radioweb
+| Motor de noticias
+|--------------------------------------------------------------------------
+|
+| Actualmente utiliza datos locales de demostración.
+|
+| Cuando exista el backend, cambiar:
+|
+| USE_API = true
+|
+| y colocar la dirección de la API en API_URL.
+|
+|--------------------------------------------------------------------------
+*/
+
+const USE_API = false;
+
+const API_URL =
+  "https://TU-BACKEND/api/noticias";
+
+
+const demoNews = [
+
+  {
+    id: 1,
+
+    title:
+      "La Rioja se prepara para una nueva jornada de actualidad",
+
+    category:
+      "La Rioja",
+
+    location:
+      "La Rioja",
+
+    date:
+      "2026-09-12T10:30:00",
+
+    image:
+      "",
+
+    summary:
+      "Toda la información y los principales acontecimientos de la jornada en la provincia."
+  },
+
+
+  {
+    id: 2,
+
+    title:
+      "Información y novedades de las localidades riojanas",
+
+    category:
+      "Sociedad",
+
+    location:
+      "La Rioja",
+
+    date:
+      "2026-09-12T09:15:00",
+
+    image:
+      "",
+
+    summary:
+      "Las noticias más importantes de la comunidad y sus localidades."
+  },
+
+
+  {
+    id: 3,
+
+    title:
+      "Actualidad deportiva de La Rioja",
+
+    category:
+      "Deportes",
+
+    location:
+      "La Rioja",
+
+    date:
+      "2026-09-12T08:45:00",
+
+    image:
+      "",
+
+    summary:
+      "Resultados, protagonistas y toda la información deportiva."
+  }
+
+];
+
+
+let allNews = [];
+
+let currentCategory = "Todas";
+
+let currentSearch = "";
+
+
+/*
+|--------------------------------------------------------------------------
+| INICIO
+|--------------------------------------------------------------------------
+*/
+
+document.addEventListener(
+  "DOMContentLoaded",
+  async () => {
+
+    setupSearch();
+
+    setupCategories();
+
+    await loadNews();
+
+  }
+);
+
+
+/*
+|--------------------------------------------------------------------------
+| CARGAR NOTICIAS
+|--------------------------------------------------------------------------
+*/
+
+async function loadNews() {
+
+  try {
+
+    if (USE_API) {
+
+      const response =
+        await fetch(API_URL);
+
+      if (!response.ok) {
+
+        throw new Error(
+          "Error al consultar la API"
+        );
+
+      }
+
+      allNews =
+        await response.json();
+
+    } else {
+
+      allNews =
+        demoNews;
+
+    }
+
+    renderNews();
+
+  } catch (error) {
+
+    console.error(error);
+
+    showMessage(
+      "No se pudieron cargar las noticias.",
+      "Intentá nuevamente más tarde."
+    );
+
+  }
+
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| BUSCADOR
+|--------------------------------------------------------------------------
+*/
+
+function setupSearch() {
+
+  const form =
+    document.getElementById(
+      "newsSearch"
+    );
+
+  const input =
+    document.getElementById(
+      "searchInput"
+    );
+
+
+  if (!form || !input) {
+    return;
+  }
+
+
+  form.addEventListener(
+    "submit",
+    event => {
+
+      event.preventDefault();
+
+      currentSearch =
+        input.value
+          .trim()
+          .toLowerCase();
+
+      renderNews();
+
+    }
+  );
+
+
+  input.addEventListener(
+    "input",
+    () => {
+
+      currentSearch =
+        input.value
+          .trim()
+          .toLowerCase();
+
+      renderNews();
+
+    }
+  );
+
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| CATEGORÍAS
+|--------------------------------------------------------------------------
+*/
+
+function setupCategories() {
+
+  const buttons =
+    document.querySelectorAll(
+      ".category"
+    );
+
+
+  buttons.forEach(
+    button => {
+
+      button.addEventListener(
+        "click",
+        () => {
+
+          buttons.forEach(
+            item =>
+              item.classList.remove(
+                "active"
+              )
+          );
+
+
+          button.classList.add(
+            "active"
+          );
+
+
+          currentCategory =
+            button.dataset.category;
+
+
+          renderNews();
+
+        }
+      );
+
+    }
+  );
+
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| FILTRAR
+|--------------------------------------------------------------------------
+*/
+
+function getFilteredNews() {
+
+  return allNews.filter(
+    news => {
+
+      const categoryMatch =
+        currentCategory === "Todas" ||
+        news.category === currentCategory;
+
+
+      const searchText =
+        (
+          news.title +
+          " " +
+          news.summary +
+          " " +
+          news.location
+        ).toLowerCase();
+
+
+      const searchMatch =
+        !currentSearch ||
+        searchText.includes(
+          currentSearch
+        );
+
+
+      return (
+        categoryMatch &&
+        searchMatch
+      );
+
+    }
+  );
+
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| RENDER
+|--------------------------------------------------------------------------
+*/
+
+function renderNews() {
+
+  const container =
+    document.getElementById(
+      "newsGrid"
+    );
+
+
+  if (!container) {
+    return;
+  }
+
+
+  const news =
+    getFilteredNews();
+
+
+  if (!news.length) {
+
+    showMessage(
+      "No encontramos noticias.",
+      "Probá con otra búsqueda o categoría."
+    );
+
+    return;
+
+  }
+
+
+  container.innerHTML =
+    news
+      .map(
+        createNewsCard
+      )
+      .join("");
+
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| TARJETA
+|--------------------------------------------------------------------------
+*/
+
+function createNewsCard(news) {
+
+  const image =
+    news.image
+      ? `
+        <img
+          src="${escapeHTML(news.image)}"
+          alt="${escapeHTML(news.title)}"
+          loading="lazy">
+      `
+      : `
+        <div class="no-image">
+          arena34radioweb
+        </div>
+      `;
+
+
+  return `
+
+    <article class="news-card">
+
+      <div class="news-card-image">
+
+        ${image}
+
+        <span class="news-card-category">
+          ${escapeHTML(news.category)}
+        </span>
+
+      </div>
+
+
+      <div class="news-card-content">
+
+        <div class="news-card-meta">
+
+          📍 ${escapeHTML(news.location)}
+          ·
+          ${formatDate(news.date)}
+
+        </div>
+
+
+        <h3>
+
+          <a
+            href="noticia.html?id=${encodeURIComponent(news.id)}">
+
+            ${escapeHTML(news.title)}
+
+          </a>
+
+        </h3>
+
+
+        <p>
+          ${escapeHTML(news.summary)}
+        </p>
+
+
+        <a
+          class="read-more"
+          href="noticia.html?id=${encodeURIComponent(news.id)}">
+
+          Leer noticia →
+
+        </a>
+
+      </div>
+
+    </article>
+
+  `;
+
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| MENSAJE
+|--------------------------------------------------------------------------
+*/
+
+function showMessage(
+  title,
+  description
+) {
+
+  const container =
+    document.getElementById(
+      "newsGrid"
+    );
+
+
+  if (!container) {
+    return;
+  }
+
+
+  container.innerHTML = `
+
+    <div class="empty">
+
+      <strong>
+        ${escapeHTML(title)}
+      </strong>
+
+      <p>
+        ${escapeHTML(description)}
+      </p>
+
+    </div>
+
+  `;
+
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| FECHA
+|--------------------------------------------------------------------------
+*/
+
+function formatDate(value) {
+
+  const date =
+    new Date(value);
+
+
+  if (
+    Number.isNaN(
+      date.getTime()
+    )
+  ) {
+
+    return "";
+
+  }
+
+
+  return new Intl.DateTimeFormat(
+    "es-AR",
+    {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit"
+    }
+  ).format(date);
+
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| SEGURIDAD
+|--------------------------------------------------------------------------
+*/
+
+function escapeHTML(value) {
+
+  return String(value ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+
+}
 
  
 
