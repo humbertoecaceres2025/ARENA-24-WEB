@@ -3052,235 +3052,144 @@ La organización confirmó diferentes actividades y novedades.`
     </div>
 
 </section>
+    <!-- ==========================================
+     CLIMA ARENA 24 - LA RIOJA
+========================================== -->
 
+<section class="weather-section" id="clima">
 
+  <div class="container">
 
-<!-- =====================================================
-     DÓLAR
-====================================================== -->
-
-<section
-    id="dolar"
-    class="info-section"
-    aria-labelledby="dolar-title"
->
-
-    <div class="container">
-
-
-        <div class="section-heading">
-
-            <div>
-
-                <span class="section-kicker">
-                    MERCADOS
-                </span>
-
-                <h2 id="dolar-title">
-                    💵 Dólar
-                </h2>
-
-            </div>
-
-        </div>
-
-
-        <div class="info-grid">
-
-
-            <article class="info-card">
-
-                <span class="info-card-label">
-                    
-                </span>
-
-                <div class="info-card-value">
-                   
-                </div>
-
-                <div class="info-card-footer">
-                    
-                </div>
-
-            </article>
-
-
-            <article class="info-card">
-
-                <span class="info-card-label">
-                    
-                </span>
-
-                <div class="info-card-value">
-                   
-                </div>
-
-                <div class="info-card-footer">
-                    
-                </div>
-
-            </article>
-
-
-            <article class="info-card">
-
-                <span class="info-card-label">
-                    DÓLAR TARJETA
-                </span>
-
-                <div class="info-card-value">
-                     --
-                </div>
-
-                <div class="info-card-footer">
-                   
-
-                </div>
-
-            </article>
-
-
-            <article class="info-card">
-
-                <span class="info-card-label">
-                    MERCADO
-                </span>
-
-                <div class="info-card-value">
-                    ARS
-                </div>
-
-                <div class="info-card-footer">
-                    Peso argentino
-                </div>
-
-            </article>
-
-
-        </div>
-
-
-        <p class="data-disclaimer">
-            Valores informativos. Verificá cotizaciones
-            antes de realizar operaciones.
+    <div class="section-header">
+      <div>
+        <h2 class="section-title">Clima en La Rioja</h2>
+        <p class="weather-subtitle">
+          Pronóstico actualizado automáticamente
         </p>
+      </div>
 
-
+      <button
+        class="weather-refresh"
+        id="weatherRefresh"
+        title="Actualizar clima">
+        ↻ Actualizar
+      </button>
     </div>
 
-</section>
 
+    <!-- ESTADO ACTUAL -->
 
+    <div class="weather-main">
 
-<!-- =====================================================
-     CLIMA
-====================================================== -->
+      <div class="weather-current">
 
-<section
-    id="clima"
-    class="weather-section"
-    aria-labelledby="weather-title"
->
+        <div class="weather-location">
+          <span>📍</span>
+          <strong>La Rioja, Argentina</strong>
+        </div>
 
-    <div class="container">
+        <div class="weather-date" id="weatherDate">
+          Actualizando...
+        </div>
 
+        <div class="weather-current-content">
 
-        <div class="weather-panel">
+          <div class="weather-icon" id="weatherIcon">
+            ☁️
+          </div>
 
+          <div class="weather-temperature">
+            <span id="currentTemp">--</span><sup>°C</sup>
+          </div>
 
-            <div class="weather-main">
+          <div class="weather-condition">
+            <strong id="weatherDescription">
+              Cargando...
+            </strong>
 
-
-                <div>
-
-                    <span class="section-kicker">
-                        PRONÓSTICO
-                    </span>
-
-                    <h2 id="weather-title">
-                        🌤️ Clima
-                    </h2>
-
-                    <p>
-                        La Rioja, Argentina
-                    </p>
-
-                </div>
-
-
-                <div class="weather-temperature">
-                    --°
-                </div>
-
-
-            </div>
-
-
-            <div class="weather-details">
-
-
-                <div class="weather-detail">
-
-                    <span>
-                        Estado
-                    </span>
-
-                    <strong>
-                        --
-                    </strong>
-
-                </div>
-
-
-                <div class="weather-detail">
-
-                    <span>
-                        
-                    </span>
-
-                    <strong>
-                        
-                    </strong>
-
-                </div>
-
-
-                <div class="weather-detail">
-
-                    <span>
-                        Mínima
-                    </span>
-
-                    <strong>
-                       8° --°
-                    </strong>
-
-                </div>
-
-
-                <div class="weather-detail">
-
-                    <span>
-                        Humedad
-                    </span>
-
-                    <strong>
-                        --%
-                    </strong>
-
-                </div>
-
-
-            </div>
-
-
+            <span>
+              Máx. <b id="maxTemp">--</b>°
+              · Mín. <b id="minTemp">--</b>°
+            </span>
+          </div>
 
         </div>
 
+      </div>
+
+
+      <!-- DATOS -->
+
+      <div class="weather-details">
+
+        <div class="weather-detail">
+          <span class="detail-icon">💧</span>
+          <div>
+            <small>Humedad</small>
+            <strong id="humidity">--%</strong>
+          </div>
+        </div>
+
+        <div class="weather-detail">
+          <span class="detail-icon">💨</span>
+          <div>
+            <small>Viento</small>
+            <strong id="wind">-- km/h</strong>
+          </div>
+        </div>
+
+        <div class="weather-detail">
+          <span class="detail-icon">🌧️</span>
+          <div>
+            <small>Lluvia</small>
+            <strong id="rain">--%</strong>
+          </div>
+        </div>
+
+        <div class="weather-detail">
+          <span class="detail-icon">🌡️</span>
+          <div>
+            <small>Sensación</small>
+            <strong id="feelsLike">--°</strong>
+          </div>
+        </div>
+
+      </div>
 
     </div>
 
+
+    <!-- PRONÓSTICO -->
+
+    <div class="forecast-header">
+
+      <h3>Pronóstico extendido</h3>
+
+      <span id="weatherUpdated">
+        Última actualización: --
+      </span>
+
+    </div>
+
+    <div
+      class="forecast-grid"
+      id="forecastGrid">
+
+      <!-- Se completa automáticamente -->
+
+    </div>
+
+
+    <!-- FUENTE -->
+
+    <div class="weather-source">
+      Información meteorológica actualizada automáticamente.
+    </div>
+
+  </div>
+
 </section>
+
 
 
 
