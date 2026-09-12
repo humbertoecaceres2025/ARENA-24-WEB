@@ -3420,5 +3420,155 @@ section {
     }
 
 }
+/* =========================================
+   COMPARTIR EN REDES
+========================================= */
+
+.share-section {
+  margin: 35px 0;
+  padding: 22px;
+  background: #151920;
+  border: 1px solid #272d36;
+  border-radius: 12px;
+}
+
+.share-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.share-icon {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  background: #e21d2b;
+  color: #fff;
+  border-radius: 8px;
+  font-size: 22px;
+  font-weight: 800;
+}
+
+.share-header h3 {
+  margin: 0;
+  color: #fff;
+  font-family: Montserrat, sans-serif;
+  font-size: 17px;
+}
+
+.share-header p {
+  margin: 2px 0 0;
+  color: #969da7;
+  font-size: 12px;
+}
+
+.share-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+}
+
+.share-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  min-height: 42px;
+  padding: 0 15px;
+
+  border: 0;
+  border-radius: 7px;
+
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+
+  cursor: pointer;
+  transition:
+    transform .2s ease,
+    opacity .2s ease,
+    box-shadow .2s ease;
+}
+
+.share-btn:hover {
+  transform: translateY(-2px);
+  opacity: .92;
+}
+
+.share-btn:active {
+  transform: scale(.97);
+}
+
+.share-btn span {
+  font-size: 16px;
+  font-weight: 900;
+}
+
+/* WhatsApp */
+.share-btn.whatsapp {
+  background: #25d366;
+}
+
+/* Facebook */
+.share-btn.facebook {
+  background: #1877f2;
+}
+
+/* X */
+.share-btn.x {
+  background: #000;
+  border: 1px solid #343434;
+}
+
+/* Telegram */
+.share-btn.telegram {
+  background: #229ed9;
+}
+
+/* Copiar */
+.share-btn.copy {
+  background: #292f38;
+  border: 1px solid #3a414b;
+}
+
+/* Mensaje */
+.share-message {
+  min-height: 20px;
+  margin-top: 12px;
+  color: #28c76f;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 600px) {
+
+  .share-section {
+    padding: 17px;
+    margin: 25px 0;
+  }
+
+  .share-buttons {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .share-btn {
+    width: 100%;
+    padding: 0 8px;
+    font-size: 12px;
+  }
+
+  .share-btn.copy {
+    grid-column: 1 / -1;
+  }
+
+}
 
 
