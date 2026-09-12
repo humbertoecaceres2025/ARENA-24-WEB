@@ -3661,6 +3661,157 @@ async function sendContact(event) {
   }
 
 }
+/*
+|--------------------------------------------------------------------------
+| ARENA 24
+| PANEL DE ADMINISTRACIÓN
+|--------------------------------------------------------------------------
+*/
+
+const ADMIN_API_URL =
+  "https://TU-BACKEND/api/admin/noticias";
+
+
+const form =
+  document.getElementById(
+    "newsForm"
+  );
+
+const statusBox =
+  document.getElementById(
+    "adminStatus"
+  );
+
+const saveButton =
+  document.getElementById(
+    "saveNews"
+  );
+
+
+if (form) {
+
+  form.addEventListener(
+    "submit",
+    createNews
+  );
+
+}
+
+
+async function createNews(event) {
+
+  event.preventDefault();
+
+
+  const data =
+    Object.fromEntries(
+      new FormData(form)
+    );
+
+
+  saveButton.disabled = true;
+
+  saveButton.textContent =
+    "GUARDANDO...";
+
+
+  showStatus(
+    "Enviando información...",
+    ""
+  );
+
+
+  try {
+
+    const response =
+      await fetch(
+        ADMIN_API_URL,
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type":
+              "application/json"
+          },
+
+          body:
+            JSON.stringify(data)
+        }
+      );
+
+
+    const result =
+      await response.json();
+
+
+    if (!response.ok) {
+
+      throw new Error(
+        result.error ||
+        "No se pudo guardar la noticia."
+      );
+
+    }
+
+
+    showStatus(
+      "✓ Noticia guardada correctamente. ID: " +
+      result.id,
+      "success"
+    );
+
+
+    form.reset();
+
+
+    document.getElementById(
+      "author"
+    ).value =
+      "ARENA 24";
+
+
+    document.getElementById(
+      "location"
+    ).value =
+      "La Rioja";
+
+
+  } catch (error) {
+
+    console.error(error);
+
+
+    showStatus(
+      "Error: " +
+      error.message,
+      "error"
+    );
+
+  } finally {
+
+    saveButton.disabled = false;
+
+    saveButton.textContent =
+      "GUARDAR NOTICIA";
+
+  }
+
+}
+
+
+function showStatus(
+  message,
+  type
+) {
+
+  statusBox.textContent =
+    message;
+
+  statusBox.className =
+    "admin-status " +
+    type;
+
+}
 
  
 
