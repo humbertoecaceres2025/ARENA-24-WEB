@@ -1,0 +1,8 @@
+try {
+  db.exec(`
+    ALTER TABLE noticias
+    ADD COLUMN source_url TEXT
+  `);
+} catch (error) {
+  // La columna ya existe.
+}
