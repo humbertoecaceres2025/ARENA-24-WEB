@@ -3747,3 +3747,16 @@ window.approveNews =
 
     }
   };
+${
+  news.status === "review"
+    ? `
+      <button
+        class="btn-small publish"
+        onclick="approveNews(${news.id})">
+
+        APROBAR
+
+      </button>
+    `
+    : ""
+}
