@@ -1,0 +1,11 @@
+const sourceLink =
+  news.source_url
+    ? `
+      <a
+        href="${escapeAttribute(news.source_url)}"
+        target="_blank"
+        rel="noopener noreferrer">
+        VER FUENTE ORIGINAL ↗
+      </a>
+    `
+    : "";
