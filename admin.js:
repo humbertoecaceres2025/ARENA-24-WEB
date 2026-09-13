@@ -65,3 +65,70 @@ document
 
     }
   );
+document
+  .getElementById(
+    "updateAutomaticNews"
+  )
+  .addEventListener(
+    "click",
+    async function () {
+
+      this.disabled = true;
+
+      this.textContent =
+        "ACTUALIZANDO...";
+
+      try {
+
+        const response =
+          await fetch(
+            API_BASE +
+            "/api/admin/news/update",
+            {
+              method: "POST",
+              credentials: "include"
+            }
+          );
+
+
+        const result =
+          await response.json();
+
+
+        if (!response.ok) {
+
+          throw new Error(
+            result.error ||
+            "No se pudo actualizar."
+          );
+
+        }
+
+
+        await loadNews();
+
+
+        showStatus(
+          "✓ Noticias actualizadas.",
+          "success"
+        );
+
+
+      } catch (error) {
+
+        showStatus(
+          error.message,
+          "error"
+        );
+
+      } finally {
+
+        this.disabled = false;
+
+        this.textContent =
+          "↻ ACTUALIZAR AHORA";
+
+      }
+
+    }
+  );
