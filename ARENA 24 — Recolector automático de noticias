@@ -1,0 +1,459 @@
+require("dotenv").config();
+
+const Database = require("better-sqlite3");
+const Parser = require("rss-parser");
+const path = require("path");
+
+const parser = new Parser({
+  timeout: 15000
+});
+
+const db = new Database(
+  path.join(
+    __dirname,
+    "data",
+    "arena24.db"
+  )
+);
+
+
+/*
+|--------------------------------------------------------------------------
+| FUENTES
+|--------------------------------------------------------------------------
+|
+| Agregá aquí únicamente RSS/API autorizados
+| por cada medio o institución.
+|
+*/
+
+const SOURCES = [
+  {
+    name: "FUENTE_RSS_1",
+    url: process.env.RSS_SOURCE_1
+  },
+
+  {
+    name: "FUENTE_RSS_2",
+    url: process.env.RSS_SOURCE_2
+  }
+].filter(
+  source => source.url
+);
+
+
+/*
+|--------------------------------------------------------------------------
+| UTILIDADES
+|--------------------------------------------------------------------------
+*/
+
+function cleanText(text = "") {
+
+  return text
+    .replace(
+      /<[^>]*>/g,
+      " "
+    )
+    .replace(
+      /\s+/g,
+      " "
+    )
+    .trim();
+
+}
+
+
+function slugify(text) {
+
+  return text
+    .normalize("NFD")
+    .replace(
+      /[\u0300-\u036f]/g,
+      ""
+    )
+    .toLowerCase()
+    .trim()
+    .replace(
+      /[^a-z0-9]+/g,
+      "-"
+    )
+    .replace(
+      /^-+|-+$/g,
+      "");
+
+}
+
+
+function detectCategory(
+  title,
+  description
+) {
+
+  const text =
+    (
+      title +
+      " " +
+      description
+    ).toLowerCase();
+
+
+  const categories = [
+
+    {
+      name: "Deportes",
+      words: [
+        "fútbol",
+        "futbol",
+        "deporte",
+        "liga",
+        "partido",
+        "jugador",
+        "club"
+      ]
+    },
+
+    {
+      name: "Política",
+      words: [
+        "gobierno",
+        "diputado",
+        "senador",
+        "elecciones",
+        "elección",
+        "legislatura",
+        "intendente"
+      ]
+    },
+
+    {
+      name: "Economía",
+      words: [
+        "economía",
+        "economia",
+        "precio",
+        "inflación",
+        "inflacion",
+        "salario",
+        "empleo"
+      ]
+    },
+
+    {
+      name: "Seguridad",
+      words: [
+        "policía",
+        "policia",
+        "accidente",
+        "detenido",
+        "delito",
+        "justicia",
+        "investigación"
+      ]
+    },
+
+    {
+      name: "Sociedad",
+      words: [
+        "sociedad",
+        "salud",
+        "educación",
+        "educacion",
+        "hospital",
+        "escuela"
+      ]
+    }
+
+  ];
+
+
+  for (
+    const category
+    of categories
+  ) {
+
+    const found =
+      category.words.some(
+        word =>
+          text.includes(word)
+      );
+
+
+    if (found) {
+
+      return category.name;
+
+    }
+
+  }
+
+
+  return "La Rioja";
+
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| EXISTENCIA
+|--------------------------------------------------------------------------
+*/
+
+function alreadyExists(
+  sourceUrl
+) {
+
+  const result =
+    db.prepare(`
+      SELECT id
+      FROM noticias
+      WHERE source = ?
+      LIMIT 1
+    `)
+    .get(
+      sourceUrl
+    );
+
+
+  return !!result;
+
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| GUARDAR NOTICIA
+|--------------------------------------------------------------------------
+*/
+
+function saveNews(
+  item,
+  source
+) {
+
+  const title =
+    cleanText(
+      item.title
+    );
+
+
+  if (!title) {
+
+    return false;
+
+  }
+
+
+  const sourceUrl =
+    item.link ||
+    "";
+
+
+  if (!sourceUrl) {
+
+    return false;
+
+  }
+
+
+  if (
+    alreadyExists(
+      sourceUrl
+    )
+  ) {
+
+    return false;
+
+  }
+
+
+  const summary =
+    cleanText(
+      item.contentSnippet ||
+      item.summary ||
+      item.content ||
+      ""
+    );
+
+
+  const date =
+    item.isoDate ||
+    item.pubDate ||
+    new Date()
+      .toISOString();
+
+
+  const category =
+    detectCategory(
+      title,
+      summary
+    );
+
+
+  const slug =
+    slugify(title) +
+    "-" +
+    Date.now();
+
+
+  db.prepare(`
+    INSERT INTO noticias
+    (
+      title,
+      slug,
+      summary,
+      content,
+      category,
+      location,
+      image,
+      author,
+      status,
+      source,
+      created_at,
+      updated_at,
+      published_at
+    )
+
+    VALUES
+    (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+  `)
+  .run(
+
+    title,
+
+    slug,
+
+    summary.substring(
+      0,
+      300
+    ),
+
+    summary,
+
+    category,
+
+    "La Rioja",
+
+    item.enclosure?.url ||
+    null,
+
+    source.name,
+
+    "review",
+
+    sourceUrl,
+
+    date,
+
+    date,
+
+    null
+
+  );
+
+
+  return true;
+
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| PROCESAR FUENTE
+|--------------------------------------------------------------------------
+*/
+
+async function processSource(
+  source
+) {
+
+  console.log(
+    `Consultando ${source.name}...`
+  );
+
+
+  try {
+
+    const feed =
+      await parser.parseURL(
+        source.url
+      );
+
+
+    let added = 0;
+
+
+    for (
+      const item
+      of feed.items
+    ) {
+
+      const inserted =
+        saveNews(
+          item,
+          source
+        );
+
+
+      if (inserted) {
+
+        added++;
+
+      }
+
+    }
+
+
+    console.log(
+      `${source.name}: ${added} noticias nuevas`
+    );
+
+
+  } catch (error) {
+
+    console.error(
+      `Error en ${source.name}:`,
+      error.message
+    );
+
+  }
+
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| EJECUTAR
+|--------------------------------------------------------------------------
+*/
+
+async function fetchNews() {
+
+  if (
+    !SOURCES.length
+  ) {
+
+    console.log(
+      "No hay fuentes RSS configuradas."
+    );
+
+    return;
+
+  }
+
+
+  for (
+    const source
+    of SOURCES
+  ) {
+
+    await processSource(
+      source
+    );
+
+  }
+
+}
+
+
+fetchNews();
