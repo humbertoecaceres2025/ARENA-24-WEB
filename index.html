@@ -3662,3 +3662,11 @@ La organización confirmó diferentes actividades y novedades.`
   ${escapeHtml(news.source || "")}
   ${sourceLink}
 </div>
+function escapeAttribute(value) {
+
+  return String(value || "")
+    .replace(/&/g, "&amp;")
+    .replace(/"/g, "&quot;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+}
