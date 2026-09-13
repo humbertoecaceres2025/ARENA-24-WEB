@@ -3670,3 +3670,80 @@ function escapeAttribute(value) {
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;");
 }
+window.approveNews =
+  async function(id) {
+
+    const news =
+      allNews.find(
+        item => item.id === id
+      );
+
+    if (!news) {
+      return;
+    }
+
+    try {
+
+      const response =
+        await fetch(
+          `${API_BASE}/api/admin/noticias/${id}`,
+          {
+            method: "PUT",
+
+            credentials: "include",
+
+            headers: {
+              "Content-Type":
+                "application/json"
+            },
+
+            body: JSON.stringify({
+
+              title:
+                news.title,
+
+              summary:
+                news.summary,
+
+              content:
+                news.content,
+
+              category:
+                news.category,
+
+              location:
+                news.location,
+
+              image:
+                news.image,
+
+              author:
+                "ARENA 24",
+
+              status:
+                "published"
+
+            })
+          }
+        );
+
+      const result =
+        await response.json();
+
+      if (!response.ok) {
+        throw new Error(
+          result.error ||
+          "No se pudo publicar."
+        );
+      }
+
+      await loadNews();
+
+    } catch (error) {
+
+      alert(
+        error.message
+      );
+
+    }
+  };
