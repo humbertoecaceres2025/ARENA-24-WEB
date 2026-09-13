@@ -1,0 +1,41 @@
+const { fetchNews } =
+  require("./news-fetcher");
+
+const FETCH_INTERVAL =
+  5 * 60 * 1000;
+
+async function automaticNewsUpdate() {
+
+  try {
+
+    console.log(
+      "[ARENA 24] Buscando noticias nuevas..."
+    );
+
+    await fetchNews();
+
+    console.log(
+      "[ARENA 24] Actualización terminada."
+    );
+
+  } catch (error) {
+
+    console.error(
+      "[ARENA 24] Error:",
+      error.message
+    );
+
+  }
+
+}
+
+
+// Primera consulta al arrancar
+automaticNewsUpdate();
+
+
+// Consultas posteriores cada 5 minutos
+setInterval(
+  automaticNewsUpdate,
+  FETCH_INTERVAL
+);
