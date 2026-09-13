@@ -2599,108 +2599,48 @@ audio.addEventListener("play", function(){
 </body>
 </html>
 
-A24 ARENA 24RADIO WEB · LA RIOJA ☰
-RadioNoticiasARENA 24 TV ProgramaciónContactanosRedes
-EN VIVO · LA RIOJA · ARGENTINA
-
-ARENA 24
-Siempre con vos.
-Música · Noticias · Entretenimiento · Deportes
-
-▶ Escuchar ahora Últimas noticias
-A24
-RADIO ONLINE
-
-El sonido de ARENA 24
-● EN VIVO
-ARENA 24 RADIO WEB
-▶
-ARENA 24 RADIOListo para escuchar
-🔊
-Streaming servido por Zeno Media. Si el navegador bloquea la reproducción automática, presioná el botón ▶.
-
-INFORMACIÓN 24/7
-
-Noticias La Rioja, Argentina y el mundo
-↻ Actualizar
-ÚLTIMO MOMENTO
-Cargando titulares...
-Cargando noticias...
-Fuentes RSS
-Los titulares se obtienen de fuentes públicas y enlazan a la nota original.
-
-Rioja24
-Radio La Rioja
-Ámbito
-MercoPress
-El contenido pertenece a sus respectivos medios.
-VIDEO & STREAMING
-
-ARENA 24 TV
-Abrir YouTube ↗
-
-Para mostrar un vivo específico de YouTube, reemplazá el ID del video en config.js. El canal está vinculado arriba.
-
-24 HORAS
-
-Programación ARENA 24
-MAÑANANoticias & actualidad
-La Rioja, Argentina y el mundo.
-
-MEDIODÍA / SIESTAMúsica ARENA 24
-Los mejores sonidos para acompañarte.
-
-TARDEEntretenimiento
-Actualidad, artistas, tendencias y compañía.
-
-NOCHERelax & música actual
-Una noche para bajar un cambio.
-
-ESTAMOS EN CONTACTO
-
-Contactanos
-¿Tenés una noticia, querés publicitar o comunicarte con ARENA 24?
-
-WhatsApp3804 844124 Emailarena24radio@gmail.com PublicidadSolicitá tu propuesta
-COMUNIDAD
-
-Seguinos en Redes Sociales
-Facebook@arena24radiolarioja Instagram@arena24radio YouTubeARENA 24 TV
-Publicación automática de noticias
-Esta web incluye botones para compartir cada noticia. La publicación automática real en Facebook/Instagram requiere conectar las APIs oficiales de Meta y sus permisos; no se puede hacer de forma segura solo con HTML/JS y una cuenta pública.
-
-ARENA 24 RADIO WEBLa Rioja, Argentina · Siempre con vos.
-Todos los derechos reservados · HC pro · La Rioja, Argentina
-
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-    <meta name="theme-color" content="#050509">
+    <meta
+        name="description"
+        content="ARENA 24 RADIO WEB - La Rioja, Argentina. Radio online, noticias, TV y actualidad."
+    >
 
-    <meta name="description"
-          content="ARENA 24 RADIO WEB - La Rioja, Argentina. Noticias, radio online, Arena 24 TV y actualidad.">
-
-    <meta name="keywords"
-          content="Arena 24 Radio, La Rioja, radio online, noticias La Rioja, Argentina, Arena 24 TV">
+    <meta
+        name="theme-color"
+        content="#05060a"
+    >
 
     <title>ARENA 24 RADIO WEB | La Rioja</title>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
 
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Orbitron:wght@500;600;700;800;900&display=swap"
-          rel="stylesheet">
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
 
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Orbitron:wght@500;600;700;800;900&display=swap"
+        rel="stylesheet"
+    >
 
-    <link rel="stylesheet" href="css/styles.css">
+    <link
+        rel="stylesheet"
+        href="styles.css"
+    >
 </head>
 
 <body>
@@ -2710,7 +2650,8 @@ Todos los derechos reservados · HC pro · La Rioja, Argentina
 ========================================================= -->
 
 <div class="background-grid"></div>
-<div class="noise"></div>
+<div class="background-glow glow-one"></div>
+<div class="background-glow glow-two"></div>
 
 <!-- =========================================================
      HEADER
@@ -2718,38 +2659,42 @@ Todos los derechos reservados · HC pro · La Rioja, Argentina
 
 <header class="site-header">
 
-    <div class="header-container">
+    <div class="header-inner">
 
-        <a href="#inicio" class="brand">
+        <a
+            href="#inicio"
+            class="brand"
+            aria-label="ARENA 24 RADIO WEB"
+        >
 
-            <div class="brand-logo">
-                <span>ARENA</span>
-                <strong>24</strong>
+            <div class="brand-symbol">
+                <span>24</span>
             </div>
 
             <div class="brand-text">
-                <span>RADIO WEB</span>
-                <small>LA RIOJA · ARGENTINA</small>
+                <strong>ARENA 24</strong>
+                <small>RADIO WEB</small>
             </div>
 
         </a>
 
-        <nav class="main-nav" id="mainNav">
+        <nav class="main-nav">
 
             <a href="#inicio">Inicio</a>
             <a href="#radio">Radio</a>
             <a href="#noticias">Noticias</a>
-            <a href="#tv">Arena 24 TV</a>
+            <a href="#tv">ARENA 24 TV</a>
             <a href="#contacto">Contactanos</a>
+            <a href="#redes">Redes</a>
 
         </nav>
 
-        <button class="menu-button"
-                id="menuButton"
-                aria-label="Abrir menú">
-
-            <i class="fa-solid fa-bars"></i>
-
+        <button
+            class="menu-toggle"
+            id="menuToggle"
+            aria-label="Abrir menú"
+        >
+            ☰
         </button>
 
     </div>
@@ -2761,41 +2706,44 @@ Todos los derechos reservados · HC pro · La Rioja, Argentina
      HERO
 ========================================================= -->
 
-<main>
+<main id="inicio">
 
-<section class="hero" id="inicio">
+<section class="hero">
 
     <div class="hero-content">
 
         <div class="live-badge">
             <span class="live-dot"></span>
-            TRANSMISIÓN ONLINE
+            EN VIVO
         </div>
 
         <h1>
             ARENA <span>24</span>
         </h1>
 
-        <h2>
+        <p class="hero-subtitle">
             RADIO WEB
-        </h2>
-
-        <p>
-            La voz de La Rioja.
-            Información, música, actualidad y protagonistas
-            las 24 horas.
         </p>
 
-        <div class="hero-buttons">
+        <p class="hero-description">
+            La voz de La Rioja conectada con Argentina y el mundo.
+            Noticias, información, música y transmisión en vivo.
+        </p>
 
-            <a href="#radio" class="btn btn-primary">
-                <i class="fa-solid fa-play"></i>
-                ESCUCHAR EN VIVO
+        <div class="hero-actions">
+
+            <a
+                href="#radio"
+                class="btn btn-primary"
+            >
+                ▶ ESCUCHAR AHORA
             </a>
 
-            <a href="#noticias" class="btn btn-outline">
-                <i class="fa-solid fa-newspaper"></i>
-                ÚLTIMAS NOTICIAS
+            <a
+                href="#noticias"
+                class="btn btn-secondary"
+            >
+                VER NOTICIAS
             </a>
 
         </div>
@@ -2806,16 +2754,13 @@ Todos los derechos reservados · HC pro · La Rioja, Argentina
 
         <div class="orbital">
 
-            <div class="orbital-ring ring-1"></div>
-            <div class="orbital-ring ring-2"></div>
-            <div class="orbital-ring ring-3"></div>
+            <div class="orbital-ring ring-one"></div>
+            <div class="orbital-ring ring-two"></div>
+            <div class="orbital-ring ring-three"></div>
 
-            <div class="radio-core">
-
-                <i class="fa-solid fa-microphone-lines"></i>
-
+            <div class="orbital-center">
                 <span>24</span>
-
+                <small>LIVE</small>
             </div>
 
         </div>
@@ -2829,135 +2774,142 @@ Todos los derechos reservados · HC pro · La Rioja, Argentina
      RADIO PLAYER
 ========================================================= -->
 
-<section class="radio-section section" id="radio">
+<section
+    id="radio"
+    class="section radio-section"
+>
 
-    <div class="section-header">
+    <div class="section-heading">
 
-        <span class="section-kicker">
-            <i class="fa-solid fa-satellite-dish"></i>
-            TRANSMISIÓN DIGITAL
-        </span>
+        <div>
+            <span class="eyebrow">
+                TRANSMISIÓN DIGITAL
+            </span>
 
-        <h2>
-            ARENA 24 <span>EN VIVO</span>
-        </h2>
+            <h2>
+                ARENA 24 <span>EN VIVO</span>
+            </h2>
+        </div>
 
-        <p>
-            Escuchá nuestra radio online desde cualquier lugar.
-        </p>
+        <div class="live-status">
+            <span></span>
+            ONLINE
+        </div>
 
     </div>
 
 
-    <div class="player-card">
+    <div class="radio-card">
 
-        <div class="player-top">
+        <div class="radio-top">
 
             <div class="station-info">
 
-                <div class="station-icon">
-                    <i class="fa-solid fa-radio"></i>
+                <div class="station-logo">
+                    24
                 </div>
 
                 <div>
-
-                    <span class="station-status">
-                        <span></span>
-                        EN VIVO
-                    </span>
-
                     <h3>ARENA 24 RADIO</h3>
-
                     <p>La Rioja · Argentina</p>
-
                 </div>
 
             </div>
 
-            <div class="equalizer" id="equalizer">
-
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-
+            <div class="radio-quality">
+                <span>STREAM</span>
+                <strong>HD DIGITAL</strong>
             </div>
 
         </div>
 
 
-        <div class="player-main">
-
-            <div class="disc">
-
-                <div class="disc-inner">
-                    <i class="fa-solid fa-microphone"></i>
-                </div>
-
-            </div>
-
-
-            <div class="player-controls">
-
-                <button
-                    class="play-button"
-                    id="playButton"
-                    aria-label="Reproducir radio">
-
-                    <i class="fa-solid fa-play"></i>
-
-                </button>
-
-                <div class="player-label">
-
-                    <span id="playerStatus">
-                        RADIO ONLINE
-                    </span>
-
-                    <strong id="playerMessage">
-                        Presioná PLAY para escuchar
-                    </strong>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <div class="volume-control">
-
-            <i class="fa-solid fa-volume-low"></i>
-
-            <input
-                type="range"
-                id="volume"
-                min="0"
-                max="1"
-                step="0.01"
-                value="0.8">
-
-            <i class="fa-solid fa-volume-high"></i>
-
-        </div>
-
-
+        <!-- AUDIO -->
         <audio
             id="radioAudio"
             preload="none"
-            crossorigin="anonymous">
-
+            crossorigin="anonymous"
+        >
             <source
-                src="https://stream.zeno.fm/zuw6xmmwmd0uv."
-                type="audio/mpeg">
-
+                src="https://stream.zeno.fm/zuw6xmmwmd0uv"
+                type="audio/mpeg"
+            >
         </audio>
+
+
+        <!-- VISUALIZADOR -->
+
+        <div class="visualizer" id="visualizer">
+
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+
+        </div>
+
+
+        <div class="radio-controls">
+
+            <button
+                id="playButton"
+                class="play-button"
+                aria-label="Reproducir radio"
+            >
+                ▶
+            </button>
+
+            <div class="volume-control">
+
+                <span>🔊</span>
+
+                <input
+                    type="range"
+                    id="volume"
+                    min="0"
+                    max="1"
+                    step="0.01"
+                    value="0.85"
+                >
+
+            </div>
+
+            <div class="radio-meta">
+
+                <span>
+                    ● TRANSMITIENDO
+                </span>
+
+                <small>
+                    ARENA 24 RADIO WEB
+                </small>
+
+            </div>
+
+        </div>
+
+        <div
+            id="radioMessage"
+            class="radio-message"
+        >
+            Presioná play para escuchar la transmisión.
+        </div>
 
     </div>
 
@@ -2965,106 +2917,94 @@ Todos los derechos reservados · HC pro · La Rioja, Argentina
 
 
 <!-- =========================================================
-     NEWS
+     NOTICIAS
 ========================================================= -->
 
-<section class="news-section section" id="noticias">
+<section
+    id="noticias"
+    class="section news-section"
+>
 
-    <div class="section-header">
+    <div class="section-heading">
 
-        <span class="section-kicker">
-            <i class="fa-solid fa-bolt"></i>
-            ACTUALIDAD
-        </span>
+        <div>
 
-        <h2>
-            ÚLTIMAS <span>NOTICIAS</span>
-        </h2>
+            <span class="eyebrow">
+                INFORMACIÓN 24/7
+            </span>
 
-        <p>
-            La Rioja, Argentina y el mundo.
-        </p>
+            <h2>
+                ÚLTIMAS <span>NOTICIAS</span>
+            </h2>
+
+        </div>
+
+        <button
+            id="refreshNews"
+            class="refresh-button"
+        >
+            ↻ Actualizar
+        </button>
 
     </div>
 
 
-    <div class="news-filter">
+    <div class="news-tabs">
 
-        <button class="filter active" data-category="all">
+        <button
+            class="news-tab active"
+            data-category="all"
+        >
             Todas
         </button>
 
-        <button class="filter" data-category="la-rioja">
+        <button
+            class="news-tab"
+            data-category="rioja"
+        >
             La Rioja
         </button>
 
-        <button class="filter" data-category="argentina">
+        <button
+            class="news-tab"
+            data-category="argentina"
+        >
             Argentina
         </button>
 
-        <button class="filter" data-category="mundo">
+        <button
+            class="news-tab"
+            data-category="mundo"
+        >
             Mundo
         </button>
 
     </div>
 
 
-    <div class="news-grid" id="newsGrid">
-
-        <article class="news-card featured">
-
-            <div class="news-image">
-                <div class="news-placeholder">
-                    <i class="fa-solid fa-newspaper"></i>
-                </div>
-
-                <span class="news-category">
-                    ARENA 24
-                </span>
-            </div>
-
-            <div class="news-content">
-
-                <span class="news-date">
-                    Actualidad
-                </span>
-
-                <h3>
-                    Bienvenidos a ARENA 24 RADIO WEB
-                </h3>
-
-                <p>
-                    Toda la información de La Rioja,
-                    Argentina y el mundo en un solo lugar.
-                </p>
-
-                <div class="news-footer">
-
-                    <span>
-                        ARENA 24
-                    </span>
-
-                    <button class="share-news"
-                            title="Compartir noticia">
-
-                        <i class="fa-solid fa-share-nodes"></i>
-
-                    </button>
-
-                </div>
-
-            </div>
-
-        </article>
-
+    <div
+        id="newsStatus"
+        class="news-status"
+    >
+        Cargando noticias...
     </div>
 
 
-    <div class="news-loading" id="newsLoading">
+    <div
+        id="newsGrid"
+        class="news-grid"
+    ></div>
 
-        <div class="spinner"></div>
 
-        <span>Cargando noticias...</span>
+    <div class="news-footer">
+
+        <span>
+            Actualización automática
+        </span>
+
+        <span id="lastNewsUpdate">
+            --
+        </span>
 
     </div>
 
@@ -3075,73 +3015,114 @@ Todos los derechos reservados · HC pro · La Rioja, Argentina
      TV
 ========================================================= -->
 
-<section class="tv-section section" id="tv">
+<section
+    id="tv"
+    class="section tv-section"
+>
 
-    <div class="section-header">
+    <div class="section-heading">
 
-        <span class="section-kicker">
-            <i class="fa-solid fa-tv"></i>
-            STREAMING DIGITAL
-        </span>
+        <div>
 
-        <h2>
-            ARENA 24 <span>TV</span>
-        </h2>
+            <span class="eyebrow">
+                INFORMACIÓN AUDIOVISUAL
+            </span>
 
-        <p>
-            Mirá nuestros contenidos audiovisuales.
-        </p>
+            <h2>
+                ARENA 24 <span>TV</span>
+            </h2>
+
+        </div>
+
+        <a
+            href="https://www.youtube.com/@ARENA24LARIOJA"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="youtube-link"
+        >
+            Abrir YouTube ↗
+        </a>
 
     </div>
 
 
     <div class="tv-layout">
 
-        <div class="video-wrapper">
+        <div class="tv-player">
 
-            <iframe
-                src="https://www.youtube.com/embed?listType=user_uploads&list=ARENA24LARIOJA"
-                title="ARENA 24 TV"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowfullscreen>
-            </iframe>
+            <!--
+                Para una transmisión LIVE permanente,
+                configurar YOUTUBE_LIVE_VIDEO_ID en app.js.
+            -->
+
+            <div
+                id="youtubeContainer"
+                class="youtube-container"
+            >
+
+                <div class="youtube-placeholder">
+
+                    <div class="youtube-icon">
+                        ▶
+                    </div>
+
+                    <h3>
+                        ARENA 24 TV
+                    </h3>
+
+                    <p>
+                        Mirá nuestras transmisiones y contenidos
+                        audiovisuales.
+                    </p>
+
+                    <a
+                        href="https://www.youtube.com/@ARENA24LARIOJA"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="btn btn-primary"
+                    >
+                        IR AL CANAL
+                    </a>
+
+                </div>
+
+            </div>
 
         </div>
 
 
-        <div class="tv-info">
+        <aside class="tv-info">
 
-            <div class="tv-live">
+            <div class="tv-live-card">
 
                 <span class="live-dot"></span>
 
-                ARENA 24 TV
+                <div>
+                    <strong>ARENA 24 TV</strong>
+                    <small>Contenido audiovisual</small>
+                </div>
 
             </div>
 
             <h3>
-                La Rioja también se ve.
+                Radio + TV + Noticias
             </h3>
 
             <p>
-                Entrevistas, información, transmisiones,
-                actualidad y contenido audiovisual de
-                ARENA 24.
+                Toda la actualidad de La Rioja, Argentina
+                y el mundo en una sola plataforma.
             </p>
 
             <a
                 href="https://www.youtube.com/@ARENA24LARIOJA"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="btn btn-primary">
-
-                <i class="fa-brands fa-youtube"></i>
-
-                VISITAR CANAL
-
+                class="outline-button"
+            >
+                SUSCRIBITE AL CANAL
             </a>
 
-        </div>
+        </aside>
 
     </div>
 
@@ -3149,140 +3130,114 @@ Todos los derechos reservados · HC pro · La Rioja, Argentina
 
 
 <!-- =========================================================
-     CONTACT
+     CONTACTO
 ========================================================= -->
 
-<section class="contact-section section" id="contacto">
+<section
+    id="contacto"
+    class="section contact-section"
+>
 
-    <div class="section-header">
+    <div class="section-heading">
 
-        <span class="section-kicker">
-            <i class="fa-solid fa-paper-plane"></i>
-            PARTICIPÁ
-        </span>
+        <div>
 
-        <h2>
-            <span>CONTACTANOS</span>
-        </h2>
+            <span class="eyebrow">
+                ESTAMOS CONECTADOS
+            </span>
 
-        <p>
-            Enviá tu noticia, publicidad o propuesta.
-        </p>
+            <h2>
+                CONTACTA<span>NOS</span>
+            </h2>
+
+        </div>
 
     </div>
 
 
     <div class="contact-grid">
 
-
         <a
-            href="https://wa.me/543804844124"
+            class="contact-card whatsapp"
+            href="https://wa.me/543804844124?text=Hola%20ARENA%2024%20RADIO%2C%20quiero%20enviar%20una%20noticia."
             target="_blank"
             rel="noopener noreferrer"
-            class="contact-card whatsapp">
+        >
 
             <div class="contact-icon">
-                <i class="fa-brands fa-whatsapp"></i>
+                WA
             </div>
 
             <div>
-
-                <span>WHATSAPP</span>
-
-                <strong>
-                    380 484 4124
-                </strong>
-
-                <small>
-                    Enviá tu noticia
-                </small>
-
+                <small>WHATSAPP</small>
+                <strong>380 484 4124</strong>
+                <span>Enviar una noticia</span>
             </div>
 
         </a>
 
 
         <a
-            href="mailto:arena24radio@gmail.com"
-            class="contact-card email">
+            class="contact-card"
+            href="mailto:arena24radio@gmail.com?subject=ARENA%2024%20RADIO%20-%20Contacto"
+        >
 
             <div class="contact-icon">
-                <i class="fa-solid fa-envelope"></i>
+                @
             </div>
 
             <div>
-
-                <span>EMAIL</span>
-
-                <strong>
-                    arena24radio@gmail.com
-                </strong>
-
-                <small>
-                    Publicidad y contacto
-                </small>
-
+                <small>EMAIL</small>
+                <strong>arena24radio@gmail.com</strong>
+                <span>Noticias · Publicidad · Prensa</span>
             </div>
 
         </a>
 
 
-        <a
-            href="https://wa.me/543804844124?text=Hola%20ARENA%2024%2C%20quiero%20consultar%20por%20publicidad."
-            target="_blank"
-            rel="noopener noreferrer"
-            class="contact-card advertising">
+        <div class="contact-card">
 
             <div class="contact-icon">
-                <i class="fa-solid fa-bullhorn"></i>
+                AD
             </div>
 
             <div>
-
-                <span>PUBLICIDAD</span>
-
-                <strong>
-                    Anunciá con nosotros
-                </strong>
-
-                <small>
-                    Llegá a toda La Rioja
-                </small>
-
+                <small>PUBLICIDAD</small>
+                <strong>Tu marca en ARENA 24</strong>
+                <span>Consultanos por propuestas comerciales</span>
             </div>
 
-        </a>
+        </div>
 
     </div>
 
 
-    <div class="news-submit">
-
-        <div class="submit-icon">
-            <i class="fa-solid fa-newspaper"></i>
-        </div>
+    <div class="send-news-box">
 
         <div>
 
+            <span class="eyebrow">
+                PERIODISMO CIUDADANO
+            </span>
+
             <h3>
-                ¿Tenés una noticia?
+                ¿TENÉS UNA NOTICIA?
             </h3>
 
             <p>
-                Mandanos información, fotos o videos
-                por WhatsApp.
+                Mandanos información, fotos, videos o audios.
+                Nuestro equipo analizará el material antes de publicarlo.
             </p>
 
         </div>
 
         <a
-            href="https://wa.me/543804844124?text=Hola%20ARENA%2024%2C%20quiero%20enviar%20una%20noticia."
+            href="https://wa.me/543804844124?text=ARENA%2024%20RADIO%20-%20ENV%C3%8DO%20DE%20NOTICIA"
             target="_blank"
             rel="noopener noreferrer"
-            class="btn btn-primary">
-
+            class="btn btn-primary"
+        >
             ENVIAR NOTICIA
-
         </a>
 
     </div>
@@ -3291,44 +3246,50 @@ Todos los derechos reservados · HC pro · La Rioja, Argentina
 
 
 <!-- =========================================================
-     SOCIAL
+     REDES SOCIALES
 ========================================================= -->
 
-<section class="social-section section" id="redes">
+<section
+    id="redes"
+    class="section social-section"
+>
 
-    <div class="section-header">
+    <div class="section-heading">
 
-        <span class="section-kicker">
-            <i class="fa-solid fa-share-nodes"></i>
-            COMUNIDAD
-        </span>
+        <div>
 
-        <h2>
-            SEGUÍ A <span>ARENA 24</span>
-        </h2>
+            <span class="eyebrow">
+                SEGUINOS
+            </span>
 
-        <p>
-            Información y contenidos todos los días.
-        </p>
+            <h2>
+                ARENA 24 <span>EN REDES</span>
+            </h2>
+
+        </div>
 
     </div>
 
 
     <div class="social-grid">
 
-
         <a
             href="https://www.facebook.com/arena24radiolarioja"
             target="_blank"
             rel="noopener noreferrer"
-            class="social-card facebook">
+            class="social-card facebook"
+        >
 
-            <i class="fa-brands fa-facebook-f"></i>
+            <span class="social-letter">
+                f
+            </span>
 
-            <span>Facebook</span>
+            <strong>
+                Facebook
+            </strong>
 
             <small>
-                @arena24radiolarioja
+                ARENA 24 RADIO LA RIOJA
             </small>
 
         </a>
@@ -3338,11 +3299,16 @@ Todos los derechos reservados · HC pro · La Rioja, Argentina
             href="https://www.instagram.com/arena24radio/"
             target="_blank"
             rel="noopener noreferrer"
-            class="social-card instagram">
+            class="social-card instagram"
+        >
 
-            <i class="fa-brands fa-instagram"></i>
+            <span class="social-letter">
+                ◎
+            </span>
 
-            <span>Instagram</span>
+            <strong>
+                Instagram
+            </strong>
 
             <small>
                 @arena24radio
@@ -3355,14 +3321,19 @@ Todos los derechos reservados · HC pro · La Rioja, Argentina
             href="https://www.youtube.com/@ARENA24LARIOJA"
             target="_blank"
             rel="noopener noreferrer"
-            class="social-card youtube">
+            class="social-card youtube"
+        >
 
-            <i class="fa-brands fa-youtube"></i>
+            <span class="social-letter">
+                ▶
+            </span>
 
-            <span>YouTube</span>
+            <strong>
+                YouTube
+            </strong>
 
             <small>
-                ARENA 24 LA RIOJA
+                ARENA24LARIOJA
             </small>
 
         </a>
@@ -3380,69 +3351,36 @@ Todos los derechos reservados · HC pro · La Rioja, Argentina
 
 <footer class="site-footer">
 
-    <div class="footer-main">
+    <div class="footer-brand">
 
-        <div class="footer-brand">
-
-            <div class="brand-logo">
-                <span>ARENA</span>
-                <strong>24</strong>
-            </div>
-
-            <p>
-                Radio Web · TV · Noticias
-            </p>
-
-            <small>
-                La Rioja · Argentina
-            </small>
-
+        <div class="footer-logo">
+            24
         </div>
 
-
-        <div class="footer-links">
-
-            <h4>NAVEGACIÓN</h4>
-
-            <a href="#inicio">Inicio</a>
-            <a href="#radio">Radio</a>
-            <a href="#noticias">Noticias</a>
-            <a href="#tv">Arena 24 TV</a>
-            <a href="#contacto">Contactanos</a>
-
-        </div>
-
-
-        <div class="footer-contact">
-
-            <h4>CONTACTO</h4>
-
-            <a href="https://wa.me/543804844124">
-                <i class="fa-brands fa-whatsapp"></i>
-                380 484 4124
-            </a>
-
-            <a href="mailto:arena24radio@gmail.com">
-                <i class="fa-solid fa-envelope"></i>
-                arena24radio@gmail.com
-            </a>
-
+        <div>
+            <strong>ARENA 24 RADIO WEB</strong>
+            <span>La Rioja · Argentina</span>
         </div>
 
     </div>
 
 
-    <div class="footer-bottom">
+    <div class="footer-links">
 
-        <p>
-            © <span id="currentYear"></span>
-            ARENA 24 RADIO WEB.
-            TODOS LOS DERECHOS RESERVADOS.
-        </p>
+        <a href="#radio">Radio</a>
+        <a href="#noticias">Noticias</a>
+        <a href="#tv">TV</a>
+        <a href="#contacto">Contacto</a>
 
-        <p>
-            HC pro · La Rioja · Argentina
-        </p>
+    </div>
+
+
+    <div class="copyright">
+
+        © <span id="year"></span>
+        ARENA 24 RADIO WEB.
+        Todos los derechos reservados.
+        HC pro — La Rioja, Argentina.
 
     </div>
 
@@ -3450,54 +3388,21 @@ Todos los derechos reservados · HC pro · La Rioja, Argentina
 
 
 <!-- =========================================================
-     FLOATING PLAYER
+     TOAST
 ========================================================= -->
 
-<div class="floating-player" id="floatingPlayer">
-
-    <div class="floating-info">
-
-        <div class="mini-disc">
-            <i class="fa-solid fa-microphone"></i>
-        </div>
-
-        <div>
-
-            <span>ARENA 24</span>
-
-            <small id="floatingStatus">
-                RADIO ONLINE
-            </small>
-
-        </div>
-
-    </div>
-
-    <button id="floatingPlay"
-            aria-label="Reproducir">
-
-        <i class="fa-solid fa-play"></i>
-
-    </button>
-
+<div
+    id="toast"
+    class="toast"
+>
+    <span>✓</span>
+    <p id="toastMessage">
+        Listo
+    </p>
 </div>
 
 
-<!-- =========================================================
-     BACK TO TOP
-========================================================= -->
-
-<button
-    id="backToTop"
-    class="back-top"
-    aria-label="Volver arriba">
-
-    <i class="fa-solid fa-arrow-up"></i>
-
-</button>
-
-
-<script src="js/app.js"></script>
+<script src="app.js"></script>
 
 </body>
 </html>
