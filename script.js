@@ -4764,6 +4764,61 @@ app.listen(
 
   }
 );
+/*
+|--------------------------------------------------------------------------
+| ACTUALIZACIÓN AUTOMÁTICA DE NOTICIAS
+|--------------------------------------------------------------------------
+*/
+
+const NEWS_UPDATE_INTERVAL =
+  5 * 60 * 1000; // 5 minutos
+
+
+async function runAutomaticNewsUpdate() {
+
+  try {
+
+    console.log(
+      "[ARENA 24] Buscando noticias nuevas..."
+    );
+
+    await fetchNews();
+
+    console.log(
+      "[ARENA 24] Actualización finalizada."
+    );
+
+  } catch (error) {
+
+    console.error(
+      "[ARENA 24] Error actualizando noticias:",
+      error
+    );
+
+  }
+
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| PRIMERA EJECUCIÓN
+|--------------------------------------------------------------------------
+*/
+
+runAutomaticNewsUpdate();
+
+
+/*
+|--------------------------------------------------------------------------
+| EJECUCIONES POSTERIORES
+|--------------------------------------------------------------------------
+*/
+
+setInterval(
+  runAutomaticNewsUpdate,
+  NEWS_UPDATE_INTERVAL
+);
 
  
 
