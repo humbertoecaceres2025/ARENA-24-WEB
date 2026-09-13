@@ -591,3 +591,7 @@ jobs:
             git push
 
           fi
+Name: arena24-api
+Root Directory: backend
+Build Command: npm install
+Start Command: npm start
