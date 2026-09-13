@@ -1,818 +1,2122 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+<title>CREA ARENA 24 | Radio Online</title>
 
-    <meta
-        name="description"
-        content="ARENA 24 RADIO WEB - La Rioja, Argentina. Radio online, noticias, TV y actualidad."
-    >
+<meta name="description"
+content="CREA ARENA 24 - Radio online, noticias, actualidad y entretenimiento.">
 
-    <meta
-        name="theme-color"
-        content="#05060a"
-    >
+<style>
 
-    <title>ARENA 24 RADIO WEB | La Rioja</title>
+/* =====================================================
+   RESET
+===================================================== */
 
-    <link
-        rel="preconnect"
-        href="https://fonts.googleapis.com"
-    >
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-    <link
-        rel="preconnect"
-        href="https://fonts.gstatic.com"
-        crossorigin
-    >
+:root {
+    --red: #ff1744;
+    --red2: #d50032;
+    --black: #06070a;
+    --card: #101218;
+    --card2: #161820;
+    --text: #ffffff;
+    --muted: #9297a6;
+    --border: rgba(255,255,255,.08);
+}
 
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Orbitron:wght@500;600;700;800;900&display=swap"
-        rel="stylesheet"
-    >
+html {
+    scroll-behavior: smooth;
+}
 
-    <link
-        rel="stylesheet"
-        href="styles.css"
-    >
+body {
+    background:
+        radial-gradient(
+            circle at 50% -20%,
+            rgba(255,23,68,.14),
+            transparent 40%
+        ),
+        var(--black);
+
+    color: var(--text);
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    line-height: 1.5;
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+
+    background: rgba(6,7,10,.88);
+
+    backdrop-filter: blur(18px);
+
+    border-bottom: 1px solid var(--border);
+}
+
+.navbar {
+    max-width: 1200px;
+
+    margin: auto;
+
+    min-height: 72px;
+
+    padding: 0 20px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    font-weight: 900;
+    letter-spacing: 2px;
+}
+
+.brand-dot {
+    width: 10px;
+    height: 10px;
+
+    background: var(--red);
+
+    border-radius: 50%;
+
+    box-shadow:
+        0 0 15px var(--red);
+
+    animation: pulse 1.5s infinite;
+}
+
+nav {
+    display: flex;
+    gap: 24px;
+}
+
+nav a {
+    color: #aaaebb;
+
+    text-decoration: none;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    transition: .2s;
+}
+
+nav a:hover {
+    color: var(--red);
+}
+
+
+/* =====================================================
+   HERO
+===================================================== */
+
+.hero {
+    max-width: 1200px;
+
+    margin: auto;
+
+    padding: 70px 20px 50px;
+
+    display: grid;
+
+    grid-template-columns:
+        1.1fr
+        .9fr;
+
+    gap: 50px;
+
+    align-items: center;
+}
+
+.hero-text .badge {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 7px 12px;
+
+    border-radius: 30px;
+
+    background: rgba(255,23,68,.1);
+
+    border: 1px solid rgba(255,23,68,.2);
+
+    color: #ff5475;
+
+    font-size: 10px;
+
+    font-weight: 800;
+
+    letter-spacing: 1.5px;
+
+    margin-bottom: 20px;
+}
+
+.hero h1 {
+    font-size: clamp(40px,7vw,76px);
+
+    line-height: .9;
+
+    letter-spacing: -4px;
+
+    margin-bottom: 20px;
+}
+
+.hero h1 span {
+    color: var(--red);
+}
+
+.hero p {
+    color: var(--muted);
+
+    max-width: 550px;
+
+    font-size: 16px;
+}
+
+
+/* =====================================================
+   RADIO PLAYER
+===================================================== */
+
+.radio-player {
+    padding: 30px;
+
+    border-radius: 28px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.07),
+            rgba(255,255,255,.025)
+        );
+
+    border: 1px solid var(--border);
+
+    box-shadow:
+        0 30px 80px rgba(0,0,0,.5);
+}
+
+.radio-top {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 25px;
+}
+
+.live {
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    color: #ff5475;
+
+    font-size: 10px;
+
+    font-weight: 800;
+
+    letter-spacing: 1px;
+}
+
+.live i {
+    width: 8px;
+    height: 8px;
+
+    background: var(--red);
+
+    border-radius: 50%;
+
+    box-shadow: 0 0 12px var(--red);
+}
+
+.station {
+    color: var(--muted);
+
+    font-size: 11px;
+}
+
+.disc {
+    width: 190px;
+    height: 190px;
+
+    margin: 0 auto 25px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            #222 0 12%,
+            #0b0c10 13% 31%,
+            #171920 32% 34%,
+            #08090d 35%
+        );
+
+    border: 7px solid #171922;
+
+    box-shadow:
+        0 0 0 5px rgba(255,23,68,.07),
+        0 20px 45px rgba(0,0,0,.5);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+}
+
+.disc.playing {
+    animation: spin 12s linear infinite;
+}
+
+.disc-logo {
+    text-align: center;
+
+    font-size: 22px;
+
+    font-weight: 900;
+
+    line-height: .9;
+}
+
+.disc-logo span {
+    display: block;
+
+    margin-top: 7px;
+
+    color: var(--red);
+
+    font-size: 8px;
+
+    letter-spacing: 3px;
+}
+
+.radio-name {
+    text-align: center;
+
+    font-size: 20px;
+
+    font-weight: 800;
+}
+
+.radio-status {
+    text-align: center;
+
+    color: var(--muted);
+
+    font-size: 12px;
+
+    margin: 5px 0 20px;
+}
+
+.radio-controls {
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 18px;
+}
+
+.radio-btn {
+    border: 0;
+
+    cursor: pointer;
+
+    width: 44px;
+    height: 44px;
+
+    border-radius: 50%;
+
+    color: white;
+
+    background: rgba(255,255,255,.07);
+
+    font-size: 17px;
+}
+
+.play-btn {
+    width: 68px;
+    height: 68px;
+
+    border-radius: 50%;
+
+    border: 0;
+
+    color: white;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--red),
+            var(--red2)
+        );
+
+    box-shadow:
+        0 12px 30px rgba(255,23,68,.35);
+
+    font-size: 24px;
+
+    cursor: pointer;
+}
+
+.volume {
+    margin-top: 22px;
+
+    display: flex;
+
+    gap: 10px;
+
+    align-items: center;
+
+    color: var(--muted);
+}
+
+.volume input {
+    flex: 1;
+}
+
+
+/* =====================================================
+   SECCIONES
+===================================================== */
+
+.section {
+    max-width: 1200px;
+
+    margin: auto;
+
+    padding: 45px 20px;
+}
+
+.section-header {
+    display: flex;
+
+    align-items: end;
+
+    justify-content: space-between;
+
+    margin-bottom: 25px;
+}
+
+.section-title {
+    font-size: 28px;
+
+    font-weight: 900;
+
+    letter-spacing: -1px;
+}
+
+.section-title span {
+    color: var(--red);
+}
+
+.section-subtitle {
+    color: var(--muted);
+
+    font-size: 12px;
+}
+
+
+/* =====================================================
+   NOTICIAS
+===================================================== */
+
+.news-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap: 18px;
+}
+
+.news-card {
+    min-height: 250px;
+
+    padding: 23px;
+
+    border-radius: 20px;
+
+    background: var(--card);
+
+    border: 1px solid var(--border);
+
+    transition: .3s;
+}
+
+.news-card:hover {
+    transform: translateY(-5px);
+
+    border-color:
+        rgba(255,23,68,.35);
+}
+
+.news-tag {
+    display: inline-block;
+
+    padding: 5px 9px;
+
+    border-radius: 20px;
+
+    background:
+        rgba(255,23,68,.1);
+
+    color: #ff5475;
+
+    font-size: 9px;
+
+    font-weight: 800;
+
+    margin-bottom: 15px;
+}
+
+.news-card h3 {
+    font-size: 18px;
+
+    line-height: 1.3;
+
+    margin-bottom: 12px;
+}
+
+.news-card h3 a {
+    color: white;
+
+    text-decoration: none;
+}
+
+.news-card p {
+    color: var(--muted);
+
+    font-size: 12px;
+
+    line-height: 1.6;
+}
+
+.news-date {
+    margin-top: 20px;
+
+    color: #626673;
+
+    font-size: 10px;
+}
+
+
+/* =====================================================
+   INFO GRID
+===================================================== */
+
+.info-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap: 18px;
+}
+
+.info-card {
+    padding: 25px;
+
+    border-radius: 20px;
+
+    background: var(--card);
+
+    border: 1px solid var(--border);
+}
+
+.info-label {
+    color: var(--muted);
+
+    font-size: 11px;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1px;
+
+    margin-bottom: 12px;
+}
+
+.info-value {
+    font-size: 28px;
+
+    font-weight: 900;
+}
+
+.info-small {
+    color: var(--muted);
+
+    font-size: 11px;
+
+    margin-top: 5px;
+}
+
+
+/* =====================================================
+   PROGRAMACIÓN
+===================================================== */
+
+.schedule {
+    display: grid;
+
+    gap: 10px;
+}
+
+.program {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 18px 20px;
+
+    background: var(--card);
+
+    border: 1px solid var(--border);
+
+    border-radius: 15px;
+}
+
+.program-time {
+    color: var(--red);
+
+    font-weight: 900;
+
+    min-width: 90px;
+}
+
+.program-name {
+    flex: 1;
+
+    font-weight: 700;
+}
+
+.program-host {
+    color: var(--muted);
+
+    font-size: 11px;
+}
+
+
+/* =====================================================
+   REDES
+===================================================== */
+
+.social-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap: 15px;
+}
+
+.social {
+    padding: 25px;
+
+    border-radius: 18px;
+
+    background: var(--card);
+
+    border: 1px solid var(--border);
+
+    text-decoration: none;
+
+    color: white;
+
+    transition: .25s;
+}
+
+.social:hover {
+    transform: translateY(-4px);
+
+    border-color:
+        rgba(255,23,68,.35);
+}
+
+.social-icon {
+    font-size: 27px;
+
+    margin-bottom: 12px;
+}
+
+.social-name {
+    font-weight: 800;
+
+    font-size: 13px;
+}
+
+.social-user {
+    color: var(--muted);
+
+    font-size: 11px;
+
+    margin-top: 3px;
+}
+
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+footer {
+    margin-top: 50px;
+
+    padding: 35px 20px;
+
+    border-top: 1px solid var(--border);
+
+    text-align: center;
+
+    color: var(--muted);
+
+    font-size: 11px;
+}
+
+.footer-brand {
+    color: white;
+
+    font-size: 17px;
+
+    font-weight: 900;
+
+    margin-bottom: 8px;
+}
+
+.footer-brand span {
+    color: var(--red);
+}
+
+
+/* =====================================================
+   ANIMACIONES
+===================================================== */
+
+@keyframes spin {
+    from {
+        transform: rotate(0);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes pulse {
+    0%,100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: .4;
+        transform: scale(.7);
+    }
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media(max-width:900px) {
+
+    .hero {
+        grid-template-columns: 1fr;
+    }
+
+    .news-grid,
+    .info-grid {
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .social-grid {
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    nav {
+        display: none;
+    }
+}
+
+@media(max-width:600px) {
+
+    .hero {
+        padding-top: 45px;
+    }
+
+    .hero h1 {
+        letter-spacing: -2px;
+    }
+
+    .news-grid,
+    .info-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .section-header {
+        display: block;
+    }
+
+    .section-subtitle {
+        margin-top: 5px;
+    }
+
+    .social-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .program-host {
+        display: none;
+    }
+}
+
+</style>
 </head>
+
 
 <body>
 
-<!-- =========================================================
-     BACKGROUND EFFECTS
-========================================================= -->
 
-<div class="background-grid"></div>
-<div class="background-glow glow-one"></div>
-<div class="background-glow glow-two"></div>
-
-<!-- =========================================================
+<!-- =================================================
      HEADER
-========================================================= -->
+================================================== -->
 
-<header class="site-header">
+<header>
 
-    <div class="header-inner">
+<div class="navbar">
 
-        <a
-            href="#inicio"
-            class="brand"
-            aria-label="ARENA 24 RADIO WEB"
-        >
+    <div class="brand">
 
-            <div class="brand-symbol">
-                <span>24</span>
-            </div>
+        <div class="brand-dot"></div>
 
-            <div class="brand-text">
-                <strong>ARENA 24</strong>
-                <small>RADIO WEB</small>
-            </div>
-
-        </a>
-
-        <nav class="main-nav">
-
-            <a href="#inicio">Inicio</a>
-            <a href="#radio">Radio</a>
-            <a href="#noticias">Noticias</a>
-            <a href="#tv">ARENA 24 TV</a>
-            <a href="#contacto">Contactanos</a>
-            <a href="#redes">Redes</a>
-
-        </nav>
-
-        <button
-            class="menu-toggle"
-            id="menuToggle"
-            aria-label="Abrir menú"
-        >
-            ☰
-        </button>
+        CREA ARENA 24
 
     </div>
+
+
+    <nav>
+
+        <a href="#radio">
+            RADIO
+        </a>
+
+        <a href="#noticias">
+            NOTICIAS
+        </a>
+
+        <a href="#programacion">
+            PROGRAMACIÓN
+        </a>
+
+        <a href="#contacto">
+            REDES
+        </a>
+
+    </nav>
+
+</div>
 
 </header>
 
 
-<!-- =========================================================
-     HERO
-========================================================= -->
 
-<main id="inicio">
+<!-- =================================================
+     HERO
+================================================== -->
 
 <section class="hero">
 
-    <div class="hero-content">
+<div class="hero-text">
 
-        <div class="live-badge">
-            <span class="live-dot"></span>
+    <div class="badge">
+
+        🔴 TRANSMISIÓN EN VIVO
+
+    </div>
+
+
+    <h1>
+
+        CREA
+        <span>ARENA</span>
+        24
+
+    </h1>
+
+
+    <p>
+
+        Radio online, noticias, actualidad,
+        música y entretenimiento durante
+        las 24 horas.
+
+    </p>
+
+</div>
+
+
+
+<!-- RADIO -->
+
+<div
+    class="radio-player"
+    id="radio">
+
+    <div class="radio-top">
+
+        <div class="live">
+
+            <i></i>
+
             EN VIVO
+
         </div>
 
-        <h1>
-            ARENA <span>24</span>
-        </h1>
+        <div class="station">
 
-        <p class="hero-subtitle">
-            RADIO WEB
-        </p>
-
-        <p class="hero-description">
-            La voz de La Rioja conectada con Argentina y el mundo.
-            Noticias, información, música y transmisión en vivo.
-        </p>
-
-        <div class="hero-actions">
-
-            <a
-                href="#radio"
-                class="btn btn-primary"
-            >
-                ▶ ESCUCHAR AHORA
-            </a>
-
-            <a
-                href="#noticias"
-                class="btn btn-secondary"
-            >
-                VER NOTICIAS
-            </a>
+            RADIO ONLINE
 
         </div>
 
     </div>
 
-    <div class="hero-visual">
 
-        <div class="orbital">
+    <div
+        class="disc"
+        id="disc">
 
-            <div class="orbital-ring ring-one"></div>
-            <div class="orbital-ring ring-two"></div>
-            <div class="orbital-ring ring-three"></div>
+        <div class="disc-logo">
 
-            <div class="orbital-center">
-                <span>24</span>
-                <small>LIVE</small>
-            </div>
+            CREA<br>
+            ARENA
+
+            <span>
+                24 RADIO
+            </span>
 
         </div>
 
     </div>
+
+
+    <div class="radio-name">
+
+        CREA ARENA 24
+
+    </div>
+
+
+    <div
+        class="radio-status"
+        id="radioStatus">
+
+        Presiona PLAY para escuchar
+
+    </div>
+
+
+    <div class="radio-controls">
+
+        <button
+            class="radio-btn"
+            id="muteBtn">
+
+            🔊
+
+        </button>
+
+
+        <button
+            class="play-btn"
+            id="playBtn">
+
+            ▶
+
+        </button>
+
+
+        <button
+            class="radio-btn"
+            id="stopBtn">
+
+            ■
+
+        </button>
+
+    </div>
+
+
+    <div class="volume">
+
+        🔈
+
+        <input
+            id="volume"
+            type="range"
+            min="0"
+            max="1"
+            step=".01"
+            value=".85">
+
+        🔊
+
+    </div>
+
+
+    <audio
+        id="radioAudio"
+        preload="none">
+
+        <source
+            src="https://stream.zeno.fm/zuw6xmmwmd0uv"
+            type="audio/mpeg">
+
+    </audio>
+
+</div>
 
 </section>
 
 
-<!-- =========================================================
-     RADIO PLAYER
-========================================================= -->
+
+<!-- =================================================
+     NOTICIAS
+================================================== -->
 
 <section
-    id="radio"
-    class="section radio-section"
->
+    class="section"
+    id="noticias">
 
-    <div class="section-heading">
+<div class="section-header">
 
-        <div>
-            <span class="eyebrow">
-                TRANSMISIÓN DIGITAL
-            </span>
+    <div>
 
-            <h2>
-                ARENA 24 <span>EN VIVO</span>
-            </h2>
+        <div class="section-title">
+
+            ARENA
+            <span>24</span>
+            NOTICIAS
+
         </div>
 
-        <div class="live-status">
-            <span></span>
-            ONLINE
+        <div class="section-subtitle">
+
+            Actualidad y últimas noticias
+
         </div>
 
     </div>
 
 
-    <div class="radio-card">
+    <div
+        class="section-subtitle"
+        id="newsUpdate">
 
-        <div class="radio-top">
+        Actualizando...
 
-            <div class="station-info">
+    </div>
 
-                <div class="station-logo">
-                    24
-                </div>
-
-                <div>
-                    <h3>ARENA 24 RADIO</h3>
-                    <p>La Rioja · Argentina</p>
-                </div>
-
-            </div>
-
-            <div class="radio-quality">
-                <span>STREAM</span>
-                <strong>HD DIGITAL</strong>
-            </div>
-
-        </div>
+</div>
 
 
-        <!-- AUDIO -->
-        <audio
-            id="radioAudio"
-            preload="none"
-            crossorigin="anonymous"
-        >
-            <source
-                src="https://stream.zeno.fm/zuw6xmmwmd0uv"
-                type="audio/mpeg"
-            >
-        </audio>
+<div
+    class="news-grid"
+    id="newsContainer">
+
+    <div class="info-card">
+
+        Cargando noticias...
+
+    </div>
+
+</div>
+
+</section>
 
 
-        <!-- VISUALIZADOR -->
 
-        <div class="visualizer" id="visualizer">
+<!-- =================================================
+     INFORMACIÓN
+================================================== -->
 
-            <div class="bar"></div>
-            <div class="bar"></div>
-            <div class="bar"></div>
-            <div class="bar"></div>
-            <div class="bar"></div>
-            <div class="bar"></div>
-            <div class="bar"></div>
-            <div class="bar"></div>
-            <div class="bar"></div>
-            <div class="bar"></div>
-            <div class="bar"></div>
-            <div class="bar"></div>
-            <div class="bar"></div>
-            <div class="bar"></div>
-            <div class="bar"></div>
-            <div class="bar"></div>
-            <div class="bar"></div>
-            <div class="bar"></div>
-            <div class="bar"></div>
-            <div class="bar"></div>
+<section class="section">
+
+<div class="section-header">
+
+    <div>
+
+        <div class="section-title">
+
+            INFORMACIÓN
+
+            <span>EN VIVO</span>
 
         </div>
 
+        <div class="section-subtitle">
 
-        <div class="radio-controls">
+            Datos actualizados automáticamente
 
-            <button
-                id="playButton"
-                class="play-button"
-                aria-label="Reproducir radio"
-            >
-                ▶
-            </button>
+        </div>
 
-            <div class="volume-control">
+    </div>
 
-                <span>🔊</span>
+</div>
 
-                <input
-                    type="range"
-                    id="volume"
-                    min="0"
-                    max="1"
-                    step="0.01"
-                    value="0.85"
-                >
 
-            </div>
+<div class="info-grid">
 
-            <div class="radio-meta">
 
-                <span>
-                    ● TRANSMITIENDO
-                </span>
+    <!-- CLIMA -->
 
-                <small>
-                    ARENA 24 RADIO WEB
-                </small>
+    <div class="info-card">
 
-            </div>
+        <div class="info-label">
+
+            🌤️ La Rioja
 
         </div>
 
         <div
-            id="radioMessage"
-            class="radio-message"
-        >
-            Presioná play para escuchar la transmisión.
+            class="info-value"
+            id="temperature">
+
+            --°C
+
+        </div>
+
+        <div
+            class="info-small"
+            id="weather">
+
+            Consultando clima...
+
         </div>
 
     </div>
 
-</section>
 
+    <!-- DOLAR -->
 
-<!-- =========================================================
-     NOTICIAS
-========================================================= -->
+    <div class="info-card">
 
-<section
-    id="noticias"
-    class="section news-section"
->
+        <div class="info-label">
 
-    <div class="section-heading">
-
-        <div>
-
-            <span class="eyebrow">
-                INFORMACIÓN 24/7
-            </span>
-
-            <h2>
-                ÚLTIMAS <span>NOTICIAS</span>
-            </h2>
+            💵 Dólar
 
         </div>
 
-        <button
-            id="refreshNews"
-            class="refresh-button"
-        >
-            ↻ Actualizar
-        </button>
+        <div
+            class="info-value"
+            id="dolar">
+
+            ---
+
+        </div>
+
+        <div class="info-small">
+
+            Cotización informativa
+
+        </div>
 
     </div>
 
 
-    <div class="news-tabs">
+    <!-- HORA -->
 
-        <button
-            class="news-tab active"
-            data-category="all"
-        >
-            Todas
-        </button>
+    <div class="info-card">
 
-        <button
-            class="news-tab"
-            data-category="rioja"
-        >
-            La Rioja
-        </button>
+        <div class="info-label">
 
-        <button
-            class="news-tab"
-            data-category="argentina"
-        >
+            🕐 Hora local
+
+        </div>
+
+        <div
+            class="info-value"
+            id="clock">
+
+            --:--
+
+        </div>
+
+        <div class="info-small">
+
             Argentina
-        </button>
 
-        <button
-            class="news-tab"
-            data-category="mundo"
-        >
-            Mundo
-        </button>
+        </div>
 
     </div>
 
-
-    <div
-        id="newsStatus"
-        class="news-status"
-    >
-        Cargando noticias...
-    </div>
-
-
-    <div
-        id="newsGrid"
-        class="news-grid"
-    ></div>
-
-
-    <div class="news-footer">
-
-        <span>
-            Actualización automática
-        </span>
-
-        <span id="lastNewsUpdate">
-            --
-        </span>
-
-    </div>
+</div>
 
 </section>
 
 
-<!-- =========================================================
-     TV
-========================================================= -->
+
+<!-- =================================================
+     PROGRAMACIÓN
+================================================== -->
 
 <section
-    id="tv"
-    class="section tv-section"
->
+    class="section"
+    id="programacion">
 
-    <div class="section-heading">
+<div class="section-header">
 
-        <div>
+    <div>
 
-            <span class="eyebrow">
-                INFORMACIÓN AUDIOVISUAL
-            </span>
+        <div class="section-title">
 
-            <h2>
-                ARENA 24 <span>TV</span>
-            </h2>
+            PROGRAMACIÓN
+
+            <span>ARENA 24</span>
 
         </div>
 
-        <a
-            href="https://www.youtube.com/@ARENA24LARIOJA"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="youtube-link"
-        >
-            Abrir YouTube ↗
-        </a>
+        <div class="section-subtitle">
+
+            Acompañándote todos los días
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="schedule">
+
+
+    <div class="program">
+
+        <div class="program-time">
+            06:00
+        </div>
+
+        <div class="program-name">
+            Primera Mañana
+        </div>
+
+        <div class="program-host">
+            CREA ARENA 24
+        </div>
 
     </div>
 
 
-    <div class="tv-layout">
+    <div class="program">
 
-        <div class="tv-player">
-
-            <!--
-                Para una transmisión LIVE permanente,
-                configurar YOUTUBE_LIVE_VIDEO_ID en app.js.
-            -->
-
-            <div
-                id="youtubeContainer"
-                class="youtube-container"
-            >
-
-                <div class="youtube-placeholder">
-
-                    <div class="youtube-icon">
-                        ▶
-                    </div>
-
-                    <h3>
-                        ARENA 24 TV
-                    </h3>
-
-                    <p>
-                        Mirá nuestras transmisiones y contenidos
-                        audiovisuales.
-                    </p>
-
-                    <a
-                        href="https://www.youtube.com/@ARENA24LARIOJA"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="btn btn-primary"
-                    >
-                        IR AL CANAL
-                    </a>
-
-                </div>
-
-            </div>
-
+        <div class="program-time">
+            09:00
         </div>
 
+        <div class="program-name">
+            Arena Noticias
+        </div>
 
-        <aside class="tv-info">
-
-            <div class="tv-live-card">
-
-                <span class="live-dot"></span>
-
-                <div>
-                    <strong>ARENA 24 TV</strong>
-                    <small>Contenido audiovisual</small>
-                </div>
-
-            </div>
-
-            <h3>
-                Radio + TV + Noticias
-            </h3>
-
-            <p>
-                Toda la actualidad de La Rioja, Argentina
-                y el mundo en una sola plataforma.
-            </p>
-
-            <a
-                href="https://www.youtube.com/@ARENA24LARIOJA"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="outline-button"
-            >
-                SUSCRIBITE AL CANAL
-            </a>
-
-        </aside>
+        <div class="program-host">
+            Información
+        </div>
 
     </div>
+
+
+    <div class="program">
+
+        <div class="program-time">
+            12:00
+        </div>
+
+        <div class="program-name">
+            Arena Central
+        </div>
+
+        <div class="program-host">
+            Actualidad
+        </div>
+
+    </div>
+
+
+    <div class="program">
+
+        <div class="program-time">
+            15:00
+        </div>
+
+        <div class="program-name">
+            Arena Música
+        </div>
+
+        <div class="program-host">
+            Música
+        </div>
+
+    </div>
+
+
+    <div class="program">
+
+        <div class="program-time">
+            18:00
+        </div>
+
+        <div class="program-name">
+            Arena Noticias
+        </div>
+
+        <div class="program-host">
+            Información
+        </div>
+
+    </div>
+
+
+    <div class="program">
+
+        <div class="program-time">
+            21:00
+        </div>
+
+        <div class="program-name">
+            Arena Night
+        </div>
+
+        <div class="program-host">
+            Música
+        </div>
+
+    </div>
+
+</div>
 
 </section>
 
 
-<!-- =========================================================
-     CONTACTO
-========================================================= -->
+
+<!-- =================================================
+     REDES
+================================================== -->
 
 <section
-    id="contacto"
-    class="section contact-section"
->
+    class="section"
+    id="contacto">
 
-    <div class="section-heading">
+<div class="section-header">
 
-        <div>
+    <div>
 
-            <span class="eyebrow">
-                ESTAMOS CONECTADOS
-            </span>
+        <div class="section-title">
 
-            <h2>
-                CONTACTA<span>NOS</span>
-            </h2>
+            SEGUÍ A
+
+            <span>ARENA 24</span>
+
+        </div>
+
+        <div class="section-subtitle">
+
+            Todas nuestras redes sociales
 
         </div>
 
     </div>
 
-
-    <div class="contact-grid">
-
-        <a
-            class="contact-card whatsapp"
-            href="https://wa.me/543804844124?text=Hola%20ARENA%2024%20RADIO%2C%20quiero%20enviar%20una%20noticia."
-            target="_blank"
-            rel="noopener noreferrer"
-        >
-
-            <div class="contact-icon">
-                WA
-            </div>
-
-            <div>
-                <small>WHATSAPP</small>
-                <strong>380 484 4124</strong>
-                <span>Enviar una noticia</span>
-            </div>
-
-        </a>
+</div>
 
 
-        <a
-            class="contact-card"
-            href="mailto:arena24radio@gmail.com?subject=ARENA%2024%20RADIO%20-%20Contacto"
-        >
-
-            <div class="contact-icon">
-                @
-            </div>
-
-            <div>
-                <small>EMAIL</small>
-                <strong>arena24radio@gmail.com</strong>
-                <span>Noticias · Publicidad · Prensa</span>
-            </div>
-
-        </a>
+<div class="social-grid">
 
 
-        <div class="contact-card">
+    <a
+        href="#"
+        class="social"
+        target="_blank">
 
-            <div class="contact-icon">
-                AD
-            </div>
-
-            <div>
-                <small>PUBLICIDAD</small>
-                <strong>Tu marca en ARENA 24</strong>
-                <span>Consultanos por propuestas comerciales</span>
-            </div>
-
+        <div class="social-icon">
+            📘
         </div>
 
-    </div>
-
-
-    <div class="send-news-box">
-
-        <div>
-
-            <span class="eyebrow">
-                PERIODISMO CIUDADANO
-            </span>
-
-            <h3>
-                ¿TENÉS UNA NOTICIA?
-            </h3>
-
-            <p>
-                Mandanos información, fotos, videos o audios.
-                Nuestro equipo analizará el material antes de publicarlo.
-            </p>
-
+        <div class="social-name">
+            Facebook
         </div>
 
-        <a
-            href="https://wa.me/543804844124?text=ARENA%2024%20RADIO%20-%20ENV%C3%8DO%20DE%20NOTICIA"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="btn btn-primary"
-        >
-            ENVIAR NOTICIA
-        </a>
+        <div class="social-user">
+            CREA ARENA 24
+        </div>
 
-    </div>
+    </a>
+
+
+    <a
+        href="#"
+        class="social"
+        target="_blank">
+
+        <div class="social-icon">
+            📸
+        </div>
+
+        <div class="social-name">
+            Instagram
+        </div>
+
+        <div class="social-user">
+            @creaarena24
+        </div>
+
+    </a>
+
+
+    <a
+        href="#"
+        class="social"
+        target="_blank">
+
+        <div class="social-icon">
+            ▶️
+        </div>
+
+        <div class="social-name">
+            YouTube
+        </div>
+
+        <div class="social-user">
+            CREA ARENA 24
+        </div>
+
+    </a>
+
+
+    <a
+        href="#"
+        class="social"
+        target="_blank">
+
+        <div class="social-icon">
+            💬
+        </div>
+
+        <div class="social-name">
+            WhatsApp
+        </div>
+
+        <div class="social-user">
+            Contactanos
+        </div>
+
+    </a>
+
+</div>
 
 </section>
 
 
-<!-- =========================================================
-     REDES SOCIALES
-========================================================= -->
 
-<section
-    id="redes"
-    class="section social-section"
->
-
-    <div class="section-heading">
-
-        <div>
-
-            <span class="eyebrow">
-                SEGUINOS
-            </span>
-
-            <h2>
-                ARENA 24 <span>EN REDES</span>
-            </h2>
-
-        </div>
-
-    </div>
-
-
-    <div class="social-grid">
-
-        <a
-            href="https://www.facebook.com/arena24radiolarioja"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="social-card facebook"
-        >
-
-            <span class="social-letter">
-                f
-            </span>
-
-            <strong>
-                Facebook
-            </strong>
-
-            <small>
-                ARENA 24 RADIO LA RIOJA
-            </small>
-
-        </a>
-
-
-        <a
-            href="https://www.instagram.com/arena24radio/"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="social-card instagram"
-        >
-
-            <span class="social-letter">
-                ◎
-            </span>
-
-            <strong>
-                Instagram
-            </strong>
-
-            <small>
-                @arena24radio
-            </small>
-
-        </a>
-
-
-        <a
-            href="https://www.youtube.com/@ARENA24LARIOJA"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="social-card youtube"
-        >
-
-            <span class="social-letter">
-                ▶
-            </span>
-
-            <strong>
-                YouTube
-            </strong>
-
-            <small>
-                ARENA24LARIOJA
-            </small>
-
-        </a>
-
-    </div>
-
-</section>
-
-</main>
-
-
-<!-- =========================================================
+<!-- =================================================
      FOOTER
-========================================================= -->
+================================================== -->
 
-<footer class="site-footer">
+<footer>
 
-    <div class="footer-brand">
+<div class="footer-brand">
 
-        <div class="footer-logo">
-            24
-        </div>
+    CREA <span>ARENA 24</span>
 
-        <div>
-            <strong>ARENA 24 RADIO WEB</strong>
-            <span>La Rioja · Argentina</span>
-        </div>
+</div>
 
-    </div>
+Radio Online · Noticias · Música · Actualidad
 
+<br><br>
 
-    <div class="footer-links">
-
-        <a href="#radio">Radio</a>
-        <a href="#noticias">Noticias</a>
-        <a href="#tv">TV</a>
-        <a href="#contacto">Contacto</a>
-
-    </div>
-
-
-    <div class="copyright">
-
-        © <span id="year"></span>
-        ARENA 24 RADIO WEB.
-        Todos los derechos reservados.
-        HC pro — La Rioja, Argentina.
-
-    </div>
+© 2026 CREA ARENA 24. Todos los derechos reservados.
 
 </footer>
 
 
-<!-- =========================================================
-     TOAST
-========================================================= -->
 
-<div
-    id="toast"
-    class="toast"
->
-    <span>✓</span>
-    <p id="toastMessage">
-        Listo
-    </p>
-</div>
+<script>
+
+/* =====================================================
+   RADIO
+===================================================== */
+
+const audio =
+    document.getElementById("radioAudio");
+
+const play =
+    document.getElementById("playBtn");
+
+const mute =
+    document.getElementById("muteBtn");
+
+const stop =
+    document.getElementById("stopBtn");
+
+const volume =
+    document.getElementById("volume");
+
+const disc =
+    document.getElementById("disc");
+
+const status =
+    document.getElementById("radioStatus");
 
 
-<script src="app.js"></script>
+audio.volume = .85;
+
+
+play.onclick = () => {
+
+    if (audio.paused) {
+
+        audio.play()
+        .then(() => {
+
+            play.textContent = "❚❚";
+
+            disc.classList.add("playing");
+
+            status.textContent =
+                "Transmitiendo en vivo";
+
+        })
+        .catch(() => {
+
+            status.textContent =
+                "No se pudo iniciar la transmisión";
+
+        });
+
+    } else {
+
+        audio.pause();
+
+    }
+
+};
+
+
+audio.onpause = () => {
+
+    play.textContent = "▶";
+
+    disc.classList.remove("playing");
+
+    status.textContent =
+        "Transmisión pausada";
+
+};
+
+
+mute.onclick = () => {
+
+    audio.muted =
+        !audio.muted;
+
+    mute.textContent =
+        audio.muted
+        ? "🔇"
+        : "🔊";
+
+};
+
+
+stop.onclick = () => {
+
+    audio.pause();
+
+    audio.currentTime = 0;
+
+};
+
+
+volume.oninput = () => {
+
+    audio.volume =
+        volume.value;
+
+    audio.muted = false;
+
+    mute.textContent =
+        "🔊";
+
+};
+
+
+
+/* =====================================================
+   RELOJ
+===================================================== */
+
+function updateClock() {
+
+    const now =
+        new Date();
+
+    document.getElementById("clock")
+        .textContent =
+        now.toLocaleTimeString(
+            "es-AR",
+            {
+                hour: "2-digit",
+                minute: "2-digit"
+            }
+        );
+
+}
+
+setInterval(
+    updateClock,
+    1000
+);
+
+updateClock();
+
+
+
+/* =====================================================
+   CLIMA - LA RIOJA
+===================================================== */
+
+async function loadWeather() {
+
+    try {
+
+        const url =
+        "https://api.open-meteo.com/v1/forecast" +
+        "?latitude=-29.4135" +
+        "&longitude=-66.8560" +
+        "&current=temperature_2m,weather_code" +
+        "&timezone=America%2FArgentina%2FLa_Rioja";
+
+        const response =
+            await fetch(url);
+
+        const data =
+            await response.json();
+
+
+        document.getElementById("temperature")
+            .textContent =
+            Math.round(
+                data.current.temperature_2m
+            )
+            + "°C";
+
+
+        const code =
+            data.current.weather_code;
+
+
+        const descriptions = {
+
+            0: "Cielo despejado",
+            1: "Principalmente despejado",
+            2: "Parcialmente nublado",
+            3: "Nublado",
+            45: "Niebla",
+            48: "Niebla",
+            51: "Llovizna",
+            53: "Llovizna",
+            55: "Llovizna",
+            61: "Lluvia",
+            63: "Lluvia",
+            65: "Lluvia intensa",
+            71: "Nieve",
+            80: "Chaparrones",
+            81: "Chaparrones",
+            82: "Chaparrones fuertes",
+            95: "Tormenta",
+            96: "Tormenta",
+            99: "Tormenta"
+
+        };
+
+
+        document.getElementById("weather")
+            .textContent =
+            descriptions[code]
+            || "Condiciones actuales";
+
+    }
+
+    catch(error) {
+
+        document.getElementById("weather")
+            .textContent =
+            "Datos no disponibles";
+
+    }
+
+}
+
+loadWeather();
+
+
+/*
+Actualizar clima cada 30 minutos
+*/
+
+setInterval(
+    loadWeather,
+    30 * 60 * 1000
+);
+
+
+
+/* =====================================================
+   DÓLAR
+
+   Fuente externa pública.
+   Si la API no responde se muestra
+   "No disponible".
+===================================================== */
+
+async function loadDollar() {
+
+    try {
+
+        const response =
+            await fetch(
+                "https://dolarapi.com/v1/dolares/blue"
+            );
+
+        if (!response.ok)
+            throw new Error();
+
+        const data =
+            await response.json();
+
+
+        document.getElementById("dolar")
+            .textContent =
+            "$" +
+            Number(data.venta)
+                .toLocaleString("es-AR");
+
+    }
+
+    catch(error) {
+
+        document.getElementById("dolar")
+            .textContent =
+            "N/D";
+
+    }
+
+}
+
+
+loadDollar();
+
+
+/*
+Actualizar dólar cada 30 minutos
+*/
+
+setInterval(
+    loadDollar,
+    30 * 60 * 1000
+);
+
+
+
+/* =====================================================
+   NOTICIAS
+===================================================== */
+
+const newsContainer =
+    document.getElementById(
+        "newsContainer"
+    );
+
+
+const newsUpdate =
+    document.getElementById(
+        "newsUpdate"
+    );
+
+
+/*
+Fuentes RSS.
+
+Se pueden agregar nuevas fuentes.
+*/
+
+const feeds = [
+
+    {
+        name:
+            "Radio La Rioja",
+
+        url:
+            "https://radiolarioja.com.ar/feed/"
+    },
+
+    {
+        name:
+            "Noticias La Rioja",
+
+        url:
+            "https://agencianoticiaslarioja.com.ar/feed/"
+    }
+
+];
+
+
+function escapeHTML(text) {
+
+    return String(text || "")
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+
+function cleanDescription(text) {
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+    div.innerHTML =
+        text || "";
+
+    return (
+        div.textContent ||
+        div.innerText ||
+        ""
+    );
+
+}
+
+
+async function loadFeed(feed) {
+
+    try {
+
+        const url =
+            "https://api.rss2json.com/v1/api.json?rss_url="
+            +
+            encodeURIComponent(
+                feed.url
+            );
+
+
+        const response =
+            await fetch(url);
+
+
+        if (!response.ok)
+            throw new Error();
+
+
+        const data =
+            await response.json();
+
+
+        if (
+            data.status !== "ok"
+        )
+            throw new Error();
+
+
+        return data.items.map(
+            item => ({
+
+                title:
+                    item.title,
+
+                description:
+                    cleanDescription(
+                        item.description
+                    ),
+
+                link:
+                    item.link,
+
+                date:
+                    item.pubDate,
+
+                source:
+                    feed.name
+
+            })
+        );
+
+    }
+
+    catch(error) {
+
+        return [];
+
+    }
+
+}
+
+
+async function loadNews() {
+
+    newsContainer.innerHTML = `
+
+        <div class="info-card">
+
+            Cargando últimas noticias...
+
+        </div>
+
+    `;
+
+
+    const results =
+        await Promise.all(
+            feeds.map(loadFeed)
+        );
+
+
+    let news =
+        results.flat();
+
+
+    /*
+    Eliminar duplicadas
+    */
+
+    const unique =
+        new Map();
+
+
+    news.forEach(item => {
+
+        if (
+            !unique.has(
+                item.title
+            )
+        ) {
+
+            unique.set(
+                item.title,
+                item
+            );
+
+        }
+
+    });
+
+
+    news =
+        Array.from(
+            unique.values()
+        );
+
+
+    /*
+    Ordenar por fecha
+    */
+
+    news.sort(
+        (a,b) =>
+            new Date(b.date) -
+            new Date(a.date)
+    );
+
+
+    /*
+    Mostrar 6 noticias
+    */
+
+    news =
+        news.slice(0,6);
+
+
+    if (!news.length) {
+
+        newsContainer.innerHTML = `
+
+            <div class="info-card">
+
+                No hay noticias disponibles
+                en este momento.
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    newsContainer.innerHTML = "";
+
+
+    news.forEach(item => {
+
+        const card =
+            document.createElement(
+                "article"
+            );
+
+
+        card.className =
+            "news-card";
+
+
+        card.innerHTML = `
+
+            <span class="news-tag">
+
+                ${escapeHTML(
+                    item.source
+                )}
+
+            </span>
+
+
+            <h3>
+
+                <a
+                    href="${item.link}"
+                    target="_blank"
+                    rel="noopener noreferrer">
+
+                    ${escapeHTML(
+                        item.title
+                    )}
+
+                </a>
+
+            </h3>
+
+
+            <p>
+
+                ${escapeHTML(
+                    item.description
+                )}
+
+            </p>
+
+
+            <div class="news-date">
+
+                ${new Date(
+                    item.date
+                ).toLocaleString(
+                    "es-AR"
+                )}
+
+            </div>
+
+        `;
+
+
+        newsContainer.appendChild(
+            card
+        );
+
+    });
+
+
+    newsUpdate.textContent =
+        "Actualizado " +
+        new Date()
+            .toLocaleTimeString(
+                "es-AR",
+                {
+                    hour:
+                        "2-digit",
+
+                    minute:
+                        "2-digit"
+                }
+            );
+
+}
+
+
+loadNews();
+
+
+/*
+Actualizar noticias cada 1 hora
+*/
+
+setInterval(
+    loadNews,
+    60 * 60 * 1000
+);
+
+</script>
 
 </body>
 </html>
-              
-
-
-        
-   
- 
-</section>
-
 
 <!-- =========================================================
      TV
@@ -1168,4 +2472,40 @@
     </div>
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    }
+
+
+
+
+    
    
