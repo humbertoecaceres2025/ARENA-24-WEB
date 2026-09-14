@@ -1,1062 +1,129 @@
 /* =========================================================
-   ARENA 24 RADIO NOTICIAS
-   Diseño: Negro / Rojo / Blanco
-   Responsive - Radio / TV / Noticias
+   ARENA 24 RADIO WEB — CSS PROFESIONAL 3.0
+   La Rioja, Argentina
    ========================================================= */
 
 :root {
-    --rojo: #e50914;
-    --rojo-oscuro: #a80008;
-    --rojo-brillante: #ff1a25;
-    --negro: #070707;
-    --negro-2: #101010;
-    --negro-3: #171717;
-    --gris: #999;
-    --gris-claro: #d8d8d8;
-    --blanco: #ffffff;
-    --verde: #20d66b;
-
-    --sombra: 0 12px 35px rgba(0, 0, 0, .35);
-    --radio: 14px;
-    --transicion: .25s ease;
+  --bg: #070b14;
+  --bg-secondary: #0d1322;
+  --panel: rgba(18, 25, 42, 0.82);
+  --panel-solid: #11192a;
+  --text: #f5f7fb;
+  --muted: #9da8bb;
+  --primary: #00d9ff;
+  --secondary: #7c3cff;
+  --accent: #ff3cac;
+  --success: #20e38a;
+  --border: rgba(255,255,255,.10);
+  --shadow: 0 20px 60px rgba(0,0,0,.40);
+  --radius: 22px;
+  --max-width: 1200px;
 }
 
-/* =========================================================
-   RESET
-   ========================================================= */
-
+/* RESET */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 html {
-    scroll-behavior: smooth;
+  scroll-behavior: smooth;
 }
 
 body {
-    font-family: Arial, Helvetica, sans-serif;
-    background:
-        radial-gradient(circle at top right, rgba(229, 9, 20, .10), transparent 35%),
-        var(--negro);
-    color: var(--blanco);
-    line-height: 1.6;
-    overflow-x: hidden;
+  font-family:
+    Inter,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+
+  color: var(--text);
+  background:
+    radial-gradient(circle at 15% 10%, rgba(0,217,255,.12), transparent 30%),
+    radial-gradient(circle at 85% 15%, rgba(124,60,255,.14), transparent 30%),
+    linear-gradient(135deg, #050811, #090e1b 50%, #060912);
+
+  min-height: 100vh;
+  line-height: 1.6;
+  overflow-x: hidden;
 }
 
-img,
-video {
-    max-width: 100%;
-    height: auto;
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(rgba(255,255,255,.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.015) 1px, transparent 1px);
+  background-size: 45px 45px;
+  mask-image: linear-gradient(to bottom, black, transparent);
+  z-index: -1;
 }
 
 a {
-    color: inherit;
-    text-decoration: none;
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
 }
 
 button,
 input,
 textarea {
-    font-family: inherit;
+  font: inherit;
 }
 
 /* =========================================================
-   SELECCIÓN
+   CONTENEDOR
    ========================================================= */
 
-::selection {
-    background: var(--rojo);
-    color: #fff;
+.container {
+  width: min(var(--max-width), calc(100% - 32px));
+  margin-inline: auto;
 }
 
 /* =========================================================
-   SCROLLBAR
+   HEADER
    ========================================================= */
-
-::-webkit-scrollbar {
-    width: 9px;
-}
-
-::-webkit-scrollbar-track {
-    background: #050505;
-}
-
-::-webkit-scrollbar-thumb {
-    background: var(--rojo);
-    border-radius: 20px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: var(--rojo-brillante);
-}
-
-/* =========================================================
-   CONTENEDOR GENERAL
-   ========================================================= */
-
-.container,
-.contenedor {
-    width: min(1180px, 92%);
-    margin: 0 auto;
-}
-
-/* =========================================================
-   HEADER / NAVBAR
-   ========================================================= */
-
-header,
-nav {
-    position: relative;
-    z-index: 1000;
-}
 
 header {
-    background: rgba(5, 5, 5, .96);
-    border-bottom: 1px solid rgba(255, 255, 255, .08);
-    box-shadow: 0 5px 25px rgba(0, 0, 0, .45);
-}
-
-nav {
-    min-height: 76px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 25px;
-    padding: 12px 4%;
-}
-
-nav a {
-    transition: var(--transicion);
-}
-
-nav a:hover {
-    color: var(--rojo);
-}
-
-/* Logo */
-
-.logo,
-.brand,
-header h1 {
-    font-weight: 900;
-    letter-spacing: -1px;
-}
-
-.logo span,
-.brand span {
-    color: var(--rojo);
-}
-
-/* Menú */
-
-nav ul {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 25px;
-    list-style: none;
-}
-
-nav ul li a {
-    color: #ddd;
-    font-size: 14px;
-    font-weight: 700;
-    text-transform: uppercase;
-}
-
-nav ul li a:hover {
-    color: var(--rojo);
-}
-
-/* =========================================================
-   INDICADOR EN VIVO
-   ========================================================= */
-
-.live,
-.en-vivo {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: var(--rojo);
-    color: #fff;
-    padding: 7px 13px;
-    border-radius: 30px;
-    font-size: 12px;
-    font-weight: 900;
-    letter-spacing: .7px;
-    text-transform: uppercase;
-    box-shadow: 0 0 20px rgba(229, 9, 20, .25);
-}
-
-.live::before,
-.en-vivo::before {
-    content: "";
-    width: 8px;
-    height: 8px;
-    background: #fff;
-    border-radius: 50%;
-    animation: pulso 1.3s infinite;
-}
-
-@keyframes pulso {
-    0% {
-        transform: scale(1);
-        opacity: 1;
-    }
-
-    50% {
-        transform: scale(1.7);
-        opacity: .35;
-    }
-
-    100% {
-        transform: scale(1);
-        opacity: 1;
-    }
-}
-
-/* =========================================================
-   HERO
-   ========================================================= */
-
-.hero {
-    min-height: 570px;
-    display: flex;
-    align-items: center;
-    position: relative;
-    overflow: hidden;
-    background:
-        linear-gradient(
-            90deg,
-            rgba(0,0,0,.98) 0%,
-            rgba(0,0,0,.90) 48%,
-            rgba(0,0,0,.45) 100%
-        ),
-        radial-gradient(
-            circle at 80% 40%,
-            rgba(229,9,20,.25),
-            transparent 45%
-        );
-}
-
-.hero::after {
-    content: "";
-    position: absolute;
-    width: 500px;
-    height: 500px;
-    right: -180px;
-    top: -150px;
-    background: rgba(229, 9, 20, .12);
-    border-radius: 50%;
-    filter: blur(60px);
-}
-
-.hero-content {
-    position: relative;
-    z-index: 2;
-    width: min(1180px, 92%);
-    margin: auto;
-}
-
-.hero h1 {
-    max-width: 800px;
-    font-size: clamp(42px, 7vw, 82px);
-    line-height: .95;
-    font-weight: 900;
-    letter-spacing: -3px;
-    margin: 18px 0;
-}
-
-.hero h1 span {
-    color: var(--rojo);
-}
-
-.hero p {
-    max-width: 700px;
-    color: #bbb;
-    font-size: 18px;
-    margin-bottom: 30px;
-}
-
-/* =========================================================
-   BOTONES
-   ========================================================= */
-
-button,
-.btn,
-.button {
-    border: 0;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    padding: 13px 21px;
-    border-radius: 8px;
-    background: var(--rojo);
-    color: #fff;
-    font-weight: 800;
-    transition: var(--transicion);
-}
-
-button:hover,
-.btn:hover,
-.button:hover {
-    background: var(--rojo-brillante);
-    transform: translateY(-2px);
-    box-shadow: 0 10px 25px rgba(229, 9, 20, .25);
-}
-
-.btn-secundario {
-    background: transparent;
-    border: 1px solid rgba(255,255,255,.2);
-}
-
-.btn-secundario:hover {
-    border-color: var(--rojo);
-}
-
-/* =========================================================
-   SECCIONES
-   ========================================================= */
-
-section {
-    padding: 85px 0;
-}
-
-section:nth-child(even) {
-    background: #0b0b0b;
-}
-
-.section-title {
-    margin-bottom: 40px;
-}
-
-.section-title small {
-    color: var(--rojo);
-    font-weight: 900;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-}
-
-.section-title h2 {
-    margin-top: 8px;
-    font-size: clamp(30px, 5vw, 48px);
-    line-height: 1.05;
-}
-
-.section-title p {
-    color: var(--gris);
-    margin-top: 10px;
-}
-
-/* =========================================================
-   ÚLTIMA HORA
-   ========================================================= */
-
-.ultima-hora {
-    background: var(--rojo);
-    color: #fff;
-    overflow: hidden;
-    white-space: nowrap;
-}
-
-.ultima-hora-inner {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    min-height: 48px;
-}
-
-.ultima-hora strong {
-    background: #000;
-    padding: 7px 13px;
-    border-radius: 5px;
-    font-size: 12px;
-}
-
-.ultima-hora span {
-    font-weight: 700;
-}
-
-/* =========================================================
-   TARJETAS DE NOTICIAS
-   ========================================================= */
-
-.news-grid,
-.noticias-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 22px;
-}
-
-.news-card,
-.noticia,
-.card {
-    position: relative;
-    overflow: hidden;
-    background: linear-gradient(
-        145deg,
-        #181818,
-        #0e0e0e
-    );
-    border: 1px solid rgba(255,255,255,.07);
-    border-radius: var(--radio);
-    padding: 25px;
-    transition: var(--transicion);
-}
-
-.news-card:hover,
-.noticia:hover,
-.card:hover {
-    transform: translateY(-7px);
-    border-color: rgba(229,9,20,.5);
-    box-shadow: var(--sombra);
-}
-
-.news-card::before,
-.noticia::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 4px;
-    height: 100%;
-    background: var(--rojo);
-}
-
-.news-card small,
-.noticia small {
-    color: var(--rojo);
-    font-weight: 800;
-    text-transform: uppercase;
-}
-
-.news-card h3,
-.noticia h3 {
-    margin: 12px 0;
-    font-size: 22px;
-    line-height: 1.2;
-}
-
-.news-card p,
-.noticia p {
-    color: #aaa;
-}
-
-/* =========================================================
-   LOCALIDADES
-   ========================================================= */
-
-.localidades,
-.ciudades {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 14px;
-}
-
-.localidad,
-.ciudad {
-    background: #111;
-    border: 1px solid #222;
-    border-radius: 10px;
-    padding: 18px;
-    transition: var(--transicion);
-}
-
-.localidad:hover,
-.ciudad:hover {
-    background: var(--rojo);
-    border-color: var(--rojo);
-    transform: translateY(-3px);
-}
-
-.localidad strong,
-.ciudad strong {
-    display: block;
-    font-size: 17px;
-}
-
-.localidad span,
-.ciudad span {
-    color: #999;
-    font-size: 13px;
-}
-
-.localidad:hover span,
-.ciudad:hover span {
-    color: #fff;
-}
-
-/* =========================================================
-   RADIO ONLINE
-   ========================================================= */
-
-.radio-player,
-.player {
-    position: relative;
-    overflow: hidden;
-    background:
-        linear-gradient(
-            135deg,
-            #191919,
-            #090909
-        );
-    border: 1px solid rgba(229,9,20,.35);
-    border-radius: 18px;
-    padding: 35px;
-    box-shadow: var(--sombra);
-}
-
-.radio-player::before {
-    content: "";
-    position: absolute;
-    width: 250px;
-    height: 250px;
-    right: -80px;
-    top: -100px;
-    background: rgba(229,9,20,.15);
-    border-radius: 50%;
-    filter: blur(20px);
-}
-
-.radio-player h2 {
-    position: relative;
-    z-index: 2;
-}
-
-.radio-player p {
-    position: relative;
-    z-index: 2;
-    color: #999;
-}
-
-.radio-controls {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    margin-top: 25px;
-}
-
-.play,
-.play-button {
-    width: 65px;
-    height: 65px;
-    border-radius: 50%;
-    background: var(--rojo);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 24px;
-    cursor: pointer;
-    transition: var(--transicion);
-}
-
-.play:hover,
-.play-button:hover {
-    transform: scale(1.08);
-    box-shadow: 0 0 30px rgba(229,9,20,.45);
-}
-
-/* =========================================================
-   BARRAS DEL AUDIO
-   ========================================================= */
-
-.audio-bars {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    height: 35px;
-}
-
-.audio-bars span {
-    width: 4px;
-    background: var(--rojo);
-    border-radius: 5px;
-    animation: audio 1s infinite ease-in-out;
-}
-
-.audio-bars span:nth-child(1) { height: 12px; }
-.audio-bars span:nth-child(2) { height: 25px; animation-delay: .1s; }
-.audio-bars span:nth-child(3) { height: 35px; animation-delay: .2s; }
-.audio-bars span:nth-child(4) { height: 20px; animation-delay: .3s; }
-.audio-bars span:nth-child(5) { height: 30px; animation-delay: .4s; }
-.audio-bars span:nth-child(6) { height: 15px; animation-delay: .5s; }
-
-@keyframes audio {
-    0%, 100% {
-        transform: scaleY(.55);
-    }
-
-    50% {
-        transform: scaleY(1);
-    }
-}
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 
-/* =========================================================
-   TV
-   ========================================================= */
+  background: rgba(5, 8, 17, .78);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
 
-.tv-container {
-    background: #050505;
-    border: 1px solid #222;
-    border-radius: 16px;
-    overflow: hidden;
-    box-shadow: var(--sombra);
+  border-bottom: 1px solid var(--border);
 }
 
-.tv-container iframe,
-.tv-container video {
-    width: 100%;
-    min-height: 500px;
-    display: block;
-    border: 0;
-}
-
-.tv-title {
-    padding: 18px 22px;
-    background: #111;
-    border-top: 3px solid var(--rojo);
-}
-
-.tv-title h3 {
-    font-size: 20px;
-}
-
-.tv-title p {
-    color: #888;
-}
-
-/* =========================================================
-   PROGRAMACIÓN
-   ========================================================= */
-
-.programacion {
-    display: grid;
-    gap: 12px;
-}
-
-.programa {
-    display: grid;
-    grid-template-columns: 150px 1fr;
-    align-items: center;
-    background: #111;
-    border: 1px solid #222;
-    border-radius: 10px;
-    overflow: hidden;
-    transition: var(--transicion);
-}
-
-.programa:hover {
-    border-color: var(--rojo);
-    transform: translateX(5px);
-}
-
-.programa-hora {
-    padding: 22px;
-    background: var(--rojo);
-    font-weight: 900;
-    text-align: center;
-}
-
-.programa-info {
-    padding: 18px 22px;
-}
-
-.programa-info h3 {
-    font-size: 19px;
-}
-
-.programa-info p {
-    color: #999;
-}
-
-/* =========================================================
-   PODCASTS
-   ========================================================= */
-
-.podcast-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-}
-
-.podcast {
-    padding: 28px;
-    background: #111;
-    border: 1px solid #222;
-    border-radius: 14px;
-    transition: var(--transicion);
-}
-
-.podcast:hover {
-    border-color: var(--rojo);
-    transform: translateY(-5px);
-}
-
-.podcast-icon {
-    width: 55px;
-    height: 55px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(229,9,20,.12);
-    color: var(--rojo);
-    border-radius: 12px;
-    font-size: 25px;
-    margin-bottom: 20px;
-}
-
-.podcast h3 {
-    margin-bottom: 8px;
-}
-
-.podcast p {
-    color: #999;
-}
-
-/* =========================================================
-   FORMULARIOS
-   ========================================================= */
-
-form {
-    display: grid;
-    gap: 15px;
-}
-
-input,
-textarea,
-select {
-    width: 100%;
-    padding: 14px 16px;
-    color: #fff;
-    background: #111;
-    border: 1px solid #2a2a2a;
-    border-radius: 8px;
-    outline: none;
-    transition: var(--transicion);
-}
-
-textarea {
-    min-height: 140px;
-    resize: vertical;
-}
-
-input:focus,
-textarea:focus,
-select:focus {
-    border-color: var(--rojo);
-    box-shadow: 0 0 0 3px rgba(229,9,20,.10);
-}
-
-/* =========================================================
-   ENCUESTA
-   ========================================================= */
-
-.encuesta {
-    padding: 35px;
-    background:
-        linear-gradient(
-            135deg,
-            #171717,
-            #0c0c0c
-        );
-    border: 1px solid #252525;
-    border-radius: 16px;
-}
-
-.encuesta-opciones {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 12px;
-    margin-top: 25px;
-}
-
-.encuesta-opciones button {
-    background: #151515;
-    border: 1px solid #292929;
-}
-
-.encuesta-opciones button:hover {
-    background: var(--rojo);
-    border-color: var(--rojo);
-}
-
-/* =========================================================
-   REDES
-   ========================================================= */
-
-.social-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-}
-
-.social-grid a {
-    padding: 12px 18px;
-    border-radius: 8px;
-    background: #151515;
-    border: 1px solid #252525;
-    color: #ddd;
-    font-weight: 700;
-    transition: var(--transicion);
-}
-
-.social-grid a:hover {
-    background: var(--rojo);
-    border-color: var(--rojo);
-    transform: translateY(-3px);
-}
-
-/* =========================================================
-   WHATSAPP
-   ========================================================= */
-
-.whatsapp {
-    position: fixed;
-    z-index: 9999;
-    right: 22px;
-    bottom: 22px;
+.navbar {
+  min-height: 76px;
 
-    width: 58px;
-    height: 58px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    background: #25d366;
-    color: #fff;
-
-    border-radius: 50%;
-    font-size: 27px;
-
-    box-shadow: 0 8px 30px rgba(37,211,102,.35);
-
-    transition: var(--transicion);
-}
-
-.whatsapp:hover {
-    transform: scale(1.1);
-}
-
-/* =========================================================
-   FOOTER
-   ========================================================= */
-
-footer {
-    background: #030303;
-    border-top: 1px solid #1b1b1b;
-    padding: 60px 0 25px;
-}
-
-.footer-grid {
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr;
-    gap: 50px;
-}
-
-footer h3 {
-    margin-bottom: 15px;
-}
-
-footer p,
-footer li,
-footer a {
-    color: #777;
-}
-
-footer a:hover {
-    color: var(--rojo);
-}
-
-footer ul {
-    list-style: none;
-    display: grid;
-    gap: 8px;
-}
-
-.footer-bottom {
-    margin-top: 45px;
-    padding-top: 20px;
-    border-top: 1px solid #171717;
-    text-align: center;
-    color: #555;
-    font-size: 13px;
-}
-
-/* =========================================================
-   ANIMACIONES DE ENTRADA
-   ========================================================= */
-
-.fade-in {
-    animation: aparecer .7s ease both;
-}
-
-@keyframes aparecer {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* =========================================================
-   RESPONSIVE TABLET
-   ========================================================= */
-
-@media (max-width: 900px) {
-
-    nav {
-        flex-direction: column;
-        padding: 15px 4%;
-    }
-
-    nav ul {
-        flex-wrap: wrap;
-        gap: 14px;
-    }
-
-    .hero {
-        min-height: 500px;
-    }
-
-    .news-grid,
-    .noticias-grid,
-    .podcast-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .localidades,
-    .ciudades {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .encuesta-opciones {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .footer-grid {
-        grid-template-columns: 1fr 1fr;
-    }
-}
-
-/* =========================================================
-   RESPONSIVE CELULAR
-   ========================================================= */
-
-@media (max-width: 600px) {
-
-    body {
-        font-size: 15px;
-    }
-
-    nav {
-        min-height: auto;
-        gap: 12px;
-    }
-
-    nav ul {
-        width: 100%;
-        gap: 8px;
-    }
-
-    nav ul li a {
-        font-size: 11px;
-    }
-
-    .hero {
-        min-height: 520px;
-        text-align: left;
-    }
-
-    .hero h1 {
-        font-size: 48px;
-        letter-spacing: -2px;
-    }
-
-    .hero p {
-        font-size: 16px;
-    }
-
-    section {
-        padding: 60px 0;
-    }
-
-    .news-grid,
-    .noticias-grid,
-    .podcast-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .localidades,
-    .ciudades {
-        grid-template-columns: 1fr 1fr;
-    }
-
-    .programa {
-        grid-template-columns: 1fr;
-    }
-
-    .programa-hora {
-        text-align: left;
-    }
-
-    .tv-container iframe,
-    .tv-container video {
-        min-height: 260px;
-    }
-
-    .radio-player,
-    .player {
-        padding: 25px;
-    }
-
-    .encuesta {
-        padding: 25px;
-    }
-
-    .encuesta-opciones {
-        grid-template-columns: 1fr;
-    }
-
-    .footer-grid {
-        grid-template-columns: 1fr;
-        gap: 30px;
-    }
-
-    .whatsapp {
-        width: 52px;
-        height: 52px;
-        right: 15px;
-        bottom: 15px;
-    }
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 25px;
 }
 
-/* =========================================================
-   PANTALLAS MUY PEQUEÑAS
-   ========================================================= */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 
-@media (max-width: 380px) {
-
-    .hero h1 {
-        font-size: 40px;
-    }
-
-    .localidades,
-    .ciudades {
-        grid-template-columns: 1fr;
-    }
-
-    nav ul li a {
-        font-size: 10px;
-    }
+  font-size: 1.35rem;
+  font-weight: 900;
+  letter-spacing: .5px;
 }
-
 
+.logo span {
+  background: linear-gradient(
+    90deg
