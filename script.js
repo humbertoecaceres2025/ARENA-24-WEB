@@ -1,1103 +1,1704 @@
-:root{
-    --bg:#05070b;
-    --bg2:#0a0f17;
-    --panel:#101722;
-    --orange:#ff5a1f;
-    --orange2:#ff8b45;
-    --cyan:#25d9e6;
-    --white:#fff;
-    --text:#e8edf3;
-    --muted:#98a4b3;
-    --border:rgba(255,255,255,.10);
-    --shadow:0 20px 60px rgba(0,0,0,.45);
+/* =========================================================
+   ARENA 24 RADIO WEB 3.2
+   ========================================================= */
+
+"use strict";
+
+
+/* =========================================================
+   CONFIGURACIÓN
+   ========================================================= */
+
+const CONFIG = {
+
+  stream:
+    "https://stream.zeno.fm/zuw6xmmwmd0uv",
+
+  whatsapp:
+    "https://web.whatsapp.com/",
+
+  facebook:
+    "https://www.facebook.com/arena24radiolarioja",
+
+  instagram:
+    "https://www.instagram.com/arena24radio/",
+
+  youtube:
+    "https://www.youtube.com/@ARENA24LARIOJA",
+
+  newsRefreshMinutes:
+    10
+
+};
+
+
+/* =========================================================
+   PROGRAMACIÓN
+   ========================================================= */
+
+const PROGRAMS = [
+
+  {
+    start: 0,
+    end: 6,
+
+    title:
+      "Martina Night & Relax",
+
+    host:
+      "Martina",
+
+    description:
+      "Música actual, relax y compañía durante la madrugada."
+
+  },
+
+  {
+    start: 6,
+    end: 10,
+
+    title:
+      "ARENA 24 Noticias",
+
+    host:
+      "Enrique",
+
+    description:
+      "Noticias de La Rioja, Argentina y el mundo para comenzar el día."
+
+  },
+
+  {
+    start: 10,
+    end: 14,
+
+    title:
+      "ARENA 24 Entretenimiento",
+
+    host:
+      "Viviana",
+
+    description:
+      "Música, actualidad, entretenimiento y compañía."
+
+  },
+
+  {
+    start: 14,
+    end: 18,
+
+    title:
+      "ARENA 24 Deportes",
+
+    host:
+      "Nicolás",
+
+    description:
+      "Toda la actualidad deportiva y los protagonistas."
+
+  },
+
+  {
+    start: 18,
+    end: 21,
+
+    title:
+      "ARENA 24 Entretenimiento",
+
+    host:
+      "Viviana",
+
+    description:
+      "La tarde continúa con música y entretenimiento."
+
+  },
+
+  {
+    start: 21,
+    end: 24,
+
+    title:
+      "Martina Night & Relax",
+
+    host:
+      "Martina",
+
+    description:
+      "Música actual y una noche más tranquila en ARENA 24."
+
+  }
+
+];
+
+
+/* =========================================================
+   ESTADO
+   ========================================================= */
+
+let currentProgram = null;
+
+let activeNewsCategory =
+  "rioja";
+
+let allNews = [];
+
+let audioStarted = false;
+
+
+/* =========================================================
+   HELPERS
+   ========================================================= */
+
+function $(selector) {
+  return document.querySelector(selector);
 }
 
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
-}
-
-html{
-    scroll-behavior:smooth;
-    scroll-padding-top:80px;
-}
-
-body{
-    background:
-        radial-gradient(
-            circle at 80% 10%,
-            rgba(255,90,31,.12),
-            transparent 35%
-        ),
-        #05070b;
-    color:var(--text);
-    font-family:Arial,Helvetica,sans-serif;
-    line-height:1.5;
-    padding-bottom:90px;
-}
-
-a{
-    color:inherit;
-    text-decoration:none;
-}
-
-button{
-    font:inherit;
+function $$(selector) {
+  return document.querySelectorAll(selector);
 }
 
 
-/* =========================
-   HEADER
-========================= */
+function escapeHTML(value) {
 
-.topbar{
-    position:sticky;
-    top:0;
-    z-index:1000;
-    min-height:72px;
-    display:flex;
-    align-items:center;
-    gap:25px;
-    padding:12px 5%;
-    background:rgba(5,7,11,.90);
-    border-bottom:1px solid var(--border);
-    backdrop-filter:blur(18px);
-}
+  if (value === null || value === undefined) {
+    return "";
+  }
 
-.brand{
-    font-size:27px;
-    font-weight:900;
-    white-space:nowrap;
-}
-
-.brand strong{
-    color:var(--orange);
-}
-
-.live-indicator{
-    display:flex;
-    align-items:center;
-    gap:7px;
-    color:#fff;
-    font-size:11px;
-    font-weight:900;
-    letter-spacing:1px;
-}
-
-.live-indicator i{
-    width:8px;
-    height:8px;
-    border-radius:50%;
-    background:#ff2424;
-    box-shadow:0 0 12px #ff2424;
-    animation:pulse 1.2s infinite;
-}
-
-@keyframes pulse{
-    50%{opacity:.35}
-}
-
-nav{
-    margin-left:auto;
-    display:flex;
-    gap:20px;
-}
-
-nav a{
-    color:#aeb8c5;
-    font-size:12px;
-    font-weight:800;
-}
-
-nav a:hover{
-    color:#fff;
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
 }
 
 
-/* =========================
-   HERO
-========================= */
+function safeURL(url) {
 
-.hero{
-    min-height:calc(100vh - 72px);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    text-align:center;
-    padding:80px 20px;
-    position:relative;
-    overflow:hidden;
+  try {
+
+    const parsed =
+      new URL(url, window.location.href);
+
+    if (
+      parsed.protocol === "https:" ||
+      parsed.protocol === "http:"
+    ) {
+      return parsed.href;
+    }
+
+  } catch (error) {}
+
+  return "#";
 }
 
-.hero::before{
-    content:"";
-    position:absolute;
-    inset:0;
-    opacity:.12;
-    background-image:
-        linear-gradient(
-            rgba(255,255,255,.08) 1px,
-            transparent 1px
-        ),
-        linear-gradient(
-            90deg,
-            rgba(255,255,255,.08) 1px,
-            transparent 1px
+
+function formatHour(hour) {
+
+  return String(hour)
+    .padStart(2, "0") + ":00";
+}
+
+
+/* =========================================================
+   RADIO
+   ========================================================= */
+
+const radioAudio =
+  $("#radioAudio");
+
+const playBtn =
+  $("#playBtn");
+
+const fixedPlayBtn =
+  $("#fixedPlayBtn");
+
+const muteBtn =
+  $("#muteBtn");
+
+const fixedMuteBtn =
+  $("#fixedMuteBtn");
+
+const volumeControl =
+  $("#volumeControl");
+
+const fixedVolumeControl =
+  $("#fixedVolumeControl");
+
+const volumeValue =
+  $("#volumeValue");
+
+const playerStatus =
+  $("#playerStatus");
+
+const fixedStatus =
+  $("#fixedStatus");
+
+const equalizer =
+  $("#equalizer");
+
+
+if (radioAudio) {
+
+  radioAudio.src =
+    CONFIG.stream;
+
+  radioAudio.volume =
+    0.85;
+}
+
+
+/* PLAY */
+
+async function playRadio() {
+
+  if (!radioAudio) {
+    return;
+  }
+
+  try {
+
+    if (!radioAudio.src) {
+      radioAudio.src =
+        CONFIG.stream;
+    }
+
+    await radioAudio.play();
+
+    audioStarted = true;
+
+    updatePlayerUI(true);
+
+  } catch (error) {
+
+    console.warn(
+      "No se pudo iniciar la transmisión:",
+      error
+    );
+
+    updatePlayerStatus(
+      "TOCÁ PLAY PARA ESCUCHAR"
+    );
+
+  }
+}
+
+
+/* PAUSE */
+
+function pauseRadio() {
+
+  if (!radioAudio) {
+    return;
+  }
+
+  radioAudio.pause();
+
+  audioStarted = false;
+
+  updatePlayerUI(false);
+}
+
+
+/* TOGGLE */
+
+function toggleRadio() {
+
+  if (
+    radioAudio &&
+    !radioAudio.paused
+  ) {
+
+    pauseRadio();
+
+  } else {
+
+    playRadio();
+
+  }
+
+}
+
+
+/* PLAYER UI */
+
+function updatePlayerUI(isPlaying) {
+
+  if (playBtn) {
+
+    playBtn.textContent =
+      isPlaying ? "❚❚" : "▶";
+
+  }
+
+  if (fixedPlayBtn) {
+
+    fixedPlayBtn.textContent =
+      isPlaying ? "❚❚" : "▶";
+
+  }
+
+  if (equalizer) {
+
+    equalizer.classList.toggle(
+      "active",
+      isPlaying
+    );
+
+  }
+
+  updatePlayerStatus(
+    isPlaying
+      ? "TRANSMITIENDO"
+      : "SEÑAL LISTA"
+  );
+
+}
+
+
+/* STATUS */
+
+function updatePlayerStatus(text) {
+
+  if (playerStatus) {
+    playerStatus.textContent =
+      text;
+  }
+
+  if (fixedStatus) {
+    fixedStatus.textContent =
+      text;
+  }
+
+}
+
+
+/* MUTE */
+
+function toggleMute() {
+
+  if (!radioAudio) {
+    return;
+  }
+
+  radioAudio.muted =
+    !radioAudio.muted;
+
+  updateMuteUI();
+
+}
+
+
+/* MUTE UI */
+
+function updateMuteUI() {
+
+  const icon =
+    radioAudio &&
+    radioAudio.muted
+      ? "🔇"
+      : "🔊";
+
+  if (muteBtn) {
+    muteBtn.textContent =
+      icon;
+  }
+
+  if (fixedMuteBtn) {
+    fixedMuteBtn.textContent =
+      icon;
+  }
+
+}
+
+
+/* VOLUME */
+
+function setVolume(value) {
+
+  if (!radioAudio) {
+    return;
+  }
+
+  const volume =
+    Number(value);
+
+  radioAudio.volume =
+    volume;
+
+  radioAudio.muted =
+    volume === 0;
+
+  if (volumeControl) {
+    volumeControl.value =
+      volume;
+  }
+
+  if (fixedVolumeControl) {
+    fixedVolumeControl.value =
+      volume;
+  }
+
+  if (volumeValue) {
+
+    volumeValue.textContent =
+      Math.round(volume * 100) + "%";
+
+  }
+
+  updateMuteUI();
+}
+
+
+/* EVENTS */
+
+if (playBtn) {
+
+  playBtn.addEventListener(
+    "click",
+    toggleRadio
+  );
+
+}
+
+if (fixedPlayBtn) {
+
+  fixedPlayBtn.addEventListener(
+    "click",
+    toggleRadio
+  );
+
+}
+
+if (muteBtn) {
+
+  muteBtn.addEventListener(
+    "click",
+    toggleMute
+  );
+
+}
+
+if (fixedMuteBtn) {
+
+  fixedMuteBtn.addEventListener(
+    "click",
+    toggleMute
+  );
+
+}
+
+if (volumeControl) {
+
+  volumeControl.addEventListener(
+    "input",
+    event => {
+      setVolume(
+        event.target.value
+      );
+    }
+  );
+
+}
+
+if (fixedVolumeControl) {
+
+  fixedVolumeControl.addEventListener(
+    "input",
+    event => {
+      setVolume(
+        event.target.value
+      );
+    }
+  );
+
+}
+
+
+if (radioAudio) {
+
+  radioAudio.addEventListener(
+    "playing",
+    () => {
+      updatePlayerUI(true);
+    }
+  );
+
+  radioAudio.addEventListener(
+    "pause",
+    () => {
+      updatePlayerUI(false);
+    }
+  );
+
+  radioAudio.addEventListener(
+    "waiting",
+    () => {
+      updatePlayerStatus(
+        "CONECTANDO..."
+      );
+    }
+  );
+
+  radioAudio.addEventListener(
+    "error",
+    () => {
+
+      updatePlayerStatus(
+        "REVISAR SEÑAL"
+      );
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   RELOJ
+   ========================================================= */
+
+function updateClock() {
+
+  const now =
+    new Date();
+
+  const clock =
+    $("#currentTime");
+
+  if (!clock) {
+    return;
+  }
+
+  clock.textContent =
+    now.toLocaleTimeString(
+      "es-AR",
+      {
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit"
+      }
+    );
+
+}
+
+
+updateClock();
+
+setInterval(
+  updateClock,
+  1000
+);
+
+
+/* =========================================================
+   PROGRAMACIÓN DINÁMICA
+   ========================================================= */
+
+function getCurrentProgram() {
+
+  const now =
+    new Date();
+
+  const hour =
+    now.getHours();
+
+  return (
+    PROGRAMS.find(
+      program =>
+        hour >= program.start &&
+        hour < program.end
+    ) ||
+    PROGRAMS[0]
+  );
+
+}
+
+
+function getNextProgram() {
+
+  const current =
+    getCurrentProgram();
+
+  const index =
+    PROGRAMS.indexOf(current);
+
+  return (
+    PROGRAMS[
+      (index + 1) %
+      PROGRAMS.length
+    ]
+  );
+
+}
+
+
+function updateNowPlaying() {
+
+  const program =
+    getCurrentProgram();
+
+  const next =
+    getNextProgram();
+
+  currentProgram =
+    program;
+
+
+  const nowProgram =
+    $("#nowProgram");
+
+  const nowHost =
+    $("#nowHost");
+
+  const nowDescription =
+    $("#nowDescription");
+
+  const nextProgram =
+    $("#nextProgram");
+
+  const nextTime =
+    $("#nextTime");
+
+  const fixedProgram =
+    $("#fixedProgram");
+
+
+  if (nowProgram) {
+    nowProgram.textContent =
+      program.title;
+  }
+
+  if (nowHost) {
+    nowHost.textContent =
+      program.host;
+  }
+
+  if (nowDescription) {
+    nowDescription.textContent =
+      program.description;
+  }
+
+  if (nextProgram) {
+    nextProgram.textContent =
+      next.title;
+  }
+
+  if (nextTime) {
+    nextTime.textContent =
+      formatHour(next.start);
+  }
+
+  if (fixedProgram) {
+    fixedProgram.textContent =
+      program.title;
+  }
+
+
+  renderSchedule();
+
+}
+
+
+updateNowPlaying();
+
+setInterval(
+  updateNowPlaying,
+  30000
+);
+
+
+/* =========================================================
+   RENDER PROGRAMACIÓN
+   ========================================================= */
+
+function renderSchedule() {
+
+  const container =
+    $("#scheduleGrid");
+
+  if (!container) {
+    return;
+  }
+
+  const active =
+    getCurrentProgram();
+
+  container.innerHTML =
+    PROGRAMS.map(
+      program => {
+
+        const isCurrent =
+          program === active;
+
+        return `
+
+          <article
+            class="schedule-card ${
+              isCurrent ? "current" : ""
+            }"
+          >
+
+            ${
+              isCurrent
+                ? `
+                  <span class="schedule-current">
+                    ● AHORA
+                  </span>
+                `
+                : ""
+            }
+
+            <div class="schedule-time">
+              ${formatHour(program.start)}
+              -
+              ${formatHour(program.end)}
+            </div>
+
+            <h3>
+              ${escapeHTML(program.title)}
+            </h3>
+
+            <p>
+              ${escapeHTML(program.description)}
+            </p>
+
+            <span class="schedule-host">
+              Con ${escapeHTML(program.host)}
+            </span>
+
+          </article>
+
+        `;
+
+      }
+    ).join("");
+
+}
+
+
+renderSchedule();
+
+
+/* =========================================================
+   MENÚ MOBILE
+   ========================================================= */
+
+const menuToggle =
+  $("#menuToggle");
+
+const mainNav =
+  $("#mainNav");
+
+
+if (menuToggle && mainNav) {
+
+  menuToggle.addEventListener(
+    "click",
+    () => {
+
+      const opened =
+        mainNav.classList.toggle(
+          "open"
         );
-    background-size:55px 55px;
-}
 
-.hero-content{
-    position:relative;
-    z-index:1;
-}
+      menuToggle.setAttribute(
+        "aria-expanded",
+        String(opened)
+      );
 
-.hero-label{
-    color:var(--orange);
-    font-size:11px;
-    font-weight:900;
-    letter-spacing:3px;
-}
+      menuToggle.textContent =
+        opened ? "×" : "☰";
 
-.hero h1{
-    margin-top:15px;
-    font-size:clamp(65px,12vw,150px);
-    line-height:.9;
-    letter-spacing:-7px;
-}
+    }
+  );
 
-.hero h1 strong{
-    color:var(--orange);
-}
 
-.hero h2{
-    margin-top:25px;
-    font-size:clamp(15px,2vw,23px);
-    color:#c6ced8;
-}
+  $$("#mainNav a").forEach(
+    link => {
 
-.hero p{
-    margin-top:18px;
-    color:var(--cyan);
-    font-size:16px;
-    font-weight:900;
-    letter-spacing:4px;
-}
+      link.addEventListener(
+        "click",
+        () => {
 
-.hero-button,
-.tv-button{
-    display:inline-block;
-    margin-top:30px;
-    padding:15px 25px;
-    border-radius:50px;
-    background:linear-gradient(
-        135deg,
-        var(--orange),
-        var(--orange2)
-    );
-    color:#fff;
-    font-size:12px;
-    font-weight:900;
-    box-shadow:0 10px 30px rgba(255,90,31,.25);
+          mainNav.classList.remove(
+            "open"
+          );
+
+          menuToggle.setAttribute(
+            "aria-expanded",
+            "false"
+          );
+
+          menuToggle.textContent =
+            "☰";
+
+        }
+      );
+
+    }
+  );
+
 }
 
 
-/* =========================
-   SECTIONS
-========================= */
+/* =========================================================
+   NOTICIAS RSS
+   ========================================================= */
 
-.section{
-    padding:95px 6%;
+/*
+  IMPORTANTE:
+
+  GitHub Pages es un hosting estático.
+  Por eso esta versión utiliza Google News RSS
+  mediante un proxy público para obtener los datos.
+
+  Para una versión 4.0 profesional se recomienda
+  utilizar un backend/proxy propio.
+*/
+
+
+const NEWS_CONFIG = {
+
+  rioja:
+    "La Rioja Argentina",
+
+  argentina:
+    "Argentina",
+
+  mundo:
+    "mundo",
+
+  deportes:
+    "deportes Argentina"
+
+};
+
+
+function googleNewsRSS(query) {
+
+  return (
+    "https://news.google.com/rss/search?q=" +
+    encodeURIComponent(query) +
+    "&hl=es-419&gl=AR&ceid=AR:es-419"
+  );
+
 }
 
-.section-title{
-    max-width:850px;
-    margin:0 auto 45px;
-    text-align:center;
-}
 
-.section-title span,
-.section-mini{
-    color:var(--orange);
-    font-size:11px;
-    font-weight:900;
-    letter-spacing:3px;
-}
+function proxyURL(url) {
 
-.section-title h2{
-    margin-top:8px;
-    font-size:clamp(35px,5vw,60px);
-    line-height:1;
-}
+  return (
+    "https://api.allorigins.win/raw?url=" +
+    encodeURIComponent(url)
+  );
 
-.section-title p{
-    margin-top:15px;
-    color:var(--muted);
 }
 
 
-/* =========================
-   PLAYER
-========================= */
+/* LOAD NEWS */
 
-.radio-section{
-    background:#080c12;
-}
+async function loadNews(
+  category = activeNewsCategory
+) {
 
-.radio-player{
-    max-width:850px;
-    margin:auto;
-    padding:35px;
-    border-radius:22px;
-    background:
-        linear-gradient(
-            145deg,
-            rgba(255,255,255,.07),
-            rgba(255,255,255,.025)
+  const grid =
+    $("#newsGrid");
+
+  const status =
+    $("#newsStatus");
+
+  if (!grid) {
+    return;
+  }
+
+  activeNewsCategory =
+    category;
+
+  grid.innerHTML =
+    `<div class="news-loading">
+      Buscando noticias...
+    </div>`;
+
+  if (status) {
+    status.textContent =
+      "Actualizando información...";
+  }
+
+
+  try {
+
+    const rss =
+      googleNewsRSS(
+        NEWS_CONFIG[category]
+      );
+
+    const response =
+      await fetch(
+        proxyURL(rss),
+        {
+          cache: "no-store"
+        }
+      );
+
+    if (!response.ok) {
+      throw new Error(
+        "Error HTTP " +
+        response.status
+      );
+    }
+
+    const xmlText =
+      await response.text();
+
+    const parser =
+      new DOMParser();
+
+    const xml =
+      parser.parseFromString(
+        xmlText,
+        "text/xml"
+      );
+
+    const items =
+      Array.from(
+        xml.querySelectorAll("item")
+      );
+
+
+    allNews =
+      items
+        .slice(0, 12)
+        .map(
+          item => parseNewsItem(
+            item,
+            category
+          )
         );
-    border:1px solid var(--border);
-    box-shadow:var(--shadow);
-}
 
-.player-top{
-    display:flex;
-    align-items:center;
-    gap:20px;
-}
 
-.station-logo{
-    width:90px;
-    height:90px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    flex-direction:column;
-    border-radius:20px;
-    background:#090c12;
-    border:1px solid var(--border);
-}
+    renderNews();
 
-.station-logo span{
-    font-size:16px;
-    font-weight:900;
-}
 
-.station-logo strong{
-    font-size:31px;
-    color:var(--orange);
-    line-height:.8;
-}
+    const updated =
+      $("#newsUpdated");
 
-.on-air{
-    color:#ff4545;
-    font-size:10px;
-    font-weight:900;
-    letter-spacing:2px;
-}
+    if (updated) {
 
-.station-info h3,
-.player-top h3{
-    margin-top:5px;
-    font-size:24px;
-}
+      updated.textContent =
+        "Actualizado " +
+        new Date()
+          .toLocaleTimeString(
+            "es-AR",
+            {
+              hour: "2-digit",
+              minute: "2-digit"
+            }
+          );
 
-.player-top p{
-    color:var(--muted);
-}
+    }
 
-.equalizer{
-    height:110px;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    gap:5px;
-    margin:30px 0 20px;
-}
+    if (status) {
 
-.equalizer i{
-    width:6px;
-    height:20px;
-    border-radius:5px;
-    background:linear-gradient(
-        to top,
-        var(--orange),
-        var(--cyan)
+      status.textContent =
+        allNews.length +
+        " noticias disponibles";
+
+    }
+
+
+  } catch (error) {
+
+    console.error(
+      "Noticias:",
+      error
     );
-}
 
-.equalizer.active i{
-    animation:eq 1s ease-in-out infinite alternate;
-}
+    grid.innerHTML = `
 
-.equalizer i:nth-child(2){animation-delay:.1s}
-.equalizer i:nth-child(3){animation-delay:.2s}
-.equalizer i:nth-child(4){animation-delay:.3s}
-.equalizer i:nth-child(5){animation-delay:.4s}
-.equalizer i:nth-child(6){animation-delay:.5s}
-.equalizer i:nth-child(7){animation-delay:.6s}
-.equalizer i:nth-child(8){animation-delay:.7s}
-.equalizer i:nth-child(9){animation-delay:.8s}
-.equalizer i:nth-child(10){animation-delay:.9s}
-.equalizer i:nth-child(11){animation-delay:1s}
-.equalizer i:nth-child(12){animation-delay:1.1s}
+      <div class="news-empty">
 
-@keyframes eq{
-    from{height:15px}
-    to{height:90px}
-}
+        <strong>
+          No pudimos actualizar las noticias.
+        </strong>
 
-.player-controls{
-    display:flex;
-    justify-content:center;
-    gap:15px;
-}
+        <br><br>
 
-.play-button{
-    width:72px;
-    height:72px;
-    border:0;
-    border-radius:50%;
-    cursor:pointer;
-    background:var(--orange);
-    color:#fff;
-    font-size:25px;
-    box-shadow:0 10px 30px rgba(255,90,31,.35);
-}
+        Intentá nuevamente con
+        <strong>Actualizar</strong>.
 
-.control-button{
-    width:46px;
-    height:46px;
-    margin-top:13px;
-    border-radius:50%;
-    border:1px solid var(--border);
-    background:#121822;
-    color:#fff;
-    cursor:pointer;
-}
+      </div>
 
-.player-status{
-    margin-top:18px;
-    text-align:center;
-    color:var(--muted);
-    font-size:13px;
+    `;
+
+    if (status) {
+      status.textContent =
+        "No se pudo actualizar";
+    }
+
+  }
+
 }
 
 
-/* =========================
-   AHORA EN VIVO
-========================= */
+/* PARSE NEWS ITEM */
 
-.now-section{
-    padding:35px 6%;
-    background:
-        linear-gradient(
-            90deg,
-            #0c1119,
-            #121a24
+function parseNewsItem(
+  item,
+  category
+) {
+
+  const title =
+    item.querySelector("title")
+      ?.textContent
+      ?.trim() ||
+    "Noticia";
+
+  const link =
+    item.querySelector("link")
+      ?.textContent
+      ?.trim() ||
+    "#";
+
+  const description =
+    item.querySelector("description")
+      ?.textContent
+      ?.trim() ||
+    "";
+
+  const pubDate =
+    item.querySelector("pubDate")
+      ?.textContent
+      ?.trim() ||
+    "";
+
+
+  let source =
+    item.querySelector("source")
+      ?.textContent
+      ?.trim() ||
+    "Google News";
+
+
+  /*
+    Intentamos obtener una imagen
+    desde media:content / media:thumbnail.
+  */
+
+  let image = "";
+
+  const mediaContent =
+    item.querySelector(
+      "content"
+    );
+
+  const mediaThumbnail =
+    item.querySelector(
+      "thumbnail"
+    );
+
+
+  if (mediaContent) {
+
+    image =
+      mediaContent.getAttribute(
+        "url"
+      ) || "";
+
+  }
+
+  if (!image && mediaThumbnail) {
+
+    image =
+      mediaThumbnail.getAttribute(
+        "url"
+      ) || "";
+
+  }
+
+
+  /*
+    Google News RSS no garantiza
+    imágenes directas.
+  */
+
+  const cleanDescription =
+    stripHTML(description);
+
+
+  return {
+
+    title,
+
+    link:
+
+      safeURL(link),
+
+    description:
+
+      cleanDescription
+        .slice(0, 170),
+
+    date:
+
+      pubDate,
+
+    source,
+
+    category,
+
+    image
+
+  };
+
+}
+
+
+/* STRIP HTML */
+
+function stripHTML(html) {
+
+  const temporary =
+    document.createElement(
+      "div"
+    );
+
+  temporary.innerHTML =
+    html;
+
+  return (
+    temporary.textContent ||
+    temporary.innerText ||
+    ""
+  ).trim();
+
+}
+
+
+/* =========================================================
+   RENDER NEWS
+   ========================================================= */
+
+function renderNews() {
+
+  const grid =
+    $("#newsGrid");
+
+  if (!grid) {
+    return;
+  }
+
+
+  const search =
+    ($("#newsSearch")?.value || "")
+      .trim()
+      .toLowerCase();
+
+
+  const filtered =
+    allNews.filter(
+      article => {
+
+        if (!search) {
+          return true;
+        }
+
+        return (
+
+          article.title
+            .toLowerCase()
+            .includes(search)
+
+          ||
+
+          article.description
+            .toLowerCase()
+            .includes(search)
+
+          ||
+
+          article.source
+            .toLowerCase()
+            .includes(search)
+
         );
-    border-top:1px solid var(--border);
-    border-bottom:1px solid var(--border);
-}
 
-.now-container{
-    max-width:1200px;
-    margin:auto;
-}
-
-.now-live{
-    display:flex;
-    align-items:center;
-    gap:8px;
-    color:var(--orange);
-    font-size:10px;
-    font-weight:900;
-    letter-spacing:2px;
-}
-
-.now-dot{
-    width:7px;
-    height:7px;
-    border-radius:50%;
-    background:#ff3333;
-    box-shadow:0 0 10px #ff3333;
-}
-
-.now-main{
-    display:grid;
-    grid-template-columns:150px 1fr 200px;
-    align-items:center;
-    gap:30px;
-    margin-top:15px;
-}
-
-.now-time span{
-    display:block;
-    color:#fff;
-    font-size:36px;
-    font-weight:900;
-}
-
-.now-time small{
-    color:var(--muted);
-    font-size:10px;
-    letter-spacing:2px;
-}
-
-.now-program span,
-.next-program span{
-    color:var(--cyan);
-    font-size:9px;
-    font-weight:900;
-    letter-spacing:2px;
-}
-
-.now-program h2{
-    margin-top:3px;
-    font-size:30px;
-    color:#fff;
-}
-
-.now-program h3{
-    color:var(--orange);
-    font-size:16px;
-}
-
-.now-program p{
-    color:var(--muted);
-    font-size:12px;
-}
-
-.next-program{
-    border-left:1px solid var(--border);
-    padding-left:25px;
-}
-
-.next-program strong{
-    display:block;
-    margin-top:5px;
-    color:#fff;
-    font-size:16px;
-}
-
-.next-program small{
-    color:var(--muted);
-}
-
-
-/* =========================
-   NEWS
-========================= */
-
-.news-section{
-    background:#f3f5f8;
-    color:#111;
-}
-
-.news-section .section-title h2{
-    color:#111;
-}
-
-.news-section .section-title p{
-    color:#657180;
-}
-
-.news-tabs{
-    display:flex;
-    justify-content:center;
-    flex-wrap:wrap;
-    gap:10px;
-    margin-bottom:35px;
-}
-
-.news-tab{
-    padding:11px 18px;
-    border-radius:50px;
-    border:1px solid #d5dae0;
-    background:#fff;
-    color:#3c4652;
-    font-size:11px;
-    font-weight:900;
-    cursor:pointer;
-}
-
-.news-tab.active,
-.news-tab:hover{
-    background:#111820;
-    color:#fff;
-}
-
-.news-grid{
-    max-width:1200px;
-    margin:auto;
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:20px;
-}
-
-.news-card{
-    background:#fff;
-    padding:23px;
-    border:1px solid #e0e4e8;
-    border-radius:18px;
-    box-shadow:0 10px 30px rgba(0,0,0,.06);
-}
-
-.news-source{
-    color:#eb5117;
-    font-size:10px;
-    font-weight:900;
-    letter-spacing:1px;
-}
-
-.news-card h3{
-    margin-top:10px;
-    color:#111820;
-    font-size:18px;
-    line-height:1.3;
-}
-
-.news-card p{
-    margin-top:10px;
-    color:#75808d;
-    font-size:12px;
-}
-
-.news-card a{
-    display:inline-block;
-    margin-top:17px;
-    color:#e95118;
-    font-size:11px;
-    font-weight:900;
-}
-
-.news-loading{
-    grid-column:1/-1;
-    min-height:180px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    flex-direction:column;
-    color:#697481;
-}
-
-.loading-circle{
-    width:35px;
-    height:35px;
-    border-radius:50%;
-    border:3px solid #d9dee3;
-    border-top-color:#e95118;
-    animation:spin 1s linear infinite;
-    margin-bottom:12px;
-}
-
-@keyframes spin{
-    to{transform:rotate(360deg)}
-}
-
-.refresh-button{
-    display:block;
-    margin:35px auto 0;
-    padding:13px 20px;
-    border:0;
-    border-radius:50px;
-    background:#111820;
-    color:#fff;
-    font-size:11px;
-    font-weight:900;
-    cursor:pointer;
-}
-
-
-/* =========================
-   PROGRAMACION
-========================= */
-
-.schedule-section{
-    background:#090d14;
-}
-
-.schedule-grid{
-    max-width:1200px;
-    margin:auto;
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:20px;
-}
-
-.program-card{
-    padding:25px;
-    min-height:220px;
-    border-radius:20px;
-    background:linear-gradient(
-        145deg,
-        #151d28,
-        #0a1017
+      }
     );
-    border:1px solid var(--border);
-    position:relative;
-    overflow:hidden;
-}
 
-.program-card.current{
-    border-color:var(--orange);
-    box-shadow:
-        0 0 0 1px rgba(255,90,31,.15),
-        0 15px 40px rgba(255,90,31,.10);
-}
 
-.program-card.current::before{
-    content:"● AHORA";
-    position:absolute;
-    top:15px;
-    right:15px;
-    color:var(--orange);
-    font-size:9px;
-    font-weight:900;
-    letter-spacing:1px;
-}
+  if (!filtered.length) {
 
-.program-time{
-    color:var(--cyan);
-    font-size:10px;
-    font-weight:900;
-}
+    grid.innerHTML = `
 
-.program-number{
-    margin-top:18px;
-    color:rgba(255,255,255,.12);
-    font-size:42px;
-    font-weight:900;
-}
+      <div class="news-empty">
 
-.program-card h3{
-    color:#fff;
-    font-size:25px;
-}
+        No encontramos noticias
+        con esa búsqueda.
 
-.program-card h4{
-    color:var(--orange);
-    font-size:13px;
-}
+      </div>
 
-.program-card p{
-    margin-top:8px;
-    color:var(--muted);
-    font-size:12px;
+    `;
+
+    return;
+
+  }
+
+
+  grid.innerHTML =
+    filtered
+      .map(
+        article =>
+          createNewsCard(article)
+      )
+      .join("");
+
 }
 
 
-/* =========================
-   TV
-========================= */
+/* NEWS CARD */
 
-.tv-section{
-    background:#05070b;
-}
+function createNewsCard(
+  article
+) {
 
-.tv-content{
-    max-width:1150px;
-    margin:auto;
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:60px;
-    align-items:center;
-}
+  const imageHTML =
+    article.image
+      ? `
 
-.tv-content h2{
-    margin-top:10px;
-    font-size:clamp(45px,6vw,75px);
-}
+        <img
+          src="${safeURL(article.image)}"
+          alt=""
+          loading="lazy"
+          onerror="this.style.display='none';"
+        >
 
-.tv-content p{
-    margin-top:20px;
-    color:var(--muted);
-}
+      `
+      : `
 
-.tv-screen{
-    aspect-ratio:16/10;
-    padding:12px;
-    border-radius:20px;
-    background:#161c25;
-    border:1px solid var(--border);
-}
+        <div class="news-placeholder">
+          📰
+        </div>
 
-.tv-screen-inner{
-    width:100%;
-    height:100%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    flex-direction:column;
-    border-radius:12px;
-    background:#080b11;
-}
-
-.tv-screen-inner span{
-    font-size:30px;
-    font-weight:900;
-}
-
-.tv-screen-inner strong{
-    font-size:80px;
-    line-height:.75;
-    color:var(--orange);
-}
-
-.tv-screen-inner small{
-    margin-top:20px;
-    color:var(--cyan);
-    letter-spacing:3px;
-}
+      `;
 
 
-/* =========================
-   SOCIAL
-========================= */
-
-.social-section{
-    background:#f4f6f8;
-}
-
-.social-section .section-title h2{
-    color:#111;
-}
-
-.social-grid{
-    max-width:1100px;
-    margin:auto;
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:18px;
-}
-
-.social-card{
-    min-height:160px;
-    padding:24px;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    background:#fff;
-    border:1px solid #e0e5ea;
-    border-radius:20px;
-    transition:.25s;
-}
-
-.social-card:hover{
-    transform:translateY(-5px);
-}
-
-.social-icon{
-    width:43px;
-    height:43px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    border-radius:13px;
-    background:#111820;
-    color:#fff;
-    font-size:21px;
-    font-weight:900;
-    margin-bottom:18px;
-}
-
-.social-card strong{
-    font-size:17px;
-}
-
-.social-card small{
-    margin-top:5px;
-    color:#7b8592;
-}
-
-.facebook .social-icon{background:#1877f2}
-.youtube .social-icon{background:#f00}
-.whatsapp .social-icon{background:#20b957}
-
-.instagram .social-icon{
-    background:linear-gradient(
-        135deg,
-        #833ab4,
-        #fd1d1d,
-        #fcb045
+  const date =
+    formatNewsDate(
+      article.date
     );
+
+
+  return `
+
+    <article class="news-card">
+
+      <div class="news-image">
+
+        ${imageHTML}
+
+        <span class="news-category">
+          ${escapeHTML(
+            categoryName(
+              article.category
+            )
+          )}
+        </span>
+
+      </div>
+
+
+      <div class="news-content">
+
+        <h3>
+          ${escapeHTML(
+            article.title
+          )}
+        </h3>
+
+        <p>
+          ${escapeHTML(
+            article.description
+          )}
+        </p>
+
+
+        <div class="news-footer">
+
+          <span>
+            ${escapeHTML(
+              article.source
+            )}
+            ·
+            ${escapeHTML(date)}
+          </span>
+
+          <a
+            href="${safeURL(article.link)}"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            LEER →
+          </a>
+
+        </div>
+
+      </div>
+
+    </article>
+
+  `;
+
 }
 
 
-/* =========================
-   PLAYER FIJO
-========================= */
+/* CATEGORY NAME */
 
-.fixed-player{
-    position:fixed;
-    left:0;
-    right:0;
-    bottom:0;
-    z-index:5000;
-    min-height:78px;
-    padding:10px 5%;
-    display:grid;
-    grid-template-columns:1fr auto 1fr;
-    align-items:center;
-    gap:20px;
-    background:rgba(5,7,11,.96);
-    border-top:1px solid rgba(255,255,255,.12);
-    box-shadow:0 -15px 50px rgba(0,0,0,.45);
-    backdrop-filter:blur(20px);
-}
+function categoryName(
+  category
+) {
 
-.fixed-info{
-    display:flex;
-    align-items:center;
-    gap:12px;
-}
+  const names = {
 
-.mini-logo{
-    width:46px;
-    height:46px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    border-radius:12px;
-    background:#101720;
-    color:#fff;
-    font-weight:900;
-}
+    rioja:
+      "LA RIOJA",
 
-.mini-logo span{
-    color:var(--orange);
-}
+    argentina:
+      "ARGENTINA",
 
-.fixed-info strong{
-    display:block;
-    color:#fff;
-    font-size:13px;
-}
+    mundo:
+      "MUNDO",
 
-.fixed-info small{
-    color:var(--muted);
-    font-size:10px;
-}
+    deportes:
+      "DEPORTES"
 
-.fixed-center{
-    display:flex;
-    align-items:center;
-    gap:18px;
-}
+  };
 
-.fixed-play{
-    width:52px;
-    height:52px;
-    border:0;
-    border-radius:50%;
-    background:var(--orange);
-    color:#fff;
-    cursor:pointer;
-    font-size:18px;
-}
+  return (
+    names[category] ||
+    "NOTICIAS"
+  );
 
-.fixed-eq{
-    display:flex;
-    align-items:center;
-    gap:3px;
-    height:35px;
-}
-
-.fixed-eq i{
-    width:3px;
-    height:10px;
-    background:var(--cyan);
-    border-radius:3px;
-}
-
-.fixed-eq.active i{
-    animation:miniEq .7s infinite alternate;
-}
-
-.fixed-eq i:nth-child(2){animation-delay:.1s}
-.fixed-eq i:nth-child(3){animation-delay:.2s}
-.fixed-eq i:nth-child(4){animation-delay:.3s}
-.fixed-eq i:nth-child(5){animation-delay:.4s}
-.fixed-eq i:nth-child(6){animation-delay:.5s}
-
-@keyframes miniEq{
-    to{height:30px}
-}
-
-.fixed-actions{
-    display:flex;
-    justify-content:flex-end;
-    align-items:center;
-    gap:10px;
-}
-
-.fixed-actions button,
-.fixed-actions a{
-    border:1px solid var(--border);
-    background:#111820;
-    color:#fff;
-    border-radius:30px;
-    padding:9px 13px;
-    font-size:10px;
-    cursor:pointer;
 }
 
 
-/* =========================
-   FOOTER
-========================= */
+/* NEWS DATE */
 
-footer{
-    padding:55px 20px;
-    text-align:center;
-    background:#030507;
-    color:#8f99a7;
-}
+function formatNewsDate(
+  value
+) {
 
-.footer-brand{
-    font-size:35px;
-    color:#fff;
-    font-weight:900;
-}
+  if (!value) {
+    return "";
+  }
 
-.footer-brand strong{
-    color:var(--orange);
-}
+  const date =
+    new Date(value);
 
-footer p{
-    margin-top:6px;
-    font-size:12px;
-}
+  if (
+    Number.isNaN(
+      date.getTime()
+    )
+  ) {
 
-.footer-line{
-    width:80px;
-    height:2px;
-    margin:25px auto;
-    background:var(--orange);
-}
+    return "";
 
-footer small{
-    font-size:10px;
+  }
+
+  return date.toLocaleDateString(
+    "es-AR",
+    {
+      day: "2-digit",
+      month: "2-digit"
+    }
+  );
+
 }
 
 
-/* =========================
-   RESPONSIVE
-========================= */
+/* =========================================================
+   NEWS TABS
+   ========================================================= */
 
-@media(max-width:1000px){
+$$(".news-tab").forEach(
+  tab => {
 
-    nav{
-        display:none;
+    tab.addEventListener(
+      "click",
+      () => {
+
+        $$(".news-tab").forEach(
+          button => {
+
+            button.classList.remove(
+              "active"
+            );
+
+          }
+        );
+
+        tab.classList.add(
+          "active"
+        );
+
+        const category =
+          tab.dataset.category;
+
+        loadNews(category);
+
+      }
+    );
+
+  }
+);
+
+
+/* REFRESH */
+
+const refreshNews =
+  $("#refreshNews");
+
+if (refreshNews) {
+
+  refreshNews.addEventListener(
+    "click",
+    () => {
+
+      loadNews(
+        activeNewsCategory
+      );
+
     }
+  );
 
-    .news-grid{
-        grid-template-columns:repeat(2,1fr);
-    }
-
-    .schedule-grid{
-        grid-template-columns:repeat(2,1fr);
-    }
-
-    .social-grid{
-        grid-template-columns:repeat(2,1fr);
-    }
-
-    .tv-content{
-        grid-template-columns:1fr;
-    }
-
-    .now-main{
-        grid-template-columns:120px 1fr;
-    }
-
-    .next-program{
-        display:none;
-    }
 }
 
 
-@media(max-width:650px){
+/* SEARCH */
 
-    body{
-        padding-bottom:82px;
-    }
+const newsSearch =
+  $("#newsSearch");
 
-    .section{
-        padding:70px 18px;
-    }
+if (newsSearch) {
 
-    .hero h1{
-        letter-spacing:-4px;
-    }
+  newsSearch.addEventListener(
+    "input",
+    renderNews
+  );
 
-    .radio-player{
-        padding:22px;
-    }
-
-    .player-top{
-        align-items:flex-start;
-    }
-
-    .station-logo{
-        width:70px;
-        height:70px;
-        flex-shrink:0;
-    }
-
-    .station-info h3,
-    .player-top h3{
-        font-size:19px;
-    }
-
-    .news-grid,
-    .schedule-grid,
-    .social-grid{
-        grid-template-columns:1fr;
-    }
-
-    .now-main{
-        grid-template-columns:90px 1fr;
-        gap:15px;
-    }
-
-    .now-time span{
-        font-size:27px;
-    }
-
-    .now-program h2{
-        font-size:22px;
-    }
-
-    .fixed-player{
-        min-height:70px;
-        padding:8px 12px;
-        grid-template-columns:1fr auto;
-        gap:10px;
-    }
-
-    .fixed-center{
-        order:3;
-    }
-
-    .fixed-eq{
-        display:none;
-    }
-
-    .fixed-actions a{
-        display:none;
-    }
-
-    .fixed-info small{
-        display:none;
-    }
-
-    .fixed-play{
-        width:48px;
-        height:48px;
-    }
-
-    .tv-screen-inner strong{
-        font-size:65px;
-    }
 }
+
+
+/* INITIAL NEWS */
+
+loadNews(
+  activeNewsCategory
+);
+
+
+/* AUTO REFRESH */
+
+setInterval(
+  () => {
+
+    loadNews(
+      activeNewsCategory
+    );
+
+  },
+  CONFIG.newsRefreshMinutes *
+  60 *
+  1000
+);
+
+
+/* =========================================================
+   PEDIDO DE CANCIÓN
+   ========================================================= */
+
+const musicModal =
+  $("#musicModal");
+
+const musicRequestBtn =
+  $("#musicRequestBtn");
+
+const closeModal =
+  $("#closeModal");
+
+const musicForm =
+  $("#musicForm");
+
+
+function openMusicModal() {
+
+  if (!musicModal) {
+    return;
+  }
+
+  musicModal.classList.add(
+    "open"
+  );
+
+  musicModal.setAttribute(
+    "aria-hidden",
+    "false"
+  );
+
+}
+
+
+function closeMusicModal() {
+
+  if (!musicModal) {
+    return;
+  }
+
+  musicModal.classList.remove(
+    "open"
+  );
+
+  musicModal.setAttribute(
+    "aria-hidden",
+    "true"
+  );
+
+}
+
+
+if (musicRequestBtn) {
+
+  musicRequestBtn.addEventListener(
+    "click",
+    openMusicModal
+  );
+
+}
+
+
+if (closeModal) {
+
+  closeModal.addEventListener(
+    "click",
+    closeMusicModal
+  );
+
+}
+
+
+if (musicModal) {
+
+  musicModal.addEventListener(
+    "click",
+    event => {
+
+      if (
+        event.target ===
+        musicModal
+      ) {
+
+        closeMusicModal();
+
+      }
+
+    }
+  );
+
+}
+
+
+/* FORM */
+
+if (musicForm) {
+
+  musicForm.addEventListener(
+    "submit",
+    event => {
+
+      event.preventDefault();
+
+
+      const name =
+        $("#requestName")
+          ?.value
+          ?.trim() || "";
+
+      const artist =
+        $("#requestArtist")
+          ?.value
+          ?.trim() || "";
+
+      const song =
+        $("#requestSong")
+          ?.value
+          ?.trim() || "";
+
+
+      const message =
+        `Hola ARENA 24. Soy ${name}. ` +
+        `Quiero pedir la canción "${song}" ` +
+        `de ${artist}.`;
+
+
+      /*
+        Como todavía no tenemos el número
+        directo de WhatsApp de la radio,
+        abrimos WhatsApp Web y copiamos
+        el mensaje para que pueda enviarse.
+      */
+
+      navigator.clipboard
+        ?.writeText(message)
+        .catch(
+          () => {}
+        );
+
+
+      window.open(
+        CONFIG.whatsapp,
+        "_blank",
+        "noopener,noreferrer"
+      );
+
+
+      closeMusicModal();
+
+      alert(
+        "El pedido fue preparado. " +
+        "El mensaje fue copiado si tu navegador lo permite."
+      );
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   AÑO
+   ========================================================= */
+
+const year =
+  $("#year");
+
+if (year) {
+
+  year.textContent =
+    new Date()
+      .getFullYear();
+
+}
+
+
+/* =========================================================
+   INICIO
+   ========================================================= */
+
+setVolume(
+  0.85
+);
+
+updateMuteUI();
+
+console.log(
+  "ARENA 24 Radio Web 3.2 iniciada correctamente."
+);
