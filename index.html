@@ -1,543 +1,918 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
+  <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta name="theme-color" content="#05070b">
+  <title>ARENA 24 | Radio Web La Rioja Argentina</title>
 
-<meta name="description"
-content="ARENA 24 Radio Web — La Rioja, Argentina. Música, noticias, entretenimiento y deportes.">
+  <meta
+    name="description"
+    content="ARENA 24 Radio Web desde La Rioja, Argentina. Música, noticias, entretenimiento y deportes. Siempre con vos."
+  >
 
-<title>ARENA 24 | Radio Web La Rioja</title>
+  <meta
+    name="keywords"
+    content="Arena 24, radio La Rioja, radio online, La Rioja Argentina, noticias, música, deportes"
+  >
 
-<link rel="stylesheet" href="./assets/css/style.css">
+  <meta name="theme-color" content="#080b12">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="ARENA 24 Radio Web">
+  <meta property="og:description" content="Siempre con vos. Música, noticias, entretenimiento y deportes.">
+  <meta property="og:type" content="website">
+
+  <link rel="stylesheet" href="./assets/css/style.css">
+
+  <script src="./assets/js/app.js" defer></script>
 </head>
 
 <body>
 
-<header class="topbar">
+  <!-- =========================
+       HEADER
+  ========================== -->
 
-    <a href="#inicio" class="brand">
-        <span>ARENA</span><strong>24</strong>
-    </a>
+  <header class="topbar">
 
-    <div class="live-indicator">
-        <i></i>
-        EN VIVO
-    </div>
+    <div class="container nav-container">
 
-    <nav>
+      <a href="#inicio" class="brand">
+        <span class="brand-arena">ARENA</span>
+        <span class="brand-number">24</span>
+      </a>
+
+      <button
+        class="menu-toggle"
+        id="menuToggle"
+        aria-label="Abrir menú"
+        aria-expanded="false"
+      >
+        ☰
+      </button>
+
+      <nav class="main-nav" id="mainNav">
+
         <a href="#inicio">Inicio</a>
         <a href="#radio">Radio</a>
         <a href="#ahora">Ahora</a>
         <a href="#noticias">Noticias</a>
         <a href="#programacion">Programación</a>
-        <a href="#tv">TV</a>
+        <a href="#tv">ARENA 24 TV</a>
         <a href="#contacto">Contacto</a>
-    </nav>
 
-</header>
+      </nav>
+
+    </div>
+
+  </header>
 
 
-<main>
+  <!-- =========================
+       HERO
+  ========================== -->
 
-<!-- HERO -->
+  <main id="inicio">
 
-<section id="inicio" class="hero">
+    <section class="hero">
 
-    <div class="hero-content">
+      <div class="hero-glow hero-glow-one"></div>
+      <div class="hero-glow hero-glow-two"></div>
 
-        <div class="hero-label">
-            RADIO WEB · LA RIOJA · ARGENTINA
+      <div class="container hero-content">
+
+        <div class="live-badge">
+          <span class="live-dot"></span>
+          TRANSMISIÓN ONLINE
         </div>
 
         <h1>
-            ARENA <strong>24</strong>
+          ARENA <strong>24</strong>
         </h1>
 
-        <h2>
-            Música · Noticias · Entretenimiento · Deportes
-        </h2>
-
-        <p>SIEMPRE CON VOS</p>
-
-        <a href="#radio" class="hero-button">
-            ▶ ESCUCHÁ AHORA
-        </a>
-
-    </div>
-
-</section>
-
-
-<!-- PLAYER PRINCIPAL -->
-
-<section id="radio" class="section radio-section">
-
-    <div class="section-title">
-
-        <span>ARENA 24 RADIO</span>
-
-        <h2>RADIO EN VIVO</h2>
-
-        <p>
-            La señal online desde La Rioja, Argentina.
+        <p class="hero-slogan">
+          Siempre con vos.
         </p>
 
-    </div>
+        <p class="hero-description">
+          Radio Web desde La Rioja, Argentina.
+          Música, noticias, entretenimiento y deportes.
+        </p>
+
+        <div class="hero-buttons">
+
+          <a href="#radio" class="btn btn-primary">
+            ▶ ESCUCHAR AHORA
+          </a>
+
+          <a href="#programacion" class="btn btn-secondary">
+            VER PROGRAMACIÓN
+          </a>
+
+        </div>
+
+      </div>
+
+    </section>
 
 
-    <div class="radio-player">
+    <!-- =========================
+         RADIO PLAYER
+    ========================== -->
 
-        <div class="player-top">
+    <section class="section player-section" id="radio">
 
-            <div class="station-logo">
-                <span>ARENA</span>
-                <strong>24</strong>
+      <div class="container">
+
+        <div class="section-heading">
+
+          <span class="eyebrow">
+            ARENA 24 RADIO
+          </span>
+
+          <h2>
+            Escuchá la transmisión
+          </h2>
+
+          <p>
+            La señal online de ARENA 24 desde La Rioja.
+          </p>
+
+        </div>
+
+
+        <div class="main-player">
+
+          <div class="player-top">
+
+            <div class="station-icon">
+              <span>24</span>
+            </div>
+
+            <div class="station-info">
+
+              <span class="station-label">
+                ARENA 24
+              </span>
+
+              <h3>
+                Radio Web
+              </h3>
+
+              <div class="signal-status">
+                <span class="signal-dot"></span>
+                <span id="playerStatus">
+                  SEÑAL LISTA
+                </span>
+              </div>
+
+            </div>
+
+            <div class="equalizer" id="equalizer">
+
+              <i></i>
+              <i></i>
+              <i></i>
+              <i></i>
+              <i></i>
+              <i></i>
+              <i></i>
+
+            </div>
+
+          </div>
+
+
+          <div class="player-controls">
+
+            <button
+              id="playBtn"
+              class="play-button"
+              aria-label="Reproducir"
+            >
+              ▶
+            </button>
+
+            <button
+              id="muteBtn"
+              class="control-button"
+              aria-label="Silenciar"
+            >
+              🔊
+            </button>
+
+            <input
+              type="range"
+              id="volumeControl"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.85"
+              aria-label="Volumen"
+            >
+
+            <span id="volumeValue">
+              85%
+            </span>
+
+          </div>
+
+
+          <audio
+            id="radioAudio"
+            preload="none"
+          >
+          </audio>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         AHORA EN VIVO
+    ========================== -->
+
+    <section class="section now-section" id="ahora">
+
+      <div class="container">
+
+        <div class="now-card">
+
+          <div class="now-main">
+
+            <div class="now-live">
+              <span class="live-dot"></span>
+              AHORA EN VIVO
+            </div>
+
+            <div id="currentTime" class="live-clock">
+              --:--:--
+            </div>
+
+            <h2 id="nowProgram">
+              ARENA 24
+            </h2>
+
+            <p class="host-line">
+              Con <strong id="nowHost">ARENA 24</strong>
+            </p>
+
+            <p id="nowDescription">
+              Música, noticias y entretenimiento.
+            </p>
+
+          </div>
+
+
+          <div class="next-program">
+
+            <span>
+              A CONTINUACIÓN
+            </span>
+
+            <strong id="nextProgram">
+              --
+            </strong>
+
+            <small id="nextTime">
+              --
+            </small>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         NOTICIAS
+    ========================== -->
+
+    <section class="section news-section" id="noticias">
+
+      <div class="container">
+
+        <div class="section-heading news-heading">
+
+          <div>
+
+            <span class="eyebrow">
+              INFORMACIÓN
+            </span>
+
+            <h2>
+              Noticias
+            </h2>
+
+            <p>
+              La Rioja, Argentina, mundo y deportes.
+            </p>
+
+          </div>
+
+          <button
+            id="refreshNews"
+            class="refresh-button"
+          >
+            ↻ Actualizar
+          </button>
+
+        </div>
+
+
+        <!-- Buscador -->
+
+        <div class="news-search">
+
+          <input
+            type="search"
+            id="newsSearch"
+            placeholder="Buscar noticias..."
+            autocomplete="off"
+          >
+
+          <span>
+            🔎
+          </span>
+
+        </div>
+
+
+        <!-- Categorías -->
+
+        <div class="news-tabs">
+
+          <button
+            class="news-tab active"
+            data-category="rioja"
+          >
+            La Rioja
+          </button>
+
+          <button
+            class="news-tab"
+            data-category="argentina"
+          >
+            Argentina
+          </button>
+
+          <button
+            class="news-tab"
+            data-category="mundo"
+          >
+            Mundo
+          </button>
+
+          <button
+            class="news-tab"
+            data-category="deportes"
+          >
+            Deportes
+          </button>
+
+        </div>
+
+
+        <div class="news-meta">
+
+          <span id="newsStatus">
+            Cargando noticias...
+          </span>
+
+          <span id="newsUpdated">
+            --
+          </span>
+
+        </div>
+
+
+        <div
+          class="news-grid"
+          id="newsGrid"
+        >
+
+          <div class="news-loading">
+            Cargando información...
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         MANDÁ TU NOTICIA
+    ========================== -->
+
+    <section class="section participate-section">
+
+      <div class="container">
+
+        <div class="participate-grid">
+
+          <div class="participate-card">
+
+            <div class="participate-icon">
+              📰
             </div>
 
             <div>
 
-                <span class="on-air">
-                    ● EN VIVO
-                </span>
+              <span class="eyebrow">
+                PARTICIPÁ
+              </span>
 
-                <h3>ARENA 24 RADIO</h3>
+              <h3>
+                Mandá tu noticia
+              </h3>
 
-                <p>La Rioja · Argentina</p>
+              <p>
+                ¿Tenés una información para compartir?
+                Envianos tu noticia a ARENA 24.
+              </p>
 
-            </div>
-
-        </div>
-
-
-        <div id="equalizer" class="equalizer">
-
-            <i></i><i></i><i></i><i></i>
-            <i></i><i></i><i></i><i></i>
-            <i></i><i></i><i></i><i></i>
-
-        </div>
-
-
-        <div class="player-controls">
-
-            <button id="playBtn" class="play-button">
-                ▶
-            </button>
-
-            <button id="muteBtn" class="control-button">
-                🔊
-            </button>
-
-        </div>
-
-
-        <div id="playerStatus" class="player-status">
-            Presioná reproducir para escuchar ARENA 24
-        </div>
-
-
-        <audio
-            id="radioAudio"
-            preload="none"
-            src="https://stream.zeno.fm/zuw6xmmwmd0uv">
-        </audio>
-
-    </div>
-
-</section>
-
-
-<!-- AHORA EN VIVO -->
-
-<section id="ahora" class="now-section">
-
-    <div class="now-container">
-
-        <div class="now-live">
-
-            <span class="now-dot"></span>
-
-            <span>AHORA EN VIVO</span>
-
-        </div>
-
-
-        <div class="now-main">
-
-            <div class="now-time">
-
-                <span id="currentTime">
-                    00:00
-                </span>
-
-                <small>
-                    LA RIOJA
-                </small>
+              <a
+                href="https://web.whatsapp.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="btn btn-primary"
+              >
+                ENVIAR NOTICIA
+              </a>
 
             </div>
 
+          </div>
 
-            <div class="now-program">
 
-                <span id="nowLabel">
-                    PROGRAMA ACTUAL
-                </span>
+          <div class="participate-card">
 
-                <h2 id="nowProgram">
-                    ARENA 24
-                </h2>
+            <div class="participate-icon">
+              🎵
+            </div>
 
-                <h3 id="nowHost">
-                    Siempre con vos
-                </h3>
+            <div>
 
-                <p id="nowDescription">
-                    Música, noticias y entretenimiento.
-                </p>
+              <span class="eyebrow">
+                MÚSICA
+              </span>
+
+              <h3>
+                Pedí tu canción
+              </h3>
+
+              <p>
+                Elegí una canción y prepará tu pedido
+                para enviarlo a ARENA 24.
+              </p>
+
+              <button
+                id="musicRequestBtn"
+                class="btn btn-secondary"
+              >
+                PEDIR CANCIÓN
+              </button>
 
             </div>
 
-
-            <div class="next-program">
-
-                <span>PRÓXIMO</span>
-
-                <strong id="nextProgram">
-                    —
-                </strong>
-
-                <small id="nextTime">
-                    —
-                </small>
-
-            </div>
+          </div>
 
         </div>
 
-    </div>
+      </div>
 
-</section>
-
-
-<!-- NOTICIAS -->
-
-<section id="noticias" class="section news-section">
-
-    <div class="section-title">
-
-        <span>INFORMACIÓN</span>
-
-        <h2>ÚLTIMAS NOTICIAS</h2>
-
-        <p>
-            Información actualizada de La Rioja,
-            Argentina y el mundo.
-        </p>
-
-    </div>
+    </section>
 
 
-    <div class="news-tabs">
+    <!-- =========================
+         PROGRAMACIÓN
+    ========================== -->
 
-        <button
-            class="news-tab active"
-            data-category="La Rioja">
-            LA RIOJA
-        </button>
+    <section class="section schedule-section" id="programacion">
 
-        <button
-            class="news-tab"
-            data-category="Argentina">
-            ARGENTINA
-        </button>
+      <div class="container">
 
-        <button
-            class="news-tab"
-            data-category="Mundo">
-            MUNDO
-        </button>
+        <div class="section-heading">
 
-        <button
-            class="news-tab"
-            data-category="Deportes">
-            DEPORTES
-        </button>
+          <span class="eyebrow">
+            ARENA 24
+          </span>
 
-    </div>
+          <h2>
+            Programación
+          </h2>
+
+          <p>
+            Una programación pensada para acompañarte durante todo el día.
+          </p>
+
+        </div>
 
 
-    <div id="newsGrid" class="news-grid">
+        <div
+          class="schedule-grid"
+          id="scheduleGrid"
+        >
+        </div>
 
-        <article class="news-loading">
+      </div>
 
-            <div class="loading-circle"></div>
-
-            <p>
-                Cargando noticias...
-            </p>
-
-        </article>
-
-    </div>
+    </section>
 
 
-    <button
-        id="refreshNews"
-        class="refresh-button">
+    <!-- =========================
+         ARENA 24 TV
+    ========================== -->
 
-        ↻ ACTUALIZAR NOTICIAS
+    <section class="section tv-section" id="tv">
 
-    </button>
+      <div class="container">
 
-</section>
+        <div class="tv-card">
 
+          <div class="tv-content">
 
-<!-- PROGRAMACIÓN DINÁMICA -->
-
-<section id="programacion" class="section schedule-section">
-
-    <div class="section-title">
-
-        <span>PROGRAMACIÓN</span>
-
-        <h2>ARENA 24</h2>
-
-        <p>
-            Programación automática durante las 24 horas.
-        </p>
-
-    </div>
-
-
-    <div id="scheduleGrid" class="schedule-grid">
-    </div>
-
-</section>
-
-
-<!-- TV -->
-
-<section id="tv" class="section tv-section">
-
-    <div class="tv-content">
-
-        <div>
-
-            <span class="section-mini">
-                ARENA 24
+            <span class="eyebrow">
+              MULTIMEDIA
             </span>
 
-            <h2>ARENA 24 TV</h2>
+            <h2>
+              ARENA 24 TV
+            </h2>
 
             <p>
-                Videos, entrevistas, transmisiones
-                y contenido de nuestra radio.
+              Seguinos también en YouTube y disfrutá
+              nuestros contenidos audiovisuales.
             </p>
 
             <a
-                href="https://www.youtube.com/@ARENA24LARIOJA"
-                target="_blank"
-                rel="noopener"
-                class="tv-button">
-
-                ▶ VISITAR YOUTUBE
-
+              href="https://www.youtube.com/@ARENA24LARIOJA"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn btn-primary"
+            >
+              ▶ VISITAR YOUTUBE
             </a>
 
-        </div>
+          </div>
 
 
-        <div class="tv-screen">
+          <div class="tv-screen">
 
-            <div class="tv-screen-inner">
-
-                <span>ARENA</span>
-
-                <strong>24</strong>
-
-                <small>
-                    RADIO · TV · DIGITAL
-                </small>
-
+            <div class="tv-logo">
+              ARENA
+              <strong>24</strong>
             </div>
 
+            <span>
+              TV ONLINE
+            </span>
+
+          </div>
+
         </div>
 
-    </div>
+      </div>
 
-</section>
-
-
-<!-- REDES -->
-
-<section id="contacto" class="section social-section">
-
-    <div class="section-title">
-
-        <span>SEGUINOS</span>
-
-        <h2>ARENA 24 EN REDES</h2>
-
-        <p>
-            La radio también está online.
-        </p>
-
-    </div>
+    </section>
 
 
-    <div class="social-grid">
+    <!-- =========================
+         REDES SOCIALES
+    ========================== -->
 
-        <a
+    <section class="section social-section">
+
+      <div class="container">
+
+        <div class="section-heading">
+
+          <span class="eyebrow">
+            SEGUINOS
+          </span>
+
+          <h2>
+            ARENA 24 en redes
+          </h2>
+
+        </div>
+
+
+        <div class="social-grid">
+
+          <a
             href="https://www.facebook.com/arena24radiolarioja"
             target="_blank"
-            class="social-card facebook">
+            rel="noopener noreferrer"
+            class="social-card facebook"
+          >
+            <span>f</span>
+            <div>
+              <strong>Facebook</strong>
+              <small>@arena24radiolarioja</small>
+            </div>
+          </a>
 
-            <span class="social-icon">f</span>
 
-            <strong>Facebook</strong>
-
-            <small>@arena24radiolarioja</small>
-
-        </a>
-
-
-        <a
+          <a
             href="https://www.instagram.com/arena24radio/"
             target="_blank"
-            class="social-card instagram">
+            rel="noopener noreferrer"
+            class="social-card instagram"
+          >
+            <span>◎</span>
+            <div>
+              <strong>Instagram</strong>
+              <small>@arena24radio</small>
+            </div>
+          </a>
 
-            <span class="social-icon">◎</span>
 
-            <strong>Instagram</strong>
-
-            <small>@arena24radio</small>
-
-        </a>
-
-
-        <a
+          <a
             href="https://www.youtube.com/@ARENA24LARIOJA"
             target="_blank"
-            class="social-card youtube">
+            rel="noopener noreferrer"
+            class="social-card youtube"
+          >
+            <span>▶</span>
+            <div>
+              <strong>YouTube</strong>
+              <small>ARENA 24 LA RIOJA</small>
+            </div>
+          </a>
 
-            <span class="social-icon">▶</span>
 
-            <strong>YouTube</strong>
-
-            <small>ARENA 24 LA RIOJA</small>
-
-        </a>
-
-
-        <a
+          <a
             href="https://web.whatsapp.com/"
             target="_blank"
-            class="social-card whatsapp">
+            rel="noopener noreferrer"
+            class="social-card whatsapp"
+          >
+            <span>◉</span>
+            <div>
+              <strong>WhatsApp</strong>
+              <small>Contactanos</small>
+            </div>
+          </a>
 
-            <span class="social-icon">☏</span>
+        </div>
 
-            <strong>WhatsApp</strong>
+      </div>
 
-            <small>Contacto</small>
-
-        </a>
-
-    </div>
-
-</section>
-
-</main>
+    </section>
 
 
-<!-- PLAYER FIJO -->
+    <!-- =========================
+         CONTACTO
+    ========================== -->
 
-<div id="fixedPlayer" class="fixed-player">
+    <section
+      class="section contact-section"
+      id="contacto"
+    >
 
-    <div class="fixed-info">
+      <div class="container">
+
+        <div class="contact-card">
+
+          <div>
+
+            <span class="eyebrow">
+              CONTACTO
+            </span>
+
+            <h2>
+              Siempre con vos.
+            </h2>
+
+            <p>
+              ARENA 24 — Radio Web desde La Rioja, Argentina.
+            </p>
+
+          </div>
+
+          <a
+            href="https://web.whatsapp.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn btn-primary"
+          >
+            CONTACTAR
+          </a>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- =========================
+       FIXED PLAYER
+  ========================== -->
+
+  <div class="fixed-player">
+
+    <div class="fixed-player-inner">
+
+      <div class="fixed-brand">
 
         <div class="mini-logo">
-            A<span>24</span>
+          24
         </div>
 
         <div>
 
-            <strong id="fixedProgram">
-                ARENA 24
-            </strong>
+          <strong>
+            ARENA 24
+          </strong>
 
-            <small id="fixedStatus">
-                EN VIVO · Siempre con vos
-            </small>
+          <span id="fixedProgram">
+            Radio Web
+          </span>
 
         </div>
 
-    </div>
+      </div>
 
 
-    <div class="fixed-center">
-
-        <div id="fixedEqualizer" class="fixed-eq">
-            <i></i><i></i><i></i>
-            <i></i><i></i><i></i>
-        </div>
+      <div class="fixed-center">
 
         <button
-            id="fixedPlayBtn"
-            class="fixed-play">
-
-            ▶
-
+          id="fixedPlayBtn"
+          class="fixed-play"
+          aria-label="Reproducir"
+        >
+          ▶
         </button>
 
-    </div>
+        <div class="fixed-status">
+
+          <span class="signal-dot"></span>
+
+          <span id="fixedStatus">
+            SEÑAL LISTA
+          </span>
+
+        </div>
+
+      </div>
 
 
-    <div class="fixed-actions">
+      <div class="fixed-volume">
 
-        <button id="fixedMuteBtn">
-            🔊
+        <button
+          id="fixedMuteBtn"
+          aria-label="Silenciar"
+        >
+          🔊
         </button>
 
-        <a href="#radio">
-            RADIO
-        </a>
+        <input
+          type="range"
+          id="fixedVolumeControl"
+          min="0"
+          max="1"
+          step="0.01"
+          value="0.85"
+        >
+
+      </div>
 
     </div>
 
-</div>
+  </div>
 
 
-<footer>
+  <!-- =========================
+       MODAL PEDIDO DE CANCIÓN
+  ========================== -->
 
-    <div class="footer-brand">
-        ARENA<strong>24</strong>
+  <div
+    class="modal"
+    id="musicModal"
+    aria-hidden="true"
+  >
+
+    <div class="modal-box">
+
+      <button
+        id="closeModal"
+        class="modal-close"
+        aria-label="Cerrar"
+      >
+        ×
+      </button>
+
+      <span class="eyebrow">
+        ARENA 24
+      </span>
+
+      <h2>
+        Pedí tu canción
+      </h2>
+
+      <p>
+        Completá los datos y prepará tu pedido para enviarlo.
+      </p>
+
+
+      <form id="musicForm">
+
+        <label>
+          Tu nombre
+          <input
+            type="text"
+            id="requestName"
+            required
+            placeholder="Ej.: Humberto"
+          >
+        </label>
+
+
+        <label>
+          Artista
+          <input
+            type="text"
+            id="requestArtist"
+            required
+            placeholder="Artista"
+          >
+        </label>
+
+
+        <label>
+          Canción
+          <input
+            type="text"
+            id="requestSong"
+            required
+            placeholder="Nombre de la canción"
+          >
+        </label>
+
+
+        <button
+          type="submit"
+          class="btn btn-primary full-width"
+        >
+          PREPARAR PEDIDO
+        </button>
+
+      </form>
+
     </div>
 
-    <p>
-        Radio Web desde La Rioja, Argentina.
-    </p>
-
-    <p>
-        Música · Noticias · Entretenimiento · Deportes
-    </p>
-
-    <div class="footer-line"></div>
-
-    <small>
-        © 2026 ARENA 24 — Siempre con vos.
-    </small>
-
-</footer>
+  </div>
 
 
-<div id="toast" class="toast"></div>
+  <!-- =========================
+       FOOTER
+  ========================== -->
+
+  <footer class="footer">
+
+    <div class="container footer-inner">
+
+      <div>
+
+        <strong>
+          ARENA <span>24</span>
+        </strong>
+
+        <p>
+          Radio Web — La Rioja, Argentina.
+        </p>
+
+      </div>
+
+      <div class="footer-slogan">
+        Siempre con vos.
+      </div>
+
+    </div>
 
 
-<script src="./assets/js/app.js" defer></script>
+    <div class="footer-bottom">
+
+      © <span id="year"></span>
+      ARENA 24 — Todos los derechos reservados.
+
+    </div>
+
+  </footer>
 
 </body>
 </html>
