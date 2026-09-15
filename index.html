@@ -1,196 +1,387 @@
-<!-- =========================================================
-     ARENA 24 — PLAYER MULTIMEDIA
-     RADIO + TV + VOLUMEN + FULLSCREEN + TICKER
-     ========================================================= -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<div class="arena24-player">
+  <title>ARENA 24 RADIO WEB | La Rioja Argentina</title>
 
-  <!-- HEADER -->
-  <div class="arena24-header">
+  <meta name="description"
+        content="ARENA 24 RADIO WEB - La Rioja Argentina. Música, noticias, entretenimiento, deportes y ARENA 24 TV.">
 
-    <div class="arena24-logo">
-      <span class="arena24-logo-a">A</span>
+  <meta name="theme-color" content="#080808">
 
-      <div>
-        <strong>ARENA 24</strong>
-        <small>INFORMACIÓN EN VIVO</small>
-      </div>
+  <!-- CSS PRINCIPAL -->
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header class="header">
+
+  <div class="logo">
+    <div class="logo-icon">
+      A<span>24</span>
     </div>
 
-    <div class="arena24-live">
+    <div class="logo-text">
+      <strong>ARENA 24</strong>
+      <small>RADIO WEB</small>
+    </div>
+  </div>
+
+  <nav class="navigation">
+    <a href="#radio">Radio</a>
+    <a href="#noticias">Noticias</a>
+    <a href="#programacion">Programación</a>
+    <a href="#tv">ARENA 24 TV</a>
+    <a href="#contacto">Contacto</a>
+  </nav>
+
+</header>
+
+
+<!-- =====================================================
+     HERO
+===================================================== -->
+
+<section class="hero">
+
+  <div class="hero-content">
+
+    <div class="live-label">
       <span></span>
-      <b id="arena24-live-label">EN VIVO</b>
+      ARENA 24 · EN VIVO
+    </div>
+
+    <h1>
+      ARENA
+      <strong>24</strong>
+    </h1>
+
+    <h2>
+      Siempre con vos.
+    </h2>
+
+    <p>
+      Música · Noticias · Entretenimiento · Deportes
+    </p>
+
+    <div class="hero-buttons">
+
+      <a href="#radio" class="button primary">
+        ▶ ESCUCHAR RADIO
+      </a>
+
+      <a href="#noticias" class="button secondary">
+        📰 ÚLTIMAS NOTICIAS
+      </a>
+
     </div>
 
   </div>
 
 
-  <!-- PANTALLA -->
-  <div class="arena24-video">
+  <div class="hero-orb">
 
-    <!-- RADIO -->
-    <div id="arena24-radio" class="arena24-view active">
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
 
-      <div class="arena24-radio-bg"></div>
+    <div class="orb-center">
+      A24
+    </div>
 
-      <div class="arena24-radio-center">
+  </div>
 
-        <div class="arena24-radio-icon">
-          🎧
-        </div>
+</section>
 
-        <h2>RADIO ARENA 24</h2>
 
-        <p>TRANSMISIÓN EN VIVO</p>
 
-        <!-- Ecualizador -->
-        <div class="arena24-eq">
-          <i></i><i></i><i></i><i></i><i></i>
-          <i></i><i></i><i></i><i></i><i></i>
-        </div>
+<!-- =====================================================
+     PLAYER
+===================================================== -->
 
-        <button
-          id="arena24-play"
-          class="arena24-play"
-          type="button">
-          ▶
-        </button>
+<section id="radio" class="section">
 
-        <div id="arena24-audio-status">
-          Presioná PLAY para escuchar
-        </div>
+  <div class="section-title">
 
+    <span>RADIO ONLINE</span>
+
+    <h2>
+      Escuchá <strong>ARENA 24</strong>
+    </h2>
+
+  </div>
+
+
+  <div class="player">
+
+    <div class="player-background">
+
+      <div class="equalizer">
+
+        <i></i>
+        <i></i>
+        <i></i>
+        <i></i>
+        <i></i>
+        <i></i>
+        <i></i>
+        <i></i>
+        <i></i>
+        <i></i>
+        <i></i>
+        <i></i>
+
+      </div>
+
+      <div class="player-logo">
+        <strong>ARENA 24</strong>
+        <span>RADIO WEB</span>
       </div>
 
     </div>
 
 
-    <!-- TV -->
-    <div id="arena24-tv" class="arena24-view">
+    <div class="player-controls">
 
-      <iframe
-        id="arena24-youtube"
-        src="https://www.youtube.com/embed/i16rESsSqE8?autoplay=0&rel=0&modestbranding=1"
-        title="TV Arena 24"
-        allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
-        allowfullscreen>
-      </iframe>
+      <button
+        id="playButton"
+        class="play-button"
+        aria-label="Reproducir radio">
+        ▶
+      </button>
+
+
+      <div class="player-info">
+
+        <strong>
+          ARENA 24 RADIO
+        </strong>
+
+        <span id="playerStatus">
+          Listo para escuchar
+        </span>
+
+      </div>
+
+
+      <div class="live-status">
+
+        <span class="live-circle"></span>
+
+        <strong>
+          EN VIVO
+        </strong>
+
+      </div>
+
+
+      <div class="volume-control">
+
+        <span>🔊</span>
+
+        <input
+          id="volumeControl"
+          type="range"
+          min="0"
+          max="1"
+          step="0.01"
+          value="0.85">
+
+      </div>
 
     </div>
 
   </div>
 
 
-  <!-- AUDIO RADIO -->
   <audio
-    id="arena24-audio"
+    id="radioPlayer"
     preload="none"
     src="https://stream.zeno.fm/zuw6xmmwmd0uv">
   </audio>
 
-
-  <!-- BARRA DE INFORMACIÓN -->
-  <div class="arena24-info">
-
-    <div class="arena24-now">
-
-      <span class="arena24-red-dot"></span>
-
-      <div>
-        <small>SEÑAL ACTIVA</small>
-
-        <strong id="arena24-signal">
-          RADIO ARENA 24
-        </strong>
-      </div>
-
-    </div>
-
-    <div class="arena24-live-now">
-      ● EN VIVO
-    </div>
-
-  </div>
+</section>
 
 
-  <!-- CONTROLES -->
-  <div class="arena24-controls">
 
-    <button
-      id="arena24-radio-btn"
-      class="arena24-mode-btn active"
-      type="button">
+<!-- =====================================================
+     NOTICIAS
+===================================================== -->
 
-      <span>🎧</span>
+<section id="noticias" class="section">
 
-      <div>
-        <small>ESCUCHAR</small>
-        RADIO
-      </div>
+  <div class="section-title">
 
-    </button>
+    <span>INFORMACIÓN</span>
 
+    <h2>
+      Noticias <strong>ARENA 24</strong>
+    </h2>
 
-    <button
-      id="arena24-tv-btn"
-      class="arena24-mode-btn"
-      type="button">
-
-      <span>📺</span>
-
-      <div>
-        <small>VER</small>
-        TV
-      </div>
-
-    </button>
-
-
-    <!-- Volumen -->
-    <div class="arena24-volume">
-
-      <button
-        id="arena24-mute"
-        type="button">
-        🔊
-      </button>
-
-      <input
-        id="arena24-volume-range"
-        type="range"
-        min="0"
-        max="1"
-        step="0.01"
-        value="1">
-
-    </div>
+    <p>
+      La Rioja · Argentina · Mundo
+    </p>
 
   </div>
 
 
-  <!-- TICKER -->
-  <div class="arena24-ticker">
+  <div class="news-grid" id="newsContainer">
 
-    <div class="arena24-ticker-label">
-      ÚLTIMO
-    </div>
+    <article class="news-card">
 
-    <div class="arena24-ticker-track">
+      <span class="news-tag">
+        ARENA 24
+      </span>
 
-      <div class="arena24-ticker-text">
+      <h3>
+        Cargando noticias...
+      </h3>
 
-        🔴 ARENA 24 — INFORMACIÓN EN VIVO
-        &nbsp;&nbsp;&nbsp; • &nbsp;&nbsp;&nbsp;
+      <p>
+        Actualizando información.
+      </p>
 
-        Todas las noticias de La Rioja y el país.
+    </article>
 
-        &nbsp;&nbsp;&nbsp; • &nbsp;&nbsp;&nbsp;
+  </div>
 
-        Seguinos en nuestras plataformas digitales.
+</section>
 
-        &nbsp;&nbsp;&nbsp; • &nbsp;&nbsp;&nbsp;
 
-        RADIO ARENA 24 | TV ARENA 24
+
+<!-- =====================================================
+     PROGRAMACIÓN
+===================================================== -->
+
+<section id="programacion" class="section">
+
+  <div class="section-title">
+
+    <span>ARENA 24</span>
+
+    <h2>
+      Programación
+    </h2>
+
+  </div>
+
+
+  <div class="program-grid">
+
+    <article class="program-card">
+
+      <span>MAÑANA</span>
+
+      <h3>
+        Noticias & Actualidad
+      </h3>
+
+      <p>
+        La Rioja, Argentina y el mundo.
+      </p>
+
+    </article>
+
+
+    <article class="program-card">
+
+      <span>MEDIODÍA</span>
+
+      <h3>
+        Música ARENA 24
+      </h3>
+
+      <p>
+        Música para acompañarte durante el día.
+      </p>
+
+    </article>
+
+
+    <article class="program-card">
+
+      <span>TARDE</span>
+
+      <h3>
+        Entretenimiento
+      </h3>
+
+      <p>
+        Música, actualidad, artistas y tendencias.
+      </p>
+
+    </article>
+
+
+    <article class="program-card">
+
+      <span>NOCHE</span>
+
+      <h3>
+        Relax & Música Actual
+      </h3>
+
+      <p>
+        La mejor compañía para terminar el día.
+      </p>
+
+    </article>
+
+  </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     ARENA 24 TV
+===================================================== -->
+
+<section id="tv" class="section">
+
+  <div class="section-title">
+
+    <span>VIDEO</span>
+
+    <h2>
+      ARENA 24 <strong>TV</strong>
+    </h2>
+
+  </div>
+
+
+  <div class="tv-box">
+
+    <div class="tv-placeholder">
+
+      <div>
+        <div class="tv-icon">
+          ▶
+        </div>
+
+        <h3>
+          ARENA 24 TV
+        </h3>
+
+        <p>
+          Noticias · Música · Transmisiones
+        </p>
+
+        <a
+          href="https://www.youtube.com/@ARENA24LARIOJA"
+          target="_blank"
+          rel="noopener"
+          class="button primary">
+
+          VER CANAL EN YOUTUBE
+
+        </a>
 
       </div>
 
@@ -198,51 +389,445 @@
 
   </div>
 
-</div>
+</section>
 
 
-<style>
 
-/* =========================================================
-   PLAYER
-   ========================================================= */
+<!-- =====================================================
+     CONTACTO
+===================================================== -->
 
-.arena24-player {
+<section id="contacto" class="section">
 
-  width: 100%;
-  max-width: 820px;
+  <div class="section-title">
 
-  margin: 25px auto;
+    <span>CONTACTO</span>
 
-  background: #070707;
+    <h2>
+      Contactanos
+    </h2>
 
-  color: #fff;
+  </div>
 
-  border-radius: 16px;
 
-  overflow: hidden;
+  <div class="contact-grid">
+
+    <a
+      href="https://wa.me/543804844124"
+      target="_blank"
+      rel="noopener"
+      class="contact-card">
+
+      <div>📲</div>
+
+      <strong>
+        WhatsApp
+      </strong>
+
+      <span>
+        3804 844124
+      </span>
+
+    </a>
+
+
+    <a
+      href="mailto:arena24radio@gmail.com"
+      class="contact-card">
+
+      <div>✉️</div>
+
+      <strong>
+        Email
+      </strong>
+
+      <span>
+        arena24radio@gmail.com
+      </span>
+
+    </a>
+
+
+    <a
+      href="https://wa.me/543804844124?text=Hola%20ARENA%2024%2C%20quiero%20consultar%20por%20publicidad."
+      target="_blank"
+      rel="noopener"
+      class="contact-card">
+
+      <div>📢</div>
+
+      <strong>
+        Publicidad
+      </strong>
+
+      <span>
+        Consultanos
+      </span>
+
+    </a>
+
+  </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     REDES SOCIALES
+===================================================== -->
+
+<section class="section">
+
+  <div class="section-title">
+
+    <span>COMUNIDAD</span>
+
+    <h2>
+      Seguinos
+    </h2>
+
+  </div>
+
+
+  <div class="social-grid">
+
+    <a
+      href="https://www.facebook.com/arena24radiolarioja"
+      target="_blank"
+      rel="noopener">
+
+      <strong>
+        Facebook
+      </strong>
+
+      <span>
+        @arena24radiolarioja
+      </span>
+
+    </a>
+
+
+    <a
+      href="https://www.instagram.com/arena24radio/"
+      target="_blank"
+      rel="noopener">
+
+      <strong>
+        Instagram
+      </strong>
+
+      <span>
+        @arena24radio
+      </span>
+
+    </a>
+
+
+    <a
+      href="https://www.youtube.com/@ARENA24LARIOJA"
+      target="_blank"
+      rel="noopener">
+
+      <strong>
+        YouTube
+      </strong>
+
+      <span>
+        ARENA 24 TV
+      </span>
+
+    </a>
+
+  </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer>
+
+  <div class="footer-logo">
+    ARENA <strong>24</strong>
+  </div>
+
+  <p>
+    La Rioja · Argentina
+  </p>
+
+  <p>
+    Siempre con vos.
+  </p>
+
+  <small>
+    © 2026 ARENA 24 RADIO WEB.
+    Todos los derechos reservados · HC pro · La Rioja Argentina.
+  </small>
+
+</footer>
+
+
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+
+<script src="script.js"></script>
+
+</body>
+</html>
+
+:::writing{variant="document" id="74106" title="ARENA 24 RADIO WEB — style.css"}
+
+/* =====================================================
+   ARENA 24 RADIO WEB
+   DISEÑO FUTURISTA OSCURO
+===================================================== */
+
+:root {
+
+  --background: #050505;
+  --background2: #0b0b0b;
+  --panel: #111111;
+
+  --orange: #ff6a00;
+  --orange-light: #ff9a3d;
+
+  --white: #ffffff;
+  --gray: #a7a7a7;
+
+  --border: rgba(255,106,0,.25);
+
+  --shadow:
+    0 0 40px rgba(255,106,0,.12);
+
+}
+
+
+/* =====================================================
+   RESET
+===================================================== */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+html {
+  scroll-behavior: smooth;
+}
+
+
+body {
+
+  background:
+    radial-gradient(
+      circle at 80% 10%,
+      rgba(255,106,0,.12),
+      transparent 30%
+    ),
+
+    radial-gradient(
+      circle at 10% 80%,
+      rgba(255,106,0,.08),
+      transparent 30%
+    ),
+
+    #050505;
+
+  color: var(--white);
 
   font-family:
     Arial,
     Helvetica,
     sans-serif;
 
-  box-shadow:
-    0 20px 60px rgba(0,0,0,.5),
-    0 0 0 1px rgba(255,255,255,.06);
+  overflow-x: hidden;
 
 }
 
 
-/* =========================================================
+body::before {
+
+  content: "";
+
+  position: fixed;
+
+  inset: 0;
+
+  pointer-events: none;
+
+  background-image:
+    linear-gradient(
+      rgba(255,255,255,.025) 1px,
+      transparent 1px
+    ),
+
+    linear-gradient(
+      90deg,
+      rgba(255,255,255,.025) 1px,
+      transparent 1px
+    );
+
+  background-size: 40px 40px;
+
+  z-index: -1;
+
+}
+
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+
+/* =====================================================
    HEADER
-   ========================================================= */
+===================================================== */
 
-.arena24-header {
+.header {
 
-  height: 70px;
+  position: sticky;
 
-  padding: 0 20px;
+  top: 0;
+
+  z-index: 100;
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  padding: 16px 6%;
+
+  background:
+    rgba(5,5,5,.90);
+
+  backdrop-filter:
+    blur(18px);
+
+  border-bottom:
+    1px solid var(--border);
+
+}
+
+
+.logo {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+}
+
+
+.logo-icon {
+
+  width: 48px;
+
+  height: 48px;
+
+  display: grid;
+
+  place-items: center;
+
+  border-radius: 14px;
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--orange),
+      #ff2d00
+    );
+
+  font-size: 19px;
+
+  font-weight: 900;
+
+  box-shadow:
+    0 0 30px rgba(255,106,0,.35);
+
+}
+
+
+.logo-icon span {
+
+  font-size: 12px;
+
+}
+
+
+.logo-text strong {
+
+  display: block;
+
+  font-size: 18px;
+
+  letter-spacing: 3px;
+
+}
+
+
+.logo-text small {
+
+  color: var(--orange-light);
+
+  font-size: 9px;
+
+  letter-spacing: 2px;
+
+}
+
+
+.navigation {
+
+  display: flex;
+
+  gap: 25px;
+
+}
+
+
+.navigation a {
+
+  color: #c9c9c9;
+
+  font-size: 13px;
+
+  transition: .25s;
+
+}
+
+
+.navigation a:hover {
+
+  color: var(--orange);
+
+}
+
+
+/* =====================================================
+   HERO
+===================================================== */
+
+.hero {
+
+  max-width: 1250px;
+
+  min-height: 80vh;
+
+  margin: auto;
+
+  padding: 90px 6%;
 
   display: flex;
 
@@ -250,305 +835,383 @@
 
   justify-content: space-between;
 
-  background:
-    linear-gradient(
-      90deg,
-      #080808,
-      #171717
-    );
-
-  border-bottom:
-    1px solid #282828;
+  gap: 50px;
 
 }
 
 
-.arena24-logo {
+.live-label {
 
-  display: flex;
+  color: var(--orange);
 
-  align-items: center;
+  font-size: 11px;
 
-  gap: 11px;
+  letter-spacing: 3px;
 
-}
-
-
-.arena24-logo-a {
-
-  width: 42px;
-  height: 42px;
-
-  display: flex;
-
-  align-items: center;
-  justify-content: center;
-
-  border-radius: 9px;
-
-  background:
-    linear-gradient(
-      135deg,
-      #f00000,
-      #850000
-    );
-
-  font-size: 25px;
-
-  font-weight: 900;
-
-  box-shadow:
-    0 5px 20px rgba(255,0,0,.25);
+  font-weight: bold;
 
 }
 
 
-.arena24-logo strong {
+.live-label span {
 
-  display: block;
-
-  font-size: 21px;
-
-  letter-spacing: 1px;
-
-}
-
-
-.arena24-logo small {
-
-  display: block;
-
-  margin-top: 3px;
-
-  color: #777;
-
-  font-size: 8px;
-
-  font-weight: 700;
-
-  letter-spacing: 1.5px;
-
-}
-
-
-.arena24-live {
-
-  display: flex;
-
-  align-items: center;
-
-  gap: 7px;
-
-  color: #ff3030;
-
-  font-size: 10px;
-
-  letter-spacing: 1px;
-
-}
-
-
-.arena24-live span {
+  display: inline-block;
 
   width: 8px;
+
   height: 8px;
 
   border-radius: 50%;
 
-  background: #f00;
-
-  animation:
-    arena24-pulse 1.5s infinite;
-
-}
-
-
-@keyframes arena24-pulse {
-
-  0% {
-    box-shadow: 0 0 0 0 rgba(255,0,0,.6);
-  }
-
-  70% {
-    box-shadow: 0 0 0 8px rgba(255,0,0,0);
-  }
-
-  100% {
-    box-shadow: 0 0 0 0 rgba(255,0,0,0);
-  }
-
-}
-
-
-/* =========================================================
-   VIDEO / RADIO
-   ========================================================= */
-
-.arena24-video {
-
-  position: relative;
-
-  width: 100%;
-
-  aspect-ratio: 16 / 9;
-
-  background: #000;
-
-}
-
-
-.arena24-view {
-
-  position: absolute;
-
-  inset: 0;
-
-  display: none;
-
-}
-
-
-.arena24-view.active {
-
-  display: block;
-
-}
-
-
-/* =========================================================
-   RADIO
-   ========================================================= */
-
-.arena24-radio-bg {
-
-  position: absolute;
-
-  inset: 0;
-
-  background:
-
-    radial-gradient(
-      circle at center,
-      rgba(220,0,0,.22),
-      transparent 40%
-    ),
-
-    linear-gradient(
-      135deg,
-      #050505,
-      #191919
-    );
-
-}
-
-
-.arena24-radio-center {
-
-  position: relative;
-
-  height: 100%;
-
-  display: flex;
-
-  flex-direction: column;
-
-  align-items: center;
-
-  justify-content: center;
-
-  text-align: center;
-
-}
-
-
-.arena24-radio-icon {
-
-  width: 80px;
-  height: 80px;
-
-  display: flex;
-
-  align-items: center;
-  justify-content: center;
-
-  border-radius: 50%;
-
-  background:
-    linear-gradient(
-      145deg,
-      #e60000,
-      #750000
-    );
-
-  font-size: 37px;
+  background: var(--orange);
 
   box-shadow:
-    0 0 45px rgba(255,0,0,.25);
+    0 0 15px var(--orange);
+
+  margin-right: 8px;
+
+  animation:
+    pulse 1.2s infinite;
 
 }
 
 
-.arena24-radio-center h2 {
+@keyframes pulse {
 
-  margin: 14px 0 0;
+  50% {
+    opacity: .3;
+  }
+
+}
+
+
+.hero h1 {
+
+  margin-top: 20px;
 
   font-size:
-    clamp(20px,4vw,34px);
+    clamp(70px, 14vw, 160px);
 
-  font-weight: 900;
+  line-height: .8;
 
-  letter-spacing: 1px;
-
-}
-
-
-.arena24-radio-center p {
-
-  margin: 6px 0 0;
-
-  color: #ff3333;
-
-  font-size: 10px;
-
-  font-weight: 800;
-
-  letter-spacing: 2px;
+  letter-spacing: -8px;
 
 }
 
 
-/* =========================================================
-   EQUALIZER
-   ========================================================= */
+.hero h1 strong {
 
-.arena24-eq {
+  color: var(--orange);
 
-  height: 25px;
+}
+
+
+.hero h2 {
+
+  margin-top: 25px;
+
+  font-size:
+    clamp(28px, 5vw, 55px);
+
+}
+
+
+.hero p {
 
   margin-top: 15px;
 
-  display: flex;
+  color: var(--gray);
 
-  align-items: center;
-
-  gap: 3px;
+  font-size: 18px;
 
 }
 
 
-.arena24-eq i {
+.hero-buttons {
 
-  width: 3px;
+  display: flex;
 
-  height: 8px;
+  gap: 12px;
 
-  border-radius: 3px;
+  margin-top: 30px;
 
-  background: #e00000;
+  flex-wrap: wrap;
+
+}
+
+
+.button {
+
+  display: inline-flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  padding: 13px 22px;
+
+  border-radius: 50px;
+
+  font-weight: bold;
+
+  font-size: 13px;
+
+}
+
+
+.button.primary {
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--orange),
+      #ff3300
+    );
+
+  box-shadow:
+    0 0 30px rgba(255,106,0,.25);
+
+}
+
+
+.button.secondary {
+
+  border:
+    1px solid var(--border);
+
+  background:
+    rgba(255,255,255,.03);
+
+}
+
+
+/* =====================================================
+   ORBIT
+===================================================== */
+
+.hero-orb {
+
+  position: relative;
+
+  width: 350px;
+
+  height: 350px;
+
+  display: grid;
+
+  place-items: center;
+
+}
+
+
+.orb {
+
+  position: absolute;
+
+  border-radius: 50%;
+
+  border:
+    1px solid rgba(255,106,0,.45);
 
   animation:
-    arena24-equalizer
-    .7s
+    rotate 12s linear infinite;
+
+}
+
+
+.orb1 {
+
+  inset: 0;
+
+}
+
+
+.orb2 {
+
+  inset: 50px;
+
+  border-color:
+    rgba(255,170,80,.3);
+
+  animation-direction:
+    reverse;
+
+  animation-duration: 8s;
+
+}
+
+
+.orb-center {
+
+  width: 130px;
+
+  height: 130px;
+
+  border-radius: 50%;
+
+  display: grid;
+
+  place-items: center;
+
+  background:
+    radial-gradient(
+      circle,
+      #242424,
+      #080808
+    );
+
+  border:
+    2px solid var(--orange);
+
+  box-shadow:
+    0 0 60px rgba(255,106,0,.3);
+
+  font-size: 34px;
+
+  font-weight: 900;
+
+}
+
+
+@keyframes rotate {
+
+  to {
+    transform: rotate(360deg);
+  }
+
+}
+
+
+/* =====================================================
+   SECTIONS
+===================================================== */
+
+.section {
+
+  max-width: 1250px;
+
+  margin: auto;
+
+  padding: 90px 6%;
+
+}
+
+
+.section-title span {
+
+  color: var(--orange);
+
+  font-size: 10px;
+
+  letter-spacing: 3px;
+
+  font-weight: bold;
+
+}
+
+
+.section-title h2 {
+
+  margin-top: 8px;
+
+  font-size:
+    clamp(30px, 5vw, 55px);
+
+}
+
+
+.section-title h2 strong {
+
+  color: var(--orange);
+
+}
+
+
+/* =====================================================
+   PLAYER
+===================================================== */
+
+.player {
+
+  margin-top: 30px;
+
+  overflow: hidden;
+
+  border-radius: 25px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #161616,
+      #090909
+    );
+
+  border:
+    1px solid var(--border);
+
+  box-shadow:
+    var(--shadow);
+
+}
+
+
+.player-background {
+
+  height: 250px;
+
+  position: relative;
+
+  display: grid;
+
+  place-items: center;
+
+  overflow: hidden;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(255,106,0,.2),
+      transparent 60%
+    );
+
+}
+
+
+.equalizer {
+
+  position: absolute;
+
+  inset: 0;
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  gap: 8px;
+
+  opacity: .35;
+
+}
+
+
+.equalizer i {
+
+  width: 6px;
+
+  height: 40px;
+
+  border-radius: 10px;
+
+  background:
+    linear-gradient(
+      var(--orange),
+      #ff2500
+    );
+
+  animation:
+    equalizer .8s
     ease-in-out
     infinite
     alternate;
@@ -556,1645 +1219,959 @@
 }
 
 
-.arena24-eq i:nth-child(2) {
-  animation-delay: -.2s;
+.equalizer i:nth-child(2) {
+  animation-delay: .1s;
 }
 
-.arena24-eq i:nth-child(3) {
-  animation-delay: -.5s;
+.equalizer i:nth-child(3) {
+  animation-delay: .2s;
 }
 
-.arena24-eq i:nth-child(4) {
-  animation-delay: -.1s;
+.equalizer i:nth-child(4) {
+  animation-delay: .3s;
 }
 
-.arena24-eq i:nth-child(5) {
-  animation-delay: -.4s;
+.equalizer i:nth-child(5) {
+  animation-delay: .4s;
 }
 
-.arena24-eq i:nth-child(6) {
-  animation-delay: -.6s;
+.equalizer i:nth-child(6) {
+  animation-delay: .5s;
 }
 
-.arena24-eq i:nth-child(7) {
-  animation-delay: -.3s;
-}
-
-.arena24-eq i:nth-child(8) {
-  animation-delay: -.7s;
-}
-
-.arena24-eq i:nth-child(9) {
-  animation-delay: -.2s;
-}
-
-.arena24-eq i:nth-child(10) {
-  animation-delay: -.5s;
+.equalizer i:nth-child(7) {
+  animation-delay: .6s;
 }
 
 
-@keyframes arena24-equalizer {
+@keyframes equalizer {
 
   from {
-    height: 5px;
+    height: 25px;
   }
 
   to {
-    height: 24px;
+    height: 170px;
   }
 
 }
 
 
-/* =========================================================
-   PLAY
-   ========================================================= */
+.player-logo {
 
-.arena24-play {
+  position: relative;
 
-  width: 58px;
-  height: 58px;
+  z-index: 2;
 
-  margin-top: 12px;
+  text-align: center;
 
-  border: 0;
+}
+
+
+.player-logo strong {
+
+  display: block;
+
+  font-size: 30px;
+
+  letter-spacing: 5px;
+
+}
+
+
+.player-logo span {
+
+  color: var(--orange-light);
+
+  font-size: 9px;
+
+  letter-spacing: 4px;
+
+}
+
+
+.player-controls {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 18px;
+
+  padding: 22px;
+
+  flex-wrap: wrap;
+
+}
+
+
+.play-button {
+
+  width: 60px;
+
+  height: 60px;
+
+  border: none;
 
   border-radius: 50%;
 
-  background: #fff;
+  background:
+    linear-gradient(
+      135deg,
+      var(--orange),
+      #ff3000
+    );
 
-  color: #111;
+  color: white;
 
   font-size: 20px;
 
   cursor: pointer;
 
-  transition: .2s;
-
-}
-
-
-.arena24-play:hover {
-
-  transform: scale(1.08);
-
-  background: #e00000;
-
-  color: #fff;
-
-}
-
-
-#arena24-audio-status {
-
-  margin-top: 8px;
-
-  color: #777;
-
-  font-size: 10px;
-
-}
-
-
-/* =========================================================
-   TV
-   ========================================================= */
-
-#arena24-tv iframe {
-
-  width: 100%;
-  height: 100%;
-
-  border: 0;
-
-  display: block;
-
-}
-
-
-/* =========================================================
-   INFO
-   ========================================================= */
-
-.arena24-info {
-
-  height: 52px;
-
-  padding: 0 18px;
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: space-between;
-
-  background: #0d0d0d;
-
-  border-top: 1px solid #292929;
-
-}
-
-
-.arena24-now {
-
-  display: flex;
-
-  align-items: center;
-
-  gap: 9px;
-
-}
-
-
-.arena24-red-dot {
-
-  width: 7px;
-  height: 7px;
-
-  border-radius: 50%;
-
-  background: red;
-
   box-shadow:
-    0 0 9px red;
+    0 0 25px rgba(255,106,0,.3);
 
 }
 
 
-.arena24-now small {
+.player-info {
 
-  display: block;
-
-  color: #777;
-
-  font-size: 8px;
-
-  letter-spacing: 1px;
+  flex: 1;
 
 }
 
 
-.arena24-now strong {
+.player-info strong {
 
   display: block;
 
-  margin-top: 2px;
+}
+
+
+.player-info span {
+
+  color: var(--gray);
+
+  font-size: 12px;
+
+}
+
+
+.live-status {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+  color: var(--orange);
 
   font-size: 11px;
 
 }
 
 
-.arena24-live-now {
+.live-circle {
 
-  color: #e00000;
+  width: 8px;
 
-  font-size: 9px;
+  height: 8px;
 
-  font-weight: 900;
+  border-radius: 50%;
 
-  letter-spacing: 1px;
+  background: var(--orange);
 
-}
-
-
-/* =========================================================
-   CONTROLES
-   ========================================================= */
-
-.arena24-controls {
-
-  display: flex;
-
-  gap: 9px;
-
-  padding: 11px;
-
-  background: #090909;
+  box-shadow:
+    0 0 12px var(--orange);
 
 }
 
 
-.arena24-mode-btn {
-
-  flex: 1;
-
-  min-height: 58px;
+.volume-control {
 
   display: flex;
 
   align-items: center;
 
-  justify-content: center;
-
-  gap: 9px;
-
-  border: 1px solid #292929;
-
-  border-radius: 10px;
-
-  background: #161616;
-
-  color: #777;
-
-  cursor: pointer;
-
-  transition: .2s;
+  gap: 8px;
 
 }
 
 
-.arena24-mode-btn:hover {
+.volume-control input {
 
-  color: #fff;
-
-  background: #202020;
+  accent-color: var(--orange);
 
 }
 
 
-.arena24-mode-btn.active {
+/* =====================================================
+   NEWS
+===================================================== */
 
-  color: #fff;
+.news-grid {
 
-  border-color: #e00000;
+  margin-top: 30px;
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, 1fr);
+
+  gap: 18px;
+
+}
+
+
+.news-card {
+
+  padding: 22px;
+
+  border:
+    1px solid var(--border);
+
+  border-radius: 20px;
 
   background:
-    linear-gradient(
-      135deg,
-      #e00000,
-      #930000
-    );
-
-  box-shadow:
-    0 6px 20px rgba(220,0,0,.2);
+    rgba(255,255,255,.025);
 
 }
 
 
-.arena24-mode-btn > span {
+.news-tag {
 
-  font-size: 22px;
+  color: var(--orange);
+
+  font-size: 10px;
+
+  letter-spacing: 2px;
 
 }
 
 
-.arena24-mode-btn div {
+.news-card h3 {
 
-  text-align: left;
+  margin-top: 10px;
 
-  font-weight: 900;
+  font-size: 19px;
+
+}
+
+
+.news-card p {
+
+  margin-top: 10px;
+
+  color: var(--gray);
 
   font-size: 13px;
 
 }
 
 
-.arena24-mode-btn small {
+/* =====================================================
+   PROGRAMACION
+===================================================== */
 
-  display: block;
+.program-grid {
 
-  margin-bottom: 2px;
+  margin-top: 30px;
 
-  font-size: 7px;
+  display: grid;
 
-  letter-spacing: 1px;
+  grid-template-columns:
+    repeat(4,1fr);
 
-  opacity: .7;
-
-}
-
-
-/* =========================================================
-   VOLUMEN
-   ========================================================= */
-
-.arena24-volume {
-
-  min-width: 150px;
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  gap: 7px;
-
-  padding: 0 8px;
+  gap: 15px;
 
 }
 
 
-.arena24-volume button {
+.program-card {
 
-  border: 0;
+  padding: 22px;
 
-  background: transparent;
+  background:
+    #111;
 
-  color: #fff;
+  border:
+    1px solid var(--border);
 
-  cursor: pointer;
-
-  font-size: 17px;
-
-}
-
-
-.arena24-volume input {
-
-  width: 90px;
-
-  accent-color: #e00000;
-
-  cursor: pointer;
+  border-radius: 20px;
 
 }
 
 
-/* =========================================================
-   TICKER
-   ========================================================= */
+.program-card span {
 
-.arena24-ticker {
-
-  height: 38px;
-
-  display: flex;
-
-  overflow: hidden;
-
-  background: #101010;
-
-  border-top: 1px solid #292929;
-
-}
-
-
-.arena24-ticker-label {
-
-  z-index: 2;
-
-  min-width: 70px;
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  background: #e00000;
-
-  color: #fff;
-
-  font-size: 9px;
-
-  font-weight: 900;
-
-  letter-spacing: 1px;
-
-}
-
-
-.arena24-ticker-track {
-
-  flex: 1;
-
-  overflow: hidden;
-
-  display: flex;
-
-  align-items: center;
-
-}
-
-
-.arena24-ticker-text {
-
-  white-space: nowrap;
-
-  padding-left: 100%;
-
-  color: #bbb;
+  color: var(--orange);
 
   font-size: 10px;
 
-  animation:
-    arena24-ticker 28s
-    linear
-    infinite;
+  letter-spacing: 2px;
 
 }
 
 
-@keyframes arena24-ticker {
+.program-card h3 {
 
-  from {
-    transform: translateX(0);
-  }
-
-  to {
-    transform: translateX(-100%);
-  }
+  margin-top: 10px;
 
 }
 
 
-/* =========================================================
+.program-card p {
+
+  margin-top: 10px;
+
+  color: var(--gray);
+
+  font-size: 12px;
+
+}
+
+
+/* =====================================================
+   TV
+===================================================== */
+
+.tv-box {
+
+  margin-top: 30px;
+
+  aspect-ratio: 16/9;
+
+  border-radius: 25px;
+
+  overflow: hidden;
+
+  border:
+    1px solid var(--border);
+
+  background:
+    radial-gradient(
+      circle,
+      #202020,
+      #050505
+    );
+
+}
+
+
+.tv-placeholder {
+
+  height: 100%;
+
+  display: grid;
+
+  place-items: center;
+
+  text-align: center;
+
+}
+
+
+.tv-icon {
+
+  margin: auto;
+
+  width: 80px;
+
+  height: 80px;
+
+  display: grid;
+
+  place-items: center;
+
+  border-radius: 50%;
+
+  background: var(--orange);
+
+  font-size: 25px;
+
+}
+
+
+.tv-placeholder h3 {
+
+  margin-top: 20px;
+
+  font-size: 30px;
+
+}
+
+
+.tv-placeholder p {
+
+  color: var(--gray);
+
+  margin: 10px;
+
+}
+
+
+/* =====================================================
+   CONTACTO
+===================================================== */
+
+.contact-grid {
+
+  margin-top: 30px;
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(3,1fr);
+
+  gap: 15px;
+
+}
+
+
+.contact-card {
+
+  padding: 25px;
+
+  background:
+    #111;
+
+  border:
+    1px solid var(--border);
+
+  border-radius: 20px;
+
+}
+
+
+.contact-card div {
+
+  font-size: 30px;
+
+}
+
+
+.contact-card strong {
+
+  display: block;
+
+  margin-top: 15px;
+
+}
+
+
+.contact-card span {
+
+  display: block;
+
+  margin-top: 5px;
+
+  color: var(--gray);
+
+}
+
+
+/* =====================================================
+   SOCIAL
+===================================================== */
+
+.social-grid {
+
+  margin-top: 30px;
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(3,1fr);
+
+  gap: 15px;
+
+}
+
+
+.social-grid a {
+
+  padding: 25px;
+
+  border:
+    1px solid var(--border);
+
+  border-radius: 20px;
+
+  background:
+    #111;
+
+}
+
+
+.social-grid strong {
+
+  display: block;
+
+}
+
+
+.social-grid span {
+
+  color: var(--gray);
+
+  font-size: 12px;
+
+}
+
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+footer {
+
+  padding: 50px 6%;
+
+  border-top:
+    1px solid var(--border);
+
+  text-align: center;
+
+  color: var(--gray);
+
+}
+
+
+.footer-logo {
+
+  color: white;
+
+  font-size: 25px;
+
+  font-weight: bold;
+
+  letter-spacing: 3px;
+
+}
+
+
+.footer-logo strong {
+
+  color: var(--orange);
+
+}
+
+
+footer p {
+
+  margin-top: 5px;
+
+}
+
+
+footer small {
+
+  display: block;
+
+  margin-top: 25px;
+
+}
+
+
+/* =====================================================
    MOBILE
-   ========================================================= */
+===================================================== */
 
-@media (max-width: 600px) {
+@media(max-width:850px) {
 
-  .arena24-player {
-
-    margin: 10px auto;
-
-    border-radius: 12px;
-
-  }
-
-  .arena24-header {
-
-    height: 58px;
-
-    padding: 0 13px;
-
-  }
-
-  .arena24-logo-a {
-
-    width: 35px;
-    height: 35px;
-
-    font-size: 20px;
-
-  }
-
-  .arena24-logo strong {
-
-    font-size: 17px;
-
-  }
-
-  .arena24-logo small {
+  .navigation {
 
     display: none;
 
   }
 
-  .arena24-live {
 
-    font-size: 8px;
+  .hero {
 
-  }
+    flex-direction: column;
 
-  .arena24-radio-icon {
+    text-align: center;
 
-    width: 65px;
-    height: 65px;
-
-    font-size: 29px;
+    padding-top: 60px;
 
   }
 
-  .arena24-controls {
 
-    flex-wrap: wrap;
+  .hero-buttons {
 
-  }
-
-  .arena24-mode-btn {
-
-    min-height: 54px;
+    justify-content: center;
 
   }
 
-  .arena24-volume {
+
+  .hero-orb {
+
+    width: 250px;
+
+    height: 250px;
+
+  }
+
+
+  .news-grid,
+  .program-grid,
+  .contact-grid,
+  .social-grid {
+
+    grid-template-columns: 1fr;
+
+  }
+
+
+  .player-controls {
+
+    align-items: flex-start;
+
+  }
+
+
+  .live-status {
 
     width: 100%;
 
-    height: 38px;
+  }
+
+
+}
+
+
+@media(max-width:500px) {
+
+  .hero h1 {
+
+    letter-spacing: -5px;
 
   }
 
-  .arena24-volume input {
 
-    width: 130px;
+  .section {
+
+    padding:
+      65px 5%;
 
   }
 
-  .arena24-ticker-label {
 
-    min-width: 58px;
+  .player-background {
+
+    height: 200px;
+
+  }
+
+
+  .volume-control {
+
+    width: 100%;
+
+  }
+
+
+  .volume-control input {
+
+    flex: 1;
 
   }
 
 }
 
+:::writing{variant="document" id="31674" title="ARENA 24 RADIO WEB — script.js"}
 
-/* =========================================================
-   OCULTAR CONTROLES DE VOLUMEN CUANDO ESTÁ TV
-   ========================================================= */
+/* =====================================================
+   ARENA 24 RADIO WEB
+   JAVASCRIPT PRINCIPAL
+===================================================== */
 
-.arena24-player.tv-active
-.arena24-volume {
 
-  opacity: .5;
+/* =====================================================
+   CONFIGURACIÓN
+===================================================== */
 
-}
+const ARENA24 = {
 
-</style>
+  stream:
+    "https://stream.zeno.fm/zuw6xmmwmd0uv",
 
+  facebook:
+    "https://www.facebook.com/arena24radiolarioja",
 
-<script>
+  instagram:
+    "https://www.instagram.com/arena24radio/",
 
-(function () {
+  youtube:
+    "https://www.youtube.com/@ARENA24LARIOJA",
 
-  const audio =
-    document.getElementById("arena24-audio");
+  whatsapp:
+    "https://wa.me/543804844124",
 
-  const play =
-    document.getElementById("arena24-play");
+  email:
+    "arena24radio@gmail.com"
 
-  const radioBtn =
-    document.getElementById("arena24-radio-btn");
+};
 
-  const tvBtn =
-    document.getElementById("arena24-tv-btn");
 
-  const radio =
-    document.getElementById("arena24-radio");
+/* =====================================================
+   PLAYER
+===================================================== */
 
-  const tv =
-    document.getElementById("arena24-tv");
+const radio =
+  document.getElementById("radioPlayer");
 
-  const signal =
-    document.getElementById("arena24-signal");
+const playButton =
+  document.getElementById("playButton");
 
-  const liveLabel =
-    document.getElementById("arena24-live-label");
+const volumeControl =
+  document.getElementById("volumeControl");
 
-  const audioStatus =
-    document.getElementById("arena24-audio-status");
+const playerStatus =
+  document.getElementById("playerStatus");
 
-  const volume =
-    document.getElementById("arena24-volume-range");
 
-  const mute =
-    document.getElementById("arena24-mute");
+/* Volumen inicial */
 
+radio.volume = 0.85;
 
-  /* =====================================================
-     RADIO PLAY / PAUSE
-     ===================================================== */
 
-  play.addEventListener("click", function () {
+/* PLAY / PAUSE */
 
-    if (audio.paused) {
-
-      audio.play()
-
-        .then(function () {
-
-          play.textContent = "❚❚";
-
-          audioStatus.textContent =
-            "Radio Arena 24 reproduciendo";
-
-        })
-
-        .catch(function () {
-
-          audioStatus.textContent =
-            "Presioná nuevamente PLAY para comenzar";
-
-        });
-
-    } else {
-
-      audio.pause();
-
-      play.textContent = "▶";
-
-      audioStatus.textContent =
-        "Radio pausada";
-
-    }
-
-  });
-
-
-  /* =====================================================
-     RADIO
-     ===================================================== */
-
-  radioBtn.addEventListener("click", function () {
-
-    radio.classList.add("active");
-
-    tv.classList.remove("active");
-
-    radioBtn.classList.add("active");
-
-    tvBtn.classList.remove("active");
-
-    signal.textContent =
-      "RADIO ARENA 24";
-
-    liveLabel.textContent =
-      "RADIO EN VIVO";
-
-  });
-
-
-  /* =====================================================
-     TV
-     ===================================================== */
-
-  tvBtn.addEventListener("click", function () {
-
-    /*
-     * Pausamos la radio al pasar a TV.
-     */
-
-    audio.pause();
-
-    play.textContent = "▶";
-
-    radio.classList.remove("active");
-
-    tv.classList.add("active");
-
-    radioBtn.classList.remove("active");
-
-    tvBtn.classList.add("active");
-
-    signal.textContent =
-      "TV ARENA 24";
-
-    liveLabel.textContent =
-      "TV EN VIVO";
-
-  });
-
-
-  /* =====================================================
-     VOLUMEN
-     ===================================================== */
-
-  volume.addEventListener("input", function () {
-
-    audio.volume =
-      parseFloat(this.value);
-
-    if (audio.volume === 0) {
-
-      mute.textContent = "🔇";
-
-    } else {
-
-      mute.textContent = "🔊";
-
-    }
-
-  });
-
-
-  /* =====================================================
-     MUTE
-     ===================================================== */
-
-  let previousVolume = 1;
-
-  mute.addEventListener("click", function () {
-
-    if (audio.volume > 0) {
-
-      previousVolume =
-        audio.volume;
-
-      audio.volume = 0;
-
-      volume.value = 0;
-
-      mute.textContent = "🔇";
-
-    } else {
-
-      audio.volume =
-        previousVolume || 1;
-
-      volume.value =
-        previousVolume || 1;
-
-      mute.textContent = "🔊";
-
-    }
-
-  });
-
-
-  /* =====================================================
-     ERROR RADIO
-     ===================================================== */
-
-  audio.addEventListener("error", function () {
-
-    play.textContent = "▶";
-
-    audioStatus.textContent =
-      "La señal de radio no está disponible en este momento.";
-
-  });
-
-
-  /* =====================================================
-     PAUSA
-     ===================================================== */
-
-  audio.addEventListener("pause", function () {
-
-    play.textContent = "▶";
-
-  });
-
-
-})();
-
-
-      <!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>Arena 24 | Noticias de La Rioja y Argentina</title>
-  <meta name="description" content="Arena 24 - Noticias de La Rioja, Argentina y el mundo. Información, actualidad, política, economía, sociedad y deportes.">
-
-  <style>
-    :root {
-      --azul: #071a33;
-      --azul2: #0d294d;
-      --rojo: #e21d2f;
-      --rojo2: #b91425;
-      --blanco: #fff;
-      --fondo: #f4f6f8;
-      --texto: #101828;
-      --gris: #667085;
-      --borde: #e4e7ec;
-      --radio: 14px;
-      --max: 1240px;
-      --sombra: 0 8px 30px rgba(7,26,51,.08);
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family: Arial, Helvetica, sans-serif;
-      background: var(--fondo);
-      color: var(--texto);
-      line-height: 1.5;
-    }
-
-    img {
-      width: 100%;
-      display: block;
-      object-fit: cover;
-    }
-
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
-
-    .container {
-      width: min(var(--max), calc(100% - 32px));
-      margin: auto;
-    }
-
-    /* TOP */
-
-    .topbar {
-      background: var(--azul);
-      color: #cbd5e1;
-      font-size: 13px;
-    }
-
-    .topbar-inner {
-      min-height: 38px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .topbar strong {
-      color: white;
-    }
-
-    /* HEADER */
-
-    header {
-      background: white;
-      border-bottom: 1px solid var(--borde);
-    }
-
-    .header-inner {
-      min-height: 90px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .logo {
-      font-size: 37px;
-      font-weight: 900;
-      letter-spacing: -2px;
-      color: var(--azul);
-    }
-
-    .logo span {
-      color: var(--rojo);
-    }
-
-    .logo small {
-      display: block;
-      font-size: 9px;
-      letter-spacing: 3px;
-      color: var(--gris);
-      margin-top: -4px;
-    }
-
-    .search {
-      display: flex;
-      border: 1px solid var(--borde);
-      border-radius: 7px;
-      overflow: hidden;
-    }
-
-    .search input {
-      width: 220px;
-      border: 0;
-      outline: none;
-      padding: 11px 13px;
-    }
-
-    .search button {
-      width: 45px;
-      border: 0;
-      background: var(--azul);
-      color: white;
-      cursor: pointer;
-      font-size: 18px;
-    }
-
-    .menu {
-      display: none;
-      background: var(--azul);
-      color: white;
-      border: 0;
-      padding: 10px 14px;
-      border-radius: 6px;
-      font-size: 20px;
-      cursor: pointer;
-    }
-
-    /* NAV */
-
-    nav {
-      background: var(--azul2);
-      color: white;
-    }
-
-    .nav-inner {
-      display: flex;
-      overflow-x: auto;
-    }
-
-    nav a {
-      padding: 14px 17px;
-      font-size: 14px;
-      font-weight: 700;
-      white-space: nowrap;
-    }
-
-    nav a:hover,
-    nav a.active {
-      background: var(--rojo);
-    }
-
-    /* BREAKING */
-
-    .breaking {
-      background: var(--rojo);
-      color: white;
-    }
-
-    .breaking-inner {
-      min-height: 43px;
-      display: flex;
-      align-items: center;
-      gap: 15px;
-    }
-
-    .breaking-label {
-      background: var(--rojo2);
-      padding: 5px 9px;
-      border-radius: 4px;
-      font-size: 11px;
-      font-weight: 900;
-      flex-shrink: 0;
-    }
-
-    #breakingText {
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      font-size: 14px;
-    }
-
-    /* MAIN */
-
-    main {
-      padding: 30px 0 60px;
-    }
-
-    .titulo-seccion {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 3px solid var(--azul);
-      margin-bottom: 20px;
-      padding-bottom: 10px;
-    }
-
-    .titulo-seccion h2 {
-      font-size: 25px;
-      color: var(--azul);
-    }
-
-    .titulo-seccion a {
-      color: var(--rojo);
-      font-size: 12px;
-      font-weight: 800;
-    }
-
-    /* HERO */
-
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1.7fr 1fr;
-      gap: 20px;
-      margin-bottom: 42px;
-    }
-
-    .hero {
-      min-height: 500px;
-      position: relative;
-      overflow: hidden;
-      border-radius: var(--radio);
-      color: white;
-      box-shadow: var(--sombra);
-      background: #111;
-    }
-
-    .hero img {
-      position: absolute;
-      inset: 0;
-      height: 100%;
-      filter: brightness(.65);
-      transition: .4s;
-    }
-
-    .hero:hover img {
-      transform: scale(1.04);
-    }
-
-    .hero-content {
-      position: absolute;
-      bottom: 0;
-      padding: 34px;
-      width: 100%;
-      background: linear-gradient(transparent, rgba(0,0,0,.95));
-    }
-
-    .categoria {
-      display: inline-block;
-      background: var(--rojo);
-      color: white;
-      padding: 5px 9px;
-      border-radius: 4px;
-      font-size: 10px;
-      font-weight: 900;
-      text-transform: uppercase;
-      margin-bottom: 10px;
-    }
-
-    .hero h1 {
-      font-family: Georgia, serif;
-      font-size: clamp(30px,4vw,48px);
-      line-height: 1.08;
-      margin-bottom: 12px;
-    }
-
-    .hero p {
-      color: #e5e7eb;
-      font-size: 15px;
-    }
-
-    .meta {
-      color: var(--gris);
-      font-size: 11px;
-      margin-top: 10px;
-    }
-
-    .hero .meta {
-      color: #d1d5db;
-    }
-
-    /* CARDS */
-
-    .side-news {
-      display: grid;
-      gap: 20px;
-    }
-
-    .card {
-      background: white;
-      border: 1px solid var(--borde);
-      border-radius: var(--radio);
-      overflow: hidden;
-      box-shadow: 0 3px 15px rgba(0,0,0,.04);
-      transition: .25s;
-    }
-
-    .card:hover {
-      transform: translateY(-3px);
-      box-shadow: var(--sombra);
-    }
-
-    .card img {
-      height: 185px;
-    }
-
-    .card-body {
-      padding: 16px;
-    }
-
-    .card h3 {
-      font-family: Georgia, serif;
-      font-size: 20px;
-      line-height: 1.2;
-      margin: 6px 0;
-    }
-
-    .card p {
-      color: var(--gris);
-      font-size: 13px;
-    }
-
-    /* GRID */
-
-    .news-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-      margin-bottom: 45px;
-    }
-
-    /* LOADING */
-
-    .loading {
-      background: white;
-      padding: 50px;
-      text-align: center;
-      border-radius: var(--radio);
-      color: var(--gris);
-    }
-
-    .error {
-      background: #fff1f2;
-      color: #991b1b;
-      padding: 20px;
-      border-radius: 10px;
-      margin-bottom: 25px;
-    }
-
-    /* FOOTER */
-
-    footer {
-      background: #050f20;
-      color: #cbd5e1;
-      padding: 50px 0 25px;
-    }
-
-    .footer-grid {
-      display: grid;
-      grid-template-columns: 2fr 1fr 1fr 1fr;
-      gap: 35px;
-    }
-
-    footer .logo {
-      color: white;
-    }
-
-    footer p {
-      color: #94a3b8;
-      margin-top: 15px;
-      max-width: 400px;
-    }
-
-    footer h4 {
-      color: white;
-      margin-bottom: 12px;
-    }
-
-    footer ul {
-      list-style: none;
-    }
-
-    footer li {
-      margin-bottom: 8px;
-      font-size: 13px;
-    }
-
-    footer a:hover {
-      color: white;
-    }
-
-    .copyright {
-      border-top: 1px solid rgba(255,255,255,.1);
-      margin-top: 35px;
-      padding-top: 20px;
-      color: #64748b;
-      font-size: 12px;
-      display: flex;
-      justify-content: space-between;
-    }
-
-    /* RESPONSIVE */
-
-    @media(max-width:900px) {
-      .hero-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .news-grid {
-        grid-template-columns: repeat(2,1fr);
-      }
-
-      .footer-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-
-    @media(max-width:650px) {
-
-      .topbar-inner {
-        justify-content: center;
-      }
-
-      .search {
-        display: none;
-      }
-
-      .menu {
-        display: block;
-      }
-
-      nav {
-        display: none;
-      }
-
-      nav.open {
-        display: block;
-      }
-
-      .nav-inner {
-        flex-direction: column;
-      }
-
-      nav a {
-        border-bottom: 1px solid rgba(255,255,255,.1);
-      }
-
-      .logo {
-        font-size: 30px;
-      }
-
-      .hero {
-        min-height: 440px;
-      }
-
-      .hero-content {
-        padding: 22px;
-      }
-
-      .hero h1 {
-        font-size: 30px;
-      }
-
-      .news-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .footer-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-
-      .copyright {
-        flex-direction: column;
-        gap: 8px;
-      }
-    }
-  </style>
-</head>
-
-<body>
-
-  <div class="topbar">
-    <div class="container topbar-inner">
-      <strong id="fecha"></strong>
-      <span>Información · Actualidad · Periodismo</span>
-    </div>
-  </div>
-
-  <header>
-    <div class="container header-inner">
-
-      <a href="/" class="logo">
-        ARENA<span>24</span>
-        <small>NOTICIAS</small>
-      </a>
-
-      <form class="search" onsubmit="buscar(event)">
-        <input id="busqueda" type="search" placeholder="Buscar noticias...">
-        <button>⌕</button>
-      </form>
-
-      <button class="menu" onclick="toggleMenu()">☰</button>
-
-    </div>
-  </header>
-
-  <nav id="nav">
-    <div class="container nav-inner">
-      <a class="active" href="/">Inicio</a>
-      <a href="#la-rioja">La Rioja</a>
-      <a href="#nacional">Nacional</a>
-      <a href="#politica">Política</a>
-      <a href="#economia">Economía</a>
-      <a href="#sociedad">Sociedad</a>
-      <a href="#deportes">Deportes</a>
-      <a href="#internacional">Internacional</a>
-    </div>
-  </nav>
-
-  <div class="breaking">
-    <div class="container breaking-inner">
-      <span class="breaking-label">ÚLTIMA HORA</span>
-      <span id="breakingText">Cargando noticias...</span>
-    </div>
-  </div>
-
-  <main>
-
-    <section class="container">
-
-      <div class="titulo-seccion">
-        <h2>Últimas noticias</h2>
-        <a href="#">VER TODAS →</a>
-      </div>
-
-      <div id="portada">
-        <div class="loading">
-          Cargando las últimas noticias...
-        </div>
-      </div>
-
-    </section>
-
-    <section class="container" id="la-rioja">
-
-      <div class="titulo-seccion">
-        <h2>La Rioja</h2>
-        <a href="#">VER SECCIÓN →</a>
-      </div>
-
-      <div id="laRioja" class="news-grid">
-        <div class="loading">Cargando...</div>
-      </div>
-
-    </section>
-
-    <section class="container" id="nacional">
-
-      <div class="titulo-seccion">
-        <h2>Nacional</h2>
-        <a href="#">VER SECCIÓN →</a>
-      </div>
-
-      <div id="nacionalNoticias" class="news-grid">
-        <div class="loading">Cargando...</div>
-      </div>
-
-    </section>
-
-    <section class="container" id="deportes">
-
-      <div class="titulo-seccion">
-        <h2>Deportes</h2>
-        <a href="#">VER SECCIÓN →</a>
-      </div>
-
-      <div id="deportesNoticias" class="news-grid">
-        <div class="loading">Cargando...</div>
-      </div>
-
-    </section>
-
-  </main>
-
-  <footer>
-
-    <div class="container">
-
-      <div class="footer-grid">
-
-        <div>
-          <div class="logo">
-            ARENA<span>24</span>
-          </div>
-
-          <p>
-            Noticias, actualidad y periodismo desde La Rioja
-            para toda la Argentina.
-          </p>
-        </div>
-
-        <div>
-          <h4>Secciones</h4>
-          <ul>
-            <li><a href="#la-rioja">La Rioja</a></li>
-            <li><a href="#nacional">Nacional</a></li>
-            <li><a href="#deportes">Deportes</a></li>
-            <li><a href="#politica">Política</a></li>
-          </ul>
-        </div>
-
-        <div>
-          <h4>Arena 24</h4>
-          <ul>
-            <li><a href="#">Quiénes somos</a></li>
-            <li><a href="#">Contacto</a></li>
-            <li><a href="#">Publicidad</a></li>
-          </ul>
-        </div>
-
-        <div>
-          <h4>Seguinos</h4>
-          <ul>
-            <li><a href="#">Instagram</a></li>
-            <li><a href="#">Facebook</a></li>
-            <li><a href="#">YouTube</a></li>
-          </ul>
-        </div>
-
-      </div>
-
-      <div class="copyright">
-        <span>© 2026 Arena 24</span>
-        <span>Todos los derechos reservados</span>
-      </div>
-
-    </div>
-
-  </footer>
-
-<script>
-
-  const API = "api/noticias.php";
-
-  document.getElementById("fecha").textContent =
-    new Date().toLocaleDateString("es-AR", {
-      weekday: "long",
-      day: "numeric",
-      month: "long",
-      year: "numeric"
-    });
-
-  function escapeHTML(text) {
-    const div = document.createElement("div");
-    div.textContent = text || "";
-    return div.innerHTML;
-  }
-
-  tarjeta.innerHTML = `
-    <a href="noticia.php?slug=${encodeURIComponent(noticia.slug)}">
-        <img src="${noticia.imagen}" alt="${noticia.titulo}">
-        <h2>${noticia.titulo}</h2>
-        <p>${noticia.resumen}</p>
-    </a>
-`;
-
-
-          <img
-            src="${escapeHTML(noticia.imagen || 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=900&q=80')}"
-            alt="${escapeHTML(noticia.titulo)}"
-            loading="lazy"
-          >
-
-          <div class="card-body">
-
-            <span class="categoria">
-              ${escapeHTML(noticia.categoria)}
-            </span>
-
-            <h3>
-              ${escapeHTML(noticia.titulo)}
-            </h3>
-
-            <p>
-              ${escapeHTML(noticia.resumen)}
-            </p>
-
-            <div class="meta">
-              ${escapeHTML(noticia.fecha || "")}
-              ·
-              ${escapeHTML(noticia.autor || "Arena 24")}
-            </div>
-
-          </div>
-
-        </a>
-
-      </article>
-    `;
-  }
-
-  function renderPortada(noticias) {
-
-    if (!noticias.length) {
-      document.getElementById("portada").innerHTML =
-        '<div class="error">No hay noticias disponibles.</div>';
-      return;
-    }
-
-    const principal = noticias[0];
-    const laterales = noticias.slice(1,3);
-
-    document.getElementById("breakingText").textContent =
-      principal.titulo;
-
-    document.getElementById("portada").innerHTML = `
-
-      <div class="hero-grid">
-
-        <article class="hero">
-
-          <a href="${escapeHTML(principal.url || '#')}">
-
-            <img
-              src="${escapeHTML(principal.imagen)}"
-              alt="${escapeHTML(principal.titulo)}"
-            >
-
-            <div class="hero-content">
-
-              <span class="categoria">
-                ${escapeHTML(principal.categoria)}
-              </span>
-
-              <h1>
-                ${escapeHTML(principal.titulo)}
-              </h1>
-
-              <p>
-                ${escapeHTML(principal.resumen)}
-              </p>
-
-              <div class="meta">
-                ${escapeHTML(principal.fecha)}
-                ·
-                ${escapeHTML(principal.autor || "Arena 24")}
-              </div>
-
-            </div>
-
-          </a>
-
-        </article>
-
-        <div class="side-news">
-          ${laterales.map(tarjeta).join("")}
-        </div>
-
-      </div>
-    `;
-  }
-
-  function renderSeccion(id, noticias, categoria) {
-
-    const filtradas = noticias
-      .filter(n =>
-        String(n.categoria).toLowerCase() === categoria.toLowerCase()
-      )
-      .slice(0,6);
-
-    const contenedor = document.getElementById(id);
-
-    if (!filtradas.length) {
-      contenedor.innerHTML =
-        '<div class="loading">No hay noticias en esta sección.</div>';
-      return;
-    }
-
-    contenedor.innerHTML =
-      filtradas.map(tarjeta).join("");
-  }
-
-  async function cargarNoticias() {
+playButton.addEventListener(
+  "click",
+  async function () {
 
     try {
 
-      const respuesta = await fetch(API + "?t=" + Date.now(), {
-        headers: {
-          "Accept": "application/json"
-        }
-      });
+      if (radio.paused) {
 
-      if (!respuesta.ok) {
-        throw new Error("No se pudo conectar con la API.");
+        playerStatus.textContent =
+          "Conectando con ARENA 24...";
+
+        await radio.play();
+
+        playButton.textContent =
+          "❚❚";
+
+        playerStatus.textContent =
+          "Transmitiendo en vivo";
+
       }
 
-      const noticias = await respuesta.json();
+      else {
 
-      if (!Array.isArray(noticias)) {
-        throw new Error("Formato de noticias inválido.");
+        radio.pause();
+
+        playButton.textContent =
+          "▶";
+
+        playerStatus.textContent =
+          "Radio pausada";
+
       }
 
-      renderPortada(noticias);
-
-      renderSeccion(
-        "laRioja",
-        noticias,
-        "La Rioja"
-      );
-
-      renderSeccion(
-        "nacionalNoticias",
-        noticias,
-        "Nacional"
-      );
-
-      renderSeccion(
-        "deportesNoticias",
-        noticias,
-        "Deportes"
-      );
-
-    } catch(error) {
-
-      console.error(error);
-
-      const mensaje =
-        '<div class="error">No se pudieron cargar las noticias. Verificá la conexión con la API.</div>';
-
-      document.getElementById("portada").innerHTML = mensaje;
-      document.getElementById("laRioja").innerHTML = mensaje;
-      document.getElementById("nacionalNoticias").innerHTML = mensaje;
-      document.getElementById("deportesNoticias").innerHTML = mensaje;
     }
+
+    catch (error) {
+
+      console.error(
+        "Error del reproductor:",
+        error
+      );
+
+      playerStatus.textContent =
+        "No se pudo conectar. Intentá nuevamente.";
+
+    }
+
+  }
+);
+
+
+/* VOLUMEN */
+
+volumeControl.addEventListener(
+  "input",
+  function () {
+
+    radio.volume =
+      this.value;
+
+  }
+);
+
+
+/* EVENTOS DEL STREAM */
+
+radio.addEventListener(
+  "playing",
+  function () {
+
+    playerStatus.textContent =
+      "Transmitiendo en vivo";
+
+    playButton.textContent =
+      "❚❚";
+
+  }
+);
+
+
+radio.addEventListener(
+  "waiting",
+  function () {
+
+    playerStatus.textContent =
+      "Conectando...";
+
+  }
+);
+
+
+radio.addEventListener(
+  "error",
+  function () {
+
+    playerStatus.textContent =
+      "Stream temporalmente no disponible";
+
+  }
+);
+
+
+/* =====================================================
+   NOTICIAS
+===================================================== */
+
+
+/*
+   IMPORTANTE:
+
+   GitHub Pages no puede leer directamente
+   todos los RSS externos debido a CORS.
+
+   Por eso esta función está preparada
+   para recibir un RSS mediante un proxy.
+
+   Podemos conectarla después a un backend
+   o Cloudflare Worker para automatización
+   profesional.
+*/
+
+
+const newsContainer =
+  document.getElementById(
+    "newsContainer"
+  );
+
+
+const noticiasDemo = [
+
+  {
+    categoria:
+      "LA RIOJA",
+
+    titulo:
+      "Información y actualidad de La Rioja",
+
+    texto:
+      "Las principales noticias de la provincia y sus localidades."
+  },
+
+  {
+    categoria:
+      "ARGENTINA",
+
+    titulo:
+      "Actualidad nacional",
+
+    texto:
+      "Las noticias más importantes de Argentina."
+  },
+
+  {
+    categoria:
+      "MUNDO",
+
+    titulo:
+      "Noticias internacionales",
+
+    texto:
+      "Toda la información internacional."
   }
 
-  function toggleMenu() {
-    document.getElementById("nav").classList.toggle("open");
-  }
+];
 
-  function buscar(event) {
 
-    event.preventDefault();
+function cargarNoticias() {
 
-    const texto =
-      document.getElementById("busqueda").value.trim();
+  newsContainer.innerHTML = "";
 
-    if (!texto) return;
 
-    window.location.href =
-      "buscar.html?q=" + encodeURIComponent(texto);
-  }
+  noticiasDemo.forEach(
+    function (noticia) {
 
-  cargarNoticias();
+      const article =
+        document.createElement(
+          "article"
+        );
 
-</script>
 
-</body>
-</html>
+      article.className =
+        "news-card";
 
-     
 
-    
+      article.innerHTML = `
+
+        <span class="news-tag">
+          ${noticia.categoria}
+        </span>
+
+        <h3>
+          ${noticia.titulo}
+        </h3>
+
+        <p>
+          ${noticia.texto}
+        </p>
+
+      `;
+
+
+      newsContainer.appendChild(
+        article
+      );
+
+    }
+  );
+
+}
+
+
+cargarNoticias();
+
+
+/* =====================================================
+   ACTUALIZACIÓN AUTOMÁTICA
+===================================================== */
+
+setInterval(
+  cargarNoticias,
+  10 * 60 * 1000
+);
+
+
+/* =====================================================
+   CONSOLA
+===================================================== */
+
+console.log(
+  "ARENA 24 RADIO WEB cargada correctamente."
+);
+
+console.log(
+  "Stream:",
+  ARENA24.stream
+);
