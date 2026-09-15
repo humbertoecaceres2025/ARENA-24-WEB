@@ -1,24 +1,90 @@
-{
-  "updated": null,
-  "source": "ARENA 24",
-  "noticias": []
-}
-{
-  "name": "arena24-backend",
-  "version": "1.1.0",
-  "description": "Backend de noticias para ARENA 24",
-  "main": "server.js",
-  "scripts": {
-    "start": "node server.js",
-    "dev": "node --watch server.js"
+[
+  {
+    "id": 1,
+    "titulo": "La Rioja se prepara para una jornada marcada por nuevas definiciones",
+    "resumen": "Las principales novedades de la provincia y todos los detalles de una jornada cargada de información.",
+    "categoria": "La Rioja",
+    "autor": "Redacción Arena 24",
+    "fecha": "15 de septiembre de 2026 · 08:30",
+    "fecha_iso": "2026-09-15T08:30:00-03:00",
+    "imagen": "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&fit=crop&w=1400&q=85",
+    "url": "#"
   },
-  "dependencies": {
-    "better-sqlite3": "^11.10.0",
-    "cors": "^2.8.5",
-    "dotenv": "^16.4.7",
-    "express": "^5.1.0",
-    "express-session": "^1.18.1",
-    "multer": "^2.0.2",
-    "bcrypt": "^6.0.0"
+  {
+    "id": 2,
+    "titulo": "Las principales noticias políticas que marcan la agenda nacional",
+    "resumen": "Los protagonistas y las decisiones que concentran la atención durante esta jornada.",
+    "categoria": "Nacional",
+    "autor": "Redacción Arena 24",
+    "fecha": "15 de septiembre de 2026 · 08:05",
+    "fecha_iso": "2026-09-15T08:05:00-03:00",
+    "imagen": "https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?auto=format&fit=crop&w=1000&q=85",
+    "url": "#"
+  },
+  {
+    "id": 3,
+    "titulo": "La economía vuelve a estar en el centro de la agenda",
+    "resumen": "Los principales indicadores y las novedades que siguen de cerca los mercados.",
+    "categoria": "Economía",
+    "autor": "Arena 24 Economía",
+    "fecha": "15 de septiembre de 2026 · 07:45",
+    "fecha_iso": "2026-09-15T07:45:00-03:00",
+    "imagen": "https://images.unsplash.com/photo-1559526324-593bc073d938?auto=format&fit=crop&w=1000&q=85",
+    "url": "#"
+  },
+  {
+    "id": 4,
+    "titulo": "Toda la actualidad deportiva de la jornada",
+    "resumen": "Resultados, protagonistas y las noticias que tienen en vilo a los fanáticos.",
+    "categoria": "Deportes",
+    "autor": "Arena 24 Deportes",
+    "fecha": "15 de septiembre de 2026 · 07:20",
+    "fecha_iso": "2026-09-15T07:20:00-03:00",
+    "imagen": "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=1000&q=85",
+    "url": "#"
+  },
+  {
+    "id": 5,
+    "titulo": "Historias y protagonistas de La Rioja",
+    "resumen": "Una mirada a las noticias que atraviesan la vida cotidiana de los riojanos.",
+    "categoria": "La Rioja",
+    "autor": "Redacción Arena 24",
+    "fecha": "15 de septiembre de 2026 · 06:55",
+    "fecha_iso": "2026-09-15T06:55:00-03:00",
+    "imagen": "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1000&q=85",
+    "url": "#"
+  },
+  {
+    "id": 6,
+    "titulo": "Las noticias internacionales que concentran las miradas",
+    "resumen": "El panorama internacional y los acontecimientos más relevantes del día.",
+    "categoria": "Internacional",
+    "autor": "Arena 24 Mundo",
+    "fecha": "15 de septiembre de 2026 · 06:30",
+    "fecha_iso": "2026-09-15T06:30:00-03:00",
+    "imagen": "https://images.unsplash.com/photo-1521295121783-8a321d551ad2?auto=format&fit=crop&w=1000&q=85",
+    "url": "#"
+  },
+  {
+    "id": 7,
+    "titulo": "Nuevas propuestas y actividades para la comunidad riojana",
+    "resumen": "Las iniciativas que se desarrollan en distintos puntos de la provincia.",
+    "categoria": "La Rioja",
+    "autor": "Redacción Arena 24",
+    "fecha": "15 de septiembre de 2026 · 06:10",
+    "fecha_iso": "2026-09-15T06:10:00-03:00",
+    "imagen": "https://images.unsplash.com/photo-1577962917302-cd874c4e31d2?auto=format&fit=crop&w=1000&q=85",
+    "url": "#"
+  },
+  {
+    "id": 8,
+    "titulo": "Todo preparado para una nueva jornada deportiva",
+    "resumen": "La agenda deportiva y las principales novedades de los equipos.",
+    "categoria": "Deportes",
+    "autor": "Arena 24 Deportes",
+    "fecha": "15 de septiembre de 2026 · 05:50",
+    "fecha_iso": "2026-09-15T05:50:00-03:00",
+    "imagen": "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=1000&q=85",
+    "url": "#"
   }
-}
+]
