@@ -162,19 +162,6 @@ radio.addEventListener(
 ===================================================== */
 
 
-/*
-   IMPORTANTE:
-
-   GitHub Pages no puede leer directamente
-   todos los RSS externos debido a CORS.
-
-   Por eso esta función está preparada
-   para recibir un RSS mediante un proxy.
-
-   Podemos conectarla después a un backend
-   o Cloudflare Worker para automatización
-   profesional.
-*/
 
 
 const newsContainer =
@@ -311,14 +298,9 @@ document.addEventListener("DOMContentLoaded", () => {
     /* Zona horaria */
     timezone: "America/Argentina/La_Rioja",
 
-    /*
-      Cuando tengas tu backend/API de noticias,
-      reemplazá esta URL.
-
-      Ejemplo:
-      newsApi: "/api/noticias"
+   
     */
-    newsApi: null,
+    newsApi: "/api/noticias",
 
     /*
       Cada cuánto actualizar noticias.
@@ -791,10 +773,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (!ARENA_CONFIG.newsApi) {
 
-      /*
-        No hacemos ninguna petición si todavía
-        no existe un backend de noticias.
-      */
+      
 
       return;
 
