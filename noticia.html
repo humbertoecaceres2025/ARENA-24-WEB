@@ -1,0 +1,1271 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>ARENA 24 | Noticia</title>
+
+  <meta
+    name="description"
+    content="ARENA 24 NOTICIAS — Información de La Rioja, Argentina y el mundo."
+  >
+
+  <meta name="theme-color" content="#d71920">
+
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+
+    /* ==================================================
+       LECTOR DE NOTICIAS
+    ================================================== */
+
+    .article-page {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 30px 18px 60px;
+    }
+
+    .article-breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #777;
+      font-size: 12px;
+      margin-bottom: 25px;
+    }
+
+    .article-breadcrumb a {
+      color: #777;
+    }
+
+    .article-breadcrumb a:hover {
+      color: #d71920;
+    }
+
+    .article-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 820px) 320px;
+      gap: 35px;
+      align-items: start;
+    }
+
+    .article {
+      background: #fff;
+      padding: 35px;
+      box-shadow: 0 8px 30px rgba(0,0,0,.06);
+    }
+
+    .article-category {
+      display: inline-block;
+      background: #d71920;
+      color: #fff;
+      padding: 7px 11px;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: .5px;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .article h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(35px, 5vw, 58px);
+      line-height: 1.02;
+      letter-spacing: -1.5px;
+      margin-bottom: 18px;
+    }
+
+    .article-subtitle {
+      color: #555;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 20px;
+      line-height: 1.45;
+      margin-bottom: 22px;
+    }
+
+    .article-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      border-top: 1px solid #e3e5e8;
+      border-bottom: 1px solid #e3e5e8;
+      padding: 14px 0;
+      margin-bottom: 25px;
+      color: #777;
+      font-size: 12px;
+    }
+
+    .article-author {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .author-dot {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: #d71920;
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+    }
+
+    .article-cover {
+      width: 100%;
+      height: 470px;
+      object-fit: cover;
+      margin-bottom: 10px;
+    }
+
+    .photo-caption {
+      color: #888;
+      font-size: 11px;
+      margin-bottom: 28px;
+    }
+
+    .article-body {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 19px;
+      line-height: 1.75;
+      color: #25272b;
+    }
+
+    .article-body p {
+      margin-bottom: 22px;
+    }
+
+    .article-body .lead {
+      font-weight: bold;
+      font-size: 21px;
+      line-height: 1.6;
+    }
+
+    .article-body h2 {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 27px;
+      line-height: 1.2;
+      margin: 35px 0 15px;
+    }
+
+    .article-body blockquote {
+      border-left: 5px solid #d71920;
+      margin: 30px 0;
+      padding: 10px 25px;
+      font-size: 23px;
+      font-weight: bold;
+      font-style: italic;
+      color: #333;
+    }
+
+    /* COMPARTIR */
+
+    .share-area {
+      border-top: 1px solid #e3e5e8;
+      margin-top: 35px;
+      padding-top: 22px;
+    }
+
+    .share-area strong {
+      display: block;
+      margin-bottom: 12px;
+      font-size: 13px;
+    }
+
+    .share-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .share-button {
+      border: 0;
+      cursor: pointer;
+      padding: 10px 14px;
+      color: white;
+      font-size: 12px;
+      font-weight: 800;
+      border-radius: 3px;
+    }
+
+    .share-facebook {
+      background: #1877f2;
+    }
+
+    .share-x {
+      background: #111;
+    }
+
+    .share-whatsapp {
+      background: #20b958;
+    }
+
+    .share-copy {
+      background: #777;
+    }
+
+    /* SIDEBAR */
+
+    .article-sidebar {
+      position: sticky;
+      top: 20px;
+    }
+
+    .article-sidebar-box {
+      background: #fff;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 8px 30px rgba(0,0,0,.06);
+    }
+
+    .article-sidebar-box h3 {
+      font-size: 15px;
+      border-bottom: 2px solid #d71920;
+      padding-bottom: 10px;
+      margin-bottom: 10px;
+    }
+
+    .sidebar-story {
+      display: grid;
+      grid-template-columns: 90px 1fr;
+      gap: 12px;
+      padding: 13px 0;
+      border-bottom: 1px solid #e3e5e8;
+    }
+
+    .sidebar-story img {
+      width: 90px;
+      height: 65px;
+      object-fit: cover;
+    }
+
+    .sidebar-story h4 {
+      font-size: 13px;
+      line-height: 1.25;
+    }
+
+    .sidebar-story span {
+      display: block;
+      color: #999;
+      font-size: 10px;
+      margin-top: 5px;
+    }
+
+    /* RELATED */
+
+    .related {
+      margin-top: 35px;
+      background: #fff;
+      padding: 25px;
+    }
+
+    .related h2 {
+      font-size: 21px;
+      text-transform: uppercase;
+      border-bottom: 3px solid #111;
+      padding-bottom: 10px;
+      margin-bottom: 20px;
+    }
+
+    .related-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .related-card {
+      border: 1px solid #e4e5e7;
+      background: #fff;
+      overflow: hidden;
+    }
+
+    .related-card img {
+      height: 150px;
+      object-fit: cover;
+    }
+
+    .related-card-content {
+      padding: 13px;
+    }
+
+    .related-card .category {
+      margin-bottom: 7px;
+    }
+
+    .related-card h3 {
+      font-size: 16px;
+      line-height: 1.2;
+    }
+
+    /* ERROR */
+
+    .article-error {
+      text-align: center;
+      background: #fff;
+      padding: 70px 25px;
+      box-shadow: 0 8px 30px rgba(0,0,0,.06);
+    }
+
+    .article-error strong {
+      display: block;
+      font-size: 70px;
+      color: #d71920;
+    }
+
+    .article-error h1 {
+      margin-bottom: 10px;
+    }
+
+    .article-error p {
+      color: #777;
+      margin-bottom: 20px;
+    }
+
+    .back-home {
+      display: inline-block;
+      background: #d71920;
+      color: #fff;
+      padding: 12px 18px;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    /* RESPONSIVE */
+
+    @media (max-width: 950px) {
+
+      .article-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .article-sidebar {
+        position: static;
+      }
+
+      .article-cover {
+        height: 420px;
+      }
+
+    }
+
+    @media (max-width: 650px) {
+
+      .article {
+        padding: 22px;
+      }
+
+      .article h1 {
+        font-size: 35px;
+      }
+
+      .article-subtitle {
+        font-size: 18px;
+      }
+
+      .article-meta {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .article-cover {
+        height: 280px;
+      }
+
+      .article-body {
+        font-size: 18px;
+      }
+
+      .related {
+        padding: 18px;
+      }
+
+      .related-grid {
+        grid-template-columns: 1fr;
+      }
+
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ==================================================
+     CABECERA
+================================================== -->
+
+<header class="site-header">
+
+  <div class="top-header">
+
+    <div class="container header-flex">
+
+      <a href="index.html" class="logo">
+
+        <span class="logo-box">
+          A24
+        </span>
+
+        <span>
+          <strong>ARENA 24</strong>
+          <small>NOTICIAS · LA RIOJA</small>
+        </span>
+
+      </a>
+
+
+      <div class="header-data">
+
+        <div>
+
+          <small>LA RIOJA</small>
+
+          <strong>
+            ☀️ 22°C
+          </strong>
+
+        </div>
+
+
+        <div>
+
+          <small>HORA ARGENTINA</small>
+
+          <strong id="clock">
+            00:00:00
+          </strong>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <nav class="main-nav">
+
+    <div class="container nav-scroll">
+
+      <a href="index.html">
+        Inicio
+      </a>
+
+      <a href="#">
+        La Rioja
+      </a>
+
+      <a href="#">
+        Política
+      </a>
+
+      <a href="#">
+        Policiales
+      </a>
+
+      <a href="#">
+        Sociedad
+      </a>
+
+      <a href="#">
+        Economía
+      </a>
+
+      <a href="#">
+        Deportes
+      </a>
+
+      <a href="#">
+        Turismo
+      </a>
+
+      <a href="#">
+        Cultura
+      </a>
+
+      <a href="#">
+        Argentina
+      </a>
+
+    </div>
+
+  </nav>
+
+</header>
+
+
+<!-- ==================================================
+     ÚLTIMO MOMENTO
+================================================== -->
+
+<section class="breaking">
+
+  <div class="container breaking-flex">
+
+    <span class="breaking-label">
+      🔴 ÚLTIMO MOMENTO
+    </span>
+
+    <div id="breakingNews">
+      ARENA 24 · Noticias de La Rioja
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ==================================================
+     ARTÍCULO
+================================================== -->
+
+<main class="article-page">
+
+
+  <div class="article-breadcrumb">
+
+    <a href="index.html">
+      Inicio
+    </a>
+
+    <span>›</span>
+
+    <span id="breadcrumbCategory">
+      Noticias
+    </span>
+
+  </div>
+
+
+  <div id="articleContainer">
+
+    <!-- JavaScript carga aquí la noticia -->
+
+  </div>
+
+
+</main>
+
+
+<!-- ==================================================
+     FOOTER
+================================================== -->
+
+<footer>
+
+  <div class="container footer-grid">
+
+    <div>
+
+      <h2>
+        ARENA 24
+      </h2>
+
+      <p>
+        Noticias de La Rioja,
+        Argentina y el mundo.
+      </p>
+
+    </div>
+
+
+    <div>
+
+      <h4>
+        SECCIONES
+      </h4>
+
+      <a href="#">
+        La Rioja
+      </a>
+
+      <a href="#">
+        Política
+      </a>
+
+      <a href="#">
+        Policiales
+      </a>
+
+      <a href="#">
+        Sociedad
+      </a>
+
+    </div>
+
+
+    <div>
+
+      <h4>
+        ARENA 24
+      </h4>
+
+      <a href="#">
+        Quiénes somos
+      </a>
+
+      <a href="#">
+        Contacto
+      </a>
+
+      <a href="#">
+        Publicidad
+      </a>
+
+    </div>
+
+
+    <div>
+
+      <h4>
+        LEGAL
+      </h4>
+
+      <a href="#">
+        Privacidad
+      </a>
+
+      <a href="#">
+        Términos
+      </a>
+
+      <a href="#">
+        Cookies
+      </a>
+
+    </div>
+
+  </div>
+
+
+  <div class="copyright">
+
+    ©
+    <span id="year"></span>
+    ARENA 24 NOTICIAS
+
+  </div>
+
+</footer>
+
+
+<script src="app.js"></script>
+
+
+<script>
+
+/* ==================================================
+   LECTOR INDIVIDUAL
+================================================== */
+
+
+/*
+  Obtiene el ID desde:
+
+  noticia.html?id=1
+*/
+
+const params =
+  new URLSearchParams(
+    window.location.search
+  );
+
+const noticiaId =
+  Number(params.get("id"));
+
+
+/*
+  Busca la noticia en el array
+  creado en app.js
+*/
+
+const noticia =
+  noticias.find(
+    item => item.id === noticiaId
+  );
+
+
+const articleContainer =
+  document.getElementById(
+    "articleContainer"
+  );
+
+
+/* ==================================================
+   SI NO EXISTE LA NOTICIA
+================================================== */
+
+if (!noticia) {
+
+  articleContainer.innerHTML = `
+
+    <div class="article-error">
+
+      <strong>404</strong>
+
+      <h1>
+        Noticia no encontrada
+      </h1>
+
+      <p>
+        La noticia que estás buscando
+        no existe o fue retirada.
+      </p>
+
+      <a
+        href="index.html"
+        class="back-home">
+
+        ← VOLVER A ARENA 24
+
+      </a>
+
+    </div>
+
+  `;
+
+}
+
+
+/* ==================================================
+   SI EXISTE LA NOTICIA
+================================================== */
+
+else {
+
+  document.title =
+    noticia.titulo +
+    " | ARENA 24";
+
+
+  document
+    .getElementById(
+      "breadcrumbCategory"
+    )
+    .textContent =
+      noticia.categoria;
+
+
+  document
+    .getElementById(
+      "breakingNews"
+    )
+    .textContent =
+      noticia.titulo;
+
+
+  articleContainer.innerHTML = `
+
+    <div class="article-layout">
+
+
+      <!-- ARTÍCULO PRINCIPAL -->
+
+      <article class="article">
+
+        <span class="article-category">
+
+          ${noticia.categoria}
+
+        </span>
+
+
+        <h1>
+
+          ${noticia.titulo}
+
+        </h1>
+
+
+        <p class="article-subtitle">
+
+          ${noticia.resumen}
+
+        </p>
+
+
+        <div class="article-meta">
+
+          <div class="article-author">
+
+            <span class="author-dot">
+              A
+            </span>
+
+            <span>
+              Por <strong>Redacción ARENA 24</strong>
+              <br>
+              Publicado ${noticia.hora}
+            </span>
+
+          </div>
+
+
+          <span>
+            La Rioja · Argentina
+          </span>
+
+        </div>
+
+
+        <img
+          class="article-cover"
+          src="${noticia.imagen}"
+          alt="${noticia.titulo}"
+        >
+
+
+        <div class="photo-caption">
+
+          Imagen ilustrativa · ARENA 24
+
+        </div>
+
+
+        <div class="article-body">
+
+          <p class="lead">
+
+            ${noticia.resumen}
+
+          </p>
+
+
+          <p>
+
+            ARENA 24 presenta la información
+            más relevante de la jornada.
+            En esta noticia se reúnen los
+            principales datos conocidos hasta
+            el momento.
+
+          </p>
+
+
+          <p>
+
+            La información continúa en desarrollo
+            y puede actualizarse a medida que
+            aparezcan nuevos datos oficiales
+            y fuentes verificadas.
+
+          </p>
+
+
+          <h2>
+            La información
+          </h2>
+
+
+          <p>
+
+            Desde nuestra redacción seguimos
+            la evolución de los acontecimientos
+            para ofrecer información clara,
+            precisa y actualizada.
+
+          </p>
+
+
+          <blockquote>
+
+            ARENA 24 · La información
+            de La Rioja, minuto a minuto.
+
+          </blockquote>
+
+
+          <p>
+
+            Este artículo será actualizado
+            cuando existan novedades relevantes.
+
+          </p>
+
+        </div>
+
+
+        <!-- COMPARTIR -->
+
+        <div class="share-area">
+
+          <strong>
+            COMPARTIR ESTA NOTICIA
+          </strong>
+
+          <div class="share-buttons">
+
+            <button
+              class="share-button share-facebook"
+              onclick="shareFacebook()">
+
+              Facebook
+
+            </button>
+
+
+            <button
+              class="share-button share-x"
+              onclick="shareX()">
+
+              X
+
+            </button>
+
+
+            <button
+              class="share-button share-whatsapp"
+              onclick="shareWhatsApp()">
+
+              WhatsApp
+
+            </button>
+
+
+            <button
+              class="share-button share-copy"
+              onclick="copyLink()">
+
+              Copiar enlace
+
+            </button>
+
+          </div>
+
+        </div>
+
+      </article>
+
+
+      <!-- SIDEBAR -->
+
+      <aside class="article-sidebar">
+
+
+        <div class="article-sidebar-box">
+
+          <h3>
+            🔥 LO MÁS LEÍDO
+          </h3>
+
+
+          ${generarMasLeidas()}
+
+
+        </div>
+
+
+        <div class="article-sidebar-box">
+
+          <h3>
+            🌤️ CLIMA
+          </h3>
+
+          <div
+            style="
+              font-size:38px;
+              font-weight:900;
+              margin-bottom:5px;
+            ">
+
+            ☀️ 22°C
+
+          </div>
+
+          <strong>
+            La Rioja
+          </strong>
+
+          <p
+            style="
+              color:#777;
+              font-size:12px;
+              margin-top:7px;
+            ">
+
+            Pronóstico actualizado.
+
+          </p>
+
+        </div>
+
+
+      </aside>
+
+    </div>
+
+
+    <!-- RELACIONADAS -->
+
+    <section class="related">
+
+      <h2>
+        Noticias relacionadas
+      </h2>
+
+      <div class="related-grid">
+
+        ${generarRelacionadas(noticia)}
+
+      </div>
+
+    </section>
+
+  `;
+
+}
+
+
+/* ==================================================
+   MÁS LEÍDAS
+================================================== */
+
+function generarMasLeidas() {
+
+  return noticias
+    .slice(0, 4)
+    .map(
+      (item, index) => `
+
+        <a
+          href="noticia.html?id=${item.id}"
+          class="sidebar-story">
+
+          <img
+            src="${item.imagen}"
+            alt="${item.titulo}"
+          >
+
+          <div>
+
+            <h4>
+              ${item.titulo}
+            </h4>
+
+            <span>
+              ${item.categoria}
+            </span>
+
+          </div>
+
+        </a>
+
+      `
+    )
+    .join("");
+
+}
+
+
+/* ==================================================
+   RELACIONADAS
+================================================== */
+
+function generarRelacionadas(actual) {
+
+  return noticias
+
+    .filter(
+      item => item.id !== actual.id
+    )
+
+    .slice(0, 3)
+
+    .map(
+      item => `
+
+        <a
+          href="noticia.html?id=${item.id}"
+          class="related-card">
+
+          <img
+            src="${item.imagen}"
+            alt="${item.titulo}"
+          >
+
+          <div class="related-card-content">
+
+            <span class="category">
+              ${item.categoria}
+            </span>
+
+            <h3>
+              ${item.titulo}
+            </h3>
+
+          </div>
+
+        </a>
+
+      `
+    )
+
+    .join("");
+
+}
+
+
+/* ==================================================
+   COMPARTIR FACEBOOK
+================================================== */
+
+function shareFacebook() {
+
+  const url =
+    encodeURIComponent(
+      window.location.href
+    );
+
+  window.open(
+    "https://www.facebook.com/sharer/sharer.php?u=" +
+    url,
+    "_blank",
+    "width=600,height=500"
+  );
+
+}
+
+
+/* ==================================================
+   COMPARTIR X
+================================================== */
+
+function shareX() {
+
+  const text =
+    encodeURIComponent(
+      document.title
+    );
+
+  const url =
+    encodeURIComponent(
+      window.location.href
+    );
+
+  window.open(
+    "https://twitter.com/intent/tweet?text=" +
+    text +
+    "&url=" +
+    url,
+    "_blank",
+    "width=600,height=500"
+  );
+
+}
+
+
+/* ==================================================
+   COMPARTIR WHATSAPP
+================================================== */
+
+function shareWhatsApp() {
+
+  const texto =
+    encodeURIComponent(
+      document.title +
+      "\n\n" +
+      window.location.href
+    );
+
+  window.open(
+    "https://wa.me/?text=" +
+    texto,
+    "_blank"
+  );
+
+}
+
+
+/* ==================================================
+   COPIAR ENLACE
+================================================== */
+
+async function copyLink() {
+
+  try {
+
+    await navigator.clipboard.writeText(
+      window.location.href
+    );
+
+    alert(
+      "Enlace copiado correctamente."
+    );
+
+  }
+
+  catch {
+
+    alert(
+      "No fue posible copiar el enlace."
+    );
+
+  }
+
+}
+
+
+/* ==================================================
+   RELOJ
+================================================== */
+
+function actualizarRelojArticulo() {
+
+  const reloj =
+    document.getElementById("clock");
+
+  if (!reloj) return;
+
+  reloj.textContent =
+    new Intl.DateTimeFormat(
+      "es-AR",
+      {
+        timeZone:
+          "America/Argentina/La_Rioja",
+
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+
+        hour12: false
+      }
+    ).format(new Date());
+
+}
+
+actualizarRelojArticulo();
+
+setInterval(
+  actualizarRelojArticulo,
+  1000
+);
+
+
+/* ==================================================
+   AÑO
+================================================== */
+
+const year =
+  document.getElementById("year");
+
+if (year) {
+
+  year.textContent =
+    new Date().getFullYear();
+
+}
+
+</script>
+
+
+</body>
+</html>
