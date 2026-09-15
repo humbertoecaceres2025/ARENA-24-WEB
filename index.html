@@ -435,6 +435,376 @@ h1 span{
   width:90px;
   accent-color:var(--red);
 }
+  <!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RADIO ARENA 24 - Streaming</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background:
+        radial-gradient(circle at center, #292929 0%, #111 45%, #050505 100%);
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.radio-player {
+    width: min(94%, 430px);
+    padding: 30px 25px;
+    border-radius: 28px;
+    background: linear-gradient(145deg, #191919, #080808);
+    border: 1px solid rgba(212,175,55,.45);
+    box-shadow:
+        0 25px 70px rgba(0,0,0,.8),
+        0 0 35px rgba(212,175,55,.12);
+    color: white;
+    text-align: center;
+}
+
+/* LOGO / NOMBRE */
+.logo {
+    font-size: 30px;
+    font-weight: 900;
+    letter-spacing: 3px;
+    color: #d4af37;
+    text-shadow: 0 0 18px rgba(212,175,55,.35);
+}
+
+.subtitle {
+    margin-top: 5px;
+    color: #aaa;
+    font-size: 12px;
+    letter-spacing: 3px;
+}
+
+/* EN VIVO */
+.live {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin: 20px 0;
+    padding: 7px 13px;
+    border-radius: 30px;
+    background: rgba(212,175,55,.1);
+    border: 1px solid rgba(212,175,55,.35);
+    color: #d4af37;
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.live-dot {
+    width: 8px;
+    height: 8px;
+    background: #e53935;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #e53935;
+    animation: pulse 1.2s infinite;
+}
+
+@keyframes pulse {
+    50% { opacity: .35; }
+}
+
+/* DISCO */
+.record-container {
+    width: 220px;
+    height: 220px;
+    margin: 5px auto 25px;
+    position: relative;
+}
+
+.record {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background:
+        repeating-radial-gradient(
+            circle,
+            #111 0px,
+            #111 3px,
+            #1b1b1b 4px,
+            #080808 7px
+        );
+    border: 8px solid #0b0b0b;
+    box-shadow:
+        0 0 0 2px #333,
+        0 15px 35px rgba(0,0,0,.8);
+    position: relative;
+}
+
+.record.playing {
+    animation: spin 3s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.record::after {
+    content: "";
+    position: absolute;
+    width: 66px;
+    height: 66px;
+    border-radius: 50%;
+    background:
+        radial-gradient(circle, #f5d76e 0 12%,
+        #d4af37 13% 45%,
+        #8f7220 46% 100%);
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 15px rgba(212,175,55,.35);
+}
+
+.record::before {
+    content: "";
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: #111;
+    border-radius: 50%;
+    z-index: 3;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* ECUALIZADOR */
+.equalizer {
+    height: 48px;
+    display: flex;
+    justify-content: center;
+    align-items: end;
+    gap: 5px;
+    margin: 10px 0 25px;
+}
+
+.bar {
+    width: 5px;
+    height: 10px;
+    border-radius: 5px;
+    background: linear-gradient(to top, #8f7220, #f5d76e);
+    transition: height .12s ease;
+}
+
+.playing .bar {
+    animation: equalize .7s ease-in-out infinite alternate;
+}
+
+.bar:nth-child(1) { animation-delay: -.1s; }
+.bar:nth-child(2) { animation-delay: -.3s; }
+.bar:nth-child(3) { animation-delay: -.5s; }
+.bar:nth-child(4) { animation-delay: -.2s; }
+.bar:nth-child(5) { animation-delay: -.6s; }
+.bar:nth-child(6) { animation-delay: -.4s; }
+.bar:nth-child(7) { animation-delay: -.7s; }
+.bar:nth-child(8) { animation-delay: -.25s; }
+.bar:nth-child(9) { animation-delay: -.55s; }
+.bar:nth-child(10) { animation-delay: -.15s; }
+.bar:nth-child(11) { animation-delay: -.45s; }
+
+@keyframes equalize {
+    from { height: 7px; }
+    to { height: 43px; }
+}
+
+/* CONTROLES */
+.controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 18px;
+}
+
+.play-button {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    color: #111;
+    background: linear-gradient(145deg, #f5d76e, #b8860b);
+    box-shadow:
+        0 8px 25px rgba(212,175,55,.25),
+        inset 0 1px 2px rgba(255,255,255,.6);
+    font-size: 25px;
+    transition: .2s;
+}
+
+.play-button:hover {
+    transform: scale(1.06);
+    box-shadow: 0 0 30px rgba(212,175,55,.45);
+}
+
+.volume {
+    width: 100px;
+    accent-color: #d4af37;
+    cursor: pointer;
+}
+
+/* ESTADO */
+.status {
+    margin-top: 20px;
+    font-size: 12px;
+    color: #777;
+}
+
+.status.active {
+    color: #d4af37;
+}
+
+/* FOOTER */
+.footer {
+    margin-top: 20px;
+    color: #555;
+    font-size: 10px;
+    letter-spacing: 1px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="radio-player">
+
+    <div class="logo">RADIO ARENA 24</div>
+    <div class="subtitle">STREAMING</div>
+
+    <div class="live">
+        <span class="live-dot"></span>
+        EN VIVO
+    </div>
+
+    <div class="record-container">
+        <div class="record" id="record"></div>
+    </div>
+
+    <div class="equalizer" id="equalizer">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+    </div>
+
+    <audio
+        id="radio"
+        src="https://stream.zeno.fm/zuw6xmmwmd0uv"
+        preload="none">
+    </audio>
+
+    <div class="controls">
+
+        <button class="play-button" id="playButton" aria-label="Reproducir">
+            ▶
+        </button>
+
+        <input
+            class="volume"
+            id="volume"
+            type="range"
+            min="0"
+            max="1"
+            step="0.01"
+            value="0.8"
+            aria-label="Volumen">
+
+    </div>
+
+    <div class="status" id="status">
+        LISTO PARA ESCUCHAR
+    </div>
+
+    <div class="footer">
+        RADIO ARENA 24 · STREAMING ONLINE
+    </div>
+
+</div>
+
+<script>
+const radio = document.getElementById("radio");
+const playButton = document.getElementById("playButton");
+const record = document.getElementById("record");
+const equalizer = document.getElementById("equalizer");
+const volume = document.getElementById("volume");
+const status = document.getElementById("status");
+
+radio.volume = 0.8;
+
+playButton.addEventListener("click", async () => {
+
+    if (radio.paused) {
+
+        try {
+            await radio.play();
+
+            playButton.textContent = "❚❚";
+            record.classList.add("playing");
+            equalizer.classList.add("playing");
+
+            status.textContent = "REPRODUCIENDO EN VIVO";
+            status.classList.add("active");
+
+        } catch (error) {
+
+            status.textContent = "NO SE PUDO CONECTAR";
+            status.classList.remove("active");
+
+            console.error(error);
+        }
+
+    } else {
+
+        radio.pause();
+
+        playButton.textContent = "▶";
+        record.classList.remove("playing");
+        equalizer.classList.remove("playing");
+
+        status.textContent = "PAUSADO";
+        status.classList.remove("active");
+    }
+});
+
+volume.addEventListener("input", () => {
+    radio.volume = volume.value;
+});
+
+radio.addEventListener("waiting", () => {
+    status.textContent = "CONECTANDO...";
+});
+
+radio.addEventListener("playing", () => {
+    status.textContent = "REPRODUCIENDO EN VIVO";
+    status.classList.add("active");
+});
+
+radio.addEventListener("error", () => {
+    status.textContent = "SEÑAL NO DISPONIBLE";
+    status.classList.remove("active");
+});
+</script>
+
+</body>
+</html>
+
 
 /* =====================================================
    SECCIONES
