@@ -1324,358 +1324,342 @@
 
 </script>
 <section id="arena24" class="arena24">
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- HEADER -->
-  <header class="arena-header">
-    <div class="arena-brand">
-      <div class="arena-logo">A24</div>
-      <div>
-        <h1>ARENA 24</h1>
-        <span>NOTICIAS DE LA RIOJA</span>
-      </div>
-    </div>
+  <title>ARENA 24 | Noticias de La Rioja</title>
+  <meta name="description"
+        content="ARENA 24 Noticias. Información de La Rioja, Argentina y el mundo.">
 
-    <div class="arena-header-info">
-      <div class="arena-clock">
-        <span class="clock-label">ARGENTINA</span>
-        <strong id="arenaClock">--:--:--</strong>
-        <small id="arenaDate">--</small>
-      </div>
+  <link rel="stylesheet" href="style.css">
+</head>
 
-      <div class="arena-weather-mini">
-        <span id="weatherIcon">☀️</span>
+<body>
+
+<header class="site-header">
+
+  <div class="top-header">
+    <div class="container header-flex">
+
+      <a href="index.html" class="logo">
+        <span class="logo-box">A24</span>
+
+        <span>
+          <strong>ARENA 24</strong>
+          <small>NOTICIAS · LA RIOJA</small>
+        </span>
+      </a>
+
+      <div class="header-data">
         <div>
-          <strong id="weatherTemp">--°</strong>
-          <small>La Rioja</small>
+          <small>LA RIOJA</small>
+          <strong>☀️ 22°C</strong>
+        </div>
+
+        <div>
+          <small>HORA ARGENTINA</small>
+          <strong id="clock">00:00:00</strong>
         </div>
       </div>
+
     </div>
-  </header>
+  </div>
 
+  <nav class="main-nav">
+    <div class="container nav-scroll">
 
-  <!-- NAV -->
-  <nav class="arena-nav">
-    <button class="arena-menu-btn" id="arenaMenuBtn">☰</button>
+      <a class="active" href="index.html">Inicio</a>
+      <a href="#">La Rioja</a>
+      <a href="#">Política</a>
+      <a href="#">Policiales</a>
+      <a href="#">Sociedad</a>
+      <a href="#">Economía</a>
+      <a href="#">Deportes</a>
+      <a href="#">Turismo</a>
+      <a href="#">Cultura</a>
+      <a href="#">Argentina</a>
+      <a href="#">Mundo</a>
 
-    <div class="arena-nav-links" id="arenaNavLinks">
-      <a href="#ultimas">Últimas</a>
-      <a href="#la-rioja">La Rioja</a>
-      <a href="#politica">Política</a>
-      <a href="#sociedad">Sociedad</a>
-      <a href="#policiales">Policiales</a>
-      <a href="#economia">Economía</a>
-      <a href="#deportes">Deportes</a>
-      <a href="#turismo">Turismo</a>
     </div>
-
-    <button class="arena-search-button" id="arenaSearchButton">
-      🔎 Buscar
-    </button>
   </nav>
 
+</header>
 
-  <!-- ÚLTIMO MOMENTO -->
-  <div class="arena-breaking">
-    <span class="breaking-label">ÚLTIMO MOMENTO</span>
+<section class="breaking">
+  <div class="container breaking-flex">
 
-    <div class="breaking-content">
-      <span id="breakingText">
-        Información de último momento de La Rioja
-      </span>
+    <span class="breaking-label">
+      🔴 ÚLTIMO MOMENTO
+    </span>
+
+    <div id="breakingNews">
+      Información de último momento de La Rioja.
     </div>
+
   </div>
+</section>
 
+<main class="container">
 
-  <!-- BUSCADOR -->
-  <div class="arena-search-box" id="arenaSearchBox">
-    <input
-      type="search"
-      id="arenaSearchInput"
-      placeholder="Buscar noticias..."
-      autocomplete="off"
-    />
-    <button id="arenaSearchClose">✕</button>
-  </div>
+  <!-- HERO -->
 
+  <section class="hero-section">
 
-  <!-- CONTENIDO PRINCIPAL -->
-  <main class="arena-container">
+    <article class="hero-news">
 
-    <!-- COLUMNA PRINCIPAL -->
-    <section class="arena-main">
+      <img
+        src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=1600&q=85"
+        alt="Noticias">
 
-      <div class="arena-section-heading" id="ultimas">
-        <div>
-          <span>INFORMACIÓN EN TIEMPO REAL</span>
-          <h2>Últimas noticias</h2>
-        </div>
+      <div class="hero-overlay">
 
-        <div class="live-status">
-          <i></i> EN VIVO
-        </div>
+        <span class="category">
+          LA RIOJA
+        </span>
+
+        <h1>
+          Toda la actualidad de La Rioja,
+          minuto a minuto
+        </h1>
+
+        <p>
+          Información provincial, política, sociedad,
+          economía, deportes y mucho más.
+        </p>
+
+        <a href="noticia.html?id=1" class="read-button">
+          LEER NOTICIA →
+        </a>
+
       </div>
 
+    </article>
 
-      <!-- NOTICIA DESTACADA -->
-      <article class="arena-featured" id="featuredNews">
-        <div class="featured-image">
+  </section>
+
+
+  <!-- ÚLTIMAS NOTICIAS -->
+
+  <section class="section">
+
+    <div class="section-header">
+
+      <h2>Últimas noticias</h2>
+
+      <span>ACTUALIZACIÓN PERMANENTE</span>
+
+    </div>
+
+    <div id="newsContainer" class="news-grid"></div>
+
+  </section>
+
+
+  <!-- CONTENIDO + SIDEBAR -->
+
+  <section class="two-columns">
+
+    <div>
+
+      <div class="section-header">
+        <h2>Información destacada</h2>
+      </div>
+
+      <div class="featured-grid">
+
+        <article class="featured-card">
+
           <img
-            src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=1400&q=80"
-            alt="Noticias"
-          />
-          <span class="category-tag">LA RIOJA</span>
-        </div>
+            src="https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?auto=format&fit=crop&w=1000&q=80">
 
-        <div class="featured-content">
-          <span class="news-time">AHORA</span>
+          <div>
+            <span class="category">POLÍTICA</span>
 
-          <h3>
-            La Rioja, protagonista de las noticias más importantes de la jornada
-          </h3>
+            <h3>
+              La agenda política de la provincia
+            </h3>
 
-          <p>
-            Toda la información provincial, política, social, económica y deportiva
-            en un solo lugar.
-          </p>
-
-          <a href="#" class="read-more">
-            Leer noticia →
-          </a>
-        </div>
-      </article>
-
-
-      <!-- GRID DE NOTICIAS -->
-      <div class="arena-news-grid" id="newsGrid">
-
-        <article class="arena-news-card">
-          <div class="news-card-image">
-            <img
-              src="https://images.unsplash.com/photo-1495020689067-958852a7765e?auto=format&fit=crop&w=800&q=80"
-              alt="Noticias de La Rioja"
-            />
-            <span>LA RIOJA</span>
-          </div>
-
-          <div class="news-card-content">
-            <small>Hace 10 minutos</small>
-            <h3>Información destacada de la provincia</h3>
             <p>
-              Las principales novedades y acontecimientos de La Rioja.
+              Todas las novedades y protagonistas
+              de la actualidad política.
             </p>
-            <a href="#">Leer más →</a>
           </div>
+
         </article>
 
 
-        <article class="arena-news-card">
-          <div class="news-card-image">
-            <img
-              src="https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?auto=format&fit=crop&w=800&q=80"
-              alt="Política"
-            />
-            <span>POLÍTICA</span>
-          </div>
+        <article class="featured-card">
 
-          <div class="news-card-content">
-            <small>Hace 25 minutos</small>
-            <h3>La agenda política provincial</h3>
+          <img
+            src="https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?auto=format&fit=crop&w=1000&q=80">
+
+          <div>
+            <span class="category">DEPORTES</span>
+
+            <h3>
+              Toda la actualidad deportiva
+            </h3>
+
             <p>
-              Las últimas novedades de funcionarios y organismos públicos.
+              Resultados, protagonistas y noticias.
             </p>
-            <a href="#">Leer más →</a>
-          </div>
-        </article>
-
-
-        <article class="arena-news-card">
-          <div class="news-card-image">
-            <img
-              src="https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=800&q=80"
-              alt="Deportes"
-            />
-            <span>DEPORTES</span>
           </div>
 
-          <div class="news-card-content">
-            <small>Hace 35 minutos</small>
-            <h3>Todo el deporte riojano</h3>
-            <p>
-              Resultados, protagonistas y toda la actualidad deportiva.
-            </p>
-            <a href="#">Leer más →</a>
-          </div>
-        </article>
-
-
-        <article class="arena-news-card">
-          <div class="news-card-image">
-            <img
-              src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=800&q=80"
-              alt="Economía"
-            />
-            <span>ECONOMÍA</span>
-          </div>
-
-          <div class="news-card-content">
-            <small>Hace 42 minutos</small>
-            <h3>Economía y actualidad</h3>
-            <p>
-              Información económica de interés para los riojanos.
-            </p>
-            <a href="#">Leer más →</a>
-          </div>
         </article>
 
       </div>
 
-
-      <!-- CARGAR MÁS -->
-      <div class="arena-load-more">
-        <button id="loadMoreNews">
-          Cargar más noticias
-        </button>
-      </div>
-
-    </section>
+    </div>
 
 
     <!-- SIDEBAR -->
-    <aside class="arena-sidebar">
 
-      <!-- CLIMA -->
-      <section class="arena-widget weather-widget">
+    <aside>
 
-        <div class="widget-header">
-          <span>PRONÓSTICO</span>
-          <strong>CLIMA</strong>
+      <div class="sidebar">
+
+        <h3>🔥 LO MÁS LEÍDO</h3>
+
+        <div class="popular">
+          <b>01</b>
+          <p>Las noticias que están marcando la jornada.</p>
         </div>
 
-        <div class="weather-location">
-          <span>📍</span>
+        <div class="popular">
+          <b>02</b>
+          <p>La agenda de La Rioja para hoy.</p>
+        </div>
+
+        <div class="popular">
+          <b>03</b>
+          <p>Las principales noticias provinciales.</p>
+        </div>
+
+        <div class="popular">
+          <b>04</b>
+          <p>Las novedades de Argentina.</p>
+        </div>
+
+        <div class="popular">
+          <b>05</b>
+          <p>Deportes: toda la información.</p>
+        </div>
+
+      </div>
+
+
+      <div class="sidebar weather">
+
+        <h3>🌤️ CLIMA</h3>
+
+        <div class="weather-main">
+
+          <strong>22°</strong>
+
           <div>
-            <strong>La Rioja</strong>
+            <span>La Rioja</span>
             <small>Argentina</small>
           </div>
+
         </div>
 
-        <div class="weather-current">
-          <span id="weatherMainIcon">☀️</span>
+        <p>
+          Pronóstico actualizado automáticamente.
+        </p>
 
-          <div class="weather-temperature">
-            <strong id="weatherMainTemp">--°</strong>
-            <span id="weatherDescription">Cargando...</span>
-          </div>
-        </div>
-
-        <div class="weather-details">
-          <div>
-            <span>Máxima</span>
-            <strong id="weatherMax">--°</strong>
-          </div>
-
-          <div>
-            <span>Mínima</span>
-            <strong id="weatherMin">--°</strong>
-          </div>
-
-          <div>
-            <span>Viento</span>
-            <strong id="weatherWind">-- km/h</strong>
-          </div>
-        </div>
-
-        <div class="weather-updated">
-          Actualizado automáticamente
-        </div>
-
-      </section>
-
-
-      <!-- HORA -->
-      <section class="arena-widget clock-widget">
-
-        <div class="widget-header">
-          <span>HORA OFICIAL</span>
-          <strong>ARGENTINA</strong>
-        </div>
-
-        <div class="big-clock" id="arenaBigClock">
-          --:--:--
-        </div>
-
-        <div class="clock-date" id="arenaBigDate">
-          Cargando fecha...
-        </div>
-
-        <div class="timezone">
-          UTC−03:00 · America/Argentina/La_Rioja
-        </div>
-
-      </section>
-
-
-      <!-- MÁS LEÍDAS -->
-      <section class="arena-widget most-read">
-
-        <div class="widget-header">
-          <span>RANKING</span>
-          <strong>MÁS LEÍDAS</strong>
-        </div>
-
-        <ol>
-          <li>
-            <span>01</span>
-            <a href="#">Las noticias más importantes de La Rioja</a>
-          </li>
-
-          <li>
-            <span>02</span>
-            <a href="#">Toda la actualidad provincial</a>
-          </li>
-
-          <li>
-            <span>03</span>
-            <a href="#">Las novedades de la jornada</a>
-          </li>
-
-          <li>
-            <span>04</span>
-            <a href="#">Últimas noticias deportivas</a>
-          </li>
-
-          <li>
-            <span>05</span>
-            <a href="#">Información y servicios</a>
-          </li>
-        </ol>
-
-      </section>
+      </div>
 
     </aside>
 
-  </main>
+  </section>
 
 
-  <!-- FOOTER -->
-  <footer class="arena-footer">
+  <!-- NEWSLETTER -->
 
-    <div class="footer-brand">
-      <strong>ARENA 24</strong>
-      <span>Noticias de La Rioja</span>
+  <section class="newsletter">
+
+    <div>
+      <span>ARENA 24</span>
+
+      <h2>
+        Las noticias directamente en tu correo
+      </h2>
+
+      <p>
+        Suscribite para recibir las principales noticias.
+      </p>
     </div>
 
-    <div class="footer-links">
+    <form id="newsletterForm">
+
+      <input
+        type="email"
+        placeholder="Tu correo electrónico"
+        required>
+
+      <button>
+        SUSCRIBIRME
+      </button>
+
+    </form>
+
+  </section>
+
+</main>
+
+
+<footer>
+
+  <div class="container footer-grid">
+
+    <div>
+      <h2>ARENA 24</h2>
+
+      <p>
+        Noticias de La Rioja,
+        Argentina y el mundo.
+      </p>
+    </div>
+
+    <div>
+      <h4>SECCIONES</h4>
+
+      <a href="#">La Rioja</a>
+      <a href="#">Política</a>
+      <a href="#">Policiales</a>
+      <a href="#">Sociedad</a>
+    </div>
+
+    <div>
+      <h4>ARENA 24</h4>
+
       <a href="#">Quiénes somos</a>
       <a href="#">Contacto</a>
       <a href="#">Publicidad</a>
-      <a href="#">Política de privacidad</a>
     </div>
 
-    <div class="footer-copy">
-      © <span id="arenaYear"></span> ARENA 24 NOTICIAS
+    <div>
+      <h4>LEGAL</h4>
+
+      <a href="#">Privacidad</a>
+      <a href="#">Términos</a>
+      <a href="#">Cookies</a>
     </div>
 
-  </footer>
+  </div>
 
-</section>
+  <div class="copyright">
+    © <span id="year"></span> ARENA 24 NOTICIAS
+  </div>
+
+</footer>
+
+<script src="app.js"></script>
+
+</body>
+</html>
+
+  
