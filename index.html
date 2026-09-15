@@ -316,160 +316,6 @@ h1 span{
   font-size:12px;
 }
 
-/* =====================================================
-   PLAYER RADIO
-===================================================== */
-
-.player-wrap{
-  position:relative;
-  margin-top:-45px;
-  z-index:10;
-}
-
-.player{
-  max-width:1050px;
-  margin:auto;
-  padding:20px;
-  display:grid;
-  grid-template-columns:auto 1fr auto;
-  gap:18px;
-  align-items:center;
-  background:linear-gradient(145deg,#191c24,#0e1015);
-  border:1px solid rgba(255,255,255,.1);
-  border-radius:19px;
-  box-shadow:var(--shadow);
-}
-
-.album{
-  width:70px;
-  height:70px;
-  border-radius:14px;
-  display:grid;
-  place-items:center;
-  background:
-    radial-gradient(circle,#ff3153 0 7%,transparent 8%),
-    repeating-radial-gradient(
-      circle,
-      #260812 0 5px,
-      #e5092f 6px 8px
-    );
-  position:relative;
-  animation:disc 4s linear infinite paused;
-}
-
-.album.playing{
-  animation-play-state:running;
-}
-
-.album:after{
-  content:"";
-  width:12px;
-  height:12px;
-  position:absolute;
-  border-radius:50%;
-  background:#08090d;
-}
-
-@keyframes disc{
-  to{
-    transform:rotate(360deg);
-  }
-}
-
-.player-info h3{
-  font-size:16px;
-}
-
-.player-info p{
-  color:var(--muted);
-  font-size:11px;
-}
-
-.status{
-  display:inline-flex;
-  align-items:center;
-  gap:7px;
-  color:#8d94a2;
-  font-size:9px;
-  font-weight:900;
-  margin-top:7px;
-}
-
-.status.live{
-  color:var(--green);
-}
-
-.status:before{
-  content:"";
-  width:7px;
-  height:7px;
-  border-radius:50%;
-  background:currentColor;
-}
-
-.controls{
-  display:flex;
-  align-items:center;
-  gap:15px;
-}
-
-.play{
-  width:55px;
-  height:55px;
-  display:grid;
-  place-items:center;
-  border:0;
-  border-radius:50%;
-  color:#fff;
-  background:var(--red);
-  font-size:20px;
-  box-shadow:0 8px 25px rgba(229,9,47,.35);
-  transition:.25s;
-}
-
-.play:hover{
-  transform:scale(1.06);
-}
-
-.volume{
-  width:90px;
-  accent-color:var(--red);
-}
-  <!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RADIO ARENA 24 - Streaming</title>
-
-<style>
-* {
-    box-sizing: border-box;
-}
-
-body {
-    margin: 0;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background:
-        radial-gradient(circle at center, #292929 0%, #111 45%, #050505 100%);
-    font-family: Arial, Helvetica, sans-serif;
-}
-
-.radio-player {
-    width: min(94%, 430px);
-    padding: 30px 25px;
-    border-radius: 28px;
-    background: linear-gradient(145deg, #191919, #080808);
-    border: 1px solid rgba(212,175,55,.45);
-    box-shadow:
-        0 25px 70px rgba(0,0,0,.8),
-        0 0 35px rgba(212,175,55,.12);
-    color: white;
-    text-align: center;
-}
 
 /* LOGO / NOMBRE */
 .logo {
@@ -961,45 +807,6 @@ section{
    TV
 ===================================================== */
 
-.tv-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:20px;
-}
-
-.tv-card{
-  overflow:hidden;
-  border:1px solid var(--border);
-  border-radius:19px;
-  background:linear-gradient(145deg,#151820,#0d0f14);
-}
-
-.tv-header{
-  height:60px;
-  padding:0 19px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  border-bottom:1px solid var(--border);
-}
-
-.tv-header strong{
-  font-size:13px;
-}
-
-.tv-tag{
-  color:#777d89;
-  font-size:9px;
-  font-weight:900;
-  letter-spacing:1px;
-}
-
-.youtube-box,
-.video-box{
-  aspect-ratio:16/9;
-  background:#000;
-  position:relative;
-}
 
 .youtube-placeholder{
   position:absolute;
@@ -1064,48 +871,6 @@ section{
   cursor:pointer;
 }
 
-/* =====================================================
-   PROGRAMACION
-===================================================== */
-
-.program-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:14px;
-}
-
-.program{
-  padding:19px;
-  border:1px solid var(--border);
-  border-radius:14px;
-  background:var(--card);
-  transition:.25s;
-}
-
-.program:hover{
-  transform:translateY(-3px);
-}
-
-.program.active{
-  border-color:rgba(229,9,47,.5);
-  box-shadow:inset 3px 0 var(--red);
-}
-
-.program-time{
-  color:var(--red);
-  font-size:10px;
-  font-weight:900;
-}
-
-.program h3{
-  font-size:16px;
-  margin-top:5px;
-}
-
-.program p{
-  color:var(--muted);
-  font-size:11px;
-}
 
 /* =====================================================
    PODCAST
@@ -1229,62 +994,6 @@ section{
   color:#777c88;
 }
 
-/* =====================================================
-   ENVIAR NOTICIA
-===================================================== */
-
-.submit-grid{
-  display:grid;
-  grid-template-columns:.8fr 1.2fr;
-  gap:20px;
-}
-
-.submit-info,
-.form{
-  padding:28px;
-  border:1px solid var(--border);
-  border-radius:18px;
-  background:var(--card);
-}
-
-.submit-info h2{
-  font-size:32px;
-  line-height:1.05;
-  margin:10px 0 15px;
-}
-
-.submit-info p{
-  color:var(--muted);
-  font-size:13px;
-}
-
-.form{
-  display:grid;
-  gap:12px;
-}
-
-.form input,
-.form textarea{
-  width:100%;
-  border:1px solid var(--border);
-  outline:0;
-  border-radius:9px;
-  padding:13px;
-  color:#fff;
-  background:#0d0f14;
-  font-size:12px;
-}
-
-.form input:focus,
-.form textarea:focus{
-  border-color:var(--red);
-}
-
-.form textarea{
-  min-height:130px;
-  resize:vertical;
-}
-
 
 /* =====================================================
    EQUIPO
@@ -1296,33 +1005,6 @@ section{
   gap:15px;
 }
 
-.team{
-  min-height:180px;
-  display:flex;
-  flex-direction:column;
-  justify-content:end;
-  padding:19px;
-  border:1px solid var(--border);
-  border-radius:15px;
-  background:
-    linear-gradient(0deg,rgba(0,0,0,.8),transparent),
-    radial-gradient(circle at 50% 20%,#363945,#161820);
-  transition:.25s;
-}
-
-.team:hover{
-  transform:translateY(-3px);
-  border-color:rgba(229,9,47,.3);
-}
-
-.team h3{
-  font-size:16px;
-}
-
-.team span{
-  color:#a2a6af;
-  font-size:10px;
-}
 
 /* =====================================================
    FOOTER
@@ -2485,18 +2167,6 @@ footer{
     </div>
 
   </section>
-
-</main>
-
-
-<!-- =====================================================
-     FOOTER
-===================================================== -->
-
-<footer>
-
-  <div class="footer">
-    (c)Todos los derechos reservados ARENA 24 RADIO
 
 
 
@@ -3849,7 +3519,15 @@ radio.addEventListener("error", () => {
   }
 
 </script>
+</main>
+<!-- =====================================================
+     FOOTER
+===================================================== -->
 
+<footer>
+
+  <div class="footer">
+    (c)Todos los derechos reservados ARENA 24 RADIO
 
     
 
