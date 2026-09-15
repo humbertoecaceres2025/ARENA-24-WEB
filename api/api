@@ -1,0 +1,56 @@
+<?php
+
+header('Content-Type: application/json; charset=utf-8');
+header('Access-Control-Allow-Origin: *');
+
+$archivo = __DIR__ . '/../noticias.json';
+
+if (!file_exists($archivo)) {
+
+    http_response_code(404);
+
+    echo json_encode([
+        'error' => 'No existe el archivo noticias.json'
+    ], JSON_UNESCAPED_UNICODE);
+
+    exit;
+}
+
+$contenido = file_get_contents($archivo);
+
+$noticias = json_decode($contenido, true);
+
+if (!is_array($noticias)) {
+
+    http_response_code(500);
+
+    echo json_encode([
+        'error' => 'El archivo noticias.json no tiene un formato válido'
+    ], JSON_UNESCAPED_UNICODE);
+
+    exit;
+}
+
+/*
+ * Ordenar noticias desde la más reciente
+ */
+
+usort($noticias, function ($a, $b) {
+
+    $fechaA = strtotime($a['fecha_iso'] ?? '');
+    $fechaB = strtotime($b['fecha_iso'] ?? '');
+
+    return $fechaB <=> $fechaA;
+});
+
+/*
+ * Limitar cantidad enviada
+ */
+
+$noticias = array_slice($noticias, 0, 30);
+
+echo json_encode(
+    $noticias,
+    JSON_UNESCAPED_UNICODE |
+    JSON_UNESCAPED_SLASHES
+);
