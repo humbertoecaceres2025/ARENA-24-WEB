@@ -1323,3 +1323,1812 @@
 })();
 
 </script>
+<!-- =========================================================
+     ARENA 24 — PORTAL DE NOTICIAS
+     ========================================================= -->
+
+<section class="a24-news">
+
+  <!-- CABECERA -->
+  <div class="a24-news-head">
+
+    <div class="a24-news-brand">
+
+      <div class="a24-news-a">A</div>
+
+      <div>
+        <div class="a24-news-kicker">ARENA 24</div>
+        <h2>Noticias de La Rioja</h2>
+      </div>
+
+    </div>
+
+    <div class="a24-news-live">
+      <span></span>
+      ACTUALIZADO
+      <strong id="a24-update-time">AHORA</strong>
+    </div>
+
+  </div>
+
+
+  <!-- NAVEGACIÓN -->
+  <nav class="a24-news-nav">
+
+    <button class="active" data-filter="todos">
+      TODAS
+    </button>
+
+    <button data-filter="la-rioja">
+      LA RIOJA
+    </button>
+
+    <button data-filter="politica">
+      POLÍTICA
+    </button>
+
+    <button data-filter="policiales">
+      POLICIALES
+    </button>
+
+    <button data-filter="economia">
+      ECONOMÍA
+    </button>
+
+    <button data-filter="sociedad">
+      SOCIEDAD
+    </button>
+
+    <button data-filter="salud">
+      SALUD
+    </button>
+
+    <button data-filter="deportes">
+      DEPORTES
+    </button>
+
+    <button data-filter="clima">
+      CLIMA
+    </button>
+
+  </nav>
+
+
+  <!-- ÚLTIMO MOMENTO -->
+  <div class="a24-breaking">
+
+    <div class="a24-breaking-label">
+      🔴 ÚLTIMO MOMENTO
+    </div>
+
+    <div class="a24-breaking-content">
+
+      <div
+        id="a24-breaking-text"
+        class="a24-breaking-scroll">
+
+        ARENA 24 — Información en vivo desde La Rioja
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <div class="a24-news-layout">
+
+
+    <!-- COLUMNA PRINCIPAL -->
+    <main>
+
+      <!-- DESTACADA -->
+      <article
+        id="a24-featured"
+        class="a24-featured">
+
+        <div class="a24-featured-image">
+
+          <div class="a24-image-placeholder">
+            ARENA 24
+          </div>
+
+        </div>
+
+        <div class="a24-featured-info">
+
+          <span class="a24-category">
+            LA RIOJA
+          </span>
+
+          <h1>
+            Información y noticias de La Rioja
+          </h1>
+
+          <p>
+            Todas las noticias de la provincia,
+            política, economía, sociedad, policiales,
+            deportes y actualidad.
+          </p>
+
+          <div class="a24-meta">
+            ARENA 24 · EN VIVO
+          </div>
+
+        </div>
+
+      </article>
+
+
+      <!-- GRILLA -->
+      <div
+        id="a24-news-grid"
+        class="a24-grid">
+
+        <!-- Noticias dinámicas -->
+
+      </div>
+
+    </main>
+
+
+    <!-- SIDEBAR -->
+    <aside class="a24-sidebar">
+
+      <!-- RADIO -->
+      <div class="a24-sidebar-box">
+
+        <div class="a24-sidebar-title">
+          <span>🎧</span>
+          RADIO ARENA 24
+        </div>
+
+        <div class="a24-radio-mini">
+
+          <div class="a24-radio-disc">
+            A
+          </div>
+
+          <div>
+            <strong>EN VIVO</strong>
+            <small>Escuchá ARENA 24</small>
+          </div>
+
+        </div>
+
+        <button
+          onclick="document.getElementById('arena24-play')?.click()"
+          class="a24-listen">
+
+          ▶ ESCUCHAR RADIO
+
+        </button>
+
+      </div>
+
+
+      <!-- CATEGORÍAS -->
+      <div class="a24-sidebar-box">
+
+        <div class="a24-sidebar-title">
+          CATEGORÍAS
+        </div>
+
+        <div class="a24-category-list">
+
+          <button data-filter="la-rioja">
+            La Rioja
+            <span>›</span>
+          </button>
+
+          <button data-filter="politica">
+            Política
+            <span>›</span>
+          </button>
+
+          <button data-filter="policiales">
+            Policiales
+            <span>›</span>
+          </button>
+
+          <button data-filter="economia">
+            Economía
+            <span>›</span>
+          </button>
+
+          <button data-filter="salud">
+            Salud
+            <span>›</span>
+          </button>
+
+          <button data-filter="deportes">
+            Deportes
+            <span>›</span>
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <!-- INFORMACIÓN -->
+      <div class="a24-sidebar-box a24-about">
+
+        <div class="a24-sidebar-title">
+          ARENA 24
+        </div>
+
+        <p>
+          Información de La Rioja y el país.
+          Noticias, actualidad, radio y televisión
+          en un solo lugar.
+        </p>
+
+        <strong>
+          🔴 INFORMACIÓN EN VIVO
+        </strong>
+
+      </div>
+
+    </aside>
+
+  </div>
+
+
+  <!-- MÁS NOTICIAS -->
+  <div class="a24-more">
+
+    <div class="a24-section-title">
+
+      <span></span>
+
+      <h2>
+        MÁS NOTICIAS
+      </h2>
+
+      <span></span>
+
+    </div>
+
+    <div
+      id="a24-more-grid"
+      class="a24-more-grid">
+    </div>
+
+  </div>
+
+
+  <!-- FOOTER -->
+  <div class="a24-news-footer">
+
+    <strong>ARENA 24</strong>
+
+    <span>
+      Noticias de La Rioja
+    </span>
+
+    <span>
+      Actualización automática
+    </span>
+
+  </div>
+
+</section>
+
+
+<style>
+
+/* =========================================================
+   BASE
+   ========================================================= */
+
+.a24-news {
+
+  width: 100%;
+  max-width: 1180px;
+
+  margin: 40px auto;
+
+  padding: 0 18px;
+
+  box-sizing: border-box;
+
+  color: #171717;
+
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.a24-news-head {
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  padding-bottom: 18px;
+
+  border-bottom:
+    3px solid #df0000;
+
+}
+
+
+.a24-news-brand {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+}
+
+
+.a24-news-a {
+
+  width: 48px;
+  height: 48px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 9px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ef0000,
+      #820000
+    );
+
+  color: #fff;
+
+  font-size: 27px;
+
+  font-weight: 900;
+
+}
+
+
+.a24-news-kicker {
+
+  color: #df0000;
+
+  font-size: 10px;
+
+  font-weight: 900;
+
+  letter-spacing: 2px;
+
+}
+
+
+.a24-news-brand h2 {
+
+  margin: 3px 0 0;
+
+  font-size:
+    clamp(24px,4vw,36px);
+
+  line-height: 1;
+
+}
+
+
+.a24-news-live {
+
+  color: #888;
+
+  font-size: 9px;
+
+  font-weight: 800;
+
+  letter-spacing: .7px;
+
+}
+
+
+.a24-news-live span {
+
+  display: inline-block;
+
+  width: 7px;
+  height: 7px;
+
+  margin-right: 5px;
+
+  border-radius: 50%;
+
+  background: #df0000;
+
+  animation: a24pulse 1.5s infinite;
+
+}
+
+
+.a24-news-live strong {
+
+  color: #df0000;
+
+}
+
+
+@keyframes a24pulse {
+
+  0%,100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: .35;
+  }
+
+}
+
+
+/* =========================================================
+   NAV
+   ========================================================= */
+
+.a24-news-nav {
+
+  display: flex;
+
+  gap: 7px;
+
+  padding: 14px 0;
+
+  overflow-x: auto;
+
+  scrollbar-width: none;
+
+}
+
+
+.a24-news-nav::-webkit-scrollbar {
+  display: none;
+}
+
+
+.a24-news-nav button {
+
+  flex-shrink: 0;
+
+  padding: 9px 13px;
+
+  border:
+    1px solid #ddd;
+
+  border-radius: 5px;
+
+  background: #fff;
+
+  color: #555;
+
+  font-size: 9px;
+
+  font-weight: 900;
+
+  cursor: pointer;
+
+  transition: .2s;
+
+}
+
+
+.a24-news-nav button:hover {
+
+  color: #df0000;
+
+  border-color: #df0000;
+
+}
+
+
+.a24-news-nav button.active {
+
+  background: #df0000;
+
+  border-color: #df0000;
+
+  color: #fff;
+
+}
+
+
+/* =========================================================
+   BREAKING
+   ========================================================= */
+
+.a24-breaking {
+
+  display: flex;
+
+  height: 39px;
+
+  margin-bottom: 22px;
+
+  overflow: hidden;
+
+  border-radius: 5px;
+
+  background: #101010;
+
+}
+
+
+.a24-breaking-label {
+
+  z-index: 2;
+
+  flex-shrink: 0;
+
+  display: flex;
+
+  align-items: center;
+
+  padding: 0 15px;
+
+  background: #df0000;
+
+  color: #fff;
+
+  font-size: 9px;
+
+  font-weight: 900;
+
+  letter-spacing: .7px;
+
+}
+
+
+.a24-breaking-content {
+
+  display: flex;
+
+  align-items: center;
+
+  overflow: hidden;
+
+}
+
+
+.a24-breaking-scroll {
+
+  padding-left: 30px;
+
+  white-space: nowrap;
+
+  color: #ddd;
+
+  font-size: 10px;
+
+}
+
+
+/* =========================================================
+   LAYOUT
+   ========================================================= */
+
+.a24-news-layout {
+
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1fr)
+    300px;
+
+  gap: 25px;
+
+}
+
+
+/* =========================================================
+   FEATURED
+   ========================================================= */
+
+.a24-featured {
+
+  position: relative;
+
+  display: grid;
+
+  grid-template-columns:
+    1.15fr .85fr;
+
+  min-height: 330px;
+
+  overflow: hidden;
+
+  border-radius: 12px;
+
+  background: #111;
+
+  color: #fff;
+
+}
+
+
+.a24-featured-image {
+
+  min-height: 330px;
+
+  background:
+
+    radial-gradient(
+      circle at 40% 40%,
+      rgba(230,0,0,.35),
+      transparent 40%
+    ),
+
+    linear-gradient(
+      135deg,
+      #222,
+      #080808
+    );
+
+}
+
+
+.a24-image-placeholder {
+
+  height: 100%;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  color: rgba(255,255,255,.08);
+
+  font-size: 65px;
+
+  font-weight: 900;
+
+}
+
+
+.a24-featured-info {
+
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: center;
+
+  padding: 30px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #171717,
+      #080808
+    );
+
+}
+
+
+.a24-category {
+
+  width: fit-content;
+
+  padding: 5px 8px;
+
+  background: #df0000;
+
+  color: #fff;
+
+  font-size: 8px;
+
+  font-weight: 900;
+
+  letter-spacing: 1px;
+
+}
+
+
+.a24-featured-info h1 {
+
+  margin: 12px 0 10px;
+
+  font-size:
+    clamp(24px,3vw,35px);
+
+  line-height: 1.05;
+
+}
+
+
+.a24-featured-info p {
+
+  margin: 0;
+
+  color: #bbb;
+
+  font-size: 12px;
+
+  line-height: 1.5;
+
+}
+
+
+.a24-meta {
+
+  margin-top: 18px;
+
+  color: #777;
+
+  font-size: 9px;
+
+  font-weight: 700;
+
+}
+
+
+/* =========================================================
+   GRID
+   ========================================================= */
+
+.a24-grid {
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(2,minmax(0,1fr));
+
+  gap: 17px;
+
+  margin-top: 20px;
+
+}
+
+
+.a24-card {
+
+  overflow: hidden;
+
+  border:
+    1px solid #e5e5e5;
+
+  border-radius: 9px;
+
+  background: #fff;
+
+  transition:
+    transform .2s,
+    box-shadow .2s;
+
+}
+
+
+.a24-card:hover {
+
+  transform:
+    translateY(-3px);
+
+  box-shadow:
+    0 10px 28px rgba(0,0,0,.09);
+
+}
+
+
+.a24-card-line {
+
+  height: 5px;
+
+  background: #df0000;
+
+}
+
+
+.a24-card-body {
+
+  padding: 17px;
+
+}
+
+
+.a24-card-category {
+
+  color: #df0000;
+
+  font-size: 8px;
+
+  font-weight: 900;
+
+  letter-spacing: 1px;
+
+}
+
+
+.a24-card h3 {
+
+  margin: 7px 0 9px;
+
+  font-size: 17px;
+
+  line-height: 1.2;
+
+}
+
+
+.a24-card h3 a {
+
+  color: #151515;
+
+  text-decoration: none;
+
+}
+
+
+.a24-card h3 a:hover {
+
+  color: #df0000;
+
+}
+
+
+.a24-card p {
+
+  margin: 0;
+
+  color: #777;
+
+  font-size: 11px;
+
+  line-height: 1.45;
+
+}
+
+
+.a24-card-meta {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  margin-top: 13px;
+
+  padding-top: 10px;
+
+  border-top:
+    1px solid #eee;
+
+  color: #999;
+
+  font-size: 8px;
+
+}
+
+
+/* =========================================================
+   SIDEBAR
+   ========================================================= */
+
+.a24-sidebar {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 15px;
+
+}
+
+
+.a24-sidebar-box {
+
+  padding: 17px;
+
+  border:
+    1px solid #e3e3e3;
+
+  border-radius: 9px;
+
+  background: #fff;
+
+}
+
+
+.a24-sidebar-title {
+
+  padding-bottom: 10px;
+
+  margin-bottom: 13px;
+
+  border-bottom:
+    2px solid #df0000;
+
+  font-size: 11px;
+
+  font-weight: 900;
+
+  letter-spacing: .7px;
+
+}
+
+
+.a24-radio-mini {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+}
+
+
+.a24-radio-disc {
+
+  width: 48px;
+  height: 48px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background:
+    linear-gradient(
+      135deg,
+      #e50000,
+      #760000
+    );
+
+  color: #fff;
+
+  font-size: 20px;
+
+  font-weight: 900;
+
+}
+
+
+.a24-radio-mini strong {
+
+  display: block;
+
+  color: #df0000;
+
+  font-size: 10px;
+
+}
+
+
+.a24-radio-mini small {
+
+  display: block;
+
+  margin-top: 3px;
+
+  color: #777;
+
+  font-size: 9px;
+
+}
+
+
+.a24-listen {
+
+  width: 100%;
+
+  margin-top: 14px;
+
+  padding: 11px;
+
+  border: 0;
+
+  border-radius: 5px;
+
+  background: #df0000;
+
+  color: #fff;
+
+  font-size: 9px;
+
+  font-weight: 900;
+
+  cursor: pointer;
+
+}
+
+
+.a24-category-list {
+
+  display: flex;
+
+  flex-direction: column;
+
+}
+
+
+.a24-category-list button {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  padding: 9px 0;
+
+  border: 0;
+
+  border-bottom:
+    1px solid #eee;
+
+  background: transparent;
+
+  color: #444;
+
+  text-align: left;
+
+  font-size: 11px;
+
+  cursor: pointer;
+
+}
+
+
+.a24-category-list button:hover {
+
+  color: #df0000;
+
+}
+
+
+.a24-category-list span {
+
+  color: #df0000;
+
+}
+
+
+.a24-about p {
+
+  margin: 0 0 13px;
+
+  color: #777;
+
+  font-size: 11px;
+
+  line-height: 1.5;
+
+}
+
+
+.a24-about strong {
+
+  color: #df0000;
+
+  font-size: 9px;
+
+}
+
+
+/* =========================================================
+   MÁS NOTICIAS
+   ========================================================= */
+
+.a24-more {
+
+  margin-top: 38px;
+
+}
+
+
+.a24-section-title {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  margin-bottom: 18px;
+
+}
+
+
+.a24-section-title span {
+
+  height: 2px;
+
+  flex: 1;
+
+  background: #ddd;
+
+}
+
+
+.a24-section-title span:first-child {
+
+  max-width: 45px;
+
+  background: #df0000;
+
+}
+
+
+.a24-section-title h2 {
+
+  margin: 0;
+
+  font-size: 18px;
+
+  font-weight: 900;
+
+}
+
+
+.a24-more-grid {
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(4,minmax(0,1fr));
+
+  gap: 15px;
+
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.a24-news-footer {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  padding: 20px 0;
+
+  margin-top: 35px;
+
+  border-top:
+    1px solid #ddd;
+
+  color: #888;
+
+  font-size: 9px;
+
+}
+
+
+.a24-news-footer strong {
+
+  color: #df0000;
+
+  letter-spacing: 1px;
+
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media(max-width:900px) {
+
+  .a24-news-layout {
+
+    grid-template-columns: 1fr;
+
+  }
+
+  .a24-sidebar {
+
+    display: grid;
+
+    grid-template-columns:
+      repeat(2,1fr);
+
+  }
+
+  .a24-more-grid {
+
+    grid-template-columns:
+      repeat(2,1fr);
+
+  }
+
+}
+
+
+@media(max-width:600px) {
+
+  .a24-news {
+
+    padding: 0 12px;
+
+  }
+
+  .a24-news-head {
+
+    align-items: flex-start;
+
+  }
+
+  .a24-news-live {
+
+    display: none;
+
+  }
+
+  .a24-news-brand h2 {
+
+    font-size: 24px;
+
+  }
+
+  .a24-featured {
+
+    grid-template-columns: 1fr;
+
+  }
+
+  .a24-featured-image {
+
+    min-height: 180px;
+
+  }
+
+  .a24-featured-info {
+
+    padding: 22px;
+
+  }
+
+  .a24-grid {
+
+    grid-template-columns: 1fr;
+
+  }
+
+  .a24-sidebar {
+
+    grid-template-columns: 1fr;
+
+  }
+
+  .a24-more-grid {
+
+    grid-template-columns: 1fr;
+
+  }
+
+  .a24-news-footer {
+
+    flex-direction: column;
+
+    gap: 8px;
+
+  }
+
+}
+
+</style>
+
+
+<script>
+
+/* =========================================================
+   ARENA 24 — NOTICIAS
+   ========================================================= */
+
+(function() {
+
+  /*
+   * FUENTES
+   *
+   * En producción estas fuentes deberían pasar por
+   * el backend de ARENA 24 para controlar duplicados
+   * y aprobación editorial.
+   */
+
+  const feeds = [
+
+    {
+      category: "la-rioja",
+      search: "La Rioja Argentina"
+    },
+
+    {
+      category: "politica",
+      search: "La Rioja Argentina política"
+    },
+
+    {
+      category: "policiales",
+      search: "La Rioja Argentina policiales"
+    },
+
+    {
+      category: "economia",
+      search: "La Rioja Argentina economía"
+    },
+
+    {
+      category: "salud",
+      search: "La Rioja Argentina salud"
+    },
+
+    {
+      category: "deportes",
+      search: "La Rioja Argentina deportes"
+    },
+
+    {
+      category: "clima",
+      search: "La Rioja Argentina clima"
+    }
+
+  ];
+
+
+  const grid =
+    document.getElementById(
+      "a24-news-grid"
+    );
+
+  const more =
+    document.getElementById(
+      "a24-more-grid"
+    );
+
+  const breaking =
+    document.getElementById(
+      "a24-breaking-text"
+    );
+
+  const update =
+    document.getElementById(
+      "a24-update-time"
+    );
+
+
+  let news = [];
+
+
+  /* =======================================================
+     RSS
+     ======================================================= */
+
+  async function loadFeed(feed) {
+
+    const rss =
+      "https://news.google.com/rss/search?q=" +
+      encodeURIComponent(feed.search) +
+      "&hl=es-419&gl=AR&ceid=AR:es-419";
+
+    const proxy =
+      "https://api.rss2json.com/v1/api.json?rss_url=" +
+      encodeURIComponent(rss);
+
+    try {
+
+      const response =
+        await fetch(proxy);
+
+      const data =
+        await response.json();
+
+      if (!data.items) {
+        return [];
+      }
+
+      return data.items
+        .slice(0,8)
+        .map(function(item) {
+
+          return {
+
+            title:
+              clean(item.title),
+
+            description:
+              clean(item.description),
+
+            link:
+              item.link,
+
+            date:
+              item.pubDate,
+
+            category:
+              feed.category,
+
+            source:
+              data.feed &&
+              data.feed.title
+                ? clean(
+                    data.feed.title
+                  )
+                : "Fuente original"
+
+          };
+
+        });
+
+    } catch(error) {
+
+      return [];
+
+    }
+
+  }
+
+
+  /* =======================================================
+     CARGAR
+     ======================================================= */
+
+  async function loadNews() {
+
+    const result =
+      await Promise.all(
+        feeds.map(loadFeed)
+      );
+
+
+    const all =
+      result.flat();
+
+
+    /*
+     * Eliminar duplicados
+     */
+
+    const unique = [];
+
+    const titles = new Set();
+
+
+    all.forEach(function(item) {
+
+      const key =
+        item.title
+          .toLowerCase()
+          .replace(/\s+/g," ")
+          .trim();
+
+
+      if (!titles.has(key)) {
+
+        titles.add(key);
+
+        unique.push(item);
+
+      }
+
+    });
+
+
+    unique.sort(function(a,b) {
+
+      return new Date(b.date) -
+             new Date(a.date);
+
+    });
+
+
+    news = unique;
+
+
+    render(news);
+
+    update.textContent =
+      new Date().toLocaleTimeString(
+        "es-AR",
+        {
+          hour: "2-digit",
+          minute: "2-digit"
+        }
+      );
+
+  }
+
+
+  /* =======================================================
+     RENDER
+     ======================================================= */
+
+  function render(items) {
+
+    if (!items.length) {
+
+      grid.innerHTML =
+        "<p>No hay noticias disponibles.</p>";
+
+      return;
+
+    }
+
+
+    /*
+     * ÚLTIMO MOMENTO
+     */
+
+    breaking.textContent =
+      items
+        .slice(0,5)
+        .map(function(item) {
+
+          return "🔴 " + item.title;
+
+        })
+        .join("   •   ");
+
+
+    /*
+     * CARDS
+     */
+
+    grid.innerHTML =
+      items
+        .slice(1,9)
+        .map(card)
+        .join("");
+
+
+    more.innerHTML =
+      items
+        .slice(9,17)
+        .map(card)
+        .join("");
+
+  }
+
+
+  /* =======================================================
+     CARD
+     ======================================================= */
+
+  function card(item) {
+
+    return `
+
+      <article class="a24-card">
+
+        <div class="a24-card-line"></div>
+
+        <div class="a24-card-body">
+
+          <div class="a24-card-category">
+
+            ${categoryName(item.category)}
+
+          </div>
+
+          <h3>
+
+            <a
+              href="${safe(item.link)}"
+              target="_blank"
+              rel="noopener noreferrer">
+
+              ${escapeHTML(item.title)}
+
+            </a>
+
+          </h3>
+
+          <p>
+
+            ${escapeHTML(
+              truncate(
+                item.description,
+                125
+              )
+            )}
+
+          </p>
+
+          <div class="a24-card-meta">
+
+            <span>
+              ${relativeDate(item.date)}
+            </span>
+
+            <span>
+              ${escapeHTML(item.source)}
+            </span>
+
+          </div>
+
+        </div>
+
+      </article>
+
+    `;
+
+  }
+
+
+  /* =======================================================
+     FILTROS
+     ======================================================= */
+
+  document
+    .querySelectorAll(
+      ".a24-news-nav button, .a24-category-list button"
+    )
+    .forEach(function(button) {
+
+      button.addEventListener(
+        "click",
+        function() {
+
+          const filter =
+            button.dataset.filter;
+
+
+          document
+            .querySelectorAll(
+              ".a24-news-nav button"
+            )
+            .forEach(function(btn) {
+
+              btn.classList.remove(
+                "active"
+              );
+
+            });
+
+
+          const navButton =
+            document.querySelector(
+              '.a24-news-nav button[data-filter="' +
+              filter +
+              '"]'
+            );
+
+
+          if (navButton) {
+
+            navButton.classList.add(
+              "active"
+            );
+
+          }
+
+
+          if (filter === "todos") {
+
+            render(news);
+
+          } else {
+
+            render(
+              news.filter(function(item) {
+
+                return item.category ===
+                  filter;
+
+              })
+            );
+
+          }
+
+        }
+      );
+
+    });
+
+
+  /* =======================================================
+     UTILIDADES
+     ======================================================= */
+
+  function clean(text) {
+
+    const div =
+      document.createElement("div");
+
+    div.innerHTML =
+      text || "";
+
+    return div.textContent
+      .replace(/\s+/g," ")
+      .trim();
+
+  }
+
+
+  function escapeHTML(text) {
+
+    return String(text || "")
+      .replace(/&/g,"&amp;")
+      .replace(/</g,"&lt;")
+      .replace(/>/g,"&gt;")
+      .replace(/"/g,"&quot;")
+      .replace(/'/g,"&#039;");
+
+  }
+
+
+  function safe(url) {
+
+    try {
+
+      const parsed =
+        new URL(url);
+
+      if (
+        parsed.protocol === "http:" ||
+        parsed.protocol === "https:"
+      ) {
+
+        return parsed.href;
+
+      }
+
+    } catch(e) {}
+
+    return "#";
+
+  }
+
+
+  function truncate(text,n) {
+
+    text =
+      String(text || "");
+
+    return text.length > n
+      ? text.substring(0,n) + "..."
+      : text;
+
+  }
+
+
+  function relativeDate(date) {
+
+    const d =
+      new Date(date);
+
+    if (isNaN(d)) {
+      return "";
+    }
+
+    const minutes =
+      Math.floor(
+        (Date.now() - d.getTime()) /
+        60000
+      );
+
+
+    if (minutes < 1) {
+      return "Ahora";
+    }
+
+    if (minutes < 60) {
+      return "Hace " + minutes + " min";
+    }
+
+
+    const hours =
+      Math.floor(minutes / 60);
+
+
+    if (hours < 24) ;
+
+
+
