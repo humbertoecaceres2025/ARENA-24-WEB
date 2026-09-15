@@ -656,3 +656,1329 @@ body{
 
 </body>
 </html>
+
+<!-- =========================================================
+     ARENA 24 — PLAYER MULTIMEDIA
+     RADIO + TV + VOLUMEN + FULLSCREEN + TICKER
+     ========================================================= -->
+
+<div class="arena24-player">
+
+  <!-- HEADER -->
+  <div class="arena24-header">
+
+    <div class="arena24-logo">
+      <span class="arena24-logo-a">A</span>
+
+      <div>
+        <strong>ARENA 24</strong>
+        <small>INFORMACIÓN EN VIVO</small>
+      </div>
+    </div>
+
+    <div class="arena24-live">
+      <span></span>
+      <b id="arena24-live-label">EN VIVO</b>
+    </div>
+
+  </div>
+
+
+  <!-- PANTALLA -->
+  <div class="arena24-video">
+
+    <!-- RADIO -->
+    <div id="arena24-radio" class="arena24-view active">
+
+      <div class="arena24-radio-bg"></div>
+
+      <div class="arena24-radio-center">
+
+        <div class="arena24-radio-icon">
+          🎧
+        </div>
+
+        <h2>RADIO ARENA 24</h2>
+
+        <p>TRANSMISIÓN EN VIVO</p>
+
+        <!-- Ecualizador -->
+        <div class="arena24-eq">
+          <i></i><i></i><i></i><i></i><i></i>
+          <i></i><i></i><i></i><i></i><i></i>
+        </div>
+
+        <button
+          id="arena24-play"
+          class="arena24-play"
+          type="button">
+          ▶
+        </button>
+
+        <div id="arena24-audio-status">
+          Presioná PLAY para escuchar
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- TV -->
+    <div id="arena24-tv" class="arena24-view">
+
+      <iframe
+        id="arena24-youtube"
+        src="https://www.youtube.com/embed/i16rESsSqE8?autoplay=0&rel=0&modestbranding=1"
+        title="TV Arena 24"
+        allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
+        allowfullscreen>
+      </iframe>
+
+    </div>
+
+  </div>
+
+
+  <!-- AUDIO RADIO -->
+  <audio
+    id="arena24-audio"
+    preload="none"
+    src="https://stream.zeno.fm/zuw6xmmwmd0uv">
+  </audio>
+
+
+  <!-- BARRA DE INFORMACIÓN -->
+  <div class="arena24-info">
+
+    <div class="arena24-now">
+
+      <span class="arena24-red-dot"></span>
+
+      <div>
+        <small>SEÑAL ACTIVA</small>
+
+        <strong id="arena24-signal">
+          RADIO ARENA 24
+        </strong>
+      </div>
+
+    </div>
+
+    <div class="arena24-live-now">
+      ● EN VIVO
+    </div>
+
+  </div>
+
+
+  <!-- CONTROLES -->
+  <div class="arena24-controls">
+
+    <button
+      id="arena24-radio-btn"
+      class="arena24-mode-btn active"
+      type="button">
+
+      <span>🎧</span>
+
+      <div>
+        <small>ESCUCHAR</small>
+        RADIO
+      </div>
+
+    </button>
+
+
+    <button
+      id="arena24-tv-btn"
+      class="arena24-mode-btn"
+      type="button">
+
+      <span>📺</span>
+
+      <div>
+        <small>VER</small>
+        TV
+      </div>
+
+    </button>
+
+
+    <!-- Volumen -->
+    <div class="arena24-volume">
+
+      <button
+        id="arena24-mute"
+        type="button">
+        🔊
+      </button>
+
+      <input
+        id="arena24-volume-range"
+        type="range"
+        min="0"
+        max="1"
+        step="0.01"
+        value="1">
+
+    </div>
+
+  </div>
+
+
+  <!-- TICKER -->
+  <div class="arena24-ticker">
+
+    <div class="arena24-ticker-label">
+      ÚLTIMO
+    </div>
+
+    <div class="arena24-ticker-track">
+
+      <div class="arena24-ticker-text">
+
+        🔴 ARENA 24 — INFORMACIÓN EN VIVO
+        &nbsp;&nbsp;&nbsp; • &nbsp;&nbsp;&nbsp;
+
+        Todas las noticias de La Rioja y el país.
+
+        &nbsp;&nbsp;&nbsp; • &nbsp;&nbsp;&nbsp;
+
+        Seguinos en nuestras plataformas digitales.
+
+        &nbsp;&nbsp;&nbsp; • &nbsp;&nbsp;&nbsp;
+
+        RADIO ARENA 24 | TV ARENA 24
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<style>
+
+/* =========================================================
+   PLAYER
+   ========================================================= */
+
+.arena24-player {
+
+  width: 100%;
+  max-width: 820px;
+
+  margin: 25px auto;
+
+  background: #070707;
+
+  color: #fff;
+
+  border-radius: 16px;
+
+  overflow: hidden;
+
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  box-shadow:
+    0 20px 60px rgba(0,0,0,.5),
+    0 0 0 1px rgba(255,255,255,.06);
+
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.arena24-header {
+
+  height: 70px;
+
+  padding: 0 20px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  background:
+    linear-gradient(
+      90deg,
+      #080808,
+      #171717
+    );
+
+  border-bottom:
+    1px solid #282828;
+
+}
+
+
+.arena24-logo {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 11px;
+
+}
+
+
+.arena24-logo-a {
+
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 9px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #f00000,
+      #850000
+    );
+
+  font-size: 25px;
+
+  font-weight: 900;
+
+  box-shadow:
+    0 5px 20px rgba(255,0,0,.25);
+
+}
+
+
+.arena24-logo strong {
+
+  display: block;
+
+  font-size: 21px;
+
+  letter-spacing: 1px;
+
+}
+
+
+.arena24-logo small {
+
+  display: block;
+
+  margin-top: 3px;
+
+  color: #777;
+
+  font-size: 8px;
+
+  font-weight: 700;
+
+  letter-spacing: 1.5px;
+
+}
+
+
+.arena24-live {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+  color: #ff3030;
+
+  font-size: 10px;
+
+  letter-spacing: 1px;
+
+}
+
+
+.arena24-live span {
+
+  width: 8px;
+  height: 8px;
+
+  border-radius: 50%;
+
+  background: #f00;
+
+  animation:
+    arena24-pulse 1.5s infinite;
+
+}
+
+
+@keyframes arena24-pulse {
+
+  0% {
+    box-shadow: 0 0 0 0 rgba(255,0,0,.6);
+  }
+
+  70% {
+    box-shadow: 0 0 0 8px rgba(255,0,0,0);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 rgba(255,0,0,0);
+  }
+
+}
+
+
+/* =========================================================
+   VIDEO / RADIO
+   ========================================================= */
+
+.arena24-video {
+
+  position: relative;
+
+  width: 100%;
+
+  aspect-ratio: 16 / 9;
+
+  background: #000;
+
+}
+
+
+.arena24-view {
+
+  position: absolute;
+
+  inset: 0;
+
+  display: none;
+
+}
+
+
+.arena24-view.active {
+
+  display: block;
+
+}
+
+
+/* =========================================================
+   RADIO
+   ========================================================= */
+
+.arena24-radio-bg {
+
+  position: absolute;
+
+  inset: 0;
+
+  background:
+
+    radial-gradient(
+      circle at center,
+      rgba(220,0,0,.22),
+      transparent 40%
+    ),
+
+    linear-gradient(
+      135deg,
+      #050505,
+      #191919
+    );
+
+}
+
+
+.arena24-radio-center {
+
+  position: relative;
+
+  height: 100%;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+  text-align: center;
+
+}
+
+
+.arena24-radio-icon {
+
+  width: 80px;
+  height: 80px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background:
+    linear-gradient(
+      145deg,
+      #e60000,
+      #750000
+    );
+
+  font-size: 37px;
+
+  box-shadow:
+    0 0 45px rgba(255,0,0,.25);
+
+}
+
+
+.arena24-radio-center h2 {
+
+  margin: 14px 0 0;
+
+  font-size:
+    clamp(20px,4vw,34px);
+
+  font-weight: 900;
+
+  letter-spacing: 1px;
+
+}
+
+
+.arena24-radio-center p {
+
+  margin: 6px 0 0;
+
+  color: #ff3333;
+
+  font-size: 10px;
+
+  font-weight: 800;
+
+  letter-spacing: 2px;
+
+}
+
+
+/* =========================================================
+   EQUALIZER
+   ========================================================= */
+
+.arena24-eq {
+
+  height: 25px;
+
+  margin-top: 15px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 3px;
+
+}
+
+
+.arena24-eq i {
+
+  width: 3px;
+
+  height: 8px;
+
+  border-radius: 3px;
+
+  background: #e00000;
+
+  animation:
+    arena24-equalizer
+    .7s
+    ease-in-out
+    infinite
+    alternate;
+
+}
+
+
+.arena24-eq i:nth-child(2) {
+  animation-delay: -.2s;
+}
+
+.arena24-eq i:nth-child(3) {
+  animation-delay: -.5s;
+}
+
+.arena24-eq i:nth-child(4) {
+  animation-delay: -.1s;
+}
+
+.arena24-eq i:nth-child(5) {
+  animation-delay: -.4s;
+}
+
+.arena24-eq i:nth-child(6) {
+  animation-delay: -.6s;
+}
+
+.arena24-eq i:nth-child(7) {
+  animation-delay: -.3s;
+}
+
+.arena24-eq i:nth-child(8) {
+  animation-delay: -.7s;
+}
+
+.arena24-eq i:nth-child(9) {
+  animation-delay: -.2s;
+}
+
+.arena24-eq i:nth-child(10) {
+  animation-delay: -.5s;
+}
+
+
+@keyframes arena24-equalizer {
+
+  from {
+    height: 5px;
+  }
+
+  to {
+    height: 24px;
+  }
+
+}
+
+
+/* =========================================================
+   PLAY
+   ========================================================= */
+
+.arena24-play {
+
+  width: 58px;
+  height: 58px;
+
+  margin-top: 12px;
+
+  border: 0;
+
+  border-radius: 50%;
+
+  background: #fff;
+
+  color: #111;
+
+  font-size: 20px;
+
+  cursor: pointer;
+
+  transition: .2s;
+
+}
+
+
+.arena24-play:hover {
+
+  transform: scale(1.08);
+
+  background: #e00000;
+
+  color: #fff;
+
+}
+
+
+#arena24-audio-status {
+
+  margin-top: 8px;
+
+  color: #777;
+
+  font-size: 10px;
+
+}
+
+
+/* =========================================================
+   TV
+   ========================================================= */
+
+#arena24-tv iframe {
+
+  width: 100%;
+  height: 100%;
+
+  border: 0;
+
+  display: block;
+
+}
+
+
+/* =========================================================
+   INFO
+   ========================================================= */
+
+.arena24-info {
+
+  height: 52px;
+
+  padding: 0 18px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  background: #0d0d0d;
+
+  border-top: 1px solid #292929;
+
+}
+
+
+.arena24-now {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 9px;
+
+}
+
+
+.arena24-red-dot {
+
+  width: 7px;
+  height: 7px;
+
+  border-radius: 50%;
+
+  background: red;
+
+  box-shadow:
+    0 0 9px red;
+
+}
+
+
+.arena24-now small {
+
+  display: block;
+
+  color: #777;
+
+  font-size: 8px;
+
+  letter-spacing: 1px;
+
+}
+
+
+.arena24-now strong {
+
+  display: block;
+
+  margin-top: 2px;
+
+  font-size: 11px;
+
+}
+
+
+.arena24-live-now {
+
+  color: #e00000;
+
+  font-size: 9px;
+
+  font-weight: 900;
+
+  letter-spacing: 1px;
+
+}
+
+
+/* =========================================================
+   CONTROLES
+   ========================================================= */
+
+.arena24-controls {
+
+  display: flex;
+
+  gap: 9px;
+
+  padding: 11px;
+
+  background: #090909;
+
+}
+
+
+.arena24-mode-btn {
+
+  flex: 1;
+
+  min-height: 58px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 9px;
+
+  border: 1px solid #292929;
+
+  border-radius: 10px;
+
+  background: #161616;
+
+  color: #777;
+
+  cursor: pointer;
+
+  transition: .2s;
+
+}
+
+
+.arena24-mode-btn:hover {
+
+  color: #fff;
+
+  background: #202020;
+
+}
+
+
+.arena24-mode-btn.active {
+
+  color: #fff;
+
+  border-color: #e00000;
+
+  background:
+    linear-gradient(
+      135deg,
+      #e00000,
+      #930000
+    );
+
+  box-shadow:
+    0 6px 20px rgba(220,0,0,.2);
+
+}
+
+
+.arena24-mode-btn > span {
+
+  font-size: 22px;
+
+}
+
+
+.arena24-mode-btn div {
+
+  text-align: left;
+
+  font-weight: 900;
+
+  font-size: 13px;
+
+}
+
+
+.arena24-mode-btn small {
+
+  display: block;
+
+  margin-bottom: 2px;
+
+  font-size: 7px;
+
+  letter-spacing: 1px;
+
+  opacity: .7;
+
+}
+
+
+/* =========================================================
+   VOLUMEN
+   ========================================================= */
+
+.arena24-volume {
+
+  min-width: 150px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 7px;
+
+  padding: 0 8px;
+
+}
+
+
+.arena24-volume button {
+
+  border: 0;
+
+  background: transparent;
+
+  color: #fff;
+
+  cursor: pointer;
+
+  font-size: 17px;
+
+}
+
+
+.arena24-volume input {
+
+  width: 90px;
+
+  accent-color: #e00000;
+
+  cursor: pointer;
+
+}
+
+
+/* =========================================================
+   TICKER
+   ========================================================= */
+
+.arena24-ticker {
+
+  height: 38px;
+
+  display: flex;
+
+  overflow: hidden;
+
+  background: #101010;
+
+  border-top: 1px solid #292929;
+
+}
+
+
+.arena24-ticker-label {
+
+  z-index: 2;
+
+  min-width: 70px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  background: #e00000;
+
+  color: #fff;
+
+  font-size: 9px;
+
+  font-weight: 900;
+
+  letter-spacing: 1px;
+
+}
+
+
+.arena24-ticker-track {
+
+  flex: 1;
+
+  overflow: hidden;
+
+  display: flex;
+
+  align-items: center;
+
+}
+
+
+.arena24-ticker-text {
+
+  white-space: nowrap;
+
+  padding-left: 100%;
+
+  color: #bbb;
+
+  font-size: 10px;
+
+  animation:
+    arena24-ticker 28s
+    linear
+    infinite;
+
+}
+
+
+@keyframes arena24-ticker {
+
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-100%);
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+  .arena24-player {
+
+    margin: 10px auto;
+
+    border-radius: 12px;
+
+  }
+
+  .arena24-header {
+
+    height: 58px;
+
+    padding: 0 13px;
+
+  }
+
+  .arena24-logo-a {
+
+    width: 35px;
+    height: 35px;
+
+    font-size: 20px;
+
+  }
+
+  .arena24-logo strong {
+
+    font-size: 17px;
+
+  }
+
+  .arena24-logo small {
+
+    display: none;
+
+  }
+
+  .arena24-live {
+
+    font-size: 8px;
+
+  }
+
+  .arena24-radio-icon {
+
+    width: 65px;
+    height: 65px;
+
+    font-size: 29px;
+
+  }
+
+  .arena24-controls {
+
+    flex-wrap: wrap;
+
+  }
+
+  .arena24-mode-btn {
+
+    min-height: 54px;
+
+  }
+
+  .arena24-volume {
+
+    width: 100%;
+
+    height: 38px;
+
+  }
+
+  .arena24-volume input {
+
+    width: 130px;
+
+  }
+
+  .arena24-ticker-label {
+
+    min-width: 58px;
+
+  }
+
+}
+
+
+/* =========================================================
+   OCULTAR CONTROLES DE VOLUMEN CUANDO ESTÁ TV
+   ========================================================= */
+
+.arena24-player.tv-active
+.arena24-volume {
+
+  opacity: .5;
+
+}
+
+</style>
+
+
+<script>
+
+(function () {
+
+  const audio =
+    document.getElementById("arena24-audio");
+
+  const play =
+    document.getElementById("arena24-play");
+
+  const radioBtn =
+    document.getElementById("arena24-radio-btn");
+
+  const tvBtn =
+    document.getElementById("arena24-tv-btn");
+
+  const radio =
+    document.getElementById("arena24-radio");
+
+  const tv =
+    document.getElementById("arena24-tv");
+
+  const signal =
+    document.getElementById("arena24-signal");
+
+  const liveLabel =
+    document.getElementById("arena24-live-label");
+
+  const audioStatus =
+    document.getElementById("arena24-audio-status");
+
+  const volume =
+    document.getElementById("arena24-volume-range");
+
+  const mute =
+    document.getElementById("arena24-mute");
+
+
+  /* =====================================================
+     RADIO PLAY / PAUSE
+     ===================================================== */
+
+  play.addEventListener("click", function () {
+
+    if (audio.paused) {
+
+      audio.play()
+
+        .then(function () {
+
+          play.textContent = "❚❚";
+
+          audioStatus.textContent =
+            "Radio Arena 24 reproduciendo";
+
+        })
+
+        .catch(function () {
+
+          audioStatus.textContent =
+            "Presioná nuevamente PLAY para comenzar";
+
+        });
+
+    } else {
+
+      audio.pause();
+
+      play.textContent = "▶";
+
+      audioStatus.textContent =
+        "Radio pausada";
+
+    }
+
+  });
+
+
+  /* =====================================================
+     RADIO
+     ===================================================== */
+
+  radioBtn.addEventListener("click", function () {
+
+    radio.classList.add("active");
+
+    tv.classList.remove("active");
+
+    radioBtn.classList.add("active");
+
+    tvBtn.classList.remove("active");
+
+    signal.textContent =
+      "RADIO ARENA 24";
+
+    liveLabel.textContent =
+      "RADIO EN VIVO";
+
+  });
+
+
+  /* =====================================================
+     TV
+     ===================================================== */
+
+  tvBtn.addEventListener("click", function () {
+
+    /*
+     * Pausamos la radio al pasar a TV.
+     */
+
+    audio.pause();
+
+    play.textContent = "▶";
+
+    radio.classList.remove("active");
+
+    tv.classList.add("active");
+
+    radioBtn.classList.remove("active");
+
+    tvBtn.classList.add("active");
+
+    signal.textContent =
+      "TV ARENA 24";
+
+    liveLabel.textContent =
+      "TV EN VIVO";
+
+  });
+
+
+  /* =====================================================
+     VOLUMEN
+     ===================================================== */
+
+  volume.addEventListener("input", function () {
+
+    audio.volume =
+      parseFloat(this.value);
+
+    if (audio.volume === 0) {
+
+      mute.textContent = "🔇";
+
+    } else {
+
+      mute.textContent = "🔊";
+
+    }
+
+  });
+
+
+  /* =====================================================
+     MUTE
+     ===================================================== */
+
+  let previousVolume = 1;
+
+  mute.addEventListener("click", function () {
+
+    if (audio.volume > 0) {
+
+      previousVolume =
+        audio.volume;
+
+      audio.volume = 0;
+
+      volume.value = 0;
+
+      mute.textContent = "🔇";
+
+    } else {
+
+      audio.volume =
+        previousVolume || 1;
+
+      volume.value =
+        previousVolume || 1;
+
+      mute.textContent = "🔊";
+
+    }
+
+  });
+
+
+  /* =====================================================
+     ERROR RADIO
+     ===================================================== */
+
+  audio.addEventListener("error", function () {
+
+    play.textContent = "▶";
+
+    audioStatus.textContent =
+      "La señal de radio no está disponible en este momento.";
+
+  });
+
+
+  /* =====================================================
+     PAUSA
+     ===================================================== */
+
+  audio.addEventListener("pause", function () {
+
+    play.textContent = "▶";
+
+  });
+
+
+})();
+
+</script>
