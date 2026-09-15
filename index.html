@@ -373,3 +373,286 @@ radio.addEventListener("error", () => {
     status.classList.remove("live");
 });
 
+</script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>TV ARENA 24</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:
+        radial-gradient(circle at center,#252525 0%,#0b0b0b 55%,#000 100%);
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+/* PLAYER */
+
+.tv-player{
+
+    width:min(1000px,95%);
+
+    background:
+        linear-gradient(145deg,#171717,#050505);
+
+    border:1px solid #ff5a00;
+
+    border-radius:24px;
+
+    padding:18px;
+
+    box-shadow:
+        0 0 35px rgba(255,70,0,.20),
+        0 25px 70px rgba(0,0,0,.8);
+
+}
+
+/* CABECERA */
+
+.header{
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    margin-bottom:15px;
+}
+
+.brand{
+
+    font-size:28px;
+    font-weight:900;
+    letter-spacing:3px;
+
+    color:#fff;
+}
+
+.brand span{
+    color:#ff5a00;
+}
+
+.live{
+
+    display:flex;
+    align-items:center;
+    gap:8px;
+
+    padding:7px 13px;
+
+    border-radius:20px;
+
+    background:#170b06;
+
+    border:1px solid #ff5a00;
+
+    color:#ff6a00;
+
+    font-size:11px;
+    font-weight:bold;
+
+    letter-spacing:2px;
+}
+
+.dot{
+
+    width:8px;
+    height:8px;
+
+    border-radius:50%;
+
+    background:#ff2600;
+
+    box-shadow:0 0 12px #ff2600;
+
+    animation:pulse 1s infinite;
+}
+
+@keyframes pulse{
+
+    50%{
+        opacity:.3;
+    }
+
+}
+
+/* VIDEO */
+
+.video-box{
+
+    position:relative;
+
+    width:100%;
+
+    aspect-ratio:16/9;
+
+    overflow:hidden;
+
+    border-radius:16px;
+
+    background:#000;
+
+    border:2px solid #272727;
+
+    box-shadow:
+        0 0 0 1px #ff5a00,
+        0 15px 45px #000;
+}
+
+.video-box iframe{
+
+    position:absolute;
+
+    width:100%;
+    height:100%;
+
+    left:0;
+    top:0;
+
+    border:0;
+}
+
+/* BARRA INFERIOR */
+
+.info{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:15px 5px 3px;
+
+    color:#999;
+
+    font-size:12px;
+}
+
+.program{
+
+    color:#fff;
+
+    font-weight:bold;
+
+    letter-spacing:1px;
+}
+
+.location{
+
+    color:#ff6a00;
+
+    font-weight:bold;
+}
+
+/* LINEA */
+
+.line{
+
+    width:100%;
+    height:2px;
+
+    margin-top:10px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            #ff5a00,
+            transparent
+        );
+
+}
+
+/* FOOTER */
+
+.footer{
+
+    text-align:center;
+
+    margin-top:13px;
+
+    color:#555;
+
+    font-size:9px;
+
+    letter-spacing:3px;
+}
+
+</style>
+</head>
+
+
+<body>
+
+<div class="tv-player">
+
+    <div class="header">
+
+        <div class="brand">
+            TV <span>ARENA 24</span>
+        </div>
+
+        <div class="live">
+            <span class="dot"></span>
+            EN VIVO
+        </div>
+
+    </div>
+
+
+    <div class="video-box">
+
+        <iframe
+
+            src="https://www.youtube-nocookie.com/embed/i16rESsSqE8?autoplay=0&playsinline=1&rel=0"
+
+            title="TV ARENA 24"
+
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+
+            allowfullscreen>
+
+        </iframe>
+
+    </div>
+
+
+    <div class="info">
+
+        <div class="program">
+            📺 TV ARENA 24
+        </div>
+
+        <div class="location">
+            LA RIOJA · ARGENTINA
+        </div>
+
+    </div>
+
+    <div class="line"></div>
+
+    <div class="footer">
+        TV ARENA 24 · INFORMACIÓN · NOTICIAS · ENTRETENIMIENTO
+    </div>
+
+</div>
+
+
+</body>
+</html>
