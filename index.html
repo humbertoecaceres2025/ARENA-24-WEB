@@ -1992,12 +1992,14 @@
     return div.innerHTML;
   }
 
-  function tarjeta(noticia) {
+  tarjeta.innerHTML = `
+    <a href="noticia.php?slug=${encodeURIComponent(noticia.slug)}">
+        <img src="${noticia.imagen}" alt="${noticia.titulo}">
+        <h2>${noticia.titulo}</h2>
+        <p>${noticia.resumen}</p>
+    </a>
+`;
 
-    return `
-      <article class="card">
-
-        <a href="${escapeHTML(noticia.url || '#')}">
 
           <img
             src="${escapeHTML(noticia.imagen || 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=900&q=80')}"
