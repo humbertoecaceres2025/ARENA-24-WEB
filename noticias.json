@@ -1,41 +1,49 @@
 [
   {
     "id": 1,
-    "titulo": "La Rioja se prepara para una jornada marcada por nuevas definiciones",
-    "resumen": "Las principales novedades de la provincia y todos los detalles de una jornada cargada de información.",
+    "titulo": "Presupuesto 2027"
+    "resumen": "el Gobierno de La Rioja anticipó que reclamará a Nación fondos extracoparticipables. Según RadioLaRioja, el reclamo provincial rondaría los $50.000 millones mensuales. Es una posición atribuida al Gobierno y legisladores riojanos, no una cifra acordada con Nación",
     "categoria": "La Rioja",
     "autor": "Redacción Arena 24",
-    "fecha": "15 de septiembre de 2026 · 08:30",
+    "fecha": "17 de septiembre de 2026 · 08:30",
     "fecha_iso": "2026-09-15T08:30:00-03:00",
     "imagen": "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&fit=crop&w=1400&q=85",
     "url": "#"
   },
   {
     "id": 2,
-    "titulo": "Las principales noticias políticas que marcan la agenda nacional",
-    "resumen": "Los protagonistas y las decisiones que concentran la atención durante esta jornada.",
+    "titulo": "Malvinas y soberanía"
+    "resumen": "el Gobierno de Javier Milei envió al Congreso un proyecto de ley sobre defensa de la soberanía que incluye nuevas sanciones por explotación no autorizada de recursos y cambios en materia de seguridad. La iniciativa ya genera posiciones contrapuestas entre distintos sectores.",
     "categoria": "Nacional",
     "autor": "Redacción Arena 24",
-    "fecha": "15 de septiembre de 2026 · 08:05",
+    "fecha": "17 de septiembre de 2026 · 08:05",
     "fecha_iso": "2026-09-15T08:05:00-03:00",
     "imagen": "https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?auto=format&fit=crop&w=1000&q=85",
     "url": "#"
   },
   {
     "id": 3,
-    "titulo": "La economía vuelve a estar en el centro de la agenda",
-    "resumen": "Los principales indicadores y las novedades que siguen de cerca los mercados.",
+    "titulo": "Mercados"
+    "resumen": "los mercados argentinos reaccionan a la reciente decisión de la Reserva Federal de Estados Unidos sobre las tasas de interés."
     "categoria": "Economía",
     "autor": "Arena 24 Economía",
-    "fecha": "15 de septiembre de 2026 · 07:45",
+    "fecha": "17 de septiembre de 2026 · 07:45",
     "fecha_iso": "2026-09-15T07:45:00-03:00",
     "imagen": "https://images.unsplash.com/photo-1559526324-593bc073d938?auto=format&fit=crop&w=1000&q=85",
     "url": "#"
   },
   {
     "id": 4,
-    "titulo": "Toda la actualidad deportiva de la jornada",
-    "resumen": "Resultados, protagonistas y las noticias que tienen en vilo a los fanáticos.",
+    "titulo": "Medallas de Argentina en Santa Fe 2026",
+    "resumen": "Argentina lleva 95 medallas en los Juegos Suramericanos Santa Fe 2026:
+
+🥇 31 de oro
+
+🥈 27 de plata
+
+🥉 37 de bronce
+
+Total: 95 medallas",
     "categoria": "Deportes",
     "autor": "Arena 24 Deportes",
     "fecha": "15 de septiembre de 2026 · 07:20",
@@ -45,8 +53,8 @@
   },
   {
     "id": 5,
-    "titulo": "Historias y protagonistas de La Rioja",
-    "resumen": "Una mirada a las noticias que atraviesan la vida cotidiana de los riojanos.",
+    "titulo": "Fernanda Russo",
+    "resumen": "Medalla de oro en tiro deportivo, rifle de aire 10 m",
     "categoria": "La Rioja",
     "autor": "Redacción Arena 24",
     "fecha": "15 de septiembre de 2026 · 06:55",
@@ -56,33 +64,48 @@
   },
   {
     "id": 6,
-    "titulo": "Las noticias internacionales que concentran las miradas",
-    "resumen": "El panorama internacional y los acontecimientos más relevantes del día.",
+    "titulo": "Ecuador",
+    "resumen": "comenzaron nuevos toques de queda nocturnos durante 15 días en cuatro provincias, como medida frente a la violencia atribuida al crimen organizado",
     "categoria": "Internacional",
     "autor": "Arena 24 Mundo",
-    "fecha": "15 de septiembre de 2026 · 06:30",
+    "fecha": "17 de septiembre de 2026 · 06:30",
     "fecha_iso": "2026-09-15T06:30:00-03:00",
     "imagen": "https://images.unsplash.com/photo-1521295121783-8a321d551ad2?auto=format&fit=crop&w=1000&q=85",
     "url": "#"
   },
   {
     "id": 7,
-    "titulo": "Nuevas propuestas y actividades para la comunidad riojana",
-    "resumen": "Las iniciativas que se desarrollan en distintos puntos de la provincia.",
+    "titulo": "Clima: para la ciudad de La Rioja",
+    "resumen": " se prevé una jornada sin lluvias, aunque las fuentes consultadas difieren en la temperatura exacta; una previsión ubica la máxima alrededor de 26 °C",
     "categoria": "La Rioja",
     "autor": "Redacción Arena 24",
-    "fecha": "15 de septiembre de 2026 · 06:10",
+    "fecha": "17 de septiembre de 2026 · 06:10",
     "fecha_iso": "2026-09-15T06:10:00-03:00",
     "imagen": "https://images.unsplash.com/photo-1577962917302-cd874c4e31d2?auto=format&fit=crop&w=1000&q=85",
     "url": "#"
   },
   {
     "id": 8,
-    "titulo": "Todo preparado para una nueva jornada deportiva",
-    "resumen": "La agenda deportiva y las principales novedades de los equipos.",
+    "titulo": "Argentina se encuentra segunda en el medallero, detrás de Brasil, según el último recuento publicado",
+    "resumen": "Algunos de los últimos oros argentinos
+Rodrigo Enríquez y Santino Menín — remo, doble peso ligero masculino.
+
+Fernanda Russo — tiro deportivo, rifle de aire 10 m.
+
+Catalina Serio — pentatlón moderno individual femenino.
+
+Mara Kucharski — tiro, skeet femenino.
+
+Juliette Duhaime — stand up paddle, técnica femenina.
+
+Santino Basaldella — stand up paddle, técnica masculina.
+
+Facundo Chávez y Gabriel Villanueva — esports, Valorant.
+
+Julieta Lucas — gimnasia artística, piso",
     "categoria": "Deportes",
     "autor": "Arena 24 Deportes",
-    "fecha": "15 de septiembre de 2026 · 05:50",
+    "fecha": "17 de septiembre de 2026 · 05:50",
     "fecha_iso": "2026-09-15T05:50:00-03:00",
     "imagen": "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=1000&q=85",
     "url": "#"
