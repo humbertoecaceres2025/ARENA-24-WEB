@@ -1295,3 +1295,212 @@ footer small {
   }
 
 }
+
+/* =====================================================
+   ARENA 24 TV — DISEÑO AUTOMÁTICO
+===================================================== */
+
+.arena24-tv {
+  width: min(1100px, 94%);
+  margin: 45px auto;
+  padding: 22px;
+  background:
+    radial-gradient(circle at top right,
+      rgba(255,120,0,.12),
+      transparent 35%),
+    linear-gradient(145deg,#111,#050505);
+  border: 1px solid rgba(255,130,0,.28);
+  border-radius: 22px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.55);
+}
+
+.arena24-tv-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.arena24-tv-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.arena24-tv-brand small {
+  display: block;
+  color: #aaa;
+  font-size: 11px;
+  letter-spacing: 3px;
+}
+
+.arena24-tv-brand h2 {
+  margin: 0;
+  color: #fff;
+  font-size: 30px;
+  letter-spacing: 2px;
+}
+
+.arena24-live-dot {
+  width: 13px;
+  height: 13px;
+  display: block;
+  border-radius: 50%;
+  background: #ff2500;
+  box-shadow: 0 0 15px #ff2500;
+  animation: arena24Blink 1.2s infinite;
+}
+
+.arena24-live-badge {
+  padding: 7px 13px;
+  border-radius: 8px;
+  background: #c90000;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.arena24-video {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: #000;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,.08);
+}
+
+.arena24-video iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  position: absolute;
+  inset: 0;
+}
+
+.arena24-loading {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  background: #050505;
+  color: #aaa;
+  font-size: 14px;
+}
+
+.arena24-spinner {
+  width: 38px;
+  height: 38px;
+  border: 3px solid #333;
+  border-top-color: #ff7900;
+  border-radius: 50%;
+  animation: arena24Spin .8s linear infinite;
+}
+
+.arena24-status {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: 14px;
+  padding: 10px 4px;
+  color: #aaa;
+  font-size: 13px;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #777;
+}
+
+.arena24-tv-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.arena24-tv-info {
+  color: #fff;
+  font-size: 14px;
+}
+
+.arena24-tv-info span {
+  margin-left: 8px;
+  color: #777;
+}
+
+.arena24-tv-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.arena24-tv-buttons a {
+  padding: 10px 15px;
+  border-radius: 9px;
+  border: 1px solid rgba(255,130,0,.35);
+  color: #fff;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 700;
+  transition: .25s;
+}
+
+.arena24-tv-buttons a:hover {
+  background: #ff7900;
+  color: #000;
+  transform: translateY(-2px);
+}
+
+@keyframes arena24Spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes arena24Blink {
+  50% {
+    opacity: .35;
+  }
+}
+
+@media (max-width: 650px) {
+
+  .arena24-tv {
+    width: 92%;
+    padding: 15px;
+  }
+
+  .arena24-tv-header {
+    align-items: flex-start;
+  }
+
+  .arena24-live-badge {
+    font-size: 9px;
+  }
+
+  .arena24-tv-brand h2 {
+    font-size: 24px;
+  }
+
+  .arena24-tv-footer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .arena24-tv-buttons a {
+    flex: 1;
+    text-align: center;
+  }
+
+  .arena24-tv-info span {
+    display: block;
+    margin: 5px 0 0;
+  }
+}
