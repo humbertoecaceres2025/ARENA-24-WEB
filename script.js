@@ -299,7 +299,7 @@ console.log(
 
 */
 
-const arena24ChannelID = "PEGAR_AQUI_EL_ID_DEL_CANAL";
+const arena24ChannelID = "https://www.youtube.com/@ARENA24LARIOJA";
 
 
 /* =====================================================
@@ -320,7 +320,7 @@ function arena24IniciarTV() {
 
   if (
     !arena24ChannelID ||
-    arena24ChannelID === "PEGAR_AQUI_EL_ID_DEL_CANAL"
+    arena24ChannelID === "https://www.youtube.com/@ARENA24LARIOJA"
   ) {
 
     arena24Status.textContent =
