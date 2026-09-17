@@ -1295,3 +1295,333 @@ footer small {
   }
 
 }
+/* =========================================================
+   ARENA 24 — TRANSMISIÓN ONLINE PROFESIONAL
+   ========================================================= */
+
+.arena24-tv-pro {
+  width: min(1200px, 94%);
+  margin: 50px auto;
+  padding: 0;
+  overflow: hidden;
+
+  background:
+    radial-gradient(circle at 90% 0%,
+      rgba(255,122,0,.16),
+      transparent 32%),
+    linear-gradient(145deg,#111111,#050505);
+
+  border: 1px solid rgba(255,140,0,.28);
+  border-radius: 24px;
+
+  box-shadow:
+    0 25px 70px rgba(0,0,0,.65),
+    0 0 35px rgba(255,110,0,.08);
+}
+
+/* CABECERA */
+
+.arena24-tv-pro-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 18px 22px;
+
+  background: rgba(255,255,255,.025);
+  border-bottom: 1px solid rgba(255,255,255,.07);
+}
+
+.arena24-tv-pro-logo {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+}
+
+.arena24-tv-pro-logo .signal {
+  width: 12px;
+  height: 12px;
+
+  border-radius: 50%;
+  background: #ff2800;
+
+  box-shadow:
+    0 0 8px #ff2800,
+    0 0 20px rgba(255,40,0,.7);
+
+  animation: arena24LivePulse 1.2s infinite;
+}
+
+.arena24-tv-pro-logo strong {
+  color: #fff;
+  font-size: 21px;
+  letter-spacing: 2px;
+}
+
+.arena24-tv-pro-logo span {
+  color: #999;
+  font-size: 11px;
+  letter-spacing: 2px;
+}
+
+/* ETIQUETA EN VIVO */
+
+.arena24-tv-live {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+
+  padding: 7px 13px;
+
+  border-radius: 8px;
+
+  background: #c90000;
+  color: #fff;
+
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 1px;
+
+  box-shadow: 0 0 18px rgba(220,0,0,.25);
+}
+
+/* VIDEO */
+
+.arena24-tv-screen {
+  position: relative;
+
+  width: 100%;
+  aspect-ratio: 16 / 9;
+
+  background: #000;
+
+  overflow: hidden;
+}
+
+.arena24-tv-screen iframe,
+.arena24-tv-screen video {
+  position: absolute;
+
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  border: 0;
+}
+
+/* BARRA SOBRE EL VIDEO */
+
+.arena24-tv-overlay {
+  position: absolute;
+
+  left: 18px;
+  right: 18px;
+  bottom: 18px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  pointer-events: none;
+}
+
+.arena24-tv-overlay-left {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+
+  padding: 8px 12px;
+
+  background: rgba(0,0,0,.72);
+  backdrop-filter: blur(8px);
+
+  border-radius: 8px;
+
+  color: #fff;
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.arena24-tv-overlay-left span {
+  width: 7px;
+  height: 7px;
+
+  border-radius: 50%;
+
+  background: #ff2600;
+
+  box-shadow: 0 0 10px #ff2600;
+}
+
+/* INFORMACIÓN */
+
+.arena24-tv-pro-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 17px 22px;
+
+  border-top: 1px solid rgba(255,255,255,.05);
+}
+
+.arena24-tv-program {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.arena24-tv-program strong {
+  color: #fff;
+
+  font-size: 15px;
+}
+
+.arena24-tv-program span {
+  color: #888;
+
+  font-size: 12px;
+}
+
+/* INDICADOR */
+
+.arena24-tv-signal {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  color: #aaa;
+
+  font-size: 11px;
+}
+
+.arena24-tv-signal i {
+  width: 8px;
+  height: 8px;
+
+  border-radius: 50%;
+
+  background: #19d66b;
+
+  box-shadow: 0 0 10px #19d66b;
+}
+
+/* BOTONES */
+
+.arena24-tv-actions {
+  display: flex;
+  gap: 10px;
+
+  padding: 0 22px 20px;
+}
+
+.arena24-tv-actions a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 10px 16px;
+
+  border-radius: 9px;
+
+  border: 1px solid rgba(255,140,0,.3);
+
+  background: rgba(255,255,255,.025);
+
+  color: #fff;
+
+  text-decoration: none;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  transition: .25s ease;
+}
+
+.arena24-tv-actions a:hover {
+  background: #ff7900;
+  border-color: #ff7900;
+  color: #000;
+
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 8px 25px rgba(255,120,0,.25);
+}
+
+/* ANIMACIÓN */
+
+@keyframes arena24LivePulse {
+
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  50% {
+    transform: scale(1.35);
+    opacity: .55;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* =========================================================
+   CELULAR
+   ========================================================= */
+
+@media (max-width: 650px) {
+
+  .arena24-tv-pro {
+    width: 94%;
+    margin: 30px auto;
+    border-radius: 17px;
+  }
+
+  .arena24-tv-pro-header {
+    padding: 14px;
+  }
+
+  .arena24-tv-pro-logo strong {
+    font-size: 17px;
+  }
+
+  .arena24-tv-pro-logo span {
+    display: none;
+  }
+
+  .arena24-tv-live {
+    padding: 6px 9px;
+    font-size: 9px;
+  }
+
+  .arena24-tv-overlay {
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+  }
+
+  .arena24-tv-overlay-left {
+    font-size: 10px;
+    padding: 6px 9px;
+  }
+
+  .arena24-tv-pro-info {
+    padding: 14px;
+  }
+
+  .arena24-tv-actions {
+    padding: 0 14px 15px;
+
+    flex-direction: column;
+  }
+
+  .arena24-tv-actions a {
+    width: 100%;
+  }
+}
