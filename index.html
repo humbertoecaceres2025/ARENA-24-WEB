@@ -2425,3 +2425,875 @@ activateRadio();
 </body>
 
 </html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Arena 24 | Noticias de La Rioja y Argentina</title>
+  <meta name="description" content="Arena 24 - Noticias de La Rioja, Argentina y el mundo. Información, actualidad, política, economía, sociedad y deportes.">
+
+  <style>
+    :root {
+      --azul: #071a33;
+      --azul2: #0d294d;
+      --rojo: #e21d2f;
+      --rojo2: #b91425;
+      --blanco: #fff;
+      --fondo: #f4f6f8;
+      --texto: #101828;
+      --gris: #667085;
+      --borde: #e4e7ec;
+      --radio: 14px;
+      --max: 1240px;
+      --sombra: 0 8px 30px rgba(7,26,51,.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--fondo);
+      color: var(--texto);
+      line-height: 1.5;
+    }
+
+    img {
+      width: 100%;
+      display: block;
+      object-fit: cover;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .container {
+      width: min(var(--max), calc(100% - 32px));
+      margin: auto;
+    }
+
+    /* TOP */
+
+    .topbar {
+      background: var(--azul);
+      color: #cbd5e1;
+      font-size: 13px;
+    }
+
+    .topbar-inner {
+      min-height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .topbar strong {
+      color: white;
+    }
+
+    /* HEADER */
+
+    header {
+      background: white;
+      border-bottom: 1px solid var(--borde);
+    }
+
+    .header-inner {
+      min-height: 90px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-size: 37px;
+      font-weight: 900;
+      letter-spacing: -2px;
+      color: var(--azul);
+    }
+
+    .logo span {
+      color: var(--rojo);
+    }
+
+    .logo small {
+      display: block;
+      font-size: 9px;
+      letter-spacing: 3px;
+      color: var(--gris);
+      margin-top: -4px;
+    }
+
+    .search {
+      display: flex;
+      border: 1px solid var(--borde);
+      border-radius: 7px;
+      overflow: hidden;
+    }
+
+    .search input {
+      width: 220px;
+      border: 0;
+      outline: none;
+      padding: 11px 13px;
+    }
+
+    .search button {
+      width: 45px;
+      border: 0;
+      background: var(--azul);
+      color: white;
+      cursor: pointer;
+      font-size: 18px;
+    }
+
+    .menu {
+      display: none;
+      background: var(--azul);
+      color: white;
+      border: 0;
+      padding: 10px 14px;
+      border-radius: 6px;
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    /* NAV */
+
+    nav {
+      background: var(--azul2);
+      color: white;
+    }
+
+    .nav-inner {
+      display: flex;
+      overflow-x: auto;
+    }
+
+    nav a {
+      padding: 14px 17px;
+      font-size: 14px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    nav a:hover,
+    nav a.active {
+      background: var(--rojo);
+    }
+
+    /* BREAKING */
+
+    .breaking {
+      background: var(--rojo);
+      color: white;
+    }
+
+    .breaking-inner {
+      min-height: 43px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .breaking-label {
+      background: var(--rojo2);
+      padding: 5px 9px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 900;
+      flex-shrink: 0;
+    }
+
+    #breakingText {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-size: 14px;
+    }
+
+    /* MAIN */
+
+    main {
+      padding: 30px 0 60px;
+    }
+
+    .titulo-seccion {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 3px solid var(--azul);
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+    }
+
+    .titulo-seccion h2 {
+      font-size: 25px;
+      color: var(--azul);
+    }
+
+    .titulo-seccion a {
+      color: var(--rojo);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    /* HERO */
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.7fr 1fr;
+      gap: 20px;
+      margin-bottom: 42px;
+    }
+
+    .hero {
+      min-height: 500px;
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--radio);
+      color: white;
+      box-shadow: var(--sombra);
+      background: #111;
+    }
+
+    .hero img {
+      position: absolute;
+      inset: 0;
+      height: 100%;
+      filter: brightness(.65);
+      transition: .4s;
+    }
+
+    .hero:hover img {
+      transform: scale(1.04);
+    }
+
+    .hero-content {
+      position: absolute;
+      bottom: 0;
+      padding: 34px;
+      width: 100%;
+      background: linear-gradient(transparent, rgba(0,0,0,.95));
+    }
+
+    .categoria {
+      display: inline-block;
+      background: var(--rojo);
+      color: white;
+      padding: 5px 9px;
+      border-radius: 4px;
+      font-size: 10px;
+      font-weight: 900;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .hero h1 {
+      font-family: Georgia, serif;
+      font-size: clamp(30px,4vw,48px);
+      line-height: 1.08;
+      margin-bottom: 12px;
+    }
+
+    .hero p {
+      color: #e5e7eb;
+      font-size: 15px;
+    }
+
+    .meta {
+      color: var(--gris);
+      font-size: 11px;
+      margin-top: 10px;
+    }
+
+    .hero .meta {
+      color: #d1d5db;
+    }
+
+    /* CARDS */
+
+    .side-news {
+      display: grid;
+      gap: 20px;
+    }
+
+    .card {
+      background: white;
+      border: 1px solid var(--borde);
+      border-radius: var(--radio);
+      overflow: hidden;
+      box-shadow: 0 3px 15px rgba(0,0,0,.04);
+      transition: .25s;
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--sombra);
+    }
+
+    .card img {
+      height: 185px;
+    }
+
+    .card-body {
+      padding: 16px;
+    }
+
+    .card h3 {
+      font-family: Georgia, serif;
+      font-size: 20px;
+      line-height: 1.2;
+      margin: 6px 0;
+    }
+
+    .card p {
+      color: var(--gris);
+      font-size: 13px;
+    }
+
+    /* GRID */
+
+    .news-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-bottom: 45px;
+    }
+
+    /* LOADING */
+
+    .loading {
+      background: white;
+      padding: 50px;
+      text-align: center;
+      border-radius: var(--radio);
+      color: var(--gris);
+    }
+
+    .error {
+      background: #fff1f2;
+      color: #991b1b;
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 25px;
+    }
+
+    /* FOOTER */
+
+    footer {
+      background: #050f20;
+      color: #cbd5e1;
+      padding: 50px 0 25px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 35px;
+    }
+
+    footer .logo {
+      color: white;
+    }
+
+    footer p {
+      color: #94a3b8;
+      margin-top: 15px;
+      max-width: 400px;
+    }
+
+    footer h4 {
+      color: white;
+      margin-bottom: 12px;
+    }
+
+    footer ul {
+      list-style: none;
+    }
+
+    footer li {
+      margin-bottom: 8px;
+      font-size: 13px;
+    }
+
+    footer a:hover {
+      color: white;
+    }
+
+    .copyright {
+      border-top: 1px solid rgba(255,255,255,.1);
+      margin-top: 35px;
+      padding-top: 20px;
+      color: #64748b;
+      font-size: 12px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    /* RESPONSIVE */
+
+    @media(max-width:900px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .news-grid {
+        grid-template-columns: repeat(2,1fr);
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media(max-width:650px) {
+
+      .topbar-inner {
+        justify-content: center;
+      }
+
+      .search {
+        display: none;
+      }
+
+      .menu {
+        display: block;
+      }
+
+      nav {
+        display: none;
+      }
+
+      nav.open {
+        display: block;
+      }
+
+      .nav-inner {
+        flex-direction: column;
+      }
+
+      nav a {
+        border-bottom: 1px solid rgba(255,255,255,.1);
+      }
+
+      .logo {
+        font-size: 30px;
+      }
+
+      .hero {
+        min-height: 440px;
+      }
+
+      .hero-content {
+        padding: 22px;
+      }
+
+      .hero h1 {
+        font-size: 30px;
+      }
+
+      .news-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .copyright {
+        flex-direction: column;
+        gap: 8px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="topbar">
+    <div class="container topbar-inner">
+      <strong id="fecha"></strong>
+      <span>Información · Actualidad · Periodismo</span>
+    </div>
+  </div>
+
+  <header>
+    <div class="container header-inner">
+
+      <a href="/" class="logo">
+        ARENA<span>24</span>
+        <small>NOTICIAS</small>
+      </a>
+
+      <form class="search" onsubmit="buscar(event)">
+        <input id="busqueda" type="search" placeholder="Buscar noticias...">
+        <button>⌕</button>
+      </form>
+
+      <button class="menu" onclick="toggleMenu()">☰</button>
+
+    </div>
+  </header>
+
+  <nav id="nav">
+    <div class="container nav-inner">
+      <a class="active" href="/">Inicio</a>
+      <a href="#la-rioja">La Rioja</a>
+      <a href="#nacional">Nacional</a>
+      <a href="#politica">Política</a>
+      <a href="#economia">Economía</a>
+      <a href="#sociedad">Sociedad</a>
+      <a href="#deportes">Deportes</a>
+      <a href="#internacional">Internacional</a>
+    </div>
+  </nav>
+
+  <div class="breaking">
+    <div class="container breaking-inner">
+      <span class="breaking-label">ÚLTIMA HORA</span>
+      <span id="breakingText">Cargando noticias...</span>
+    </div>
+  </div>
+
+  <main>
+
+    <section class="container">
+
+      <div class="titulo-seccion">
+        <h2>Últimas noticias</h2>
+        <a href="#">VER TODAS →</a>
+      </div>
+
+      <div id="portada">
+        <div class="loading">
+          Cargando las últimas noticias...
+        </div>
+      </div>
+
+    </section>
+
+    <section class="container" id="la-rioja">
+
+      <div class="titulo-seccion">
+        <h2>La Rioja</h2>
+        <a href="#">VER SECCIÓN →</a>
+      </div>
+
+      <div id="laRioja" class="news-grid">
+        <div class="loading">Cargando...</div>
+      </div>
+
+    </section>
+
+    <section class="container" id="nacional">
+
+      <div class="titulo-seccion">
+        <h2>Nacional</h2>
+        <a href="#">VER SECCIÓN →</a>
+      </div>
+
+      <div id="nacionalNoticias" class="news-grid">
+        <div class="loading">Cargando...</div>
+      </div>
+
+    </section>
+
+    <section class="container" id="deportes">
+
+      <div class="titulo-seccion">
+        <h2>Deportes</h2>
+        <a href="#">VER SECCIÓN →</a>
+      </div>
+
+      <div id="deportesNoticias" class="news-grid">
+        <div class="loading">Cargando...</div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <footer>
+
+    <div class="container">
+
+      <div class="footer-grid">
+
+        <div>
+          <div class="logo">
+            ARENA<span>24</span>
+          </div>
+
+          <p>
+            Noticias, actualidad y periodismo desde La Rioja
+            para toda la Argentina.
+          </p>
+        </div>
+
+        <div>
+          <h4>Secciones</h4>
+          <ul>
+            <li><a href="#la-rioja">La Rioja</a></li>
+            <li><a href="#nacional">Nacional</a></li>
+            <li><a href="#deportes">Deportes</a></li>
+            <li><a href="#politica">Política</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4>Arena 24</h4>
+          <ul>
+            <li><a href="#">Quiénes somos</a></li>
+            <li><a href="#">Contacto</a></li>
+            <li><a href="#">Publicidad</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4>Seguinos</h4>
+          <ul>
+            <li><a href="#">Instagram</a></li>
+            <li><a href="#">Facebook</a></li>
+            <li><a href="#">YouTube</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="copyright">
+        <span>© 2026 Arena 24</span>
+        <span>Todos los derechos reservados</span>
+      </div>
+
+    </div>
+
+  </footer>
+
+<script>
+
+  const API = "api/noticias.php";
+
+  document.getElementById("fecha").textContent =
+    new Date().toLocaleDateString("es-AR", {
+      weekday: "long",
+      day: "numeric",
+      month: "long",
+      year: "numeric"
+    });
+
+  function escapeHTML(text) {
+    const div = document.createElement("div");
+    div.textContent = text || "";
+    return div.innerHTML;
+  }
+
+  tarjeta.innerHTML = `
+    <a href="noticia.php?slug=${encodeURIComponent(noticia.slug)}">
+        <img src="${noticia.imagen}" alt="${noticia.titulo}">
+        <h2>${noticia.titulo}</h2>
+        <p>${noticia.resumen}</p>
+    </a>
+`;
+
+
+          <img
+            src="${escapeHTML(noticia.imagen || 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=900&q=80')}"
+            alt="${escapeHTML(noticia.titulo)}"
+            loading="lazy"
+          >
+
+          <div class="card-body">
+
+            <span class="categoria">
+              ${escapeHTML(noticia.categoria)}
+            </span>
+
+            <h3>
+              ${escapeHTML(noticia.titulo)}
+            </h3>
+
+            <p>
+              ${escapeHTML(noticia.resumen)}
+            </p>
+
+            <div class="meta">
+              ${escapeHTML(noticia.fecha || "")}
+              ·
+              ${escapeHTML(noticia.autor || "Arena 24")}
+            </div>
+
+          </div>
+
+        </a>
+
+      </article>
+    `;
+  }
+
+  function renderPortada(noticias) {
+
+    if (!noticias.length) {
+      document.getElementById("portada").innerHTML =
+        '<div class="error">No hay noticias disponibles.</div>';
+      return;
+    }
+
+    const principal = noticias[0];
+    const laterales = noticias.slice(1,3);
+
+    document.getElementById("breakingText").textContent =
+      principal.titulo;
+
+    document.getElementById("portada").innerHTML = `
+
+      <div class="hero-grid">
+
+        <article class="hero">
+
+          <a href="${escapeHTML(principal.url || '#')}">
+
+            <img
+              src="${escapeHTML(principal.imagen)}"
+              alt="${escapeHTML(principal.titulo)}"
+            >
+
+            <div class="hero-content">
+
+              <span class="categoria">
+                ${escapeHTML(principal.categoria)}
+              </span>
+
+              <h1>
+                ${escapeHTML(principal.titulo)}
+              </h1>
+
+              <p>
+                ${escapeHTML(principal.resumen)}
+              </p>
+
+              <div class="meta">
+                ${escapeHTML(principal.fecha)}
+                ·
+                ${escapeHTML(principal.autor || "Arena 24")}
+              </div>
+
+            </div>
+
+          </a>
+
+        </article>
+
+        <div class="side-news">
+          ${laterales.map(tarjeta).join("")}
+        </div>
+
+      </div>
+    `;
+  }
+
+  function renderSeccion(id, noticias, categoria) {
+
+    const filtradas = noticias
+      .filter(n =>
+        String(n.categoria).toLowerCase() === categoria.toLowerCase()
+      )
+      .slice(0,6);
+
+    const contenedor = document.getElementById(id);
+
+    if (!filtradas.length) {
+      contenedor.innerHTML =
+        '<div class="loading">No hay noticias en esta sección.</div>';
+      return;
+    }
+
+    contenedor.innerHTML =
+      filtradas.map(tarjeta).join("");
+  }
+
+  async function cargarNoticias() {
+
+    try {
+
+      const respuesta = await fetch(API + "?t=" + Date.now(), {
+        headers: {
+          "Accept": "application/json"
+        }
+      });
+
+      if (!respuesta.ok) {
+        throw new Error("No se pudo conectar con la API.");
+      }
+
+      const noticias = await respuesta.json();
+
+      if (!Array.isArray(noticias)) {
+        throw new Error("Formato de noticias inválido.");
+      }
+
+      renderPortada(noticias);
+
+      renderSeccion(
+        "laRioja",
+        noticias,
+        "La Rioja"
+      );
+
+      renderSeccion(
+        "nacionalNoticias",
+        noticias,
+        "Nacional"
+      );
+
+      renderSeccion(
+        "deportesNoticias",
+        noticias,
+        "Deportes"
+      );
+
+    } catch(error) {
+
+      console.error(error);
+
+      const mensaje =
+        '<div class="error">No se pudieron cargar las noticias. Verificá la conexión con la API.</div>';
+
+      document.getElementById("portada").innerHTML = mensaje;
+      document.getElementById("laRioja").innerHTML = mensaje;
+      document.getElementById("nacionalNoticias").innerHTML = mensaje;
+      document.getElementById("deportesNoticias").innerHTML = mensaje;
+    }
+  }
+
+  function toggleMenu() {
+    document.getElementById("nav").classList.toggle("open");
+  }
+
+  function buscar(event) {
+
+    event.preventDefault();
+
+    const texto =
+      document.getElementById("busqueda").value.trim();
+
+    if (!texto) return;
+
+    window.location.href =
+      "buscar.html?q=" + encodeURIComponent(texto);
+  }
+
+  cargarNoticias();
+
+</script>
+
+</body>
+</html>
+
