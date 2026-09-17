@@ -1,39 +1,160 @@
-name: Actualizar noticias
+const fs = require("fs");
 
-on:
-  schedule:
-    - cron: "*/30 * * * *"
-  workflow_dispatch:
+const FEEDS = [
+  {
+    nombre: "Clarín",
+    categoria: "Argentina",
+    url: "https://www.clarin.com/rss/lo-ultimo/"
+  },
+  {
+    nombre: "Clarín Deportes",
+    categoria: "Deportes",
+    url: "https://www.clarin.com/rss/deportes/"
+  },
+  {
+    nombre: "Cadena 3",
+    categoria: "Argentina",
+    url: "https://cadena3.com/rss/Sociedad.xml"
+  },
+  {
+    nombre: "Cadena 3 Deportes",
+    categoria: "Deportes",
+    url: "https://cadena3.com/rss/Deportes.xml"
+  }
+];
 
-permissions:
-  contents: write
+function limpiarHTML(texto = "") {
+  return texto
+    .replace(/<!\[CDATA\[|\]\]>/g, "")
+    .replace(/<[^>]*>/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+}
 
-jobs:
-  actualizar:
-    runs-on: ubuntu-latest
+function obtenerTag(xml, tag) {
+  const regex = new RegExp(
+    `<${tag}(?:\\s[^>]*)?>([\\s\\S]*?)<\\/${tag}>`,
+    "i"
+  );
 
-    steps:
-      - name: Descargar repositorio
-        uses: actions/checkout@v4
+  const resultado = xml.match(regex);
 
-      - name: Configurar Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
+  return resultado ? limpiarHTML(resultado[1]) : "";
+}
 
-      - name: Actualizar noticias
-        run: node scripts/actualizar-noticias.js
+function obtenerItems(xml) {
+  return xml.match(/<item[\s\S]*?<\/item>/gi) || [];
+}
 
-      - name: Guardar cambios
-        run: |
-          git config user.name "ARENA 24 Bot"
-          git config user.email "actions@github.com"
+async function obtenerNoticias(feed) {
 
-          git add noticias.json
+  console.log(`Leyendo: ${feed.nombre}`);
 
-          if git diff --cached --quiet; then
-            echo "No hay noticias nuevas"
-          else
-            git commit -m "Actualizar noticias automáticamente"
-            git push
-          fi
+  const respuesta = await fetch(feed.url);
+
+  if (!respuesta.ok) {
+    throw new Error(
+      `Error HTTP ${respuesta.status} en ${feed.url}`
+    );
+  }
+
+  const xml = await respuesta.text();
+
+  const items = obtenerItems(xml);
+
+  return items.map((item, index) => {
+
+    const titulo = obtenerTag(item, "title");
+
+    const descripcion =
+      obtenerTag(item, "description");
+
+    const enlace =
+      obtenerTag(item, "link");
+
+    const fecha =
+      obtenerTag(item, "pubDate");
+
+    return {
+      id:
+        `${feed.nombre}-${index}-${Date.now()}`,
+
+      titulo,
+
+      resumen:
+        descripcion.substring(0, 300),
+
+      categoria:
+        feed.categoria,
+
+      autor:
+        feed.nombre,
+
+      fecha,
+
+      fecha_iso:
+        fecha
+          ? new Date(fecha).toISOString()
+          : new Date().toISOString(),
+
+      imagen:
+        "",
+
+      url:
+        enlace,
+
+      fuente:
+        feed.nombre
+    };
+
+  }).filter(noticia => noticia.titulo && noticia.url);
+}
+
+async function main() {
+
+  let todas = [];
+
+  for (const feed of FEEDS) {
+
+    try {
+
+      const noticias =
+        await obtenerNoticias(feed);
+
+      todas.push(...noticias);
+
+    } catch (error) {
+
+      console.error(
+        `No se pudo leer ${feed.nombre}:`,
+        error.message
+      );
+
+    }
+  }
+
+  todas.sort(
+    (a, b) =>
+      new Date(b.fecha_iso) -
+      new Date(a.fecha_iso)
+  );
+
+  const noticiasFinales =
+    todas.slice(0, 40);
+
+  fs.writeFileSync(
+    "noticias.json",
+    JSON.stringify(
+      noticiasFinales,
+      null,
+      2
+    ),
+    "utf8"
+  );
+
+  console.log(
+    `Se guardaron ${noticiasFinales.length} noticias`
+  );
+}
+
+main();
