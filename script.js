@@ -177,45 +177,78 @@ radio.addEventListener(
 */
 
 
-const newsContainer =
-  document.getElementById(
-    "newsContainer"
-  );
+async function cargarNoticias() {
 
+  try {
 
-const noticiasDemo = [
+    const respuesta =
+      await fetch(
+        "noticias.json?cache=" + Date.now()
+      );
 
-  {
-    categoria:
-      "LA RIOJA",
+    const noticias =
+      await respuesta.json();
 
-    titulo:
-      "Información y actualidad de La Rioja",
+    newsContainer.innerHTML = "";
 
-    texto:
-      "Las principales noticias de la provincia y sus localidades."
-  },
+    noticias.forEach(
+      function (noticia) {
 
-  {
-    categoria:
-      "ARGENTINA",
+        const article =
+          document.createElement("article");
 
-    titulo:
-      "Actualidad nacional",
+        article.className =
+          "news-card";
 
-    texto:
-      "Las noticias más importantes de Argentina."
-  },
+        article.innerHTML = `
 
-  {
-    categoria:
-      "MUNDO",
+          <span class="news-tag">
+            ${noticia.categoria}
+          </span>
 
-    titulo:
-      "Noticias internacionales",
+          <h3>
+            ${noticia.titulo}
+          </h3>
 
-    texto:
-      "Toda la información internacional."
+          <p>
+            ${noticia.resumen}
+          </p>
+
+          <small>
+            ${noticia.fuente}
+          </small>
+
+          <br>
+
+          <a
+            href="${noticia.url}"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Leer noticia →
+          </a>
+
+        `;
+
+        newsContainer.appendChild(
+          article
+        );
+
+      }
+    );
+
+  }
+
+  catch (error) {
+
+    console.error(
+      "Error cargando noticias:",
+      error
+    );
+
+  }
+
+}
   }
 
 ];
