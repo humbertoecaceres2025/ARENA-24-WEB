@@ -2412,91 +2412,69 @@ document.addEventListener(
 );
     
 <!-- =====================================================
-     ARENA 24 TV — SISTEMA AUTOMÁTICO
-     OBS → YOUTUBE → ARENA 24 WEB
+     ARENA 24 TV — TRANSMISIÓN OBS / YOUTUBE
+     Pegar debajo de tu sección ARENA 24 TV existente
 ===================================================== -->
 
-<section id="arena24-tv" class="arena24-tv">
+<section id="arena24-live" class="arena24-live">
 
-  <div class="arena24-tv-header">
-    <div class="arena24-tv-brand">
-      <span class="arena24-live-dot"></span>
-      <div>
-        <small>ARENA 24</small>
-        <h2>TV</h2>
-      </div>
-    </div>
-
-    <div class="arena24-live-badge">
-      ● EN VIVO
-    </div>
+  <div class="arena24-live-title">
+    <span class="arena24-live-dot"></span>
+    <span>ARENA 24 TV</span>
+    <strong>EN VIVO</strong>
   </div>
 
-  <div class="arena24-video">
+  <div class="arena24-live-box">
 
-    <!-- =================================================
-         CAMBIAR SOLAMENTE ESTA PARTE
+    <!--
+      CAMBIAR solamente:
+      TU_ID_DEL_DIRECTO
 
-         Cuando tengas el ID del canal:
-
-         UCxxxxxxxxxxxxxxxxxxxx
-
-         colocarlo en arena24ChannelID del JS.
-    ================================================== -->
+      Ejemplo:
+      https://www.youtube.com/watch?v=ABC123XYZ
+      ID = ABC123XYZ
+    -->
 
     <iframe
-      id="arena24YouTube"
-      src=""
-      title="ARENA 24 TV"
+      id="arena24Player"
+      src="https://www.youtube.com/embed/TU_ID_DEL_DIRECTO?autoplay=1&mute=1&rel=0"
+      title="ARENA 24 TV — Transmisión en vivo"
       allow="autoplay; encrypted-media; picture-in-picture"
       allowfullscreen>
     </iframe>
 
-    <div id="arena24Loading" class="arena24-loading">
-      <div class="arena24-spinner"></div>
-      <span>Cargando ARENA 24 TV...</span>
-    </div>
-
   </div>
 
-  <div id="arena24Status" class="arena24-status">
-    <span class="status-dot"></span>
-    <span id="arena24StatusText">
-      ARENA 24 TV — preparando transmisión
-    </span>
+  <div class="arena24-live-info">
+    <div>
+      <span class="live-circle"></span>
+      TRANSMISIÓN EN VIVO
+    </div>
+
+    <p>
+      ARENA 24 Radio Web — La Rioja, Argentina
+    </p>
   </div>
 
-  <div class="arena24-tv-footer">
+  <div class="arena24-live-buttons">
 
-    <div class="arena24-tv-info">
-      📡 <strong>ARENA 24 TV</strong>
-      <span>La Rioja, Argentina</span>
-    </div>
+    <a
+      href="https://www.youtube.com/@ARENA24LARIOJA"
+      target="_blank"
+      rel="noopener">
+      ▶ VER EN YOUTUBE
+    </a>
 
-    <div class="arena24-tv-buttons">
-
-      <a
-        href="https://www.youtube.com/@ARENA24LARIOJA"
-        target="_blank"
-        rel="noopener">
-        ▶ YouTube
-      </a>
-
-      <a
-        href="https://www.facebook.com/arena24radiolarioja"
-        target="_blank"
-        rel="noopener">
-        Facebook
-      </a>
-
-    </div>
+    <a
+      href="https://www.facebook.com/arena24radiolarioja"
+      target="_blank"
+      rel="noopener">
+      f FACEBOOK
+    </a>
 
   </div>
 
 </section>
-
-<script src="arena24-tv.js"></script>
-
 /*
 |--------------------------------------------------------------------------
 | INICIO
