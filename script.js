@@ -291,6 +291,7 @@ console.log(
   "Stream:",
   ARENA24.stream
 );
+
 /* =====================================================
    ARENA 24 TV — CONFIGURACIÓN
 ===================================================== */
@@ -370,7 +371,6 @@ function arena24IniciarTV() {
   });
 
 }
-
 
 /* Iniciar */
 
