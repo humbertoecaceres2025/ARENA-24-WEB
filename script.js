@@ -296,14 +296,7 @@ console.log(
    ARENA 24 TV — CONFIGURACIÓN
 ===================================================== */
 
-/*
-   CUANDO TENGAS EL ID DEL CANAL DE YOUTUBE,
-   CAMBIA SOLAMENTE ESTA LÍNEA.
 
-   Ejemplo:
-
-   const arena24ChannelID =
-   "UC123456789xxxxxxxxxxxx";
 */
 
 const arena24ChannelID = "PEGAR_AQUI_EL_ID_DEL_CANAL";
