@@ -2425,3 +2425,88 @@ activateRadio();
 </body>
 
 </html>
+<!-- =====================================================
+     ARENA 24 TV — SISTEMA AUTOMÁTICO
+     OBS → YOUTUBE → ARENA 24 WEB
+===================================================== -->
+
+<section id="arena24-tv" class="arena24-tv">
+
+  <div class="arena24-tv-header">
+    <div class="arena24-tv-brand">
+      <span class="arena24-live-dot"></span>
+      <div>
+        <small>ARENA 24</small>
+        <h2>TV</h2>
+      </div>
+    </div>
+
+    <div class="arena24-live-badge">
+      ● EN VIVO
+    </div>
+  </div>
+
+  <div class="arena24-video">
+
+    <!-- =================================================
+         CAMBIAR SOLAMENTE ESTA PARTE
+
+         Cuando tengas el ID del canal:
+
+         UCxxxxxxxxxxxxxxxxxxxx
+
+         colocarlo en arena24ChannelID del JS.
+    ================================================== -->
+
+    <iframe
+      id="arena24YouTube"
+      src=""
+      title="ARENA 24 TV"
+      allow="autoplay; encrypted-media; picture-in-picture"
+      allowfullscreen>
+    </iframe>
+
+    <div id="arena24Loading" class="arena24-loading">
+      <div class="arena24-spinner"></div>
+      <span>Cargando ARENA 24 TV...</span>
+    </div>
+
+  </div>
+
+  <div id="arena24Status" class="arena24-status">
+    <span class="status-dot"></span>
+    <span id="arena24StatusText">
+      ARENA 24 TV — preparando transmisión
+    </span>
+  </div>
+
+  <div class="arena24-tv-footer">
+
+    <div class="arena24-tv-info">
+      📡 <strong>ARENA 24 TV</strong>
+      <span>La Rioja, Argentina</span>
+    </div>
+
+    <div class="arena24-tv-buttons">
+
+      <a
+        href="https://www.youtube.com/@ARENA24LARIOJA"
+        target="_blank"
+        rel="noopener">
+        ▶ YouTube
+      </a>
+
+      <a
+        href="https://www.facebook.com/arena24radiolarioja"
+        target="_blank"
+        rel="noopener">
+        Facebook
+      </a>
+
+    </div>
+
+  </div>
+
+</section>
+
+<script src="arena24-tv.js"></script>
