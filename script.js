@@ -291,3 +291,88 @@ console.log(
   "Stream:",
   ARENA24.stream
 );
+
+/* =====================================================
+   ARENA 24 TV — CONFIGURACIÓN
+===================================================== */
+
+/*
+   CUANDO TENGAS EL ID DEL CANAL DE YOUTUBE,
+   CAMBIA SOLAMENTE ESTA LÍNEA.
+
+   Ejemplo:
+
+   const arena24ChannelID =
+   "UC123456789xxxxxxxxxxxx";
+*/
+
+const arena24ChannelID = "PEGAR_AQUI_EL_ID_DEL_CANAL";
+
+
+/* =====================================================
+   SISTEMA
+===================================================== */
+
+const arena24Frame =
+  document.getElementById("arena24YouTube");
+
+const arena24Loading =
+  document.getElementById("arena24Loading");
+
+const arena24Status =
+  document.getElementById("arena24StatusText");
+
+
+function arena24IniciarTV() {
+
+  if (
+    !arena24ChannelID ||
+    arena24ChannelID === "PEGAR_AQUI_EL_ID_DEL_CANAL"
+  ) {
+
+    arena24Status.textContent =
+      "ARENA 24 TV — esperando configuración del canal";
+
+    arena24Loading.innerHTML = `
+      <div class="arena24-spinner"></div>
+      <span>
+        ARENA 24 TV estará disponible cuando agregues
+        el ID del canal de YouTube.
+      </span>
+    `;
+
+    return;
+  }
+
+
+  /*
+     YouTube permite utilizar el parámetro
+     "channel" para cargar el contenido del canal.
+  */
+
+  const youtubeURL =
+    "https://www.youtube.com/embed/live_stream" +
+    "?channel=" +
+    encodeURIComponent(arena24ChannelID) +
+    "&autoplay=1" +
+    "&mute=1" +
+    "&rel=0";
+
+  arena24Frame.src = youtubeURL;
+
+
+  arena24Frame.addEventListener("load", function () {
+
+    arena24Loading.style.display = "none";
+
+    arena24Status.textContent =
+      "ARENA 24 TV — transmisión de YouTube";
+
+  });
+
+}
+
+
+/* Iniciar */
+
+arena24IniciarTV();
