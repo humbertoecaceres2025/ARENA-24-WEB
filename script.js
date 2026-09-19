@@ -339,7 +339,7 @@ console.log(
    "UC123456789xxxxxxxxxxxx";
 */
 
-const arena24ChannelID = "pra5-ct0p-r1jz-67x8-5yh8";
+const arena24ChannelID = "UCrHexRcAlWkaTn8P-BLT3LA";
 
 
 /* =====================================================
@@ -360,7 +360,7 @@ function arena24IniciarTV() {
 
   if (
     !arena24ChannelID ||
-    arena24ChannelID === "pra5-ct0p-r1jz-67x8-5yh8"
+    arena24ChannelID === "UCrHexRcAlWkaTn8P-BLT3LA"
   ) {
 
     arena24Status.textContent =
