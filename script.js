@@ -198,14 +198,14 @@ const newsData = [
         categoryName: "LA RIOJA",
         icon: "📍",
 
-        title: "Escribí aquí el título de la noticia",
+        title: "La Rioja avanza en la preparación del precongreso EDU IA 2026",
 
         summary:
-            "Escribí aquí un resumen breve de la noticia. Este texto aparecerá en la tarjeta principal de ARENA 24.",
+            " La provincia trabaja en una iniciativa destinada a analizar cómo incorporar la inteligencia artificial en las aulas.",
 
         date: "20/09/2026 · ARENA 24 INFORMA",
 
-        link: "https://www.ejemplo.com",
+        read: "irectivos, docentes y equipos técnicos participaron de un precongreso orientado a construir criterios pedagógicos para el uso de inteligencia artificial en el ámbito educativo. La propuesta busca abrir un espacio de análisis sobre las oportunidades y desafíos que plantea esta tecnología para las escuelas",
 
         source: "Fuente: ARENA 24"
     },
@@ -220,14 +220,14 @@ const newsData = [
         categoryName: "LA RIOJA",
         icon: "📰",
 
-        title: "Nueva noticia de La Rioja",
+        title: "La Rioja se suma a una iniciativa nacional para prevenir adicciones",
 
         summary:
-            "Colocá aquí la información principal de la noticia y una breve descripción para los lectores.",
+            "La provincia se incorporó al programa “25 Firmas”, destinado a la prevención de adicciones y al cuidado de la salud menta",
 
         date: "20/09/2026 · ARENA 24",
 
-        link: "https://www.ejemplo.com",
+        read: "El gobernador Ricardo Quintela encabezó la firma de un convenio de adhesión a la iniciativa “25 Firmas”, impulsada por La Casa de la Cultura de la Calle. El programa plantea acciones de prevención y concientización vinculadas con las adicciones y el cuidado de la salud mental.",
 
         source: "Fuente: ARENA 24"
     },
@@ -242,14 +242,14 @@ const newsData = [
         categoryName: "ARGENTINA",
         icon: "🇦🇷",
 
-        title: "Actualidad de Argentina",
+        title: "Accidente en avenida Félix de la Colina dejó dos personas heridas",
 
         summary:
-            "Resumen de la información nacional que quieras publicar en ARENA 24.",
+            "Un siniestro vial registrado en la capital riojana generó complicaciones en el tránsito y dejó dos personas heridas de gravedad",
 
         date: "20/09/2026 · ARENA 24 INFORMA",
 
-        link: "https://www.ejemplo.com",
+        read: "El hecho ocurrió en avenida Félix de la Colina y requirió la intervención de los servicios de emergencia. La información disponible señala que dos personas resultaron heridas y que el tránsito se vio afectado en el sector.",
 
         source: "Fuente: ARENA 24"
     },
