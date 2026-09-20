@@ -158,158 +158,416 @@ radio.addEventListener(
 
 
 /* =====================================================
-   NOTICIAS
-===================================================== */
+   ARENA 24 RADIO
+   NOTICIAS - CARGA MANUAL
+   ===================================================== */
+
+const newsGrid = document.getElementById("newsGrid");
+const searchInput = document.getElementById("searchInput");
+const refreshBtn = document.getElementById("refreshBtn");
+const noResults = document.getElementById("noResults");
+const breakingText = document.getElementById("breakingText");
+
+let currentCategory = "all";
 
 
-/*
-   IMPORTANTE:
+/* =====================================================
+   CARGA MANUAL DE NOTICIAS
+   =====================================================
 
-   GitHub Pages no puede leer directamente
-   todos los RSS externos debido a CORS.
+   PARA AGREGAR UNA NOTICIA:
 
-   Por eso esta función está preparada
-   para recibir un RSS mediante un proxy.
+   1. Copiá uno de los bloques.
+   2. Cambiá título, resumen, fecha y enlace.
+   3. Elegí la categoría:
+      rioja
+      argentina
+      mundo
+      deportes
 
-   Podemos conectarla después a un backend
-   o Cloudflare Worker para automatización
-   profesional.
-*/
+   ===================================================== */
+
+const newsData = [
+
+    /* -------------------------------------------------
+       NOTICIA 1
+       ------------------------------------------------- */
+
+    {
+        category: "rioja",
+        categoryName: "LA RIOJA",
+        icon: "📍",
+
+        title: "Escribí aquí el título de la noticia",
+
+        summary:
+            "Escribí aquí un resumen breve de la noticia. Este texto aparecerá en la tarjeta principal de ARENA 24.",
+
+        date: "20/09/2026 · ARENA 24 INFORMA",
+
+        link: "https://www.ejemplo.com",
+
+        source: "Fuente: ARENA 24"
+    },
 
 
-async function cargarNoticias() {
+    /* -------------------------------------------------
+       NOTICIA 2
+       ------------------------------------------------- */
 
-  try {
+    {
+        category: "rioja",
+        categoryName: "LA RIOJA",
+        icon: "📰",
 
-    const respuesta =
-      await fetch(
-        "noticias.json?cache=" + Date.now()
-      );
+        title: "Nueva noticia de La Rioja",
 
-    const noticias =
-      await respuesta.json();
+        summary:
+            "Colocá aquí la información principal de la noticia y una breve descripción para los lectores.",
 
-    newsContainer.innerHTML = "";
+        date: "20/09/2026 · ARENA 24",
 
-    noticias.forEach(
-      function (noticia) {
+        link: "https://www.ejemplo.com",
 
-        const article =
-          document.createElement("article");
+        source: "Fuente: ARENA 24"
+    },
 
-        article.className =
-          "news-card";
 
-        article.innerHTML = `
+    /* -------------------------------------------------
+       NOTICIA 3
+       ------------------------------------------------- */
 
-          <span class="news-tag">
-            ${noticia.categoria}
-          </span>
+    {
+        category: "argentina",
+        categoryName: "ARGENTINA",
+        icon: "🇦🇷",
 
-          <h3>
-            ${noticia.titulo}
-          </h3>
+        title: "Actualidad de Argentina",
 
-          <p>
-            ${noticia.resumen}
-          </p>
+        summary:
+            "Resumen de la información nacional que quieras publicar en ARENA 24.",
 
-          <small>
-            ${noticia.fuente}
-          </small>
+        date: "20/09/2026 · ARENA 24 INFORMA",
 
-          <br>
+        link: "https://www.ejemplo.com",
 
-          <a
-            href="${noticia.url}"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Leer noticia →
-          </a>
+        source: "Fuente: ARENA 24"
+    },
 
-        `;
 
-        newsContainer.appendChild(
-          article
-        );
+    /* -------------------------------------------------
+       NOTICIA 4
+       ------------------------------------------------- */
 
-      }
-    );
+    {
+        category: "mundo",
+        categoryName: "MUNDO",
+        icon: "🌎",
 
-  }
+        title: "Noticias del mundo",
 
-  catch (error) {
+        summary:
+            "Resumen breve de la información internacional.",
 
-    console.error(
-      "Error cargando noticias:",
-      error
-    );
+        date: "20/09/2026 · ARENA 24",
 
-  }
+        link: "https://www.ejemplo.com",
 
-}
-  }
+        source: "Fuente: ARENA 24"
+    },
+
+
+    /* -------------------------------------------------
+       NOTICIA 5
+       ------------------------------------------------- */
+
+    {
+        category: "deportes",
+        categoryName: "DEPORTES",
+        icon: "⚽",
+
+        title: "Actualidad deportiva",
+
+        summary:
+            "Información deportiva de La Rioja, Argentina o el mundo.",
+
+        date: "20/09/2026 · ARENA 24 DEPORTES",
+
+        link: "https://www.ejemplo.com",
+
+        source: "Fuente: ARENA 24"
+    }
 
 ];
 
 
-function cargarNoticias() {
+/* =====================================================
+   MOSTRAR NOTICIAS
+   ===================================================== */
 
-  newsContainer.innerHTML = "";
+function renderNews() {
+
+    const searchTerm =
+        searchInput.value
+            .toLowerCase()
+            .trim();
+
+    const filteredNews = newsData.filter(news => {
+
+        const categoryMatch =
+            currentCategory === "all" ||
+            news.category === currentCategory;
+
+        const textMatch =
+            news.title
+                .toLowerCase()
+                .includes(searchTerm) ||
+
+            news.summary
+                .toLowerCase()
+                .includes(searchTerm) ||
+
+            news.categoryName
+                .toLowerCase()
+                .includes(searchTerm);
+
+        return categoryMatch && textMatch;
+    });
 
 
-  noticiasDemo.forEach(
-    function (noticia) {
-
-      const article =
-        document.createElement(
-          "article"
-        );
+    newsGrid.innerHTML = "";
 
 
-      article.className =
-        "news-card";
+    if (filteredNews.length === 0) {
 
+        noResults.style.display = "block";
 
-      article.innerHTML = `
-
-        <span class="news-tag">
-          ${noticia.categoria}
-        </span>
-
-        <h3>
-          ${noticia.titulo}
-        </h3>
-
-        <p>
-          ${noticia.texto}
-        </p>
-
-      `;
-
-
-      newsContainer.appendChild(
-        article
-      );
-
+        return;
     }
-  );
+
+
+    noResults.style.display = "none";
+
+
+    filteredNews.forEach(news => {
+
+        const card =
+            document.createElement("article");
+
+        card.className = "news-card";
+
+
+        card.innerHTML = `
+
+            <div class="news-image">
+
+                <span>
+                    ${news.icon}
+                </span>
+
+            </div>
+
+
+            <div class="news-content">
+
+                <div class="news-category">
+                    ${news.categoryName}
+                </div>
+
+
+                <h3 class="news-title">
+                    ${news.title}
+                </h3>
+
+
+                <p class="news-summary">
+                    ${news.summary}
+                </p>
+
+
+                <div class="news-meta">
+                    ${news.date}
+                </div>
+
+
+                <div class="news-source">
+                    ${news.source}
+                </div>
+
+
+                <a
+                    class="news-link"
+                    href="${news.link}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    AMPLIAR NOTICIA →
+                </a>
+
+            </div>
+
+        `;
+
+
+        newsGrid.appendChild(card);
+
+    });
 
 }
 
 
-cargarNoticias();
+/* =====================================================
+   CATEGORÍAS
+   ===================================================== */
+
+document
+    .querySelectorAll(".category")
+    .forEach(button => {
+
+        button.addEventListener("click", () => {
+
+            document
+                .querySelectorAll(".category")
+                .forEach(btn => {
+                    btn.classList.remove("active");
+                });
+
+
+            button.classList.add("active");
+
+
+            currentCategory =
+                button.dataset.category;
+
+
+            renderNews();
+
+        });
+
+    });
 
 
 /* =====================================================
-   ACTUALIZACIÓN AUTOMÁTICA
-===================================================== */
+   BUSCADOR
+   ===================================================== */
+
+searchInput.addEventListener(
+    "input",
+    renderNews
+);
+
+
+/* =====================================================
+   BOTÓN ACTUALIZAR
+   ===================================================== */
+
+refreshBtn.addEventListener(
+    "click",
+    () => {
+
+        renderNews();
+
+        refreshBtn.textContent =
+            "✓ ACTUALIZADO";
+
+
+        setTimeout(() => {
+
+            refreshBtn.textContent =
+                "↻ ACTUALIZAR";
+
+        }, 1500);
+
+    }
+);
+
+
+/* =====================================================
+   RELOJ
+   ===================================================== */
+
+function updateClock() {
+
+    const now = new Date();
+
+
+    const hours =
+        String(now.getHours())
+            .padStart(2, "0");
+
+
+    const minutes =
+        String(now.getMinutes())
+            .padStart(2, "0");
+
+
+    const seconds =
+        String(now.getSeconds())
+            .padStart(2, "0");
+
+
+    document.getElementById("clock")
+        .textContent =
+        `${hours}:${minutes}:${seconds}`;
+
+}
+
+
+setInterval(updateClock, 1000);
+
+updateClock();
+
+
+/* =====================================================
+   TITULAR "ÚLTIMO MOMENTO"
+   ===================================================== */
+
+const headlines = [
+
+    "ARENA 24 INFORMA · Noticias de La Rioja",
+
+    "ARENA 24 INFORMA · Actualidad de Argentina",
+
+    "ARENA 24 INFORMA · Información internacional",
+
+    "ARENA 24 INFORMA · ARENA 24 DEPORTES"
+
+];
+
+
+let headlineIndex = 0;
+
+
+function changeHeadline() {
+
+    headlineIndex++;
+
+
+    if (
+        headlineIndex >=
+        headlines.length
+    ) {
+        headlineIndex = 0;
+    }
+
+
+    breakingText.textContent =
+        headlines[headlineIndex];
+
+}
+
 
 setInterval(
-  cargarNoticias,
-  10 * 60 * 1000
+    changeHeadline,
+    6000
 );
+
+
+/* =====================================================
+   INICIAR
+   ===================================================== */
+
+renderNews();
 
 
 /* =====================================================
