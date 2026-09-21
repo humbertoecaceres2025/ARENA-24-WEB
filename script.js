@@ -157,21 +157,6 @@ radio.addEventListener(
 );
 
 
-/* =====================================================
-   ARENA 24 RADIO
-   NOTICIAS - CARGA MANUAL
-   ===================================================== */
-
-const newsGrid = document.getElementById("newsGrid");
-const searchInput = document.getElementById("searchInput");
-const refreshBtn = document.getElementById("refreshBtn");
-const noResults = document.getElementById("noResults");
-const breakingText = document.getElementById("breakingText");
-
-let currentCategory = "all";
-
-
-
 
 /* =====================================================
    CONSOLA
@@ -284,167 +269,16 @@ arena24IniciarTV();
 
 <body>
 
-<section id="arena24-noticias">
 
-    <!-- CABECERA -->
-
-    <div class="a24-news-header">
-
-        <div class="a24-news-logo">
-
-            <div class="a24-news-circle">
-                A24
-            </div>
-
-            <div>
-                <h2>ARENA <span>24</span></h2>
-
-                <p>
-                    RADIO · INFORMACIÓN · ACTUALIDAD
-                </p>
-            </div>
-
-        </div>
-
-
-        <div class="a24-live">
-
-            <span class="a24-live-dot"></span>
-
-            ARENA 24 INFORMA
-
-        </div>
-
-    </div>
-
-
-    <!-- INFORMACIÓN -->
-
-    <div class="a24-news-info">
-
-        <span>
-            📍 LA RIOJA · ARGENTINA
-        </span>
-
-        <span id="a24-clock">
-            00:00:00
-        </span>
-
-    </div>
-
-
-    <!-- CATEGORÍAS -->
-
-    <div class="a24-categories">
-
-        <button
-            class="a24-category active"
-            data-category="all">
-            TODAS
-        </button>
-
-        <button
-            class="a24-category"
-            data-category="rioja">
-            🟠 LA RIOJA
-        </button>
-
-        <button
-            class="a24-category"
-            data-category="argentina">
-            🇦🇷 ARGENTINA
-        </button>
-
-        <button
-            class="a24-category"
-            data-category="mundo">
-            🌎 MUNDO
-        </button>
-
-        <button
-            class="a24-category"
-            data-category="deportes">
-            ⚽ DEPORTES
-        </button>
-
-    </div>
-
-
-    <!-- BUSCADOR -->
-
-    <div class="a24-search">
-
-        <input
-            type="search"
-            id="a24-search-input"
-            placeholder="🔎 Buscar noticias..."
-        >
-
-    </div>
-
-
-    <!-- ÚLTIMO MOMENTO -->
-
-    <div class="a24-breaking">
-
-        <div class="a24-breaking-label">
-            🔴 ÚLTIMO MOMENTO
-        </div>
-
-        <div
-            class="a24-breaking-text"
-            id="a24-breaking-text">
 
             ARENA 24 INFORMA · Noticias de La Rioja,
             Argentina y el mundo
 
-        </div>
-
-    </div>
-
-
-    <!-- TÍTULO -->
-
-    <div class="a24-section-title">
-
-        <h2>
-            <span class="a24-orange-line"></span>
-            Noticias
-        </h2>
-
-        <button
-            class="a24-refresh"
-            id="a24-refresh">
-
-            ↻ ACTUALIZAR
-
-        </button>
-
-    </div>
-
-
-    <!-- NOTICIAS -->
-
-    <div
-        class="a24-news-grid"
-        id="a24-news-grid">
-    </div>
-
-
-    <!-- SIN RESULTADOS -->
-
-    <div
-        class="a24-no-results"
-        id="a24-no-results">
-
-        No se encontraron noticias.
 
     </div>
 
 </section>
 
-
-<script src="noticias.js"></script>
 
 </body>
 </html>
