@@ -5296,3 +5296,216 @@ footer small {
     }
 
 }
+
+/* =========================================================
+   PROGRAMACIÓN ARENA 24
+   ========================================================= */
+
+.current-program {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 22px;
+
+    padding: 25px;
+
+    margin-bottom: 28px;
+
+    border-radius: 20px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255, 106, 0, 0.16),
+            rgba(10, 10, 14, 0.96)
+        );
+
+    border: 1px solid rgba(255, 106, 0, 0.35);
+
+    box-shadow:
+        0 0 30px rgba(255, 106, 0, 0.08);
+}
+
+.current-program-live {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    color: #ff6a00;
+
+    font-weight: 800;
+    font-size: 0.85rem;
+}
+
+.current-program-live .status-dot {
+    background: #ff3b30;
+}
+
+#currentProgramCategory {
+    color: #ff6a00;
+
+    font-size: 0.78rem;
+    font-weight: 800;
+
+    letter-spacing: 0.12em;
+}
+
+#currentProgramName {
+    margin: 6px 0;
+
+    color: #ffffff;
+
+    font-size: clamp(1.5rem, 3vw, 2.3rem);
+}
+
+#currentProgramDescription {
+    margin: 0;
+
+    color: #aaa;
+}
+
+.current-program-time {
+    text-align: center;
+
+    min-width: 90px;
+}
+
+.current-program-time span {
+    display: block;
+
+    color: #777;
+
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+}
+
+.current-program-time strong {
+    display: block;
+
+    margin-top: 5px;
+
+    color: #ffffff;
+
+    font-size: 1.7rem;
+}
+
+.schedule-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 16px;
+}
+
+.schedule-card {
+    position: relative;
+
+    padding: 22px;
+
+    border-radius: 18px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.045),
+            rgba(255, 255, 255, 0.015)
+        );
+
+    border: 1px solid rgba(255, 255, 255, 0.08);
+
+    transition:
+        transform 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.schedule-card:hover {
+    transform: translateY(-4px);
+
+    border-color:
+        rgba(255, 106, 0, 0.4);
+
+    box-shadow:
+        0 10px 35px rgba(0, 0, 0, 0.25);
+}
+
+.schedule-card.active {
+    border-color: #ff6a00;
+
+    box-shadow:
+        0 0 25px rgba(255, 106, 0, 0.14);
+}
+
+.schedule-card .schedule-time {
+    color: #ff6a00;
+
+    font-size: 0.9rem;
+    font-weight: 800;
+}
+
+.schedule-card h3 {
+    margin: 8px 0;
+
+    color: #ffffff;
+}
+
+.schedule-card p {
+    margin: 0;
+
+    color: #999;
+
+    line-height: 1.5;
+}
+
+.schedule-card .host {
+    display: inline-block;
+
+    margin-top: 14px;
+
+    color: #ddd;
+
+    font-size: 0.85rem;
+}
+
+.schedule-card.active::after {
+    content: "EN VIVO";
+
+    position: absolute;
+
+    top: 16px;
+    right: 16px;
+
+    padding: 5px 8px;
+
+    border-radius: 6px;
+
+    background: #ff3b30;
+
+    color: #ffffff;
+
+    font-size: 0.65rem;
+    font-weight: 800;
+}
+
+
+/* =========================================================
+   PROGRAMACIÓN EN CELULAR
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+    .current-program {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .current-program-time {
+        text-align: left;
+    }
+
+    .schedule-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
