@@ -171,403 +171,6 @@ const breakingText = document.getElementById("breakingText");
 let currentCategory = "all";
 
 
-/* =====================================================
-   CARGA MANUAL DE NOTICIAS
-   =====================================================
-
-   PARA AGREGAR UNA NOTICIA:
-
-   1. Copiá uno de los bloques.
-   2. Cambiá título, resumen, fecha y enlace.
-   3. Elegí la categoría:
-      rioja
-      argentina
-      mundo
-      deportes
-
-   ===================================================== */
-
-const newsData = [
-
-    /* -------------------------------------------------
-       NOTICIA 1
-       ------------------------------------------------- */
-
-    {
-        category: "rioja",
-        categoryName: "LA RIOJA",
-        icon: "📍",
-
-        title: "La Rioja avanza en la preparación del precongreso EDU IA 2026",
-
-        summary:
-            " La provincia trabaja en una iniciativa destinada a analizar cómo incorporar la inteligencia artificial en las aulas.",
-
-        date: "20/09/2026 · ARENA 24 INFORMA",
-
-        read: "irectivos, docentes y equipos técnicos participaron de un precongreso orientado a construir criterios pedagógicos para el uso de inteligencia artificial en el ámbito educativo. La propuesta busca abrir un espacio de análisis sobre las oportunidades y desafíos que plantea esta tecnología para las escuelas",
-
-        source: "Fuente: ARENA 24"
-    },
-
-
-    /* -------------------------------------------------
-       NOTICIA 2
-       ------------------------------------------------- */
-
-    {
-        category: "rioja",
-        categoryName: "LA RIOJA",
-        icon: "📰",
-
-        title: "La Rioja se suma a una iniciativa nacional para prevenir adicciones",
-
-        summary:
-            "La provincia se incorporó al programa “25 Firmas”, destinado a la prevención de adicciones y al cuidado de la salud menta",
-
-        date: "20/09/2026 · ARENA 24",
-
-        read: "El gobernador Ricardo Quintela encabezó la firma de un convenio de adhesión a la iniciativa “25 Firmas”, impulsada por La Casa de la Cultura de la Calle. El programa plantea acciones de prevención y concientización vinculadas con las adicciones y el cuidado de la salud mental.",
-
-        source: "Fuente: ARENA 24"
-    },
-
-
-    /* -------------------------------------------------
-       NOTICIA 3
-       ------------------------------------------------- */
-
-    {
-        category: "argentina",
-        categoryName: "ARGENTINA",
-        icon: "🇦🇷",
-
-        title: "Accidente en avenida Félix de la Colina dejó dos personas heridas",
-
-        summary:
-            "Un siniestro vial registrado en la capital riojana generó complicaciones en el tránsito y dejó dos personas heridas de gravedad",
-
-        date: "20/09/2026 · ARENA 24 INFORMA",
-
-        read: "El hecho ocurrió en avenida Félix de la Colina y requirió la intervención de los servicios de emergencia. La información disponible señala que dos personas resultaron heridas y que el tránsito se vio afectado en el sector.",
-
-        source: "Fuente: ARENA 24"
-    },
-
-
-    /* -------------------------------------------------
-       NOTICIA 4
-       ------------------------------------------------- */
-
-    {
-        category: "mundo",
-        categoryName: "MUNDO",
-        icon: "🌎",
-
-        title: "Noticias del mundo",
-
-        summary:
-            "Resumen breve de la información internacional.",
-
-        date: "20/09/2026 · ARENA 24",
-
-        link: "https://www.ejemplo.com",
-
-        source: "Fuente: ARENA 24"
-    },
-
-
-    /* -------------------------------------------------
-       NOTICIA 5
-       ------------------------------------------------- */
-
-    {
-        category: "deportes",
-        categoryName: "DEPORTES",
-        icon: "⚽",
-
-        title: "Actualidad deportiva",
-
-        summary:
-            "Información deportiva de La Rioja, Argentina o el mundo.",
-
-        date: "20/09/2026 · ARENA 24 DEPORTES",
-
-        link: "https://www.ejemplo.com",
-
-        source: "Fuente: ARENA 24"
-    }
-
-];
-
-
-/* =====================================================
-   MOSTRAR NOTICIAS
-   ===================================================== */
-
-function renderNews() {
-
-    const searchTerm =
-        searchInput.value
-            .toLowerCase()
-            .trim();
-
-    const filteredNews = newsData.filter(news => {
-
-        const categoryMatch =
-            currentCategory === "all" ||
-            news.category === currentCategory;
-
-        const textMatch =
-            news.title
-                .toLowerCase()
-                .includes(searchTerm) ||
-
-            news.summary
-                .toLowerCase()
-                .includes(searchTerm) ||
-
-            news.categoryName
-                .toLowerCase()
-                .includes(searchTerm);
-
-        return categoryMatch && textMatch;
-    });
-
-
-    newsGrid.innerHTML = "";
-
-
-    if (filteredNews.length === 0) {
-
-        noResults.style.display = "block";
-
-        return;
-    }
-
-
-    noResults.style.display = "none";
-
-
-    filteredNews.forEach(news => {
-
-        const card =
-            document.createElement("article");
-
-        card.className = "news-card";
-
-
-        card.innerHTML = `
-
-            <div class="news-image">
-
-                <span>
-                    ${news.icon}
-                </span>
-
-            </div>
-
-
-            <div class="news-content">
-
-                <div class="news-category">
-                    ${news.categoryName}
-                </div>
-
-
-                <h3 class="news-title">
-                    ${news.title}
-                </h3>
-
-
-                <p class="news-summary">
-                    ${news.summary}
-                </p>
-
-
-                <div class="news-meta">
-                    ${news.date}
-                </div>
-
-
-                <div class="news-source">
-                    ${news.source}
-                </div>
-
-
-                <a
-                    class="news-link"
-                    href="${news.link}"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    AMPLIAR NOTICIA →
-                </a>
-
-            </div>
-
-        `;
-
-
-        newsGrid.appendChild(card);
-
-    });
-
-}
-
-
-/* =====================================================
-   CATEGORÍAS
-   ===================================================== */
-
-document
-    .querySelectorAll(".category")
-    .forEach(button => {
-
-        button.addEventListener("click", () => {
-
-            document
-                .querySelectorAll(".category")
-                .forEach(btn => {
-                    btn.classList.remove("active");
-                });
-
-
-            button.classList.add("active");
-
-
-            currentCategory =
-                button.dataset.category;
-
-
-            renderNews();
-
-        });
-
-    });
-
-
-/* =====================================================
-   BUSCADOR
-   ===================================================== */
-
-searchInput.addEventListener(
-    "input",
-    renderNews
-);
-
-
-/* =====================================================
-   BOTÓN ACTUALIZAR
-   ===================================================== */
-
-refreshBtn.addEventListener(
-    "click",
-    () => {
-
-        renderNews();
-
-        refreshBtn.textContent =
-            "✓ ACTUALIZADO";
-
-
-        setTimeout(() => {
-
-            refreshBtn.textContent =
-                "↻ ACTUALIZAR";
-
-        }, 1500);
-
-    }
-);
-
-
-/* =====================================================
-   RELOJ
-   ===================================================== */
-
-function updateClock() {
-
-    const now = new Date();
-
-
-    const hours =
-        String(now.getHours())
-            .padStart(2, "0");
-
-
-    const minutes =
-        String(now.getMinutes())
-            .padStart(2, "0");
-
-
-    const seconds =
-        String(now.getSeconds())
-            .padStart(2, "0");
-
-
-    document.getElementById("clock")
-        .textContent =
-        `${hours}:${minutes}:${seconds}`;
-
-}
-
-
-setInterval(updateClock, 1000);
-
-updateClock();
-
-
-/* =====================================================
-   TITULAR "ÚLTIMO MOMENTO"
-   ===================================================== */
-
-const headlines = [
-
-    "ARENA 24 INFORMA · Noticias de La Rioja",
-
-    "ARENA 24 INFORMA · Actualidad de Argentina",
-
-    "ARENA 24 INFORMA · Información internacional",
-
-    "ARENA 24 INFORMA · ARENA 24 DEPORTES"
-
-];
-
-
-let headlineIndex = 0;
-
-
-function changeHeadline() {
-
-    headlineIndex++;
-
-
-    if (
-        headlineIndex >=
-        headlines.length
-    ) {
-        headlineIndex = 0;
-    }
-
-
-    breakingText.textContent =
-        headlines[headlineIndex];
-
-}
-
-
-setInterval(
-    changeHeadline,
-    6000
-);
-
-
-/* =====================================================
-   INICIAR
-   ===================================================== */
-
-renderNews();
 
 
 /* =====================================================
@@ -667,3 +270,181 @@ function arena24IniciarTV() {
 /* Iniciar */
 
 arena24IniciarTV();
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ARENA 24 INFORMA</title>
+
+<link rel="stylesheet" href="noticias.css">
+</head>
+
+<body>
+
+<section id="arena24-noticias">
+
+    <!-- CABECERA -->
+
+    <div class="a24-news-header">
+
+        <div class="a24-news-logo">
+
+            <div class="a24-news-circle">
+                A24
+            </div>
+
+            <div>
+                <h2>ARENA <span>24</span></h2>
+
+                <p>
+                    RADIO · INFORMACIÓN · ACTUALIDAD
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="a24-live">
+
+            <span class="a24-live-dot"></span>
+
+            ARENA 24 INFORMA
+
+        </div>
+
+    </div>
+
+
+    <!-- INFORMACIÓN -->
+
+    <div class="a24-news-info">
+
+        <span>
+            📍 LA RIOJA · ARGENTINA
+        </span>
+
+        <span id="a24-clock">
+            00:00:00
+        </span>
+
+    </div>
+
+
+    <!-- CATEGORÍAS -->
+
+    <div class="a24-categories">
+
+        <button
+            class="a24-category active"
+            data-category="all">
+            TODAS
+        </button>
+
+        <button
+            class="a24-category"
+            data-category="rioja">
+            🟠 LA RIOJA
+        </button>
+
+        <button
+            class="a24-category"
+            data-category="argentina">
+            🇦🇷 ARGENTINA
+        </button>
+
+        <button
+            class="a24-category"
+            data-category="mundo">
+            🌎 MUNDO
+        </button>
+
+        <button
+            class="a24-category"
+            data-category="deportes">
+            ⚽ DEPORTES
+        </button>
+
+    </div>
+
+
+    <!-- BUSCADOR -->
+
+    <div class="a24-search">
+
+        <input
+            type="search"
+            id="a24-search-input"
+            placeholder="🔎 Buscar noticias..."
+        >
+
+    </div>
+
+
+    <!-- ÚLTIMO MOMENTO -->
+
+    <div class="a24-breaking">
+
+        <div class="a24-breaking-label">
+            🔴 ÚLTIMO MOMENTO
+        </div>
+
+        <div
+            class="a24-breaking-text"
+            id="a24-breaking-text">
+
+            ARENA 24 INFORMA · Noticias de La Rioja,
+            Argentina y el mundo
+
+        </div>
+
+    </div>
+
+
+    <!-- TÍTULO -->
+
+    <div class="a24-section-title">
+
+        <h2>
+            <span class="a24-orange-line"></span>
+            Noticias
+        </h2>
+
+        <button
+            class="a24-refresh"
+            id="a24-refresh">
+
+            ↻ ACTUALIZAR
+
+        </button>
+
+    </div>
+
+
+    <!-- NOTICIAS -->
+
+    <div
+        class="a24-news-grid"
+        id="a24-news-grid">
+    </div>
+
+
+    <!-- SIN RESULTADOS -->
+
+    <div
+        class="a24-no-results"
+        id="a24-no-results">
+
+        No se encontraron noticias.
+
+    </div>
+
+</section>
+
+
+<script src="noticias.js"></script>
+
+</body>
+</html>
