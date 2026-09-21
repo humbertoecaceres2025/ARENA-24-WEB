@@ -5061,3 +5061,238 @@ footer small {
     text-align: center;
   }
 }
+/* =========================================================
+   ARENA 24 TV
+   ========================================================= */
+
+.tv-section {
+    position: relative;
+}
+
+.tv-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(280px, 1fr);
+    gap: 24px;
+    align-items: stretch;
+}
+
+.tv-player {
+    background: rgba(10, 10, 14, 0.92);
+    border: 1px solid rgba(255, 106, 0, 0.30);
+    border-radius: 22px;
+    overflow: hidden;
+    box-shadow:
+        0 0 30px rgba(255, 106, 0, 0.08);
+}
+
+.tv-screen {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(255, 106, 0, 0.18),
+            transparent 42%
+        ),
+        linear-gradient(
+            135deg,
+            #050505,
+            #111116,
+            #050505
+        );
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.tv-screen::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent 48%,
+            rgba(255, 106, 0, 0.08) 50%,
+            transparent 52%
+        );
+
+    background-size: 80px 80px;
+    animation: tvGridMove 8s linear infinite;
+}
+
+@keyframes tvGridMove {
+
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(80px);
+    }
+
+}
+
+.tv-placeholder {
+    position: relative;
+    z-index: 2;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    gap: 8px;
+}
+
+.tv-placeholder strong {
+    font-size: clamp(2rem, 5vw, 4rem);
+    letter-spacing: 0.08em;
+
+    color: #ffffff;
+
+    text-shadow:
+        0 0 10px rgba(255, 106, 0, 0.8),
+        0 0 35px rgba(255, 106, 0, 0.35);
+}
+
+.tv-placeholder span {
+    color: #ff6a00;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+}
+
+.tv-placeholder small {
+    color: #aaa;
+}
+
+.tv-live-dot {
+    width: 14px;
+    height: 14px;
+
+    background: #ff3b30;
+    border-radius: 50%;
+
+    box-shadow:
+        0 0 8px #ff3b30,
+        0 0 25px rgba(255, 59, 48, 0.7);
+
+    animation: livePulse 1.3s infinite;
+}
+
+@keyframes livePulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    50% {
+        transform: scale(1.35);
+        opacity: 0.65;
+    }
+
+}
+
+.tv-status {
+    min-height: 58px;
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    padding: 0 20px;
+
+    border-top: 1px solid rgba(255, 255, 255, 0.07);
+
+    color: #ffffff;
+}
+
+.status-dot {
+    width: 9px;
+    height: 9px;
+
+    border-radius: 50%;
+
+    background: #ff3b30;
+
+    box-shadow:
+        0 0 12px rgba(255, 59, 48, 0.8);
+}
+
+.tv-status-text {
+    margin-left: auto;
+    color: #999;
+    font-size: 0.85rem;
+}
+
+.tv-info {
+    padding: 30px;
+
+    border-radius: 22px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 106, 0, 0.12),
+            rgba(10, 10, 14, 0.95)
+        );
+
+    border: 1px solid rgba(255, 106, 0, 0.22);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.tv-info h3 {
+    margin: 12px 0;
+
+    font-size: 1.8rem;
+
+    color: #ffffff;
+}
+
+.tv-info p {
+    color: #aaa;
+    line-height: 1.7;
+    margin-bottom: 24px;
+}
+
+.tv-info .btn {
+    align-self: flex-start;
+}
+
+
+/* =========================================================
+   TV RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 800px) {
+
+    .tv-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .tv-info {
+        padding: 24px;
+    }
+
+    .tv-status {
+        flex-wrap: wrap;
+        padding: 14px 16px;
+    }
+
+    .tv-status-text {
+        margin-left: 0;
+        width: 100%;
+    }
+
+}
