@@ -1061,7 +1061,7 @@ document.addEventListener("DOMContentLoaded", () => {
             categoria: "NOTICIAS",
             descripcion:
                 "Noticias de La Rioja, Argentina y el mundo.",
-            conductor: "Enrique",
+            conductor: "Enri",
             horario: "06:00 - 10:00"
         },
 
@@ -1072,7 +1072,7 @@ document.addEventListener("DOMContentLoaded", () => {
             categoria: "ENTRETENIMIENTO",
             descripcion:
                 "Música, actualidad, entretenimiento y compañía.",
-            conductor: "Viviana",
+            conductor: "Viana",
             horario: "10:00 - 14:00"
         },
 
@@ -1094,7 +1094,7 @@ document.addEventListener("DOMContentLoaded", () => {
             categoria: "DEPORTES",
             descripcion:
                 "Información y actualidad deportiva.",
-            conductor: "Nicolás",
+            conductor: "Nics",
             horario: "18:00 - 22:00"
         },
 
@@ -1105,7 +1105,7 @@ document.addEventListener("DOMContentLoaded", () => {
             categoria: "RELAX",
             descripcion:
                 "Música actual y sonidos para terminar el día.",
-            conductor: "Martina",
+            conductor: "Mar",
             horario: "22:00 - 00:00"
         }
 
@@ -1132,7 +1132,7 @@ document.addEventListener("DOMContentLoaded", () => {
             categoria: "ENTRETENIMIENTO",
             descripcion:
                 "Entretenimiento, música y actualidad.",
-            conductor: "Viviana",
+            conductor: "Viana",
             horario: "09:00 - 13:00"
         },
 
@@ -1143,7 +1143,7 @@ document.addEventListener("DOMContentLoaded", () => {
             categoria: "DEPORTES",
             descripcion:
                 "Actualidad deportiva y música.",
-            conductor: "Nicolás",
+            conductor: "Nics",
             horario: "13:00 - 18:00"
         },
 
@@ -1165,7 +1165,7 @@ document.addEventListener("DOMContentLoaded", () => {
             categoria: "RELAX",
             descripcion:
                 "Música actual para cerrar el día.",
-            conductor: "Martina",
+            conductor: "Mar",
             horario: "22:00 - 00:00"
         }
 
