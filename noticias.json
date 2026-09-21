@@ -1,113 +1,177 @@
-[
-  {
-    "id": 1,
-    "titulo": "Presupuesto 2027"
-    "resumen": "el Gobierno de La Rioja anticipó que reclamará a Nación fondos extracoparticipables. Según RadioLaRioja, el reclamo provincial rondaría los $50.000 millones mensuales. Es una posición atribuida al Gobierno y legisladores riojanos, no una cifra acordada con Nación",
-    "categoria": "La Rioja",
-    "autor": "Redacción Arena 24",
-    "fecha": "17 de septiembre de 2026 · 08:30",
-    "fecha_iso": "2026-09-15T08:30:00-03:00",
-    "imagen": "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&fit=crop&w=1400&q=85",
-    "url": "#"
-  },
-  {
-    "id": 2,
-    "titulo": "Malvinas y soberanía"
-    "resumen": "el Gobierno de Javier Milei envió al Congreso un proyecto de ley sobre defensa de la soberanía que incluye nuevas sanciones por explotación no autorizada de recursos y cambios en materia de seguridad. La iniciativa ya genera posiciones contrapuestas entre distintos sectores.",
-    "categoria": "Nacional",
-    "autor": "Redacción Arena 24",
-    "fecha": "17 de septiembre de 2026 · 08:05",
-    "fecha_iso": "2026-09-15T08:05:00-03:00",
-    "imagen": "https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?auto=format&fit=crop&w=1000&q=85",
-    "url": "#"
-  },
-  {
-    "id": 3,
-    "titulo": "Mercados"
-    "resumen": "los mercados argentinos reaccionan a la reciente decisión de la Reserva Federal de Estados Unidos sobre las tasas de interés."
-    "categoria": "Economía",
-    "autor": "Arena 24 Economía",
-    "fecha": "17 de septiembre de 2026 · 07:45",
-    "fecha_iso": "2026-09-15T07:45:00-03:00",
-    "imagen": "https://images.unsplash.com/photo-1559526324-593bc073d938?auto=format&fit=crop&w=1000&q=85",
-    "url": "#"
-  },
-  {
-    "id": 4,
-    "titulo": "Medallas de Argentina en Santa Fe 2026",
-    "resumen": "Argentina lleva 95 medallas en los Juegos Suramericanos Santa Fe 2026:
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-🥇 31 de oro
+<title>ARENA 24 INFORMA</title>
 
-🥈 27 de plata
+<link rel="stylesheet" href="noticias.css">
+</head>
 
-🥉 37 de bronce
+<body>
 
-Total: 95 medallas",
-    "categoria": "Deportes",
-    "autor": "Arena 24 Deportes",
-    "fecha": "15 de septiembre de 2026 · 07:20",
-    "fecha_iso": "2026-09-15T07:20:00-03:00",
-    "imagen": "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=1000&q=85",
-    "url": "#"
-  },
-  {
-    "id": 5,
-    "titulo": "Fernanda Russo",
-    "resumen": "Medalla de oro en tiro deportivo, rifle de aire 10 m",
-    "categoria": "La Rioja",
-    "autor": "Redacción Arena 24",
-    "fecha": "15 de septiembre de 2026 · 06:55",
-    "fecha_iso": "2026-09-15T06:55:00-03:00",
-    "imagen": "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1000&q=85",
-    "url": "#"
-  },
-  {
-    "id": 6,
-    "titulo": "Ecuador",
-    "resumen": "comenzaron nuevos toques de queda nocturnos durante 15 días en cuatro provincias, como medida frente a la violencia atribuida al crimen organizado",
-    "categoria": "Internacional",
-    "autor": "Arena 24 Mundo",
-    "fecha": "17 de septiembre de 2026 · 06:30",
-    "fecha_iso": "2026-09-15T06:30:00-03:00",
-    "imagen": "https://images.unsplash.com/photo-1521295121783-8a321d551ad2?auto=format&fit=crop&w=1000&q=85",
-    "url": "#"
-  },
-  {
-    "id": 7,
-    "titulo": "Clima: para la ciudad de La Rioja",
-    "resumen": " se prevé una jornada sin lluvias, aunque las fuentes consultadas difieren en la temperatura exacta; una previsión ubica la máxima alrededor de 26 °C",
-    "categoria": "La Rioja",
-    "autor": "Redacción Arena 24",
-    "fecha": "17 de septiembre de 2026 · 06:10",
-    "fecha_iso": "2026-09-15T06:10:00-03:00",
-    "imagen": "https://images.unsplash.com/photo-1577962917302-cd874c4e31d2?auto=format&fit=crop&w=1000&q=85",
-    "url": "#"
-  },
-  {
-    "id": 8,
-    "titulo": "Argentina se encuentra segunda en el medallero, detrás de Brasil, según el último recuento publicado",
-    "resumen": "Algunos de los últimos oros argentinos
-Rodrigo Enríquez y Santino Menín — remo, doble peso ligero masculino.
+<section id="arena24-noticias">
 
-Fernanda Russo — tiro deportivo, rifle de aire 10 m.
+    <!-- CABECERA -->
 
-Catalina Serio — pentatlón moderno individual femenino.
+    <div class="a24-news-header">
 
-Mara Kucharski — tiro, skeet femenino.
+        <div class="a24-news-logo">
 
-Juliette Duhaime — stand up paddle, técnica femenina.
+            <div class="a24-news-circle">
+                A24
+            </div>
 
-Santino Basaldella — stand up paddle, técnica masculina.
+            <div>
+                <h2>ARENA <span>24</span></h2>
 
-Facundo Chávez y Gabriel Villanueva — esports, Valorant.
+                <p>
+                    RADIO · INFORMACIÓN · ACTUALIDAD
+                </p>
+            </div>
 
-Julieta Lucas — gimnasia artística, piso",
-    "categoria": "Deportes",
-    "autor": "Arena 24 Deportes",
-    "fecha": "17 de septiembre de 2026 · 05:50",
-    "fecha_iso": "2026-09-15T05:50:00-03:00",
-    "imagen": "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=1000&q=85",
-    "url": "#"
-  }
-]
+        </div>
+
+
+        <div class="a24-live">
+
+            <span class="a24-live-dot"></span>
+
+            ARENA 24 INFORMA
+
+        </div>
+
+    </div>
+
+
+    <!-- INFORMACIÓN -->
+
+    <div class="a24-news-info">
+
+        <span>
+            📍 LA RIOJA · ARGENTINA
+        </span>
+
+        <span id="a24-clock">
+            00:00:00
+        </span>
+
+    </div>
+
+
+    <!-- CATEGORÍAS -->
+
+    <div class="a24-categories">
+
+        <button
+            class="a24-category active"
+            data-category="all">
+            TODAS
+        </button>
+
+        <button
+            class="a24-category"
+            data-category="rioja">
+            🟠 LA RIOJA
+        </button>
+
+        <button
+            class="a24-category"
+            data-category="argentina">
+            🇦🇷 ARGENTINA
+        </button>
+
+        <button
+            class="a24-category"
+            data-category="mundo">
+            🌎 MUNDO
+        </button>
+
+        <button
+            class="a24-category"
+            data-category="deportes">
+            ⚽ DEPORTES
+        </button>
+
+    </div>
+
+
+    <!-- BUSCADOR -->
+
+    <div class="a24-search">
+
+        <input
+            type="search"
+            id="a24-search-input"
+            placeholder="🔎 Buscar noticias..."
+        >
+
+    </div>
+
+
+    <!-- ÚLTIMO MOMENTO -->
+
+    <div class="a24-breaking">
+
+        <div class="a24-breaking-label">
+            🔴 ÚLTIMO MOMENTO
+        </div>
+
+        <div
+            class="a24-breaking-text"
+            id="a24-breaking-text">
+
+            ARENA 24 INFORMA · Noticias de La Rioja,
+            Argentina y el mundo
+
+        </div>
+
+    </div>
+
+
+    <!-- TÍTULO -->
+
+    <div class="a24-section-title">
+
+        <h2>
+            <span class="a24-orange-line"></span>
+            Noticias
+        </h2>
+
+        <button
+            class="a24-refresh"
+            id="a24-refresh">
+
+            ↻ ACTUALIZAR
+
+        </button>
+
+    </div>
+
+
+    <!-- NOTICIAS -->
+
+    <div
+        class="a24-news-grid"
+        id="a24-news-grid">
+    </div>
+
+
+    <!-- SIN RESULTADOS -->
+
+    <div
+        class="a24-no-results"
+        id="a24-no-results">
+
+        No se encontraron noticias.
+
+    </div>
+
+</section>
+
+
+<script src="noticias.js"></script>
+
+</body>
+</html>
