@@ -1020,3 +1020,275 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 });
+
+/* =========================================================
+       PROGRAMACIÓN AUTOMÁTICA ARENA 24
+       ========================================================= */
+
+    const currentProgramCategory =
+        document.getElementById("currentProgramCategory");
+
+    const currentProgramName =
+        document.getElementById("currentProgramName");
+
+    const currentProgramDescription =
+        document.getElementById("currentProgramDescription");
+
+    const currentProgramTime =
+        document.getElementById("currentProgramTime");
+
+    const scheduleGrid =
+        document.getElementById("scheduleGrid");
+
+
+    const programacionSemana = [
+
+        {
+            inicio: 0,
+            fin: 6,
+            nombre: "ARENA 24 Madrugada",
+            categoria: "MÚSICA",
+            descripcion:
+                "Música para acompañarte durante la madrugada.",
+            conductor: "ARENA 24",
+            horario: "00:00 - 06:00"
+        },
+
+        {
+            inicio: 6,
+            fin: 10,
+            nombre: "ARENA 24 Noticias",
+            categoria: "NOTICIAS",
+            descripcion:
+                "Noticias de La Rioja, Argentina y el mundo.",
+            conductor: "Enrique",
+            horario: "06:00 - 10:00"
+        },
+
+        {
+            inicio: 10,
+            fin: 14,
+            nombre: "ARENA 24 Entretenimiento",
+            categoria: "ENTRETENIMIENTO",
+            descripcion:
+                "Música, actualidad, entretenimiento y compañía.",
+            conductor: "Viviana",
+            horario: "10:00 - 14:00"
+        },
+
+        {
+            inicio: 14,
+            fin: 18,
+            nombre: "ARENA 24 Música",
+            categoria: "MÚSICA",
+            descripcion:
+                "Los mejores sonidos para acompañar tu tarde.",
+            conductor: "ARENA 24",
+            horario: "14:00 - 18:00"
+        },
+
+        {
+            inicio: 18,
+            fin: 22,
+            nombre: "ARENA 24 Deportes",
+            categoria: "DEPORTES",
+            descripcion:
+                "Información y actualidad deportiva.",
+            conductor: "Nicolás",
+            horario: "18:00 - 22:00"
+        },
+
+        {
+            inicio: 22,
+            fin: 24,
+            nombre: "ARENA 24 Relax",
+            categoria: "RELAX",
+            descripcion:
+                "Música actual y sonidos para terminar el día.",
+            conductor: "Martina",
+            horario: "22:00 - 00:00"
+        }
+
+    ];
+
+
+    const programacionFinDeSemana = [
+
+        {
+            inicio: 0,
+            fin: 9,
+            nombre: "ARENA 24 Weekend",
+            categoria: "MÚSICA",
+            descripcion:
+                "Música para comenzar el fin de semana.",
+            conductor: "ARENA 24",
+            horario: "00:00 - 09:00"
+        },
+
+        {
+            inicio: 9,
+            fin: 13,
+            nombre: "ARENA 24 Entretenimiento",
+            categoria: "ENTRETENIMIENTO",
+            descripcion:
+                "Entretenimiento, música y actualidad.",
+            conductor: "Viviana",
+            horario: "09:00 - 13:00"
+        },
+
+        {
+            inicio: 13,
+            fin: 18,
+            nombre: "ARENA 24 Deportes",
+            categoria: "DEPORTES",
+            descripcion:
+                "Actualidad deportiva y música.",
+            conductor: "Nicolás",
+            horario: "13:00 - 18:00"
+        },
+
+        {
+            inicio: 18,
+            fin: 22,
+            nombre: "ARENA 24 Especial",
+            categoria: "MÚSICA",
+            descripcion:
+                "Música, artistas y programación especial.",
+            conductor: "ARENA 24",
+            horario: "18:00 - 22:00"
+        },
+
+        {
+            inicio: 22,
+            fin: 24,
+            nombre: "ARENA 24 Relax",
+            categoria: "RELAX",
+            descripcion:
+                "Música actual para cerrar el día.",
+            conductor: "Martina",
+            horario: "22:00 - 00:00"
+        }
+
+    ];
+
+
+    function obtenerProgramacionActual() {
+
+        const ahora = new Date();
+
+        const hora =
+            ahora.getHours();
+
+        const dia =
+            ahora.getDay();
+
+        const esFinDeSemana =
+            dia === 0 || dia === 6;
+
+        const lista =
+            esFinDeSemana
+                ? programacionFinDeSemana
+                : programacionSemana;
+
+        return lista.find(programa =>
+            hora >= programa.inicio &&
+            hora < programa.fin
+        );
+    }
+
+
+    function mostrarProgramacion() {
+
+        if (!currentProgramName) {
+            return;
+        }
+
+        const programa =
+            obtenerProgramacionActual();
+
+        if (!programa) {
+            return;
+        }
+
+
+        currentProgramCategory.textContent =
+            programa.categoria;
+
+        currentProgramName.textContent =
+            programa.nombre;
+
+        currentProgramDescription.textContent =
+            programa.descripcion;
+
+        currentProgramTime.textContent =
+            programa.horario;
+
+
+        if (scheduleGrid) {
+
+            scheduleGrid.innerHTML =
+                programaListaActual()
+                    .map(item => {
+
+                        const activo =
+                            item.nombre ===
+                            programa.nombre;
+
+                        return `
+                            <article
+                                class="schedule-card
+                                ${activo ? "active" : ""}"
+                            >
+
+                                <span class="schedule-time">
+                                    ${item.horario}
+                                </span>
+
+                                <h3>
+                                    ${item.nombre}
+                                </h3>
+
+                                <p>
+                                    ${item.descripcion}
+                                </p>
+
+                                <span class="host">
+                                    🎙️ Conduce:
+                                    ${item.conductor}
+                                </span>
+
+                            </article>
+                        `;
+
+                    })
+                    .join("");
+        }
+
+    }
+
+
+    function programaListaActual() {
+
+        const ahora = new Date();
+
+        const dia =
+            ahora.getDay();
+
+        const esFinDeSemana =
+            dia === 0 || dia === 6;
+
+        return esFinDeSemana
+            ? programacionFinDeSemana
+            : programacionSemana;
+    }
+
+
+    mostrarProgramacion();
+
+
+    /* Actualizar cada minuto */
+
+    setInterval(
+        mostrarProgramacion,
+        60 * 1000
+    );
