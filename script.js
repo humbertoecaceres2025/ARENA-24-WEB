@@ -448,3 +448,575 @@ arena24IniciarTV();
 
 </body>
 </html>
+
+
+
+
+/* =========================================================
+   ARENA 24 RADIO WEB 4.0
+   JavaScript principal
+   ========================================================= */
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    /* =========================
+       ELEMENTOS
+       ========================= */
+
+    const audio = document.getElementById("radioAudio");
+    const playButton = document.getElementById("playButton");
+    const muteButton = document.getElementById("muteButton");
+    const volumeControl = document.getElementById("volumeControl");
+
+    const radioPlayer = document.getElementById("radioPlayer");
+    const playerMessage = document.getElementById("playerMessage");
+
+    const menuButton = document.getElementById("menuButton");
+    const mainMenu = document.getElementById("mainMenu");
+
+    const updateNews = document.getElementById("updateNews");
+    const newsContainer = document.getElementById("newsContainer");
+
+
+    /* =========================
+       CONFIGURACIÓN DEL AUDIO
+       ========================= */
+
+    if (audio) {
+        audio.volume = volumeControl
+            ? Number(volumeControl.value)
+            : 0.8;
+    }
+
+
+    /* =========================
+       REPRODUCTOR PLAY / PAUSE
+       ========================= */
+
+    if (playButton && audio) {
+
+        playButton.addEventListener("click", async () => {
+
+            if (audio.paused) {
+
+                playerMessage.textContent =
+                    "Conectando con ARENA 24...";
+
+                try {
+
+                    await audio.play();
+
+                } catch (error) {
+
+                    console.error(
+                        "Error al iniciar la radio:",
+                        error
+                    );
+
+                    playerMessage.textContent =
+                        "No se pudo iniciar la transmisión. Tocá PLAY nuevamente.";
+
+                    radioPlayer.classList.remove("playing");
+                }
+
+            } else {
+
+                audio.pause();
+            }
+
+        });
+    }
+
+
+    /* =========================
+       AUDIO REPRODUCIÉNDOSE
+       ========================= */
+
+    if (audio) {
+
+        audio.addEventListener("playing", () => {
+
+            if (playButton) {
+                playButton.textContent = "❚❚";
+                playButton.setAttribute(
+                    "aria-label",
+                    "Pausar radio"
+                );
+            }
+
+            if (playerMessage) {
+                playerMessage.textContent =
+                    "ARENA 24 está transmitiendo EN VIVO.";
+            }
+
+            if (radioPlayer) {
+                radioPlayer.classList.add("playing");
+            }
+
+        });
+
+
+        /* =========================
+           AUDIO PAUSADO
+           ========================= */
+
+        audio.addEventListener("pause", () => {
+
+            if (playButton) {
+                playButton.textContent = "▶";
+                playButton.setAttribute(
+                    "aria-label",
+                    "Reproducir radio"
+                );
+            }
+
+            if (playerMessage) {
+                playerMessage.textContent =
+                    "Radio pausada.";
+            }
+
+            if (radioPlayer) {
+                radioPlayer.classList.remove("playing");
+            }
+
+        });
+
+
+        /* =========================
+           ERROR DE CONEXIÓN
+           ========================= */
+
+        audio.addEventListener("error", () => {
+
+            if (playButton) {
+                playButton.textContent = "▶";
+            }
+
+            if (radioPlayer) {
+                radioPlayer.classList.remove("playing");
+            }
+
+            if (playerMessage) {
+                playerMessage.textContent =
+                    "No se pudo conectar al streaming. Intentá nuevamente.";
+            }
+
+        });
+    }
+
+
+    /* =========================
+       CONTROL DE VOLUMEN
+       ========================= */
+
+    if (volumeControl && audio) {
+
+        volumeControl.addEventListener("input", () => {
+
+            audio.volume =
+                Number(volumeControl.value);
+
+            audio.muted = false;
+
+            if (muteButton) {
+                muteButton.textContent = "🔊";
+            }
+
+        });
+    }
+
+
+    /* =========================
+       MUTE / SONIDO
+       ========================= */
+
+    if (muteButton && audio) {
+
+        muteButton.addEventListener("click", () => {
+
+            audio.muted = !audio.muted;
+
+            if (audio.muted) {
+
+                muteButton.textContent = "🔇";
+
+            } else {
+
+                muteButton.textContent = "🔊";
+            }
+
+        });
+    }
+
+
+    /* =========================
+       MENÚ PARA CELULAR
+       ========================= */
+
+    if (menuButton && mainMenu) {
+
+        menuButton.addEventListener("click", () => {
+
+            mainMenu.classList.toggle("open");
+
+        });
+
+
+        const menuLinks =
+            mainMenu.querySelectorAll("a");
+
+        menuLinks.forEach(link => {
+
+            link.addEventListener("click", () => {
+
+                mainMenu.classList.remove("open");
+
+            });
+
+        });
+    }
+
+
+    /* =========================================================
+       NOTICIAS
+       ========================================================= */
+
+    const RSS_PROXY =
+        "https://api.rss2json.com/v1/api.json?rss_url=";
+
+
+    const fuentes = [
+
+        {
+            categoria: "LA RIOJA",
+            url:
+                "https://news.google.com/rss/search?q=La+Rioja+Argentina&hl=es-419&gl=AR&ceid=AR:es-419"
+        },
+
+        {
+            categoria: "ARGENTINA",
+            url:
+                "https://news.google.com/rss/search?q=Argentina&hl=es-419&gl=AR&ceid=AR:es-419"
+        },
+
+        {
+            categoria: "DEPORTES",
+            url:
+                "https://news.google.com/rss/search?q=Argentina+Deportes&hl=es-419&gl=AR&ceid=AR:es-419"
+        }
+
+    ];
+
+
+    /* =========================
+       SEGURIDAD HTML
+       ========================= */
+
+    function escaparHTML(texto) {
+
+        if (!texto) return "";
+
+        return String(texto)
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    }
+
+
+    /* =========================
+       LIMPIAR DESCRIPCIÓN
+       ========================= */
+
+    function limpiarDescripcion(texto) {
+
+        if (!texto) {
+            return "Información disponible en la fuente original.";
+        }
+
+        const temporal =
+            document.createElement("div");
+
+        temporal.innerHTML = texto;
+
+        let resultado =
+            temporal.textContent ||
+            temporal.innerText ||
+            "";
+
+        resultado =
+            resultado.replace(/\s+/g, " ").trim();
+
+        if (resultado.length > 180) {
+            resultado =
+                resultado.substring(0, 180) + "...";
+        }
+
+        return resultado;
+    }
+
+
+    /* =========================
+       CARGAR UNA FUENTE RSS
+       ========================= */
+
+    async function cargarFuente(fuente) {
+
+        const url =
+            RSS_PROXY +
+            encodeURIComponent(fuente.url);
+
+        try {
+
+            const respuesta =
+                await fetch(url);
+
+            if (!respuesta.ok) {
+                throw new Error(
+                    "Error HTTP " + respuesta.status
+                );
+            }
+
+            const datos =
+                await respuesta.json();
+
+            if (
+                !datos.items ||
+                !Array.isArray(datos.items)
+            ) {
+                return [];
+            }
+
+            return datos.items.map(item => {
+
+                return {
+
+                    categoria:
+                        fuente.categoria,
+
+                    titulo:
+                        item.title || "Sin título",
+
+                    descripcion:
+                        limpiarDescripcion(
+                            item.description
+                        ),
+
+                    enlace:
+                        item.link || "#",
+
+                    fecha:
+                        item.pubDate || ""
+
+                };
+
+            });
+
+        } catch (error) {
+
+            console.error(
+                "Error cargando noticias:",
+                fuente.categoria,
+                error
+            );
+
+            return [];
+        }
+    }
+
+
+    /* =========================
+       MOSTRAR NOTICIAS
+       ========================= */
+
+    function mostrarNoticias(noticias) {
+
+        if (!newsContainer) return;
+
+
+        if (!noticias.length) {
+
+            newsContainer.innerHTML = `
+                <article class="news-card">
+                    <span class="news-category">
+                        ARENA 24
+                    </span>
+
+                    <h3>
+                        Noticias disponibles próximamente
+                    </h3>
+
+                    <p>
+                        No fue posible actualizar las fuentes
+                        de noticias en este momento.
+                    </p>
+                </article>
+            `;
+
+            return;
+        }
+
+
+        newsContainer.innerHTML =
+            noticias.map(noticia => {
+
+                return `
+                    <article class="news-card">
+
+                        <span class="news-category">
+                            ${escaparHTML(noticia.categoria)}
+                        </span>
+
+                        <h3>
+                            ${escaparHTML(noticia.titulo)}
+                        </h3>
+
+                        <p>
+                            ${escaparHTML(noticia.descripcion)}
+                        </p>
+
+                        <a
+                            href="${escaparHTML(noticia.enlace)}"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            Leer fuente original ↗
+                        </a>
+
+                    </article>
+                `;
+
+            }).join("");
+
+    }
+
+
+    /* =========================
+       ACTUALIZAR NOTICIAS
+       ========================= */
+
+    async function actualizarNoticias() {
+
+        if (!newsContainer) return;
+
+
+        newsContainer.innerHTML = `
+            <article class="news-card">
+                <span class="news-category">
+                    ARENA 24 INFORMA
+                </span>
+
+                <h3>
+                    Actualizando noticias...
+                </h3>
+
+                <p>
+                    Buscando información de La Rioja,
+                    Argentina y Deportes.
+                </p>
+            </article>
+        `;
+
+
+        const resultados =
+            await Promise.all(
+                fuentes.map(cargarFuente)
+            );
+
+
+        let todasLasNoticias =
+            resultados.flat();
+
+
+        /* Eliminar títulos repetidos */
+
+        const titulos = new Set();
+
+        todasLasNoticias =
+            todasLasNoticias.filter(noticia => {
+
+                const clave =
+                    noticia.titulo
+                        .toLowerCase()
+                        .trim();
+
+                if (titulos.has(clave)) {
+                    return false;
+                }
+
+                titulos.add(clave);
+
+                return true;
+            });
+
+
+        /* Ordenar por fecha */
+
+        todasLasNoticias.sort(
+            (a, b) =>
+                new Date(b.fecha) -
+                new Date(a.fecha)
+        );
+
+
+        /* Mostrar máximo 9 noticias */
+
+        todasLasNoticias =
+            todasLasNoticias.slice(0, 9);
+
+
+        mostrarNoticias(
+            todasLasNoticias
+        );
+
+    }
+
+
+    /* =========================
+       BOTÓN ACTUALIZAR
+       ========================= */
+
+    if (updateNews) {
+
+        updateNews.addEventListener(
+            "click",
+            actualizarNoticias
+        );
+
+    }
+
+
+    /* =========================
+       CARGA INICIAL
+       ========================= */
+
+    actualizarNoticias();
+
+
+    /* =========================
+       ACTUALIZACIÓN AUTOMÁTICA
+       CADA 15 MINUTOS
+       ========================= */
+
+    setInterval(
+        actualizarNoticias,
+        15 * 60 * 1000
+    );
+
+
+    /* =========================
+       AÑO AUTOMÁTICO
+       ========================= */
+
+    const currentYear =
+        document.getElementById("currentYear");
+
+    if (currentYear) {
+
+        currentYear.textContent =
+            new Date().getFullYear();
+
+    }
+
+});
