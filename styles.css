@@ -5496,7 +5496,7 @@ footer small {
 @media (max-width: 700px) {
 
     .current-program {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr; 
         gap: 15px;
     }
 
