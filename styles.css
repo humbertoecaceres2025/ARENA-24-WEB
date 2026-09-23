@@ -1,1006 +1,2663 @@
 /* =========================================================
    ARENA 24 RADIO Y TV
-   APP.JS PRO
+   STYLES.CSS PRO
+   DISEÑO FUTURISTA • OSCURO • MODERNO
    ========================================================= */
 
+:root{
+  --bg:#070910;
+  --bg2:#0c1019;
+  --panel:#111722;
+  --panel2:#151c29;
 
-/* ================= RADIO ================= */
+  --orange:#ff6a00;
+  --orange2:#ff9d3d;
+  --cyan:#00d9ff;
+  --green:#20e58a;
+  --red:#ff405c;
 
-const STREAM_URL =
-  "https://stream.zeno.fm/zuw6xmmwmd0uv";
+  --text:#f5f7fb;
+  --muted:#9ca8ba;
+  --line:rgba(255,255,255,.09);
 
-const TIME_ZONE =
-  "America/Argentina/La_Rioja";
+  --shadow:
+    0 20px 60px rgba(0,0,0,.45);
 
-
-const audio =
-  document.getElementById("arena24Audio");
-
-const playButton =
-  document.getElementById("arena24Play");
-
-const playIcon =
-  document.getElementById("arena24PlayIcon");
-
-const volumeControl =
-  document.getElementById("arena24Volume");
-
-const statusText =
-  document.getElementById("arena24Status");
-
-const connectionState =
-  document.getElementById("connectionState");
-
-const fixedPlay =
-  document.getElementById("fixedPlay");
-
-
-/* ================= CONFIGURAR AUDIO ================= */
-
-audio.src = STREAM_URL;
-
-audio.volume = 0.85;
-
-audio.preload = "none";
-
-
-/* ================= ESTADO ================= */
-
-let radioPlaying = false;
-
-
-/* ================= REPRODUCIR ================= */
-
-async function playRadio(){
-
-  try{
-
-    statusText.textContent =
-      "CONECTANDO...";
-
-    connectionState.textContent =
-      "CONECTANDO CON ARENA 24";
-
-    audio.src = STREAM_URL;
-
-    audio.load();
-
-    await audio.play();
-
-    radioPlaying = true;
-
-    updatePlayerUI(true);
-
-  }
-
-  catch(error){
-
-    console.error(
-      "Error reproduciendo ARENA 24:",
-      error
-    );
-
-    radioPlaying = false;
-
-    updatePlayerUI(false);
-
-    statusText.textContent =
-      "TOCÁ PLAY PARA INTENTAR NUEVAMENTE";
-
-    connectionState.textContent =
-      "NO SE PUDO CONECTAR";
-
-  }
-
+  --radius:22px;
 }
-
-
-/* ================= DETENER ================= */
-
-function pauseRadio(){
-
-  audio.pause();
-
-  radioPlaying = false;
-
-  updatePlayerUI(false);
-
-}
-
-
-/* ================= PLAY / PAUSE ================= */
-
-async function toggleRadio(){
-
-  if(audio.paused){
-
-    await playRadio();
-
-  }else{
-
-    pauseRadio();
-
-  }
-
-}
-
-
-/* ================= INTERFAZ ================= */
-
-function updatePlayerUI(isPlaying){
-
-  if(isPlaying){
-
-    playIcon.textContent =
-      "❚❚";
-
-    playButton.classList.add(
-      "playing"
-    );
-
-    statusText.textContent =
-      "RADIO EN VIVO";
-
-    connectionState.textContent =
-      "CONECTADO";
-
-    if(fixedPlay){
-
-      fixedPlay.textContent =
-        "❚❚";
-
-    }
-
-  }else{
-
-    playIcon.textContent =
-      "▶";
-
-    playButton.classList.remove(
-      "playing"
-    );
-
-    statusText.textContent =
-      "RADIO DETENIDA";
-
-    if(fixedPlay){
-
-      fixedPlay.textContent =
-        "▶";
-
-    }
-
-  }
-
-}
-
-
-/* ================= BOTONES ================= */
-
-if(playButton){
-
-  playButton.addEventListener(
-    "click",
-    toggleRadio
-  );
-
-}
-
-
-if(fixedPlay){
-
-  fixedPlay.addEventListener(
-    "click",
-    toggleRadio
-  );
-
-}
-
-
-/* ================= VOLUMEN ================= */
-
-if(volumeControl){
-
-  volumeControl.addEventListener(
-    "input",
-    function(){
-
-      audio.volume =
-        Number(this.value);
-
-      const icon =
-        document.getElementById(
-          "arena24VolumeIcon"
-        );
-
-      if(audio.volume === 0){
-
-        icon.textContent =
-          "🔇";
-
-      }else if(audio.volume < 0.5){
-
-        icon.textContent =
-          "🔉";
-
-      }else{
-
-        icon.textContent =
-          "🔊";
-
-      }
-
-    }
-  );
-
-}
-
-
-/* ================= EVENTOS AUDIO ================= */
-
-audio.addEventListener(
-  "playing",
-  function(){
-
-    radioPlaying = true;
-
-    updatePlayerUI(true);
-
-  }
-);
-
-
-audio.addEventListener(
-  "pause",
-  function(){
-
-    if(!audio.ended){
-
-      radioPlaying = false;
-
-      updatePlayerUI(false);
-
-    }
-
-  }
-);
-
-
-audio.addEventListener(
-  "waiting",
-  function(){
-
-    statusText.textContent =
-      "CARGANDO SEÑAL...";
-
-    connectionState.textContent =
-      "ESPERANDO AUDIO";
-
-  }
-);
-
-
-audio.addEventListener(
-  "canplay",
-  function(){
-
-    if(!radioPlaying){
-
-      connectionState.textContent =
-        "SEÑAL DISPONIBLE";
-
-    }
-
-  }
-);
-
-
-audio.addEventListener(
-  "error",
-  function(){
-
-    radioPlaying = false;
-
-    updatePlayerUI(false);
-
-    statusText.textContent =
-      "ERROR DE SEÑAL";
-
-    connectionState.textContent =
-      "REVISÁ LA CONEXIÓN";
-
-  }
-);
 
 
 /* =========================================================
-   RELOJ ARGENTINO
+   RESET
    ========================================================= */
 
-function updateClock(){
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
 
-  const now =
-    new Date();
+html{
+  scroll-behavior:smooth;
+}
 
+body{
+  background:
+    radial-gradient(
+      circle at 15% 10%,
+      rgba(255,106,0,.10),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 85% 25%,
+      rgba(0,217,255,.08),
+      transparent 28%
+    ),
+    var(--bg);
 
-  const time =
-    new Intl.DateTimeFormat(
-      "es-AR",
-      {
-        timeZone: TIME_ZONE,
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-        hour12: false
-      }
-    ).format(now);
+  color:var(--text);
 
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
 
-  const date =
-    new Intl.DateTimeFormat(
-      "es-AR",
-      {
-        timeZone: TIME_ZONE,
-        weekday: "long",
-        day: "2-digit",
-        month: "long"
-      }
-    ).format(now);
+  line-height:1.5;
 
+  overflow-x:hidden;
+}
 
-  const clock =
-    document.getElementById(
-      "arena24Clock"
-    );
+a{
+  color:inherit;
+  text-decoration:none;
+}
 
-  const dateElement =
-    document.getElementById(
-      "arena24Date"
-    );
-
-  const fixedClock =
-    document.getElementById(
-      "fixedClock"
-    );
-
-  const horaActual =
-    document.getElementById(
-      "horaActual"
-    );
-
-
-  if(clock)
-    clock.textContent = time;
-
-  if(dateElement)
-    dateElement.textContent =
-      "La Rioja · " + date;
-
-  if(fixedClock)
-    fixedClock.textContent =
-      time.substring(0,5);
-
-  if(horaActual)
-    horaActual.textContent =
-      time.substring(0,5);
-
+button,
+input{
+  font:inherit;
 }
 
 
-updateClock();
+/* =========================================================
+   FONDO
+   ========================================================= */
 
-setInterval(
-  updateClock,
-  1000
-);
+.page-glow{
+  position:fixed;
+  width:420px;
+  height:420px;
+  border-radius:50%;
+  filter:blur(110px);
+  opacity:.12;
+  pointer-events:none;
+  z-index:-2;
+}
+
+.glow-one{
+  top:8%;
+  left:-180px;
+  background:var(--orange);
+}
+
+.glow-two{
+  right:-180px;
+  top:45%;
+  background:var(--cyan);
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.site-header{
+  position:sticky;
+  top:0;
+  z-index:1000;
+
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+
+  min-height:76px;
+  padding:12px 5%;
+
+  background:
+    rgba(7,9,16,.90);
+
+  border-bottom:1px solid var(--line);
+
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+}
+
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.brand-symbol{
+  width:48px;
+  height:48px;
+
+  display:grid;
+  place-items:center;
+
+  border-radius:14px;
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--orange),
+      #ff2d00
+    );
+
+  color:#fff;
+
+  font-weight:900;
+  font-size:17px;
+
+  box-shadow:
+    0 0 25px rgba(255,106,0,.35);
+}
+
+.brand-text{
+  display:flex;
+  flex-direction:column;
+}
+
+.brand-text strong{
+  font-size:19px;
+  letter-spacing:2px;
+}
+
+.brand-text span{
+  color:var(--orange2);
+  font-size:9px;
+  letter-spacing:2px;
+}
+
+
+.main-nav{
+  display:flex;
+  align-items:center;
+  gap:25px;
+}
+
+.main-nav a{
+  position:relative;
+
+  color:#c9d1dc;
+
+  font-size:12px;
+  font-weight:700;
+
+  letter-spacing:1px;
+
+  transition:.25s;
+}
+
+.main-nav a:hover{
+  color:#fff;
+}
+
+.main-nav a::after{
+  content:"";
+
+  position:absolute;
+
+  left:0;
+  bottom:-7px;
+
+  width:0;
+  height:2px;
+
+  background:var(--orange);
+
+  transition:.25s;
+}
+
+.main-nav a:hover::after{
+  width:100%;
+}
+
+
+.menu-button{
+  display:none;
+
+  border:1px solid var(--line);
+
+  background:var(--panel);
+
+  color:#fff;
+
+  width:44px;
+  height:44px;
+
+  border-radius:12px;
+
+  cursor:pointer;
+}
+
+
+/* =========================================================
+   HERO
+   ========================================================= */
+
+.hero{
+  position:relative;
+
+  min-height:680px;
+
+  display:flex;
+  align-items:center;
+
+  padding:100px 8%;
+
+  overflow:hidden;
+
+  border-bottom:1px solid var(--line);
+}
+
+.hero-grid{
+  position:absolute;
+  inset:0;
+
+  opacity:.15;
+
+  background-image:
+    linear-gradient(
+      rgba(255,255,255,.05) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(255,255,255,.05) 1px,
+      transparent 1px
+    );
+
+  background-size:50px 50px;
+
+  mask-image:
+    linear-gradient(
+      to bottom,
+      black,
+      transparent
+    );
+}
+
+.hero-content{
+  position:relative;
+  z-index:2;
+
+  max-width:720px;
+}
+
+.live-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:9px;
+
+  padding:9px 14px;
+
+  border:1px solid rgba(255,106,0,.35);
+
+  border-radius:100px;
+
+  background:rgba(255,106,0,.08);
+
+  color:var(--orange2);
+
+  font-size:11px;
+  font-weight:800;
+
+  letter-spacing:1px;
+}
+
+.live-badge span{
+  width:8px;
+  height:8px;
+
+  border-radius:50%;
+
+  background:var(--orange);
+
+  box-shadow:
+    0 0 12px var(--orange);
+
+  animation:pulse 1.5s infinite;
+}
+
+.hero-kicker{
+  margin-top:30px;
+
+  color:var(--cyan);
+
+  font-size:12px;
+  font-weight:800;
+
+  letter-spacing:4px;
+}
+
+.hero h1{
+  margin-top:10px;
+
+  font-size:
+    clamp(70px,12vw,150px);
+
+  line-height:.9;
+
+  letter-spacing:-7px;
+
+  font-weight:900;
+}
+
+.hero h1 strong{
+  color:var(--orange);
+  text-shadow:
+    0 0 40px rgba(255,106,0,.3);
+}
+
+.hero-line{
+  width:180px;
+  height:4px;
+
+  margin:25px 0;
+
+  background:
+    linear-gradient(
+      90deg,
+      var(--orange),
+      var(--cyan)
+    );
+
+  border-radius:20px;
+}
+
+.hero-slogan{
+  font-size:30px;
+  font-weight:700;
+}
+
+.hero-description{
+  max-width:600px;
+
+  margin-top:10px;
+
+  color:var(--muted);
+  font-size:16px;
+}
+
+.hero-buttons{
+  display:flex;
+  gap:12px;
+
+  margin-top:30px;
+}
+
+.btn-primary,
+.btn-secondary{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+
+  min-height:48px;
+
+  padding:0 20px;
+
+  border-radius:12px;
+
+  font-size:12px;
+  font-weight:800;
+
+  letter-spacing:.8px;
+
+  transition:.25s;
+
+  cursor:pointer;
+}
+
+.btn-primary{
+  background:
+    linear-gradient(
+      135deg,
+      var(--orange),
+      #ff3d00
+    );
+
+  color:#fff;
+
+  box-shadow:
+    0 10px 30px rgba(255,106,0,.20);
+}
+
+.btn-primary:hover{
+  transform:translateY(-2px);
+  box-shadow:
+    0 15px 40px rgba(255,106,0,.35);
+}
+
+.btn-secondary{
+  border:1px solid rgba(0,217,255,.3);
+
+  background:rgba(0,217,255,.06);
+
+  color:#b8f5ff;
+}
+
+.btn-secondary:hover{
+  border-color:var(--cyan);
+  background:rgba(0,217,255,.12);
+}
+
+
+/* =========================================================
+   ORBIT
+   ========================================================= */
+
+.hero-orbit{
+  position:absolute;
+
+  right:7%;
+  top:50%;
+
+  width:380px;
+  height:380px;
+
+  transform:translateY(-50%);
+
+  opacity:.9;
+}
+
+.orbit-ring{
+  position:absolute;
+  inset:0;
+
+  border:1px solid rgba(255,106,0,.25);
+
+  border-radius:50%;
+
+  animation:rotate 18s linear infinite;
+}
+
+.ring-two{
+  inset:35px;
+
+  border-color:
+    rgba(0,217,255,.20);
+
+  animation-direction:reverse;
+  animation-duration:12s;
+}
+
+.orbit-center{
+  position:absolute;
+
+  inset:105px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+
+  border-radius:50%;
+
+  background:
+    radial-gradient(
+      circle,
+      #1a202c,
+      #080a10
+    );
+
+  border:1px solid rgba(255,255,255,.1);
+
+  box-shadow:
+    0 0 70px rgba(255,106,0,.18);
+}
+
+.orbit-center span{
+  font-size:60px;
+  font-weight:900;
+  color:var(--orange);
+}
+
+.orbit-center small{
+  color:var(--cyan);
+  letter-spacing:4px;
+}
+
+
+/* =========================================================
+   SECCIONES
+   ========================================================= */
+
+.section{
+  width:min(1180px,90%);
+
+  margin:0 auto;
+
+  padding:95px 0;
+}
+
+.section-heading{
+  display:flex;
+  align-items:flex-start;
+
+  gap:18px;
+
+  margin-bottom:30px;
+}
+
+.section-number{
+  color:var(--orange);
+
+  font-size:12px;
+  font-weight:900;
+
+  letter-spacing:2px;
+
+  padding-top:7px;
+}
+
+.section-heading span{
+  color:var(--cyan);
+
+  font-size:10px;
+  font-weight:800;
+
+  letter-spacing:2px;
+}
+
+.section-heading h2{
+  margin-top:3px;
+
+  font-size:
+    clamp(28px,4vw,45px);
+
+  letter-spacing:-1px;
+}
+
+
+/* =========================================================
+   RADIO PLAYER
+   ========================================================= */
+
+.radio-player{
+  position:relative;
+
+  padding:28px;
+
+  overflow:hidden;
+
+  border-radius:26px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(20,26,38,.98),
+      rgba(9,12,19,.98)
+    );
+
+  border:1px solid rgba(255,255,255,.09);
+
+  box-shadow:var(--shadow);
+}
+
+.radio-player::before{
+  content:"";
+
+  position:absolute;
+  top:-100px;
+  right:-100px;
+
+  width:300px;
+  height:300px;
+
+  border-radius:50%;
+
+  background:var(--orange);
+
+  opacity:.06;
+
+  filter:blur(50px);
+}
+
+.player-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+
+  gap:20px;
+}
+
+.station{
+  display:flex;
+  align-items:center;
+  gap:15px;
+}
+
+.station-logo{
+  width:62px;
+  height:62px;
+
+  display:grid;
+  place-items:center;
+
+  border-radius:17px;
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--orange),
+      #ff3500
+    );
+
+  font-size:19px;
+  font-weight:900;
+
+  box-shadow:
+    0 0 30px rgba(255,106,0,.25);
+}
+
+.live-label{
+  display:flex;
+  align-items:center;
+  gap:7px;
+
+  color:var(--green);
+
+  font-size:10px;
+  font-weight:900;
+
+  letter-spacing:1px;
+}
+
+.live-label i{
+  width:7px;
+  height:7px;
+
+  background:var(--green);
+
+  border-radius:50%;
+
+  box-shadow:
+    0 0 10px var(--green);
+}
+
+.station h3{
+  margin-top:2px;
+
+  font-size:25px;
+}
+
+.station p{
+  color:var(--muted);
+  font-size:12px;
+}
+
+.argentina-clock{
+  display:flex;
+  align-items:flex-end;
+  flex-direction:column;
+}
+
+.argentina-clock span{
+  color:var(--cyan);
+
+  font-size:9px;
+  font-weight:800;
+
+  letter-spacing:1px;
+}
+
+.argentina-clock strong{
+  margin-top:2px;
+
+  font-size:24px;
+
+  font-variant-numeric:tabular-nums;
+}
+
+.argentina-clock small{
+  color:var(--muted);
+  font-size:10px;
+}
+
+
+/* =========================================================
+   NOW PLAYING
+   ========================================================= */
+
+.now-playing{
+  display:flex;
+  align-items:center;
+
+  gap:25px;
+
+  margin-top:35px;
+}
+
+.now-disc{
+  width:105px;
+  height:105px;
+
+  flex:none;
+
+  display:grid;
+  place-items:center;
+
+  border-radius:50%;
+
+  background:
+    repeating-radial-gradient(
+      circle,
+      #171c26 0 4px,
+      #090c12 5px 8px
+    );
+
+  border:2px solid rgba(255,106,0,.35);
+
+  box-shadow:
+    0 0 30px rgba(255,106,0,.12);
+
+  animation:spin 7s linear infinite;
+}
+
+.now-disc div{
+  width:42px;
+  height:42px;
+
+  display:grid;
+  place-items:center;
+
+  border-radius:50%;
+
+  background:var(--orange);
+
+  font-size:11px;
+  font-weight:900;
+}
+
+.now-data > span{
+  color:var(--orange2);
+
+  font-size:9px;
+  font-weight:800;
+
+  letter-spacing:2px;
+}
+
+.now-data h3{
+  margin-top:4px;
+
+  font-size:28px;
+}
+
+.now-data p{
+  color:var(--muted);
+  font-size:13px;
+}
+
+.player-meta{
+  display:flex;
+  gap:15px;
+
+  margin-top:8px;
+
+  flex-wrap:wrap;
+}
+
+.player-meta span{
+  color:#8390a3;
+
+  font-size:9px;
+  font-weight:700;
+
+  letter-spacing:1px;
+}
+
+
+/* =========================================================
+   VISUALIZER
+   ========================================================= */
+
+.visualizer{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  gap:4px;
+
+  height:60px;
+
+  margin-top:25px;
+
+  overflow:hidden;
+}
+
+.visualizer i{
+  width:5px;
+  height:14px;
+
+  border-radius:5px;
+
+  background:
+    linear-gradient(
+      to top,
+      var(--orange),
+      var(--cyan)
+    );
+
+  opacity:.35;
+}
+
+.visualizer.active i{
+  opacity:1;
+
+  animation:
+    equalizer
+    .7s
+    ease-in-out
+    infinite
+    alternate;
+}
+
+.visualizer i:nth-child(2n){
+  animation-delay:.12s;
+}
+
+.visualizer i:nth-child(3n){
+  animation-delay:.22s;
+}
+
+.visualizer i:nth-child(4n){
+  animation-delay:.35s;
+}
+
+
+/* =========================================================
+   CONTROLES PLAYER
+   ========================================================= */
+
+.player-controls{
+  display:flex;
+  align-items:center;
+
+  gap:18px;
+
+  margin-top:15px;
+}
+
+.play-button{
+  width:62px;
+  height:62px;
+
+  flex:none;
+
+  border:none;
+  border-radius:50%;
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--orange),
+      #ff3200
+    );
+
+  color:#fff;
+
+  font-size:21px;
+
+  cursor:pointer;
+
+  box-shadow:
+    0 0 25px rgba(255,106,0,.25);
+
+  transition:.2s;
+}
+
+.play-button:hover{
+  transform:scale(1.05);
+}
+
+.play-button.playing{
+  box-shadow:
+    0 0 35px rgba(255,106,0,.5);
+}
+
+.volume-area{
+  display:flex;
+  align-items:center;
+  gap:10px;
+
+  min-width:220px;
+}
+
+.volume-area span{
+  font-size:18px;
+}
+
+.volume-area input{
+  width:170px;
+
+  accent-color:var(--orange);
+
+  cursor:pointer;
+}
+
+.player-status{
+  margin-left:auto;
+
+  color:var(--green);
+
+  font-size:10px;
+  font-weight:900;
+
+  letter-spacing:1px;
+}
+
+
+/* =========================================================
+   RADIO INFO
+   ========================================================= */
+
+.radio-info-grid{
+  display:grid;
+
+  grid-template-columns:
+    repeat(4,1fr);
+
+  gap:12px;
+
+  margin-top:15px;
+}
+
+.info-box{
+  padding:18px;
+
+  border-radius:15px;
+
+  background:rgba(255,255,255,.035);
+
+  border:1px solid var(--line);
+}
+
+.info-box span{
+  color:var(--muted);
+
+  font-size:9px;
+  font-weight:800;
+
+  letter-spacing:1px;
+}
+
+.info-box strong{
+  display:block;
+
+  margin-top:4px;
+
+  font-size:16px;
+}
+
+.info-box small{
+  color:#687487;
+  font-size:10px;
+}
+
+
+/* =========================================================
+   AHORA EN VIVO
+   ========================================================= */
+
+.now-live-card{
+  display:flex;
+  align-items:center;
+
+  gap:25px;
+
+  padding:25px;
+
+  border-radius:22px;
+
+  background:
+    linear-gradient(
+      110deg,
+      rgba(255,106,0,.09),
+      rgba(0,217,255,.04)
+    );
+
+  border:1px solid rgba(255,106,0,.18);
+}
+
+.live-wave{
+  display:flex;
+  align-items:center;
+  gap:4px;
+
+  height:60px;
+}
+
+.live-wave span{
+  width:5px;
+  height:25px;
+
+  border-radius:5px;
+
+  background:var(--orange);
+
+  animation:
+    equalizer
+    .6s
+    infinite
+    alternate;
+}
+
+.live-wave span:nth-child(2n){
+  animation-delay:.15s;
+}
+
+.live-wave span:nth-child(3n){
+  animation-delay:.3s;
+}
+
+.now-live-main{
+  flex:1;
+}
+
+.mini-live{
+  color:var(--green);
+
+  font-size:9px;
+  font-weight:900;
+
+  letter-spacing:1px;
+}
+
+.now-live-main h2{
+  margin-top:2px;
+}
+
+.now-live-main p{
+  color:var(--muted);
+
+  font-size:13px;
+}
+
+.now-live-main strong{
+  display:block;
+
+  margin-top:5px;
+
+  color:var(--orange2);
+
+  font-size:11px;
+  letter-spacing:1px;
+}
+
+.now-time{
+  text-align:right;
+}
+
+.now-time span{
+  display:block;
+
+  color:var(--muted);
+
+  font-size:9px;
+  letter-spacing:1px;
+}
+
+.now-time strong{
+  font-size:28px;
+}
 
 
 /* =========================================================
    PROGRAMACIÓN
    ========================================================= */
 
-const schedule = [
+.schedule-grid{
+  display:grid;
 
-  {
-    start: 6,
-    end: 12,
-    name: "ENRIQUE",
-    description:
-      "Noticias, actualidad e información de La Rioja, Argentina y el mundo."
-  },
+  grid-template-columns:
+    repeat(5,1fr);
 
-  {
-    start: 12,
-    end: 16,
-    name: "ARENA 24 SIESTA",
-    description:
-      "Música para acompañarte durante la siesta."
-  },
-
-  {
-    start: 16,
-    end: 20,
-    name: "VIANA",
-    description:
-      "Entretenimiento, música y compañía."
-  },
-
-  {
-    start: 20,
-    end: 23,
-    name: "NIC",
-    description:
-      "Deportes, protagonistas, resultados y actualidad."
-  },
-
-  {
-    start: 23,
-    end: 24,
-    name: "MAR",
-    description:
-      "Relax, música actual y compañía durante la noche."
-  },
-
-  {
-    start: 0,
-    end: 6,
-    name: "MAR",
-    description:
-      "Relax, música actual y compañía durante la noche."
-  }
-
-];
-
-
-function getCurrentProgram(){
-
-  const now =
-    new Date();
-
-  const hour =
-    Number(
-      new Intl.DateTimeFormat(
-        "es-AR",
-        {
-          timeZone: TIME_ZONE,
-          hour: "2-digit",
-          hour12: false
-        }
-      ).format(now)
-    );
-
-
-  return schedule.find(
-    program =>
-      hour >= program.start &&
-      hour < program.end
-  ) || schedule[0];
-
+  gap:15px;
 }
 
+.schedule-card{
+  position:relative;
 
-function updateProgram(){
+  padding:22px;
 
-  const program =
-    getCurrentProgram();
+  min-height:230px;
 
+  overflow:hidden;
 
-  const programaActual =
-    document.getElementById(
-      "programaActual"
-    );
+  border-radius:20px;
 
-  const descripcionActual =
-    document.getElementById(
-      "descripcionActual"
-    );
+  background:var(--panel);
 
-  const locutorActual =
-    document.getElementById(
-      "locutorActual"
-    );
+  border:1px solid var(--line);
 
-  const playerProgram =
-    document.getElementById(
-      "playerProgram"
-    );
-
-  const playerDescription =
-    document.getElementById(
-      "playerDescription"
-    );
-
-  const fixedProgram =
-    document.getElementById(
-      "fixedProgram"
-    );
-
-  const fixedLocutor =
-    document.getElementById(
-      "fixedLocutor"
-    );
-
-
-  if(programaActual)
-    programaActual.textContent =
-      program.name;
-
-  if(descripcionActual)
-    descripcionActual.textContent =
-      program.description;
-
-  if(locutorActual)
-    locutorActual.textContent =
-      program.name;
-
-  if(playerProgram)
-    playerProgram.textContent =
-      program.name;
-
-  if(playerDescription)
-    playerDescription.textContent =
-      program.description;
-
-  if(fixedProgram)
-    fixedProgram.textContent =
-      program.name;
-
-  if(fixedLocutor)
-    fixedLocutor.textContent =
-      program.description;
-
+  transition:.3s;
 }
 
+.schedule-card:hover,
+.schedule-card.active-program{
+  transform:translateY(-5px);
 
-updateProgram();
+  border-color:
+    rgba(255,106,0,.4);
 
-setInterval(
-  updateProgram,
-  30000
-);
+  box-shadow:
+    0 15px 40px rgba(0,0,0,.25);
+}
+
+.schedule-card.active-program::before{
+  content:"EN VIVO";
+
+  position:absolute;
+
+  top:15px;
+  right:15px;
+
+  color:var(--green);
+
+  font-size:8px;
+  font-weight:900;
+
+  letter-spacing:1px;
+}
+
+.schedule-card > span{
+  color:var(--orange2);
+
+  font-size:10px;
+  font-weight:800;
+}
+
+.schedule-icon{
+  margin-top:25px;
+
+  font-size:30px;
+}
+
+.schedule-card h3{
+  margin-top:10px;
+
+  font-size:18px;
+}
+
+.schedule-card p{
+  margin-top:7px;
+
+  color:var(--muted);
+
+  font-size:12px;
+}
 
 
 /* =========================================================
-   DESTACAR PROGRAMA ACTUAL
+   ESPECIALES
    ========================================================= */
 
-function highlightSchedule(){
+.special-grid{
+  display:grid;
 
-  const cards =
-    document.querySelectorAll(
-      ".schedule-card"
-    );
+  grid-template-columns:
+    repeat(3,1fr);
 
-  const current =
-    getCurrentProgram();
-
-
-  cards.forEach(
-    card => {
-
-      card.classList.remove(
-        "active-program"
-      );
-
-      const title =
-        card.querySelector("h3");
-
-      if(
-        title &&
-        title.textContent.trim() ===
-        current.name
-      ){
-
-        card.classList.add(
-          "active-program"
-        );
-
-      }
-
-    }
-  );
-
+  gap:18px;
 }
 
+.special-card{
+  position:relative;
 
-highlightSchedule();
+  min-height:290px;
 
-setInterval(
-  highlightSchedule,
-  30000
-);
+  overflow:hidden;
 
+  border-radius:24px;
 
-/* =========================================================
-   MENÚ MÓVIL
-   ========================================================= */
-
-const menuButton =
-  document.getElementById(
-    "menuButton"
-  );
-
-const mainNav =
-  document.getElementById(
-    "mainNav"
-  );
-
-
-if(menuButton){
-
-  menuButton.addEventListener(
-    "click",
-    function(){
-
-      mainNav.classList.toggle(
-        "open"
-      );
-
-    }
-  );
-
-}
-
-
-document.querySelectorAll(
-  ".main-nav a"
-).forEach(
-  link => {
-
-    link.addEventListener(
-      "click",
-      function(){
-
-        mainNav.classList.remove(
-          "open"
-        );
-
-      }
+  background:
+    linear-gradient(
+      145deg,
+      #171d29,
+      #090c12
     );
 
-  }
-);
+  border:1px solid var(--line);
+
+  box-shadow:var(--shadow);
+
+  transition:.3s;
+}
+
+.special-card:hover{
+  transform:
+    translateY(-7px)
+    scale(1.01);
+
+  border-color:
+    rgba(255,106,0,.35);
+}
+
+.special-light{
+  position:absolute;
+
+  width:250px;
+  height:250px;
+
+  top:-100px;
+  right:-70px;
+
+  border-radius:50%;
+
+  background:var(--orange);
+
+  filter:blur(70px);
+
+  opacity:.16;
+}
+
+.special-content{
+  position:relative;
+
+  z-index:2;
+
+  padding:25px;
+}
+
+.special-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+
+  gap:10px;
+
+  color:var(--muted);
+
+  font-size:9px;
+  font-weight:800;
+
+  letter-spacing:1px;
+}
+
+.special-top b{
+  color:var(--orange);
+}
+
+.special-icon{
+  margin-top:30px;
+
+  font-size:45px;
+
+  filter:
+    drop-shadow(
+      0 0 15px
+      rgba(255,106,0,.35)
+    );
+}
+
+.special-card h3{
+  margin-top:15px;
+
+  font-size:23px;
+}
+
+.special-card h4{
+  color:var(--cyan);
+
+  font-size:12px;
+  letter-spacing:1px;
+}
+
+.special-card p{
+  margin-top:8px;
+
+  color:var(--muted);
+}
+
+.special-card p strong{
+  color:#fff;
+}
+
+.special-tag{
+  display:inline-block;
+
+  margin-top:20px;
+
+  padding:7px 10px;
+
+  border-radius:8px;
+
+  background:rgba(255,255,255,.04);
+
+  color:#9faabd;
+
+  font-size:8px;
+  font-weight:800;
+
+  letter-spacing:.8px;
+}
 
 
 /* =========================================================
    NOTICIAS
    ========================================================= */
 
-const newsFilters =
-  document.querySelectorAll(
-    ".news-filter"
-  );
+.news-toolbar{
+  display:flex;
+  flex-wrap:wrap;
 
-const newsCards =
-  document.querySelectorAll(
-    ".news-card"
-  );
+  gap:8px;
+
+  margin-bottom:20px;
+}
+
+.news-filter{
+  padding:9px 13px;
+
+  border-radius:10px;
+
+  border:1px solid var(--line);
+
+  background:rgba(255,255,255,.03);
+
+  color:var(--muted);
+
+  font-size:9px;
+  font-weight:800;
+
+  cursor:pointer;
+
+  transition:.2s;
+}
+
+.news-filter:hover,
+.news-filter.active{
+  color:#fff;
+
+  background:rgba(255,106,0,.12);
+
+  border-color:
+    rgba(255,106,0,.35);
+}
+
+.news-grid{
+  display:grid;
+
+  grid-template-columns:
+    repeat(4,1fr);
+
+  gap:15px;
+}
+
+.news-card{
+  padding:22px;
+
+  border-radius:18px;
+
+  background:var(--panel);
+
+  border:1px solid var(--line);
+}
+
+.news-card > span{
+  color:var(--orange2);
+
+  font-size:9px;
+  font-weight:900;
+
+  letter-spacing:1px;
+}
+
+.news-card h3{
+  margin-top:8px;
+
+  font-size:18px;
+}
+
+.news-card p{
+  margin-top:7px;
+
+  color:var(--muted);
+
+  font-size:12px;
+}
+
+.news-card a{
+  display:inline-block;
+
+  margin-top:18px;
+
+  color:var(--cyan);
+
+  font-size:9px;
+  font-weight:900;
+}
+
+.news-note{
+  display:flex;
+  align-items:center;
+
+  gap:10px;
+
+  margin-top:15px;
+
+  padding:14px 18px;
+
+  border-radius:12px;
+
+  background:rgba(255,255,255,.025);
+
+  color:var(--muted);
+
+  font-size:11px;
+}
+
+.news-note span{
+  color:var(--orange);
+}
 
 
-newsFilters.forEach(
-  button => {
+/* =========================================================
+   ARENA 24 TV
+   ========================================================= */
 
-    button.addEventListener(
-      "click",
-      function(){
+.tv-card{
+  padding:22px;
 
-        newsFilters.forEach(
-          item =>
-            item.classList.remove(
-              "active"
-            )
-        );
+  border-radius:25px;
 
-        this.classList.add(
-          "active"
-        );
-
-
-        const category =
-          this.dataset.category;
-
-
-        newsCards.forEach(
-          card => {
-
-            if(
-              category === "all" ||
-              card.dataset.category === category
-            ){
-
-              card.style.display =
-                "";
-
-            }else{
-
-              card.style.display =
-                "none";
-
-            }
-
-          }
-        );
-
-      }
+  background:
+    linear-gradient(
+      145deg,
+      #111722,
+      #080b11
     );
 
-  }
-);
+  border:1px solid var(--line);
+
+  box-shadow:var(--shadow);
+}
+
+.tv-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+
+  margin-bottom:18px;
+}
+
+.tv-live{
+  color:var(--green);
+
+  font-size:9px;
+  font-weight:900;
+
+  letter-spacing:1px;
+}
+
+.tv-top h2{
+  margin-top:5px;
+
+  font-size:28px;
+}
+
+.tv-top p{
+  color:var(--muted);
+  font-size:12px;
+}
+
+.tv-logo{
+  width:65px;
+  height:65px;
+
+  display:grid;
+  place-items:center;
+
+  border-radius:17px;
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--orange),
+      #ff3300
+    );
+
+  font-size:19px;
+  font-weight:900;
+
+  box-shadow:
+    0 0 30px rgba(255,106,0,.22);
+}
+
+
+/* =========================================================
+   TV PLAYER
+   ========================================================= */
+
+.tv-player{
+  position:relative;
+
+  width:100%;
+
+  aspect-ratio:16 / 9;
+
+  min-height:300px;
+
+  overflow:hidden;
+
+  border-radius:18px;
+
+  background:#030508;
+
+  border:1px solid rgba(255,255,255,.08);
+}
+
+
+/* VIDEO DE FONDO */
+
+.tv-background{
+  position:absolute;
+
+  inset:0;
+
+  width:100%;
+  height:100%;
+
+  object-fit:cover;
+
+  z-index:1;
+
+  opacity:1;
+
+  background:#05070b;
+}
+
+
+/* CAPA OSCURA */
+
+.tv-background-overlay{
+  position:absolute;
+
+  inset:0;
+
+  z-index:2;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(4,7,12,.25),
+      rgba(4,7,12,.65)
+    );
+
+  pointer-events:none;
+}
+
+
+/* YOUTUBE */
+
+.tv-iframe{
+  position:absolute;
+
+  inset:0;
+
+  width:100%;
+  height:100%;
+
+  border:0;
+
+  z-index:4;
+
+  background:#000;
+}
+
+
+/* FUERA DE AIRE */
+
+.tv-offline{
+  position:absolute;
+
+  inset:0;
+
+  z-index:3;
+
+  display:flex;
+
+  align-items:center;
+  justify-content:center;
+
+  flex-direction:column;
+
+  text-align:center;
+
+  padding:30px;
+
+  background:
+    radial-gradient(
+      circle at center,
+      rgba(0,0,0,.15),
+      rgba(0,0,0,.60)
+    );
+}
+
+.tv-offline-logo{
+  width:75px;
+  height:75px;
+
+  display:grid;
+  place-items:center;
+
+  border-radius:20px;
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--orange),
+      #ff3500
+    );
+
+  font-size:22px;
+  font-weight:900;
+
+  box-shadow:
+    0 0 40px rgba(255,106,0,.35);
+}
+
+.tv-offline > span{
+  margin-top:18px;
+
+  color:var(--cyan);
+
+  font-size:10px;
+  font-weight:900;
+
+  letter-spacing:3px;
+}
+
+.tv-offline h3{
+  margin-top:6px;
+
+  font-size:
+    clamp(20px,3vw,34px);
+}
+
+.tv-offline p{
+  max-width:500px;
+
+  margin-top:8px;
+
+  color:#b5bfce;
+
+  font-size:12px;
+}
+
+
+/* =========================================================
+   TV EQUALIZER
+   ========================================================= */
+
+.tv-equalizer{
+  display:flex;
+  align-items:center;
+
+  gap:5px;
+
+  height:35px;
+
+  margin-top:18px;
+}
+
+.tv-equalizer i{
+  width:5px;
+  height:12px;
+
+  border-radius:4px;
+
+  background:
+    linear-gradient(
+      to top,
+      var(--orange),
+      var(--cyan)
+    );
+
+  animation:
+    equalizer
+    .65s
+    infinite
+    alternate;
+}
+
+.tv-equalizer i:nth-child(2){
+  animation-delay:.12s;
+}
+
+.tv-equalizer i:nth-child(3){
+  animation-delay:.24s;
+}
+
+.tv-equalizer i:nth-child(4){
+  animation-delay:.36s;
+}
+
+.tv-equalizer i:nth-child(5){
+  animation-delay:.18s;
+}
+
+.tv-equalizer i:nth-child(6){
+  animation-delay:.3s;
+}
+
+.tv-equalizer i:nth-child(7){
+  animation-delay:.42s;
+}
+
+.tv-equalizer i:nth-child(8){
+  animation-delay:.54s;
+}
+
+
+/* TV LIVE BADGE */
+
+.tv-live-badge{
+  position:absolute;
+
+  top:15px;
+  right:15px;
+
+  z-index:6;
+
+  padding:8px 12px;
+
+  border-radius:100px;
+
+  background:rgba(20,229,138,.15);
+
+  border:1px solid rgba(20,229,138,.35);
+
+  color:var(--green);
+
+  font-size:9px;
+  font-weight:900;
+
+  letter-spacing:1px;
+}
+
+
+/* TV ACTIONS */
+
+.tv-actions{
+  display:flex;
+  align-items:center;
+
+  gap:15px;
+
+  margin-top:15px;
+
+  flex-wrap:wrap;
+}
+
+.tv-actions > span{
+  color:var(--muted);
+  font-size:11px;
+}
+
+
+/* =========================================================
+   REDES
+   ========================================================= */
+
+.social-grid{
+  display:grid;
+
+  grid-template-columns:
+    repeat(4,1fr);
+
+  gap:15px;
+}
+
+.social-card{
+  display:flex;
+  align-items:center;
+
+  gap:15px;
+
+  padding:20px;
+
+  border-radius:18px;
+
+  background:var(--panel);
+
+  border:1px solid var(--line);
+
+  transition:.25s;
+}
+
+.social-card:hover{
+  transform:translateY(-4px);
+
+  border-color:
+    rgba(255,255,255,.18);
+}
+
+.social-card > strong{
+  width:45px;
+  height:45px;
+
+  display:grid;
+  place-items:center;
+
+  border-radius:13px;
+
+  background:rgba(255,255,255,.06);
+
+  font-size:20px;
+}
+
+.social-card span{
+  display:block;
+
+  font-size:11px;
+  font-weight:900;
+}
+
+.social-card small{
+  display:block;
+
+  margin-top:2px;
+
+  color:var(--muted);
+
+  font-size:9px;
+}
+
+.facebook strong{
+  color:#5e9dff;
+}
+
+.instagram strong{
+  color:#ff6ba8;
+}
+
+.youtube strong{
+  color:#ff4c5c;
+}
+
+.whatsapp strong{
+  color:#20e58a;
+}
+
+
+/* =========================================================
+   PARTICIPACIÓN
+   ========================================================= */
+
+.participation-card{
+  min-height:270px;
+
+  display:flex;
+  align-items:center;
+
+  padding:40px;
+
+  border-radius:25px;
+
+  background:
+    radial-gradient(
+      circle at 85% 20%,
+      rgba(255,106,0,.16),
+      transparent 35%
+    ),
+    linear-gradient(
+      135deg,
+      #141b27,
+      #080b11
+    );
+
+  border:1px solid var(--line);
+}
+
+.participation-copy{
+  max-width:650px;
+}
+
+.participation-icon{
+  color:var(--orange);
+
+  font-size:30px;
+}
+
+.participation-copy h2{
+  margin-top:10px;
+
+  font-size:
+    clamp(25px,4vw,40px);
+}
+
+.participation-copy p{
+  margin:10px 0 22px;
+
+  color:var(--muted);
+}
+
+
+/* =========================================================
+   PUBLICIDAD
+   ========================================================= */
+
+.ad-grid{
+  display:grid;
+
+  grid-template-columns:
+    repeat(2,1fr);
+
+  gap:15px;
+}
+
+.ad-card{
+  min-height:170px;
+
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+
+  padding:30px;
+
+  border-radius:20px;
+
+  background:
+    repeating-linear-gradient(
+      -45deg,
+      rgba(255,255,255,.025) 0 10px,
+      transparent 10px 20px
+    );
+
+  border:1px dashed rgba(255,255,255,.14);
+}
+
+.ad-card span{
+  color:var(--orange);
+
+  font-size:9px;
+  font-weight:900;
+
+  letter-spacing:2px;
+}
+
+.ad-card strong{
+  margin-top:7px;
+
+  font-size:23px;
+}
+
+.ad-card small{
+  margin-top:4px;
+
+  color:var(--muted);
+}
+
+
+/* =========================================================
+   CONTACTO
+   ========================================================= */
+
+.contact-grid{
+  display:grid;
+
+  grid-template-columns:
+    repeat(2,1fr);
+
+  gap:15px;
+}
+
+.contact-card{
+  display:flex;
+  align-items:center;
+
+  gap:15px;
+
+  padding:22px;
+
+  border-radius:18px;
+
+  background:var(--panel);
+
+  border:1px solid var(--line);
+
+  transition:.25s;
+}
+
+.contact-card:hover{
+  border-color:
+    rgba(255,106,0,.3);
+
+  transform:translateY(-3px);
+}
+
+.contact-icon{
+  width:50px;
+  height:50px;
+
+  display:grid;
+  place-items:center;
+
+  border-radius:14px;
+
+  background:
+    rgba(255,106,0,.12);
+
+  color:var(--orange);
+
+  font-size:21px;
+}
+
+.contact-card span{
+  display:block;
+
+  color:var(--muted);
+
+  font-size:9px;
+  font-weight:800;
+
+  letter-spacing:1px;
+}
+
+.contact-card strong{
+  display:block;
+
+  margin-top:2px;
+
+  font-size:15px;
+}
+
+.contact-card small{
+  display:block;
+
+  margin-top:2px;
+
+  color:var(--cyan);
+
+  font-size:10px;
+}
+
+
+/* =========================================================
+   PLAYER FIJO
+   ========================================================= */
+
+.fixed-player{
+  position:fixed;
+
+  left:50%;
+  bottom:14px;
+
+  transform:translateX(-50%);
+
+  z-index:1500;
+
+  width:min(850px,92%);
+
+  display:flex;
+  align-items:center;
+
+  gap:13px;
+
+  padding:10px 14px;
+
+  border-radius:18px;
+
+  background:
+    rgba(10,13,20,.94);
+
+  border:1px solid rgba(255,106,0,.2);
+
+  box-shadow:
+    0 20px 60px rgba(0,0,0,.55);
+
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+}
+
+.fixed-brand{
+  display:flex;
+  align-items:center;
+
+  gap:8px;
+}
+
+.fixed-brand > span{
+  width:38px;
+  height:38px;
+
+  display:grid;
+  place-items:center;
+
+  border-radius:10px;
+
+  background:var(--orange);
+
+  font-size:10px;
+  font-weight:900;
+}
+
+.fixed-brand strong{
+  display:block;
+
+  font-size:10px;
+}
+
+.fixed-brand small{
+  color:var(--green);
+
+  font-size:7px;
+  font-weight:900;
+}
+
+.fixed-player button{
+  width:42px;
+  height:42px;
+
+  border:none;
+
+  border-radius:50%;
+
+  background:var(--orange);
+
+  color:#fff;
+
+  cursor:pointer;
+}
+
+.fixed-info{
+  min-width:0;
+  flex:1;
+}
+
+.fixed-info span{
+  display:block;
+
+  font-size:11px;
+  font-weight:800;
+
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.fixed-info small{
+  display:block;
+
+  color:var(--muted);
+
+  font-size:8px;
+
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.fixed-clock{
+  color:var(--cyan);
+
+  font-size:12px;
+  font-weight:800;
+
+  font-variant-numeric:tabular-nums;
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+footer{
+  padding:55px 7% 100px;
+
+  text-align:center;
+
+  border-top:1px solid var(--line);
+
+  background:#05070b;
+}
+
+.footer-brand{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  gap:12px;
+}
+
+.footer-brand > div{
+  width:50px;
+  height:50px;
+
+  display:grid;
+  place-items:center;
+
+  border-radius:13px;
+
+  background:var(--orange);
+
+  font-weight:900;
+}
+
+.footer-brand section{
+  text-align:left;
+}
+
+.footer-brand strong{
+  display:block;
+
+  font-size:17px;
+}
+
+.footer-brand span{
+  color:var(--orange2);
+
+  font-size:8px;
+  letter-spacing:2px;
+}
+
+footer p{
+  margin:18px auto;
+
+  max-width:600px;
+
+  color:var(--muted);
+
+  font-size:11px;
+}
+
+footer > small{
+  color:#626d7e;
+
+  font-size:9px;
+}
 
 
 /* =========================================================
    ANIMACIONES
    ========================================================= */
 
-const animatedElements =
-  document.querySelectorAll(
-    ".section, .schedule-card, .news-card, .social-card, .special-card, .ad-card, .contact-card"
-  );
+@keyframes pulse{
 
-
-const observer =
-  new IntersectionObserver(
-    entries => {
-
-      entries.forEach(
-        entry => {
-
-          if(entry.isIntersecting){
-
-            entry.target.classList.add(
-              "visible"
-            );
-
-          }
-
-        }
-      );
-
-    },
-    {
-      threshold: 0.08
-    }
-  );
-
-
-animatedElements.forEach(
-  element =>
-    observer.observe(element)
-);
-
-
-/* =========================================================
-   VISUALIZADOR
-   ========================================================= */
-
-const visualizer =
-  document.getElementById(
-    "visualizer"
-  );
-
-
-function visualizerOn(){
-
-  if(!visualizer)
-    return;
-
-  visualizer.classList.add(
-    "active"
-  );
-
-}
-
-
-function visualizerOff(){
-
-  if(!visualizer)
-    return;
-
-  visualizer.classList.remove(
-    "active"
-  );
-
-}
-
-
-audio.addEventListener(
-  "playing",
-  visualizerOn
-);
-
-audio.addEventListener(
-  "pause",
-  visualizerOff
-);
-
-audio.addEventListener(
-  "error",
-  visualizerOff
-);
-
-
-/* =========================================================
-   TECLADO
-   ========================================================= */
-
-document.addEventListener(
-  "keydown",
-  function(event){
-
-    if(
-      event.code === "Space" &&
-      event.target.tagName !== "INPUT" &&
-      event.target.tagName !== "TEXTAREA"
-    ){
-
-      event.preventDefault();
-
-      toggleRadio();
-
-    }
-
+  0%,100%{
+    transform:scale(1);
+    opacity:1;
   }
-);
 
+  50%{
+    transform:scale(1.5);
+    opacity:.5;
+  }
 
-/* =========================================================
-   ARENA 24 TV
-   =========================================================
+}
 
-   IMPORTANTE:
+@keyframes rotate{
 
-   En una página GitHub estática no se puede consultar
-   directamente desde JavaScript el estado "LIVE" de
-   YouTube debido a las restricciones del iframe.
+  from{
+    transform:rotate(0);
+  }
 
-   Por eso existe TV_LIVE.
+  to{
+    transform:rotate(360deg);
+  }
 
-   false = fondo de TV fuera de aire
-   true  = mostrar transmisión YouTube
+}
 
-   Cuando quieras transmitir en vivo, cambiás:
+@keyframes spin{
 
-   const TV_LIVE = true;
+  from{
+    transform:rotate(0);
+  }
 
-   ========================================================= */
+  to{
+    transform:rotate(360deg);
+  }
 
+}
 
-const TV_LIVE = false;
+@keyframes equalizer{
 
+  from{
+    transform:scaleY(.35);
+  }
 
-const tvIframe =
-  document.getElementById(
-    "arena24TV"
-  );
-
-const tvOffline =
-  document.getElementById(
-    "tvOffline"
-  );
-
-const tvLiveBadge =
-  document.getElementById(
-    "tvLiveBadge"
-  );
-
-const tvModeButton =
-  document.getElementById(
-    "tvModeButton"
-  );
-
-const tvBackground =
-  document.getElementById(
-    "tvBackground"
-  );
-
-
-function setTVMode(live){
-
-  if(live){
-
-    if(tvIframe)
-      tvIframe.style.display =
-        "block";
-
-    if(tvOffline)
-      tvOffline.style.display =
-        "none";
-
-    if(tvLiveBadge)
-      tvLiveBadge.style.display =
-        "block";
-
-    if(tvModeButton)
-      tvModeButton.textContent =
-        "TV EN VIVO";
-
-  }else{
-
-    if(tvIframe)
-      tvIframe.style.display =
-        "none";
-
-    if(tvOffline)
-      tvOffline.style.display =
-        "flex";
-
-    if(tvLiveBadge)
-      tvLiveBadge.style.display =
-        "none";
-
-    if(tvModeButton)
-      tvModeButton.textContent =
-        "TV FUERA DE AIRE";
-
+  to{
+    transform:scaleY(
+      1.8
+    );
   }
 
 }
 
 
-/* Estado inicial */
+/* =========================================================
+   SCROLL
+   ========================================================= */
 
-setTVMode(
-  TV_LIVE
-);
+.section,
+.schedule-card,
+.news-card,
+.social-card,
+.special-card,
+.ad-card,
+.contact-card{
+  opacity:0;
+  transform:translateY(20px);
+
+  transition:
+    opacity .7s ease,
+    transform .7s ease;
+}
+
+.visible{
+  opacity:1 !important;
+  transform:translateY(0) !important;
+}
 
 
-/* Botón para probar ambos modos */
+/* =========================================================
+   RESPONSIVE 950px
+   ========================================================= */
 
-if(tvModeButton){
+@media(max-width:950px){
 
-  tvModeButton.addEventListener(
-    "click",
-    function(){
+  .main-nav{
+    gap:14px;
+  }
 
-      const currentlyLive =
-        tvIframe &&
-        tvIframe.style.display !== "none";
+  .main-nav a{
+    font-size:10px;
+  }
 
-      setTVMode(
-        !currentlyLive
-      );
+  .hero{
+    min-height:600px;
+  }
 
-    }
-  );
+  .hero-orbit{
+    right:-100px;
+    opacity:.35;
+  }
+
+  .schedule-grid{
+    grid-template-columns:
+      repeat(2,1fr);
+  }
+
+  .special-grid{
+    grid-template-columns:
+      repeat(2,1fr);
+  }
+
+  .news-grid{
+    grid-template-columns:
+      repeat(2,1fr);
+  }
+
+  .social-grid{
+    grid-template-columns:
+      repeat(2,1fr);
+  }
+
+  .radio-info-grid{
+    grid-template-columns:
+      repeat(2,1fr);
+  }
 
 }
 
 
 /* =========================================================
-   VIDEO DE FONDO TV
+   RESPONSIVE 700px
    ========================================================= */
 
-if(tvBackground){
+@media(max-width:700px){
 
-  tvBackground.play().catch(
-    () => {
+  .site-header{
+    padding:10px 5%;
+  }
 
-      /*
-        Algunos navegadores bloquean
-        autoplay hasta que el usuario
-        interactúa con la página.
-      */
+  .menu-button{
+    display:block;
+  }
 
-    }
-  );
+  .main-nav{
+    position:absolute;
+
+    top:70px;
+    left:5%;
+    right:5%;
+
+    display:none;
+
+    flex-direction:column;
+
+    align-items:stretch;
+
+    gap:0;
+
+    padding:10px;
+
+    border-radius:16px;
+
+    background:
+      rgba(10,13,20,.97);
+
+    border:1px solid var(--line);
+
+    box-shadow:var(--shadow);
+  }
+
+  .main-nav.open{
+    display:flex;
+  }
+
+  .main-nav a{
+    padding:13px;
+
+    font-size:11px;
+  }
+
+  .hero{
+    min-height:650px;
+
+    padding:90px 6%;
+  }
+
+  .hero h1{
+    letter-spacing:-4px;
+  }
+
+  .hero-orbit{
+    width:270px;
+    height:270px;
+
+    right:-90px;
+    bottom:20px;
+    top:auto;
+
+    transform:none;
+
+    opacity:.18;
+  }
+
+  .hero-buttons{
+    flex-direction:column;
+
+    align-items:stretch;
+  }
+
+  .section{
+    width:90%;
+
+    padding:70px 0;
+  }
+
+  .player-top{
+    align-items:flex-start;
+
+    flex-direction:column;
+  }
+
+  .argentina-clock{
+    align-items:flex-start;
+  }
+
+  .now-playing{
+    align-items:flex-start;
+  }
+
+  .player-controls{
+    flex-wrap:wrap;
+  }
+
+  .player-status{
+    width:100%;
+    margin-left:0;
+  }
+
+  .volume-area{
+    min-width:0;
+    flex:1;
+  }
+
+  .volume-area input{
+    width:100%;
+  }
+
+  .now-live-card{
+    align-items:flex-start;
+
+    flex-direction:column;
+  }
+
+  .now-time{
+    text-align:left;
+  }
+
+  .schedule-grid,
+  .news-grid,
+  .social-grid,
+  .special-grid,
+  .ad-grid,
+  .contact-grid{
+    grid-template-columns:1fr;
+  }
+
+  .tv-player{
+    min-height:210px;
+  }
+
+  .tv-top{
+    align-items:flex-start;
+  }
+
+  .tv-logo{
+    width:52px;
+    height:52px;
+  }
+
+  .fixed-player{
+    width:94%;
+    bottom:8px;
+  }
+
+  .fixed-brand > div{
+    display:none;
+  }
 
 }
 
 
 /* =========================================================
-   INICIO
+   RESPONSIVE 480px
    ========================================================= */
 
-console.log(
-  "ARENA 24 Radio y TV — sistema iniciado correctamente."
-);
+@media(max-width:480px){
 
-console.log(
-  "Stream:",
-  STREAM_URL
-);
+  .brand-symbol{
+    width:42px;
+    height:42px;
+  }
 
-console.log(
-  "TV:",
-  TV_LIVE ? "EN VIVO" : "FUERA DE AIRE"
-);
+  .brand-text strong{
+    font-size:15px;
+  }
+
+  .hero h1{
+    font-size:68px;
+  }
+
+  .hero-slogan{
+    font-size:25px;
+  }
+
+  .section-heading h2{
+    font-size:28px;
+  }
+
+  .radio-player{
+    padding:18px;
+  }
+
+  .station-logo{
+    width:54px;
+    height:54px;
+  }
+
+  .station h3{
+    font-size:21px;
+  }
+
+  .now-disc{
+    width:82px;
+    height:82px;
+  }
+
+  .now-disc div{
+    width:35px;
+    height:35px;
+  }
+
+  .now-data h3{
+    font-size:22px;
+  }
+
+  .radio-info-grid{
+    grid-template-columns:1fr;
+  }
+
+  .fixed-info{
+    display:none;
+  }
+
+  .fixed-player{
+    justify-content:space-between;
+  }
+
+}
+
+
+/* =========================================================
+   REDUCCIÓN DE MOVIMIENTO
+   ========================================================= */
+
+@media(prefers-reduced-motion:reduce){
+
+  *,
+  *::before,
+  *::after{
+    animation-duration:.01ms !important;
+    animation-iteration-count:1 !important;
+    scroll-behavior:auto !important;
+    transition-duration:.01ms !important;
+  }
+
+}
