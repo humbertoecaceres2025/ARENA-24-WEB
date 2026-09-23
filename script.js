@@ -354,7 +354,7 @@ document.addEventListener("DOMContentLoaded", function () {
         ) {
 
             program =
-                "ENRIQUE — NOTICIAS";
+                "ENRI — NOTICIAS";
 
             description =
                 "Noticias, actualidad y La Rioja.";
@@ -380,7 +380,7 @@ document.addEventListener("DOMContentLoaded", function () {
         ) {
 
             program =
-                "VIVIANA — ENTRETENIMIENTO";
+                "VIANA — ENTRETENIMIENTO";
 
             description =
                 "Entretenimiento y música.";
@@ -393,7 +393,7 @@ document.addEventListener("DOMContentLoaded", function () {
         ) {
 
             program =
-                "NICOLÁS — DEPORTES";
+                "NIC — DEPORTES";
 
             description =
                 "Toda la actualidad deportiva.";
@@ -403,7 +403,7 @@ document.addEventListener("DOMContentLoaded", function () {
         else {
 
             program =
-                "MARTINA — RELAX";
+                "MAR — RELAX";
 
             description =
                 "Relax y música actual.";
