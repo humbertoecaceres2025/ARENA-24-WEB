@@ -1,451 +1,495 @@
 /* =====================================================
    ARENA 24
-   JAVASCRIPT PRINCIPAL
-   ===================================================== */
+   JAVASCRIPT
+   REPRODUCTOR ESTABLE
+===================================================== */
 
-document.addEventListener("DOMContentLoaded", () => {
-
-
-  /* ===================================================
-     RADIO
-     =================================================== */
-
-  const radio = document.getElementById("radioPlayer");
-
-  const playBtn = document.getElementById("playBtn");
-
-  const playerStatus =
-    document.getElementById("playerStatus");
-
-  const playerTitle =
-    document.getElementById("playerTitle");
-
-  const volume =
-    document.getElementById("volume");
-
-  const volumeLabel =
-    document.getElementById("volumeLabel");
-
-  const radioCard =
-    document.querySelector(".radio-player");
+document.addEventListener("DOMContentLoaded", function () {
 
 
-  if (radio) {
+    /* =================================================
+       RADIO
+    ================================================= */
 
-    radio.volume = 0.85;
+    const radio =
+        document.getElementById("radioPlayer");
+
+    const playButton =
+        document.getElementById("playButton");
+
+    const volume =
+        document.getElementById("volume");
+
+    const volumeValue =
+        document.getElementById("volumeValue");
+
+    const radioStatus =
+        document.getElementById("radioStatus");
+
+    const radioTitle =
+        document.getElementById("radioTitle");
+
+    const radioBox =
+        document.querySelector(".radio-box");
 
 
-    function updateVolume() {
+    if (radio && playButton) {
 
-      const value =
-        Number(volume.value);
-
-      radio.volume = value;
-
-      volumeLabel.textContent =
-        Math.round(value * 100) + "%";
-    }
-
-
-    volume.addEventListener(
-      "input",
-      updateVolume
-    );
-
-
-    async function playRadio() {
-
-      try {
-
-        playerStatus.textContent =
-          "Conectando con ARENA 24...";
-
-        playBtn.disabled = true;
 
         /*
-          Reiniciamos el elemento para asegurarnos
-          de utilizar correctamente el stream.
-        */
+         * VOLUMEN INICIAL
+         */
 
-        radio.load();
+        radio.volume = 0.85;
 
-        await radio.play();
 
-        playBtn.textContent = "Ⅱ";
+        /*
+         * BOTÓN PLAY / PAUSA
+         *
+         * IMPORTANTE:
+         * NO usamos radio.load()
+         * NO cambiamos radio.src
+         */
 
-        playerTitle.textContent =
-          "ARENA 24 — EN VIVO";
+        playButton.addEventListener(
+            "click",
+            async function () {
 
-        playerStatus.textContent =
-          "Transmitiendo desde La Rioja";
+                if (radio.paused) {
 
-        radioCard.classList.add("playing");
+                    radioStatus.textContent =
+                        "Conectando con ARENA 24...";
 
-      }
+                    playButton.disabled = true;
 
-      catch (error) {
+                    try {
 
-        console.error(
-          "Error al reproducir:",
-          error
+                        await radio.play();
+
+                    }
+
+                    catch (error) {
+
+                        console.error(
+                            "Error de reproducción:",
+                            error
+                        );
+
+                        radioStatus.textContent =
+                            "No se pudo iniciar. Presioná PLAY nuevamente.";
+
+                        radioBox.classList.remove(
+                            "playing"
+                        );
+
+                    }
+
+                    finally {
+
+                        playButton.disabled = false;
+
+                    }
+
+                }
+
+                else {
+
+                    radio.pause();
+
+                }
+
+            }
         );
 
-        playerStatus.textContent =
-          "Presioná PLAY nuevamente para conectar";
 
-        playBtn.textContent = "▶";
+        /*
+         * CUANDO COMIENZA EL AUDIO
+         */
 
-        radioCard.classList.remove(
-          "playing"
+        radio.addEventListener(
+            "playing",
+            function () {
+
+                playButton.textContent =
+                    "Ⅱ";
+
+                playButton.setAttribute(
+                    "aria-label",
+                    "Pausar radio"
+                );
+
+                radioTitle.textContent =
+                    "ARENA 24 — EN VIVO";
+
+                radioStatus.textContent =
+                    "Transmitiendo desde La Rioja";
+
+                radioBox.classList.add(
+                    "playing"
+                );
+
+            }
         );
 
-      }
 
-      finally {
+        /*
+         * PAUSA
+         */
 
-        playBtn.disabled = false;
+        radio.addEventListener(
+            "pause",
+            function () {
 
-      }
+                playButton.textContent =
+                    "▶";
 
-    }
+                playButton.setAttribute(
+                    "aria-label",
+                    "Reproducir radio"
+                );
 
+                radioStatus.textContent =
+                    "Radio pausada";
 
-    function pauseRadio() {
+                radioBox.classList.remove(
+                    "playing"
+                );
 
-      radio.pause();
-
-      playBtn.textContent = "▶";
-
-      playerStatus.textContent =
-        "Radio pausada";
-
-      radioCard.classList.remove(
-        "playing"
-      );
-
-    }
+            }
+        );
 
 
-    playBtn.addEventListener(
-      "click",
-      () => {
+        /*
+         * BUFFER / CONEXIÓN
+         */
 
-        if (radio.paused) {
+        radio.addEventListener(
+            "waiting",
+            function () {
 
-          playRadio();
+                radioStatus.textContent =
+                    "Conectando...";
 
-        } else {
+            }
+        );
 
-          pauseRadio();
+
+        /*
+         * AUDIO LISTO
+         */
+
+        radio.addEventListener(
+            "canplay",
+            function () {
+
+                if (!radio.paused) {
+
+                    radioStatus.textContent =
+                        "Transmitiendo desde La Rioja";
+
+                }
+
+            }
+        );
+
+
+        /*
+         * ERROR
+         */
+
+        radio.addEventListener(
+            "error",
+            function () {
+
+                console.error(
+                    "Error del stream:",
+                    radio.error
+                );
+
+                playButton.textContent =
+                    "▶";
+
+                radioStatus.textContent =
+                    "Error de conexión. Probá nuevamente.";
+
+                radioBox.classList.remove(
+                    "playing"
+                );
+
+            }
+        );
+
+
+        /*
+         * VOLUMEN
+         */
+
+        if (volume) {
+
+            volume.addEventListener(
+                "input",
+                function () {
+
+                    const value =
+                        Number(volume.value);
+
+                    radio.volume =
+                        value;
+
+                    volumeValue.textContent =
+                        Math.round(value * 100) + "%";
+
+                }
+            );
 
         }
 
-      }
+    }
+
+
+
+    /* =================================================
+       FILTRO DE NOTICIAS
+    ================================================= */
+
+    const filters =
+        document.querySelectorAll(".filter");
+
+    const news =
+        document.querySelectorAll(".news-card");
+
+
+    filters.forEach(
+        function (filter) {
+
+            filter.addEventListener(
+                "click",
+                function () {
+
+                    filters.forEach(
+                        function (button) {
+
+                            button.classList.remove(
+                                "active"
+                            );
+
+                        }
+                    );
+
+
+                    filter.classList.add(
+                        "active"
+                    );
+
+
+                    const category =
+                        filter.dataset.category;
+
+
+                    news.forEach(
+                        function (card) {
+
+                            if (
+                                category === "all" ||
+                                card.dataset.category === category
+                            ) {
+
+                                card.style.display =
+                                    "";
+
+                            }
+
+                            else {
+
+                                card.style.display =
+                                    "none";
+
+                            }
+
+                        }
+                    );
+
+                }
+            );
+
+        }
     );
 
 
-    radio.addEventListener(
-      "playing",
-      () => {
 
-        playBtn.textContent = "Ⅱ";
+    /* =================================================
+       PROGRAMACIÓN AUTOMÁTICA
+    ================================================= */
 
-        playerTitle.textContent =
-          "ARENA 24 — EN VIVO";
-
-        playerStatus.textContent =
-          "Transmitiendo desde La Rioja";
-
-        radioCard.classList.add(
-          "playing"
+    const currentProgram =
+        document.getElementById(
+            "currentProgram"
         );
 
-      }
-    );
-
-
-    radio.addEventListener(
-      "pause",
-      () => {
-
-        playBtn.textContent = "▶";
-
-        radioCard.classList.remove(
-          "playing"
-        );
-
-      }
-    );
-
-
-    radio.addEventListener(
-      "waiting",
-      () => {
-
-        playerStatus.textContent =
-          "Conectando...";
-
-      }
-    );
-
-
-    radio.addEventListener(
-      "error",
-      () => {
-
-        console.error(
-          "No se pudo reproducir el stream."
-        );
-
-        playerStatus.textContent =
-          "No se pudo conectar. Probá nuevamente.";
-
-        playBtn.textContent = "▶";
-
-        radioCard.classList.remove(
-          "playing"
-        );
-
-      }
-    );
-
-  }
-
-
-  /* ===================================================
-     NOTICIAS
-     =================================================== */
-
-  const filters =
-    document.querySelectorAll(".filter");
-
-  const newsCards =
-    document.querySelectorAll(".news-card");
-
-
-  filters.forEach(filter => {
-
-    filter.addEventListener(
-      "click",
-      () => {
-
-        filters.forEach(button => {
-
-          button.classList.remove(
-            "active"
-          );
-
-        });
-
-
-        filter.classList.add(
-          "active"
+    const currentDescription =
+        document.getElementById(
+            "currentDescription"
         );
 
 
-        const category =
-          filter.dataset.category;
+    function updateProgram() {
+
+        const now =
+            new Date();
+
+        const hour =
+            now.getHours();
 
 
-        newsCards.forEach(card => {
+        let program =
+            "ARENA 24 RADIO";
 
-          if (
-            category === "todos" ||
-            card.dataset.category === category
-          ) {
+        let description =
+            "Siempre con vos.";
 
-            card.style.display = "";
 
-          } else {
+        if (
+            hour >= 6 &&
+            hour < 12
+        ) {
 
-            card.style.display = "none";
+            program =
+                "ENRIQUE — NOTICIAS";
 
-          }
+            description =
+                "Noticias, actualidad y La Rioja.";
 
-        });
+        }
 
-      }
+        else if (
+            hour >= 12 &&
+            hour < 16
+        ) {
+
+            program =
+                "ARENA 24 SIESTA";
+
+            description =
+                "Música y compañía.";
+
+        }
+
+        else if (
+            hour >= 16 &&
+            hour < 20
+        ) {
+
+            program =
+                "VIVIANA — ENTRETENIMIENTO";
+
+            description =
+                "Entretenimiento y música.";
+
+        }
+
+        else if (
+            hour >= 20 &&
+            hour < 23
+        ) {
+
+            program =
+                "NICOLÁS — DEPORTES";
+
+            description =
+                "Toda la actualidad deportiva.";
+
+        }
+
+        else {
+
+            program =
+                "MARTINA — RELAX";
+
+            description =
+                "Relax y música actual.";
+
+        }
+
+
+        if (currentProgram) {
+
+            currentProgram.textContent =
+                program;
+
+        }
+
+
+        if (currentDescription) {
+
+            currentDescription.textContent =
+                description;
+
+        }
+
+    }
+
+
+    updateProgram();
+
+
+    setInterval(
+        updateProgram,
+        60000
     );
 
-  });
 
 
-  /* ===================================================
-     PROGRAMACIÓN AUTOMÁTICA
-     =================================================== */
+    /* =================================================
+       ANIMACIÓN DE SECCIONES
+    ================================================= */
 
-  const currentProgram =
-    document.getElementById(
-      "currentProgram"
-    );
-
-  const currentDescription =
-    document.getElementById(
-      "currentDescription"
-    );
-
-
-  function updateProgram() {
-
-    const now =
-      new Date();
-
-    const hour =
-      now.getHours();
-
-
-    let program =
-      "ARENA 24 RADIO";
-
-    let description =
-      "Siempre con vos.";
+    const sections =
+        document.querySelectorAll(
+            ".section"
+        );
 
 
     if (
-      hour >= 6 &&
-      hour < 12
+        "IntersectionObserver"
+        in window
     ) {
 
-      program =
-        "ENRIQUE — NOTICIAS";
+        const observer =
+            new IntersectionObserver(
+                function (entries) {
 
-      description =
-        "Noticias y actualidad de La Rioja, Argentina y el mundo.";
+                    entries.forEach(
+                        function (entry) {
 
-    }
+                            if (
+                                entry.isIntersecting
+                            ) {
 
-    else if (
-      hour >= 12 &&
-      hour < 16
-    ) {
+                                entry.target.classList.add(
+                                    "visible"
+                                );
 
-      program =
-        "ARENA 24 SIESTA";
+                            }
 
-      description =
-        "Música y compañía.";
+                        }
+                    );
 
-    }
-
-    else if (
-      hour >= 16 &&
-      hour < 20
-    ) {
-
-      program =
-        "VIVIANA — ENTRETENIMIENTO";
-
-      description =
-        "Entretenimiento, música y actualidad.";
-
-    }
-
-    else if (
-      hour >= 20 &&
-      hour < 23
-    ) {
-
-      program =
-        "NICOLÁS — DEPORTES";
-
-      description =
-        "Toda la actualidad deportiva.";
-
-    }
-
-    else {
-
-      program =
-        "MARTINA — RELAX";
-
-      description =
-        "Relax y música actual.";
-
-    }
+                },
+                {
+                    threshold: 0.08
+                }
+            );
 
 
-    if (currentProgram) {
+        sections.forEach(
+            function (section) {
 
-      currentProgram.textContent =
-        program;
-
-    }
-
-
-    if (currentDescription) {
-
-      currentDescription.textContent =
-        description;
-
-    }
-
-  }
-
-
-  updateProgram();
-
-  setInterval(
-    updateProgram,
-    60000
-  );
-
-
-  /* ===================================================
-     AÑO DEL FOOTER
-     =================================================== */
-
-  const year =
-    document.querySelector(
-      ".footer-year"
-    );
-
-
-  if (year) {
-
-    year.textContent =
-      new Date().getFullYear();
-
-  }
-
-
-  /* ===================================================
-     ANIMACIÓN SUAVE AL HACER SCROLL
-     =================================================== */
-
-  const sections =
-    document.querySelectorAll(
-      ".section"
-    );
-
-
-  const observer =
-    new IntersectionObserver(
-      entries => {
-
-        entries.forEach(
-          entry => {
-
-            if (entry.isIntersecting) {
-
-              entry.target.classList.add(
-                "visible"
-              );
+                observer.observe(section);
 
             }
-
-          }
         );
 
-      },
-      {
-        threshold: 0.08
-      }
-    );
-
-
-  sections.forEach(
-    section => observer.observe(section)
-  );
+    }
 
 
 });
