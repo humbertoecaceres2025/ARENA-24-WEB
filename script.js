@@ -1,92 +1,94 @@
-/* =====================================================
-   ARENA 24 - APP 4.0
-===================================================== */
+/* ==================================================
+   ARENA 24 — PROGRAMACIÓN 4.1
+   El audio NO es controlado por JavaScript.
+   ================================================== */
 
-
-/* =========================
-   PROGRAMACIÓN
-========================= */
 
 const programas = [
 
   {
     inicio: 0,
     fin: 6,
-    nombre: "Martina",
-    descripcion: "Relax y música actual durante la noche."
+    nombre: "MAR",
+    descripcion:
+      "Relax y música actual durante la noche."
   },
 
   {
     inicio: 6,
     fin: 12,
-    nombre: "Enrique",
-    descripcion: "Noticias, actualidad y la información de La Rioja, Argentina y el mundo."
+    nombre: "ENRIQUE",
+    descripcion:
+      "Noticias, actualidad y la información de La Rioja, Argentina y el mundo."
   },
 
   {
     inicio: 12,
     fin: 16,
-    nombre: "ARENA 24 Siesta",
-    descripcion: "Música para acompañarte durante la siesta."
+    nombre: "ARENA 24 SIESTA",
+    descripcion:
+      "Música para acompañarte durante la siesta."
   },
 
   {
     inicio: 16,
     fin: 20,
-    nombre: "Viviana",
-    descripcion: "Entretenimiento, música y compañía."
+    nombre: "VIANA",
+    descripcion:
+      "Entretenimiento, música y compañía."
   },
 
   {
     inicio: 20,
     fin: 23,
-    nombre: "Nicolás",
-    descripcion: "Toda la actualidad deportiva."
+    nombre: "NIC",
+    descripcion:
+      "Toda la actualidad deportiva."
   },
 
   {
     inicio: 23,
     fin: 24,
-    nombre: "Martina",
-    descripcion: "Relax y música actual."
+    nombre: "MAR",
+    descripcion:
+      "Relax y música actual."
   }
 
 ];
 
 
-/* =========================
-   OBTENER PROGRAMA
-========================= */
+/* ================= PROGRAMA ACTUAL ================= */
 
 function obtenerProgramaActual() {
 
-  const ahora = new Date();
+  const hora =
+    new Date().getHours();
 
-  const hora = ahora.getHours();
-
-  return programas.find(programa => {
-
-    return hora >= programa.inicio &&
-           hora < programa.fin;
-
-  });
+  return programas.find(
+    programa =>
+      hora >= programa.inicio &&
+      hora < programa.fin
+  );
 
 }
 
 
-/* =========================
-   ACTUALIZAR AHORA EN VIVO
-========================= */
+/* ================= ACTUALIZAR PROGRAMA ================= */
 
 function actualizarPrograma() {
 
-  const programa = obtenerProgramaActual();
+  const programa =
+    obtenerProgramaActual();
 
   const nombre =
-    document.getElementById("programaActual");
+    document.getElementById(
+      "programaActual"
+    );
 
   const descripcion =
-    document.getElementById("descripcionActual");
+    document.getElementById(
+      "descripcionActual"
+    );
 
 
   if (!nombre || !descripcion) {
@@ -107,14 +109,14 @@ function actualizarPrograma() {
 }
 
 
-/* =========================
-   RELOJ
-========================= */
+/* ================= RELOJ ================= */
 
 function actualizarReloj() {
 
   const reloj =
-    document.getElementById("horaActual");
+    document.getElementById(
+      "horaActual"
+    );
 
 
   if (!reloj) {
@@ -122,17 +124,20 @@ function actualizarReloj() {
   }
 
 
-  const ahora = new Date();
+  const ahora =
+    new Date();
 
 
   const horas =
-    String(ahora.getHours())
-      .padStart(2, "0");
+    String(
+      ahora.getHours()
+    ).padStart(2, "0");
 
 
   const minutos =
-    String(ahora.getMinutes())
-      .padStart(2, "0");
+    String(
+      ahora.getMinutes()
+    ).padStart(2, "0");
 
 
   reloj.textContent =
@@ -141,9 +146,7 @@ function actualizarReloj() {
 }
 
 
-/* =========================
-   INICIO
-========================= */
+/* ================= INICIO ================= */
 
 function iniciarArena24() {
 
@@ -154,9 +157,13 @@ function iniciarArena24() {
 }
 
 
-/* =========================
-   ACTUALIZACIONES
-========================= */
+document.addEventListener(
+  "DOMContentLoaded",
+  iniciarArena24
+);
+
+
+/* ================= ACTUALIZACIÓN ================= */
 
 setInterval(
   actualizarReloj,
@@ -167,10 +174,4 @@ setInterval(
 setInterval(
   actualizarPrograma,
   60000
-);
-
-
-document.addEventListener(
-  "DOMContentLoaded",
-  iniciarArena24
 );
