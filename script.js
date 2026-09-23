@@ -1,1128 +1,351 @@
-/* =====================================================
+/* =========================================
    ARENA 24 RADIO WEB
-   JAVASCRIPT PRINCIPAL
-===================================================== */
+   JavaScript principal
+========================================= */
 
 
-/* =====================================================
-   CONFIGURACIÓN
-===================================================== */
-
-const ARENA24 = {
-
-  stream:
-    "https://stream.zeno.fm/zuw6xmmwmd0uv",
-
-  facebook:
-    "https://www.facebook.com/arena24radiolarioja",
-
-  instagram:
-    "https://www.instagram.com/arena24radio/",
-
-  youtube:
-    "https://www.youtube.com/@ARENA24LARIOJA",
-
-  whatsapp:
-    "https://wa.me/543804844124",
-
-  email:
-    "arena24radio@gmail.com"
-
-};
-
-
-/* =====================================================
-   PLAYER
-===================================================== */
+/* =========================================
+   REPRODUCTOR DE RADIO
+========================================= */
 
 const radio =
   document.getElementById("radioPlayer");
 
-const playButton =
-  document.getElementById("playButton");
+const playBtn =
+  document.getElementById("playBtn");
 
-const volumeControl =
-  document.getElementById("volumeControl");
+const volume =
+  document.getElementById("volume");
 
-const playerStatus =
-  document.getElementById("playerStatus");
+const volumeLabel =
+  document.getElementById("volumeLabel");
+
+const radioCard =
+  document.querySelector(".radio-card");
+
+const nowStatus =
+  document.getElementById("nowStatus");
 
 
 /* Volumen inicial */
 
-radio.volume = 0.85;
+radio.volume =
+  Number(volume.value);
 
 
 /* PLAY / PAUSE */
 
-playButton.addEventListener(
-  "click",
-  async function () {
+async function toggleRadio() {
+
+  if (radio.paused) {
 
     try {
 
-      if (radio.paused) {
+      await radio.play();
 
-        playerStatus.textContent =
-          "Conectando con ARENA 24...";
+      playBtn.textContent = "❚❚";
 
-        await radio.play();
-
-        playButton.textContent =
-          "❚❚";
-
-        playerStatus.textContent =
-          "Transmitiendo en vivo";
-
-      }
-
-      else {
-
-        radio.pause();
-
-        playButton.textContent =
-          "▶";
-
-        playerStatus.textContent =
-          "Radio pausada";
-
-      }
-
-    }
-
-    catch (error) {
-
-      console.error(
-        "Error del reproductor:",
-        error
+      playBtn.setAttribute(
+        "aria-label",
+        "Pausar radio"
       );
 
-      playerStatus.textContent =
-        "No se pudo conectar. Intentá nuevamente.";
+      radioCard.classList.add(
+        "playing"
+      );
+
+      nowStatus.textContent =
+        "ARENA 24 está sonando en vivo";
+
+    } catch (error) {
+
+      nowStatus.textContent =
+        "No se pudo iniciar el audio. Tocá reproducir nuevamente.";
 
     }
 
+  } else {
+
+    radio.pause();
+
+    playBtn.textContent = "▶";
+
+    playBtn.setAttribute(
+      "aria-label",
+      "Reproducir radio"
+    );
+
+    radioCard.classList.remove(
+      "playing"
+    );
+
+    nowStatus.textContent =
+      "Radio pausada";
   }
+}
+
+
+playBtn.addEventListener(
+  "click",
+  toggleRadio
 );
 
 
-/* VOLUMEN */
+/* CONTROL DE VOLUMEN */
 
-volumeControl.addEventListener(
+volume.addEventListener(
   "input",
-  function () {
+  () => {
 
     radio.volume =
-      this.value;
+      Number(volume.value);
+
+    volumeLabel.textContent =
+      Math.round(
+        Number(volume.value) * 100
+      ) + "%";
 
   }
 );
 
 
-/* EVENTOS DEL STREAM */
-
-radio.addEventListener(
-  "playing",
-  function () {
-
-    playerStatus.textContent =
-      "Transmitiendo en vivo";
-
-    playButton.textContent =
-      "❚❚";
-
-  }
-);
-
-
-radio.addEventListener(
-  "waiting",
-  function () {
-
-    playerStatus.textContent =
-      "Conectando...";
-
-  }
-);
-
+/* ERROR DE STREAM */
 
 radio.addEventListener(
   "error",
-  function () {
+  () => {
 
-    playerStatus.textContent =
-      "Stream temporalmente no disponible";
+    nowStatus.textContent =
+      "La señal no está disponible en este momento.";
+
+    radioCard.classList.remove(
+      "playing"
+    );
+
+    playBtn.textContent = "▶";
 
   }
 );
 
 
+/* =========================================
+   FILTRO DE NOTICIAS
+========================================= */
 
-/* =====================================================
-   CONSOLA
-===================================================== */
+const filters =
+  document.querySelectorAll(
+    ".filter"
+  );
 
-console.log(
-  "ARENA 24 RADIO WEB cargada correctamente."
+const newsCards =
+  document.querySelectorAll(
+    ".news-card"
+  );
+
+
+filters.forEach(
+  button => {
+
+    button.addEventListener(
+      "click",
+      () => {
+
+        filters.forEach(
+          item =>
+            item.classList.remove(
+              "active"
+            )
+        );
+
+        button.classList.add(
+          "active"
+        );
+
+        const filter =
+          button.dataset.filter;
+
+
+        newsCards.forEach(
+          card => {
+
+            if (
+              filter === "todas" ||
+              card.dataset.category === filter
+            ) {
+
+              card.style.display = "";
+
+            } else {
+
+              card.style.display =
+                "none";
+
+            }
+
+          }
+        );
+
+      }
+    );
+
+  }
 );
 
-console.log(
-  "Stream:",
-  ARENA24.stream
-);
 
-/* =====================================================
-   ARENA 24 TV — CONFIGURACIÓN
-===================================================== */
+/* =========================================
+   PROGRAMACIÓN DINÁMICA
+========================================= */
 
-/*
-   CUANDO TENGAS EL ID DEL CANAL DE YOUTUBE,
-   CAMBIA SOLAMENTE ESTA LÍNEA.
+const programs = [
 
-   Ejemplo:
+  {
+    start: 6,
+    end: 12,
+    name: "Enri",
+    text:
+      "Noticias · La Rioja · Argentina · Mundo"
+  },
 
-   const arena24ChannelID =
-   "UC123456789xxxxxxxxxxxx";
-*/
+  {
+    start: 12,
+    end: 16,
+    name: "ARENA 24 Siesta",
+    text:
+      "Música y compañía"
+  },
 
-const arena24ChannelID = "UCrHexRcAlWkaTn8P-BLT3LA";
+  {
+    start: 16,
+    end: 20,
+    name: "Viana",
+    text:
+      "Entretenimiento y actualidad"
+  },
 
+  {
+    start: 20,
+    end: 23,
+    name: "Nic",
+    text:
+      "Deportes y protagonistas"
+  },
 
-/* =====================================================
-   SISTEMA
-===================================================== */
+  {
+    start: 23,
+    end: 24,
+    name: "Mar",
+    text:
+      "Relax y música actual"
+  },
 
-const arena24Frame =
-  document.getElementById("arena24YouTube");
-
-const arena24Loading =
-  document.getElementById("arena24Loading");
-
-const arena24Status =
-  document.getElementById("arena24StatusText");
-
-
-function arena24IniciarTV() {
-
-  if (
-    !arena24ChannelID ||
-    arena24ChannelID === "UCrHexRcAlWkaTn8P-BLT3LA"
-  ) {
-
-    arena24Status.textContent =
-      "ARENA 24 TV — esperando configuración del canal";
-
-    arena24Loading.innerHTML = `
-      <div class="arena24-spinner"></div>
-      <span>
-        ARENA 24 TV estará disponible cuando agregues
-        el ID del canal de YouTube.
-      </span>
-    `;
-
-    return;
+  {
+    start: 0,
+    end: 6,
+    name: "Mar",
+    text:
+      "Relax y música actual"
   }
 
-
-  /*
-     YouTube permite utilizar el parámetro
-     "channel" para cargar el contenido del canal.
-  */
-
-  const youtubeURL =
-    "https://www.youtube.com/embed/live_stream" +
-    "?channel=" +
-    encodeURIComponent(arena24ChannelID) +
-    "&autoplay=1" +
-    "&mute=1" +
-    "&rel=0";
-
-  arena24Frame.src = youtubeURL;
+];
 
 
-  arena24Frame.addEventListener("load", function () {
+function updateCurrentProgram() {
 
-    arena24Loading.style.display = "none";
+  const hour =
+    new Date().getHours();
 
-    arena24Status.textContent =
-      "ARENA 24 TV — transmisión de YouTube";
+  const program =
+    programs.find(
+      item =>
+        hour >= item.start &&
+        hour < item.end
+    );
 
-  });
+
+  const box =
+    document.getElementById(
+      "currentProgram"
+    );
+
+
+  if (program) {
+
+    box.innerHTML =
+      "<strong>AHORA:</strong> " +
+      program.name +
+      " — " +
+      program.text;
+
+  }
 
 }
 
 
-/* Iniciar */
+updateCurrentProgram();
 
-arena24IniciarTV();
 
-<!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+setInterval(
+  updateCurrentProgram,
+  60000
+);
 
-<title>ARENA 24 INFORMA</title>
 
-<link rel="stylesheet" href="noticias.css">
-</head>
+/* =========================================
+   AÑO AUTOMÁTICO
+========================================= */
 
-<body>
+document.getElementById(
+  "year"
+).textContent =
+  new Date().getFullYear();
 
 
+/* =========================================
+   MENÚ MÓVIL
+========================================= */
 
-            ARENA 24 INFORMA · Noticias de La Rioja,
-            Argentina y el mundo
+const menuToggle =
+  document.getElementById(
+    "menuToggle"
+  );
 
+const mainNav =
+  document.getElementById(
+    "mainNav"
+  );
 
-    </div>
 
-</section>
+menuToggle.addEventListener(
+  "click",
+  () => {
 
-
-</body>
-</html>
-
-
-
-
-/* =========================================================
-   ARENA 24 RADIO WEB 4.0
-   JavaScript principal
-   ========================================================= */
-
-document.addEventListener("DOMContentLoaded", () => {
-
-    /* =========================
-       ELEMENTOS
-       ========================= */
-
-    const audio = document.getElementById("radioAudio");
-    const playButton = document.getElementById("playButton");
-    const muteButton = document.getElementById("muteButton");
-    const volumeControl = document.getElementById("volumeControl");
-
-    const radioPlayer = document.getElementById("radioPlayer");
-    const playerMessage = document.getElementById("playerMessage");
-
-    const menuButton = document.getElementById("menuButton");
-    const mainMenu = document.getElementById("mainMenu");
-
-    const updateNews = document.getElementById("updateNews");
-    const newsContainer = document.getElementById("newsContainer");
-
-
-    /* =========================
-       CONFIGURACIÓN DEL AUDIO
-       ========================= */
-
-    if (audio) {
-        audio.volume = volumeControl
-            ? Number(volumeControl.value)
-            : 0.8;
-    }
-
-
-    /* =========================
-       REPRODUCTOR PLAY / PAUSE
-       ========================= */
-
-    if (playButton && audio) {
-
-        playButton.addEventListener("click", async () => {
-
-            if (audio.paused) {
-
-                playerMessage.textContent =
-                    "Conectando con ARENA 24...";
-
-                try {
-
-                    await audio.play();
-
-                } catch (error) {
-
-                    console.error(
-                        "Error al iniciar la radio:",
-                        error
-                    );
-
-                    playerMessage.textContent =
-                        "No se pudo iniciar la transmisión. Tocá PLAY nuevamente.";
-
-                    radioPlayer.classList.remove("playing");
-                }
-
-            } else {
-
-                audio.pause();
-            }
-
-        });
-    }
-
-
-    /* =========================
-       AUDIO REPRODUCIÉNDOSE
-       ========================= */
-
-    if (audio) {
-
-        audio.addEventListener("playing", () => {
-
-            if (playButton) {
-                playButton.textContent = "❚❚";
-                playButton.setAttribute(
-                    "aria-label",
-                    "Pausar radio"
-                );
-            }
-
-            if (playerMessage) {
-                playerMessage.textContent =
-                    "ARENA 24 está transmitiendo EN VIVO.";
-            }
-
-            if (radioPlayer) {
-                radioPlayer.classList.add("playing");
-            }
-
-        });
-
-
-        /* =========================
-           AUDIO PAUSADO
-           ========================= */
-
-        audio.addEventListener("pause", () => {
-
-            if (playButton) {
-                playButton.textContent = "▶";
-                playButton.setAttribute(
-                    "aria-label",
-                    "Reproducir radio"
-                );
-            }
-
-            if (playerMessage) {
-                playerMessage.textContent =
-                    "Radio pausada.";
-            }
-
-            if (radioPlayer) {
-                radioPlayer.classList.remove("playing");
-            }
-
-        });
-
-
-        /* =========================
-           ERROR DE CONEXIÓN
-           ========================= */
-
-        audio.addEventListener("error", () => {
-
-            if (playButton) {
-                playButton.textContent = "▶";
-            }
-
-            if (radioPlayer) {
-                radioPlayer.classList.remove("playing");
-            }
-
-            if (playerMessage) {
-                playerMessage.textContent =
-                    "No se pudo conectar al streaming. Intentá nuevamente.";
-            }
-
-        });
-    }
-
-
-    /* =========================
-       CONTROL DE VOLUMEN
-       ========================= */
-
-    if (volumeControl && audio) {
-
-        volumeControl.addEventListener("input", () => {
-
-            audio.volume =
-                Number(volumeControl.value);
-
-            audio.muted = false;
-
-            if (muteButton) {
-                muteButton.textContent = "🔊";
-            }
-
-        });
-    }
-
-
-    /* =========================
-       MUTE / SONIDO
-       ========================= */
-
-    if (muteButton && audio) {
-
-        muteButton.addEventListener("click", () => {
-
-            audio.muted = !audio.muted;
-
-            if (audio.muted) {
-
-                muteButton.textContent = "🔇";
-
-            } else {
-
-                muteButton.textContent = "🔊";
-            }
-
-        });
-    }
-
-
-    /* =========================
-       MENÚ PARA CELULAR
-       ========================= */
-
-    if (menuButton && mainMenu) {
-
-        menuButton.addEventListener("click", () => {
-
-            mainMenu.classList.toggle("open");
-
-        });
-
-
-        const menuLinks =
-            mainMenu.querySelectorAll("a");
-
-        menuLinks.forEach(link => {
-
-            link.addEventListener("click", () => {
-
-                mainMenu.classList.remove("open");
-
-            });
-
-        });
-    }
-
-
-    /* =========================================================
-       NOTICIAS
-       ========================================================= */
-
-    const RSS_PROXY =
-        "https://api.rss2json.com/v1/api.json?rss_url=";
-
-
-    const fuentes = [
-
-        {
-            categoria: "LA RIOJA",
-            url:
-                "https://news.google.com/rss/search?q=La+Rioja+Argentina&hl=es-419&gl=AR&ceid=AR:es-419"
-        },
-
-        {
-            categoria: "ARGENTINA",
-            url:
-                "https://news.google.com/rss/search?q=Argentina&hl=es-419&gl=AR&ceid=AR:es-419"
-        },
-
-        {
-            categoria: "DEPORTES",
-            url:
-                "https://news.google.com/rss/search?q=Argentina+Deportes&hl=es-419&gl=AR&ceid=AR:es-419"
-        }
-
-    ];
-
-
-    /* =========================
-       SEGURIDAD HTML
-       ========================= */
-
-    function escaparHTML(texto) {
-
-        if (!texto) return "";
-
-        return String(texto)
-            .replace(/&/g, "&amp;")
-            .replace(/</g, "&lt;")
-            .replace(/>/g, "&gt;")
-            .replace(/"/g, "&quot;")
-            .replace(/'/g, "&#039;");
-    }
-
-
-    /* =========================
-       LIMPIAR DESCRIPCIÓN
-       ========================= */
-
-    function limpiarDescripcion(texto) {
-
-        if (!texto) {
-            return "Información disponible en la fuente original.";
-        }
-
-        const temporal =
-            document.createElement("div");
-
-        temporal.innerHTML = texto;
-
-        let resultado =
-            temporal.textContent ||
-            temporal.innerText ||
-            "";
-
-        resultado =
-            resultado.replace(/\s+/g, " ").trim();
-
-        if (resultado.length > 180) {
-            resultado =
-                resultado.substring(0, 180) + "...";
-        }
-
-        return resultado;
-    }
-
-
-    /* =========================
-       CARGAR UNA FUENTE RSS
-       ========================= */
-
-    async function cargarFuente(fuente) {
-
-        const url =
-            RSS_PROXY +
-            encodeURIComponent(fuente.url);
-
-        try {
-
-            const respuesta =
-                await fetch(url);
-
-            if (!respuesta.ok) {
-                throw new Error(
-                    "Error HTTP " + respuesta.status
-                );
-            }
-
-            const datos =
-                await respuesta.json();
-
-            if (
-                !datos.items ||
-                !Array.isArray(datos.items)
-            ) {
-                return [];
-            }
-
-            return datos.items.map(item => {
-
-                return {
-
-                    categoria:
-                        fuente.categoria,
-
-                    titulo:
-                        item.title || "Sin título",
-
-                    descripcion:
-                        limpiarDescripcion(
-                            item.description
-                        ),
-
-                    enlace:
-                        item.link || "#",
-
-                    fecha:
-                        item.pubDate || ""
-
-                };
-
-            });
-
-        } catch (error) {
-
-            console.error(
-                "Error cargando noticias:",
-                fuente.categoria,
-                error
-            );
-
-            return [];
-        }
-    }
-
-
-    /* =========================
-       MOSTRAR NOTICIAS
-       ========================= */
-
-    function mostrarNoticias(noticias) {
-
-        if (!newsContainer) return;
-
-
-        if (!noticias.length) {
-
-            newsContainer.innerHTML = `
-                <article class="news-card">
-                    <span class="news-category">
-                        ARENA 24
-                    </span>
-
-                    <h3>
-                        Noticias disponibles próximamente
-                    </h3>
-
-                    <p>
-                        No fue posible actualizar las fuentes
-                        de noticias en este momento.
-                    </p>
-                </article>
-            `;
-
-            return;
-        }
-
-
-        newsContainer.innerHTML =
-            noticias.map(noticia => {
-
-                return `
-                    <article class="news-card">
-
-                        <span class="news-category">
-                            ${escaparHTML(noticia.categoria)}
-                        </span>
-
-                        <h3>
-                            ${escaparHTML(noticia.titulo)}
-                        </h3>
-
-                        <p>
-                            ${escaparHTML(noticia.descripcion)}
-                        </p>
-
-                        <a
-                            href="${escaparHTML(noticia.enlace)}"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            Leer fuente original ↗
-                        </a>
-
-                    </article>
-                `;
-
-            }).join("");
-
-    }
-
-
-    /* =========================
-       ACTUALIZAR NOTICIAS
-       ========================= */
-
-    async function actualizarNoticias() {
-
-        if (!newsContainer) return;
-
-
-        newsContainer.innerHTML = `
-            <article class="news-card">
-                <span class="news-category">
-                    ARENA 24 INFORMA
-                </span>
-
-                <h3>
-                    Actualizando noticias...
-                </h3>
-
-                <p>
-                    Buscando información de La Rioja,
-                    Argentina y Deportes.
-                </p>
-            </article>
-        `;
-
-
-        const resultados =
-            await Promise.all(
-                fuentes.map(cargarFuente)
-            );
-
-
-        let todasLasNoticias =
-            resultados.flat();
-
-
-        /* Eliminar títulos repetidos */
-
-        const titulos = new Set();
-
-        todasLasNoticias =
-            todasLasNoticias.filter(noticia => {
-
-                const clave =
-                    noticia.titulo
-                        .toLowerCase()
-                        .trim();
-
-                if (titulos.has(clave)) {
-                    return false;
-                }
-
-                titulos.add(clave);
-
-                return true;
-            });
-
-
-        /* Ordenar por fecha */
-
-        todasLasNoticias.sort(
-            (a, b) =>
-                new Date(b.fecha) -
-                new Date(a.fecha)
-        );
-
-
-        /* Mostrar máximo 9 noticias */
-
-        todasLasNoticias =
-            todasLasNoticias.slice(0, 9);
-
-
-        mostrarNoticias(
-            todasLasNoticias
-        );
-
-    }
-
-
-    /* =========================
-       BOTÓN ACTUALIZAR
-       ========================= */
-
-    if (updateNews) {
-
-        updateNews.addEventListener(
-            "click",
-            actualizarNoticias
-        );
-
-    }
-
-
-    /* =========================
-       CARGA INICIAL
-       ========================= */
-
-    actualizarNoticias();
-
-
-    /* =========================
-       ACTUALIZACIÓN AUTOMÁTICA
-       CADA 15 MINUTOS
-       ========================= */
-
-    setInterval(
-        actualizarNoticias,
-        15 * 60 * 1000
+    mainNav.classList.toggle(
+      "open"
     );
 
+  }
+);
 
-    /* =========================
-       AÑO AUTOMÁTICO
-       ========================= */
 
-    const currentYear =
-        document.getElementById("currentYear");
+/* Cerrar menú al tocar un enlace */
 
-    if (currentYear) {
+document
+  .querySelectorAll(
+    "#mainNav a"
+  )
+  .forEach(
+    link => {
 
-        currentYear.textContent =
-            new Date().getFullYear();
+      link.addEventListener(
+        "click",
+        () => {
+
+          mainNav.classList.remove(
+            "open"
+          );
+
+        }
+      );
 
     }
-
-});
-
-/* =========================================================
-       PROGRAMACIÓN AUTOMÁTICA ARENA 24
-       ========================================================= */
-
-    const currentProgramCategory =
-        document.getElementById("currentProgramCategory");
-
-    const currentProgramName =
-        document.getElementById("currentProgramName");
-
-    const currentProgramDescription =
-        document.getElementById("currentProgramDescription");
-
-    const currentProgramTime =
-        document.getElementById("currentProgramTime");
-
-    const scheduleGrid =
-        document.getElementById("scheduleGrid");
-
-
-    const programacionSemana = [
-
-        {
-            inicio: 0,
-            fin: 6,
-            nombre: "ARENA 24 Madrugada",
-            categoria: "MÚSICA",
-            descripcion:
-                "Música para acompañarte durante la madrugada.",
-            conductor: "ARENA 24",
-            horario: "00:00 - 06:00"
-        },
-
-        {
-            inicio: 6,
-            fin: 10,
-            nombre: "ARENA 24 Noticias",
-            categoria: "NOTICIAS",
-            descripcion:
-                "Noticias de La Rioja, Argentina y el mundo.",
-            conductor: "Enri",
-            horario: "06:00 - 10:00"
-        },
-
-        {
-            inicio: 10,
-            fin: 14,
-            nombre: "ARENA 24 Entretenimiento",
-            categoria: "ENTRETENIMIENTO",
-            descripcion:
-                "Música, actualidad, entretenimiento y compañía.",
-            conductor: "Viana",
-            horario: "10:00 - 14:00"
-        },
-
-        {
-            inicio: 14,
-            fin: 18,
-            nombre: "ARENA 24 Música",
-            categoria: "MÚSICA",
-            descripcion:
-                "Los mejores sonidos para acompañar tu tarde.",
-            conductor: "ARENA 24",
-            horario: "14:00 - 18:00"
-        },
-
-        {
-            inicio: 18,
-            fin: 22,
-            nombre: "ARENA 24 Deportes",
-            categoria: "DEPORTES",
-            descripcion:
-                "Información y actualidad deportiva.",
-            conductor: "Nics",
-            horario: "18:00 - 22:00"
-        },
-
-        {
-            inicio: 22,
-            fin: 24,
-            nombre: "ARENA 24 Relax",
-            categoria: "RELAX",
-            descripcion:
-                "Música actual y sonidos para terminar el día.",
-            conductor: "Mar",
-            horario: "22:00 - 00:00"
-        }
-
-    ];
-
-
-    const programacionFinDeSemana = [
-
-        {
-            inicio: 0,
-            fin: 9,
-            nombre: "ARENA 24 Weekend",
-            categoria: "MÚSICA",
-            descripcion:
-                "Música para comenzar el fin de semana.",
-            conductor: "ARENA 24",
-            horario: "00:00 - 09:00"
-        },
-
-        {
-            inicio: 9,
-            fin: 13,
-            nombre: "ARENA 24 Entretenimiento",
-            categoria: "ENTRETENIMIENTO",
-            descripcion:
-                "Entretenimiento, música y actualidad.",
-            conductor: "Viana",
-            horario: "09:00 - 13:00"
-        },
-
-        {
-            inicio: 13,
-            fin: 18,
-            nombre: "ARENA 24 Deportes",
-            categoria: "DEPORTES",
-            descripcion:
-                "Actualidad deportiva y música.",
-            conductor: "Nics",
-            horario: "13:00 - 18:00"
-        },
-
-        {
-            inicio: 18,
-            fin: 22,
-            nombre: "ARENA 24 Especial",
-            categoria: "MÚSICA",
-            descripcion:
-                "Música, artistas y programación especial.",
-            conductor: "ARENA 24",
-            horario: "18:00 - 22:00"
-        },
-
-        {
-            inicio: 22,
-            fin: 24,
-            nombre: "ARENA 24 Relax",
-            categoria: "RELAX",
-            descripcion:
-                "Música actual para cerrar el día.",
-            conductor: "Mar",
-            horario: "22:00 - 00:00"
-        }
-
-    ];
-
-
-    function obtenerProgramacionActual() {
-
-        const ahora = new Date();
-
-        const hora =
-            ahora.getHours();
-
-        const dia =
-            ahora.getDay();
-
-        const esFinDeSemana =
-            dia === 0 || dia === 6;
-
-        const lista =
-            esFinDeSemana
-                ? programacionFinDeSemana
-                : programacionSemana;
-
-        return lista.find(programa =>
-            hora >= programa.inicio &&
-            hora < programa.fin
-        );
-    }
-
-
-    function mostrarProgramacion() {
-
-        if (!currentProgramName) {
-            return;
-        }
-
-        const programa =
-            obtenerProgramacionActual();
-
-        if (!programa) {
-            return;
-        }
-
-
-        currentProgramCategory.textContent =
-            programa.categoria;
-
-        currentProgramName.textContent =
-            programa.nombre;
-
-        currentProgramDescription.textContent =
-            programa.descripcion;
-
-        currentProgramTime.textContent =
-            programa.horario;
-
-
-        if (scheduleGrid) {
-
-            scheduleGrid.innerHTML =
-                programaListaActual()
-                    .map(item => {
-
-                        const activo =
-                            item.nombre ===
-                            programa.nombre;
-
-                        return `
-                            <article
-                                class="schedule-card
-                                ${activo ? "active" : ""}"
-                            >
-
-                                <span class="schedule-time">
-                                    ${item.horario}
-                                </span>
-
-                                <h3>
-                                    ${item.nombre}
-                                </h3>
-
-                                <p>
-                                    ${item.descripcion}
-                                </p>
-
-                                <span class="host">
-                                    🎙️ Conduce:
-                                    ${item.conductor}
-                                </span>
-
-                            </article>
-                        `;
-
-                    })
-                    .join("");
-        }
-
-    }
-
-
-    function programaListaActual() {
-
-        const ahora = new Date();
-
-        const dia =
-            ahora.getDay();
-
-        const esFinDeSemana =
-            dia === 0 || dia === 6;
-
-        return esFinDeSemana
-            ? programacionFinDeSemana
-            : programacionSemana;
-    }
-
-
-    mostrarProgramacion();
-
-
-    /* Actualizar cada minuto */
-
-    setInterval(
-        mostrarProgramacion,
-        60 * 1000
-    );
+  );
