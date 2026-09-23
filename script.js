@@ -1,388 +1,463 @@
 /* =========================================================
-   ARENA 24 RADIO Y TV
-   APP.JS PRO
+   ARENA 24 RADIO Y TV 5.0
    ========================================================= */
 
 
-/* ================= RADIO ================= */
+/* =========================================================
+   CONFIGURACIÓN
+   ========================================================= */
 
 const STREAM_URL =
-  "https://stream.zeno.fm/zuw6xmmwmd0uv";
+    "https://stream.zeno.fm/zuw6xmmwmd0uv";
 
 const TIME_ZONE =
-  "America/Argentina/La_Rioja";
+    "America/Argentina/La_Rioja";
 
+
+/*
+   TV_LIVE
+
+   false = TV fuera de aire + fondo cinematográfico
+   true  = TV YouTube en vivo
+
+   IMPORTANTE:
+   En GitHub Pages no podemos consultar de forma fiable
+   el estado LIVE de YouTube directamente desde el iframe.
+
+   Este sistema queda preparado para automatización.
+*/
+
+let TV_LIVE = false;
+
+
+/* =========================================================
+   ELEMENTOS RADIO
+   ========================================================= */
 
 const audio =
-  document.getElementById("arena24Audio");
+    document.getElementById(
+        "arena24Audio"
+    );
 
 const playButton =
-  document.getElementById("arena24Play");
+    document.getElementById(
+        "arena24Play"
+    );
 
 const playIcon =
-  document.getElementById("arena24PlayIcon");
-
-const volumeControl =
-  document.getElementById("arena24Volume");
-
-const statusText =
-  document.getElementById("arena24Status");
-
-const connectionState =
-  document.getElementById("connectionState");
+    document.getElementById(
+        "arena24PlayIcon"
+    );
 
 const fixedPlay =
-  document.getElementById("fixedPlay");
+    document.getElementById(
+        "fixedPlay"
+    );
+
+const volumeControl =
+    document.getElementById(
+        "arena24Volume"
+    );
+
+const status =
+    document.getElementById(
+        "arena24Status"
+    );
+
+const connection =
+    document.getElementById(
+        "connectionState"
+    );
+
+const connection2 =
+    document.getElementById(
+        "connectionState2"
+    );
+
+const errorBox =
+    document.getElementById(
+        "radioError"
+    );
+
+const retryButton =
+    document.getElementById(
+        "radioRetry"
+    );
+
+const visualizer =
+    document.getElementById(
+        "visualizer"
+    );
 
 
-/* ================= CONFIGURAR AUDIO ================= */
+/* =========================================================
+   CONFIGURAR AUDIO
+   ========================================================= */
 
 audio.src = STREAM_URL;
 
-audio.volume = 0.85;
-
 audio.preload = "none";
 
+audio.volume = 0.85;
 
-/* ================= ESTADO ================= */
+
+/* =========================================================
+   ESTADO RADIO
+   ========================================================= */
 
 let radioPlaying = false;
 
 
-/* ================= REPRODUCIR ================= */
+/* =========================================================
+   UI
+   ========================================================= */
 
-async function playRadio(){
+function setRadioUI(playing){
 
-  try{
+    radioPlaying = playing;
 
-    statusText.textContent =
-      "CONECTANDO...";
 
-    connectionState.textContent =
-      "CONECTANDO CON ARENA 24";
+    if(playing){
 
-    audio.src = STREAM_URL;
+        playIcon.textContent =
+            "❚❚";
 
-    audio.load();
+        fixedPlay.textContent =
+            "❚❚";
 
-    await audio.play();
+        status.textContent =
+            "RADIO EN VIVO";
 
-    radioPlaying = true;
+        connection.textContent =
+            "CONECTADO";
 
-    updatePlayerUI(true);
+        connection2.textContent =
+            "Señal recibida";
 
-  }
-
-  catch(error){
-
-    console.error(
-      "Error reproduciendo ARENA 24:",
-      error
-    );
-
-    radioPlaying = false;
-
-    updatePlayerUI(false);
-
-    statusText.textContent =
-      "TOCÁ PLAY PARA INTENTAR NUEVAMENTE";
-
-    connectionState.textContent =
-      "NO SE PUDO CONECTAR";
-
-  }
-
-}
-
-
-/* ================= DETENER ================= */
-
-function pauseRadio(){
-
-  audio.pause();
-
-  radioPlaying = false;
-
-  updatePlayerUI(false);
-
-}
-
-
-/* ================= PLAY / PAUSE ================= */
-
-async function toggleRadio(){
-
-  if(audio.paused){
-
-    await playRadio();
-
-  }else{
-
-    pauseRadio();
-
-  }
-
-}
-
-
-/* ================= INTERFAZ ================= */
-
-function updatePlayerUI(isPlaying){
-
-  if(isPlaying){
-
-    playIcon.textContent =
-      "❚❚";
-
-    playButton.classList.add(
-      "playing"
-    );
-
-    statusText.textContent =
-      "RADIO EN VIVO";
-
-    connectionState.textContent =
-      "CONECTADO";
-
-    if(fixedPlay){
-
-      fixedPlay.textContent =
-        "❚❚";
-
-    }
-
-  }else{
-
-    playIcon.textContent =
-      "▶";
-
-    playButton.classList.remove(
-      "playing"
-    );
-
-    statusText.textContent =
-      "RADIO DETENIDA";
-
-    if(fixedPlay){
-
-      fixedPlay.textContent =
-        "▶";
-
-    }
-
-  }
-
-}
-
-
-/* ================= BOTONES ================= */
-
-if(playButton){
-
-  playButton.addEventListener(
-    "click",
-    toggleRadio
-  );
-
-}
-
-
-if(fixedPlay){
-
-  fixedPlay.addEventListener(
-    "click",
-    toggleRadio
-  );
-
-}
-
-
-/* ================= VOLUMEN ================= */
-
-if(volumeControl){
-
-  volumeControl.addEventListener(
-    "input",
-    function(){
-
-      audio.volume =
-        Number(this.value);
-
-      const icon =
-        document.getElementById(
-          "arena24VolumeIcon"
+        visualizer.classList.add(
+            "active"
         );
 
-      if(audio.volume === 0){
+        errorBox.classList.remove(
+            "show"
+        );
 
-        icon.textContent =
-          "🔇";
+    }else{
 
-      }else if(audio.volume < 0.5){
+        playIcon.textContent =
+            "▶";
 
-        icon.textContent =
-          "🔉";
+        fixedPlay.textContent =
+            "▶";
 
-      }else{
+        status.textContent =
+            "RADIO DETENIDA";
 
-        icon.textContent =
-          "🔊";
+        connection2.textContent =
+            "Tocá PLAY para escuchar";
 
-      }
+        visualizer.classList.remove(
+            "active"
+        );
 
     }
-  );
 
 }
 
 
-/* ================= EVENTOS AUDIO ================= */
+/* =========================================================
+   REPRODUCIR
+   ========================================================= */
 
-audio.addEventListener(
-  "playing",
-  function(){
+async function startRadio(){
 
-    radioPlaying = true;
+    try{
 
-    updatePlayerUI(true);
+        status.textContent =
+            "CONECTANDO...";
 
-  }
-);
+        connection.textContent =
+            "CONECTANDO CON ZENO";
 
+        connection2.textContent =
+            "Esperando señal...";
 
-audio.addEventListener(
-  "pause",
-  function(){
-
-    if(!audio.ended){
-
-      radioPlaying = false;
-
-      updatePlayerUI(false);
-
-    }
-
-  }
-);
+        errorBox.classList.remove(
+            "show"
+        );
 
 
-audio.addEventListener(
-  "waiting",
-  function(){
+        /*
+           NO usamos load() antes de play().
+           El navegador ya conoce el stream.
+        */
 
-    statusText.textContent =
-      "CARGANDO SEÑAL...";
-
-    connectionState.textContent =
-      "ESPERANDO AUDIO";
-
-  }
-);
+        await audio.play();
 
 
-audio.addEventListener(
-  "canplay",
-  function(){
-
-    if(!radioPlaying){
-
-      connectionState.textContent =
-        "SEÑAL DISPONIBLE";
+        setRadioUI(true);
 
     }
 
-  }
+    catch(error){
+
+        console.error(
+            "ARENA 24 RADIO:",
+            error
+        );
+
+        setRadioUI(false);
+
+        status.textContent =
+            "NO SE PUDO REPRODUCIR";
+
+        connection.textContent =
+            "ERROR DE CONEXIÓN";
+
+        connection2.textContent =
+            "Intentá nuevamente";
+
+        errorBox.classList.add(
+            "show"
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   DETENER
+   ========================================================= */
+
+function stopRadio(){
+
+    audio.pause();
+
+    setRadioUI(false);
+
+}
+
+
+/* =========================================================
+   PLAY / PAUSE
+   ========================================================= */
+
+function toggleRadio(){
+
+    if(audio.paused){
+
+        startRadio();
+
+    }else{
+
+        stopRadio();
+
+    }
+
+}
+
+
+playButton.addEventListener(
+    "click",
+    toggleRadio
 );
 
 
-audio.addEventListener(
-  "error",
-  function(){
+fixedPlay.addEventListener(
+    "click",
+    toggleRadio
+);
 
-    radioPlaying = false;
 
-    updatePlayerUI(false);
+retryButton.addEventListener(
+    "click",
+    function(){
 
-    statusText.textContent =
-      "ERROR DE SEÑAL";
+        audio.pause();
 
-    connectionState.textContent =
-      "REVISÁ LA CONEXIÓN";
+        audio.currentTime = 0;
 
-  }
+        setTimeout(
+            startRadio,
+            250
+        );
+
+    }
 );
 
 
 /* =========================================================
-   RELOJ ARGENTINO
+   VOLUMEN
+   ========================================================= */
+
+volumeControl.addEventListener(
+    "input",
+    function(){
+
+        audio.volume =
+            Number(this.value);
+
+
+        const volumeIcon =
+            document.getElementById(
+                "arena24VolumeIcon"
+            );
+
+
+        if(audio.volume === 0){
+
+            volumeIcon.textContent =
+                "🔇";
+
+        }
+        else if(audio.volume < .5){
+
+            volumeIcon.textContent =
+                "🔉";
+
+        }
+        else{
+
+            volumeIcon.textContent =
+                "🔊";
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   EVENTOS AUDIO
+   ========================================================= */
+
+audio.addEventListener(
+    "playing",
+    function(){
+
+        setRadioUI(true);
+
+    }
+);
+
+
+audio.addEventListener(
+    "pause",
+    function(){
+
+        if(!audio.ended){
+
+            setRadioUI(false);
+
+        }
+
+    }
+);
+
+
+audio.addEventListener(
+    "waiting",
+    function(){
+
+        status.textContent =
+            "CARGANDO SEÑAL...";
+
+        connection.textContent =
+            "BUFFER DE AUDIO";
+
+    }
+);
+
+
+audio.addEventListener(
+    "stalled",
+    function(){
+
+        connection2.textContent =
+            "Señal temporalmente detenida";
+
+    }
+);
+
+
+audio.addEventListener(
+    "error",
+    function(){
+
+        setRadioUI(false);
+
+        status.textContent =
+            "ERROR DE STREAM";
+
+        connection.textContent =
+            "ZENO NO RESPONDE";
+
+        errorBox.classList.add(
+            "show"
+        );
+
+    }
+);
+
+
+/* =========================================================
+   RELOJ
    ========================================================= */
 
 function updateClock(){
 
-  const now =
-    new Date();
+    const now =
+        new Date();
 
 
-  const time =
-    new Intl.DateTimeFormat(
-      "es-AR",
-      {
-        timeZone: TIME_ZONE,
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-        hour12: false
-      }
-    ).format(now);
+    const time =
+        new Intl.DateTimeFormat(
+            "es-AR",
+            {
+                timeZone:TIME_ZONE,
+                hour:"2-digit",
+                minute:"2-digit",
+                second:"2-digit",
+                hour12:false
+            }
+        ).format(now);
 
 
-  const date =
-    new Intl.DateTimeFormat(
-      "es-AR",
-      {
-        timeZone: TIME_ZONE,
-        weekday: "long",
-        day: "2-digit",
-        month: "long"
-      }
-    ).format(now);
+    const date =
+        new Intl.DateTimeFormat(
+            "es-AR",
+            {
+                timeZone:TIME_ZONE,
+                weekday:"long",
+                day:"2-digit",
+                month:"long"
+            }
+        ).format(now);
 
 
-  const clock =
     document.getElementById(
-      "arena24Clock"
-    );
+        "arena24Clock"
+    ).textContent =
+        time;
 
-  const dateElement =
+
     document.getElementById(
-      "arena24Date"
-    );
+        "arena24Date"
+    ).textContent =
+        "La Rioja · " + date;
 
-  const fixedClock =
+
     document.getElementById(
-      "fixedClock"
-    );
+        "horaActual"
+    ).textContent =
+        time.substring(0,5);
 
-  const horaActual =
+
     document.getElementById(
-      "horaActual"
-    );
-
-
-  if(clock)
-    clock.textContent = time;
-
-  if(dateElement)
-    dateElement.textContent =
-      "La Rioja · " + date;
-
-  if(fixedClock)
-    fixedClock.textContent =
-      time.substring(0,5);
-
-  if(horaActual)
-    horaActual.textContent =
-      time.substring(0,5);
+        "fixedClock"
+    ).textContent =
+        time.substring(0,5);
 
 }
 
@@ -390,8 +465,8 @@ function updateClock(){
 updateClock();
 
 setInterval(
-  updateClock,
-  1000
+    updateClock,
+    1000
 );
 
 
@@ -401,153 +476,135 @@ setInterval(
 
 const schedule = [
 
-  {
-    start: 6,
-    end: 12,
-    name: "ENRIQUE",
-    description:
-      "Noticias, actualidad e información de La Rioja, Argentina y el mundo."
-  },
+    {
+        start:6,
+        end:12,
+        name:"ENRIQUE",
+        description:
+        "Noticias, actualidad e información de La Rioja, Argentina y el mundo."
+    },
 
-  {
-    start: 12,
-    end: 16,
-    name: "ARENA 24 SIESTA",
-    description:
-      "Música para acompañarte durante la siesta."
-  },
+    {
+        start:12,
+        end:16,
+        name:"ARENA 24 SIESTA",
+        description:
+        "Música para acompañarte durante la siesta."
+    },
 
-  {
-    start: 16,
-    end: 20,
-    name: "VIANA",
-    description:
-      "Entretenimiento, música y compañía."
-  },
+    {
+        start:16,
+        end:20,
+        name:"VIANA",
+        description:
+        "Entretenimiento, música y compañía."
+    },
 
-  {
-    start: 20,
-    end: 23,
-    name: "NIC",
-    description:
-      "Deportes, protagonistas, resultados y actualidad."
-  },
+    {
+        start:20,
+        end:23,
+        name:"NIC",
+        description:
+        "Deportes, protagonistas, resultados y actualidad."
+    },
 
-  {
-    start: 23,
-    end: 24,
-    name: "MAR",
-    description:
-      "Relax, música actual y compañía durante la noche."
-  },
+    {
+        start:23,
+        end:24,
+        name:"MAR",
+        description:
+        "Relax, música actual y compañía durante la noche."
+    },
 
-  {
-    start: 0,
-    end: 6,
-    name: "MAR",
-    description:
-      "Relax, música actual y compañía durante la noche."
-  }
+    {
+        start:0,
+        end:6,
+        name:"MAR",
+        description:
+        "Relax, música actual y compañía durante la noche."
+    }
 
 ];
 
 
-function getCurrentProgram(){
+function currentProgram(){
 
-  const now =
-    new Date();
+    const now =
+        new Date();
 
-  const hour =
-    Number(
-      new Intl.DateTimeFormat(
-        "es-AR",
-        {
-          timeZone: TIME_ZONE,
-          hour: "2-digit",
-          hour12: false
-        }
-      ).format(now)
+
+    const hour =
+        Number(
+            new Intl.DateTimeFormat(
+                "es-AR",
+                {
+                    timeZone:TIME_ZONE,
+                    hour:"2-digit",
+                    hour12:false
+                }
+            ).format(now)
+        );
+
+
+    return schedule.find(
+        item =>
+        hour >= item.start &&
+        hour < item.end
     );
-
-
-  return schedule.find(
-    program =>
-      hour >= program.start &&
-      hour < program.end
-  ) || schedule[0];
 
 }
 
 
 function updateProgram(){
 
-  const program =
-    getCurrentProgram();
+    const program =
+        currentProgram();
 
 
-  const programaActual =
+    if(!program)
+        return;
+
+
     document.getElementById(
-      "programaActual"
-    );
+        "programaActual"
+    ).textContent =
+        program.name;
 
-  const descripcionActual =
+
     document.getElementById(
-      "descripcionActual"
-    );
+        "descripcionActual"
+    ).textContent =
+        program.description;
 
-  const locutorActual =
+
     document.getElementById(
-      "locutorActual"
-    );
+        "locutorActual"
+    ).textContent =
+        program.name;
 
-  const playerProgram =
+
     document.getElementById(
-      "playerProgram"
-    );
+        "playerProgram"
+    ).textContent =
+        program.name;
 
-  const playerDescription =
+
     document.getElementById(
-      "playerDescription"
-    );
+        "playerDescription"
+    ).textContent =
+        program.description;
 
-  const fixedProgram =
+
     document.getElementById(
-      "fixedProgram"
-    );
+        "fixedProgram"
+    ).textContent =
+        program.name;
 
-  const fixedLocutor =
+
     document.getElementById(
-      "fixedLocutor"
-    );
-
-
-  if(programaActual)
-    programaActual.textContent =
-      program.name;
-
-  if(descripcionActual)
-    descripcionActual.textContent =
-      program.description;
-
-  if(locutorActual)
-    locutorActual.textContent =
-      program.name;
-
-  if(playerProgram)
-    playerProgram.textContent =
-      program.name;
-
-  if(playerDescription)
-    playerDescription.textContent =
-      program.description;
-
-  if(fixedProgram)
-    fixedProgram.textContent =
-      program.name;
-
-  if(fixedLocutor)
-    fixedLocutor.textContent =
-      program.description;
+        "fixedLocutor"
+    ).textContent =
+        program.description;
 
 }
 
@@ -555,452 +612,310 @@ function updateProgram(){
 updateProgram();
 
 setInterval(
-  updateProgram,
-  30000
+    updateProgram,
+    30000
 );
 
 
 /* =========================================================
-   DESTACAR PROGRAMA ACTUAL
+   TV AUTOMÁTICA
    ========================================================= */
-
-function highlightSchedule(){
-
-  const cards =
-    document.querySelectorAll(
-      ".schedule-card"
-    );
-
-  const current =
-    getCurrentProgram();
-
-
-  cards.forEach(
-    card => {
-
-      card.classList.remove(
-        "active-program"
-      );
-
-      const title =
-        card.querySelector("h3");
-
-      if(
-        title &&
-        title.textContent.trim() ===
-        current.name
-      ){
-
-        card.classList.add(
-          "active-program"
-        );
-
-      }
-
-    }
-  );
-
-}
-
-
-highlightSchedule();
-
-setInterval(
-  highlightSchedule,
-  30000
-);
-
-
-/* =========================================================
-   MENÚ MÓVIL
-   ========================================================= */
-
-const menuButton =
-  document.getElementById(
-    "menuButton"
-  );
-
-const mainNav =
-  document.getElementById(
-    "mainNav"
-  );
-
-
-if(menuButton){
-
-  menuButton.addEventListener(
-    "click",
-    function(){
-
-      mainNav.classList.toggle(
-        "open"
-      );
-
-    }
-  );
-
-}
-
-
-document.querySelectorAll(
-  ".main-nav a"
-).forEach(
-  link => {
-
-    link.addEventListener(
-      "click",
-      function(){
-
-        mainNav.classList.remove(
-          "open"
-        );
-
-      }
-    );
-
-  }
-);
-
-
-/* =========================================================
-   NOTICIAS
-   ========================================================= */
-
-const newsFilters =
-  document.querySelectorAll(
-    ".news-filter"
-  );
-
-const newsCards =
-  document.querySelectorAll(
-    ".news-card"
-  );
-
-
-newsFilters.forEach(
-  button => {
-
-    button.addEventListener(
-      "click",
-      function(){
-
-        newsFilters.forEach(
-          item =>
-            item.classList.remove(
-              "active"
-            )
-        );
-
-        this.classList.add(
-          "active"
-        );
-
-
-        const category =
-          this.dataset.category;
-
-
-        newsCards.forEach(
-          card => {
-
-            if(
-              category === "all" ||
-              card.dataset.category === category
-            ){
-
-              card.style.display =
-                "";
-
-            }else{
-
-              card.style.display =
-                "none";
-
-            }
-
-          }
-        );
-
-      }
-    );
-
-  }
-);
-
-
-/* =========================================================
-   ANIMACIONES
-   ========================================================= */
-
-const animatedElements =
-  document.querySelectorAll(
-    ".section, .schedule-card, .news-card, .social-card, .special-card, .ad-card, .contact-card"
-  );
-
-
-const observer =
-  new IntersectionObserver(
-    entries => {
-
-      entries.forEach(
-        entry => {
-
-          if(entry.isIntersecting){
-
-            entry.target.classList.add(
-              "visible"
-            );
-
-          }
-
-        }
-      );
-
-    },
-    {
-      threshold: 0.08
-    }
-  );
-
-
-animatedElements.forEach(
-  element =>
-    observer.observe(element)
-);
-
-
-/* =========================================================
-   VISUALIZADOR
-   ========================================================= */
-
-const visualizer =
-  document.getElementById(
-    "visualizer"
-  );
-
-
-function visualizerOn(){
-
-  if(!visualizer)
-    return;
-
-  visualizer.classList.add(
-    "active"
-  );
-
-}
-
-
-function visualizerOff(){
-
-  if(!visualizer)
-    return;
-
-  visualizer.classList.remove(
-    "active"
-  );
-
-}
-
-
-audio.addEventListener(
-  "playing",
-  visualizerOn
-);
-
-audio.addEventListener(
-  "pause",
-  visualizerOff
-);
-
-audio.addEventListener(
-  "error",
-  visualizerOff
-);
-
-
-/* =========================================================
-   TECLADO
-   ========================================================= */
-
-document.addEventListener(
-  "keydown",
-  function(event){
-
-    if(
-      event.code === "Space" &&
-      event.target.tagName !== "INPUT" &&
-      event.target.tagName !== "TEXTAREA"
-    ){
-
-      event.preventDefault();
-
-      toggleRadio();
-
-    }
-
-  }
-);
-
-
-/* =========================================================
-   ARENA 24 TV
-   =========================================================
-
-   IMPORTANTE:
-
-   En una página GitHub estática no se puede consultar
-   directamente desde JavaScript el estado "LIVE" de
-   YouTube debido a las restricciones del iframe.
-
-   Por eso existe TV_LIVE.
-
-   false = fondo de TV fuera de aire
-   true  = mostrar transmisión YouTube
-
-   Cuando quieras transmitir en vivo, cambiás:
-
-   const TV_LIVE = true;
-
-   ========================================================= */
-
-
-const TV_LIVE = false;
-
 
 const tvIframe =
-  document.getElementById(
-    "arena24TV"
-  );
+    document.getElementById(
+        "tvIframe"
+    );
 
 const tvOffline =
-  document.getElementById(
-    "tvOffline"
-  );
+    document.getElementById(
+        "tvOffline"
+    );
 
 const tvLiveBadge =
-  document.getElementById(
-    "tvLiveBadge"
-  );
+    document.getElementById(
+        "tvLiveBadge"
+    );
 
 const tvModeButton =
-  document.getElementById(
-    "tvModeButton"
-  );
+    document.getElementById(
+        "tvModeButton"
+    );
+
+const tvStatusLabel =
+    document.getElementById(
+        "tvStatusLabel"
+    );
 
 const tvBackground =
-  document.getElementById(
-    "tvBackground"
-  );
+    document.getElementById(
+        "tvBackground"
+    );
 
+
+/* =========================================================
+   CAMBIAR TV
+   ========================================================= */
 
 function setTVMode(live){
 
-  if(live){
-
-    if(tvIframe)
-      tvIframe.style.display =
-        "block";
-
-    if(tvOffline)
-      tvOffline.style.display =
-        "none";
-
-    if(tvLiveBadge)
-      tvLiveBadge.style.display =
-        "block";
-
-    if(tvModeButton)
-      tvModeButton.textContent =
-        "TV EN VIVO";
-
-  }else{
-
-    if(tvIframe)
-      tvIframe.style.display =
-        "none";
-
-    if(tvOffline)
-      tvOffline.style.display =
-        "flex";
-
-    if(tvLiveBadge)
-      tvLiveBadge.style.display =
-        "none";
-
-    if(tvModeButton)
-      tvModeButton.textContent =
-        "TV FUERA DE AIRE";
-
-  }
-
-}
+    TV_LIVE =
+        Boolean(live);
 
 
-/* Estado inicial */
+    if(TV_LIVE){
 
-setTVMode(
-  TV_LIVE
-);
+        tvOffline.style.display =
+            "none";
 
+        tvIframe.style.display =
+            "block";
 
-/* Botón para probar ambos modos */
+        tvLiveBadge.style.display =
+            "block";
 
-if(tvModeButton){
+        tvStatusLabel.textContent =
+            "● TV EN VIVO";
 
-  tvModeButton.addEventListener(
-    "click",
-    function(){
+        tvStatusLabel.style.color =
+            "#20e58a";
 
-      const currentlyLive =
-        tvIframe &&
-        tvIframe.style.display !== "none";
-
-      setTVMode(
-        !currentlyLive
-      );
+        tvModeButton.textContent =
+            "DESACTIVAR TV EN VIVO";
 
     }
-  );
+    else{
+
+        tvIframe.style.display =
+            "none";
+
+        tvOffline.style.display =
+            "flex";
+
+        tvLiveBadge.style.display =
+            "none";
+
+        tvStatusLabel.textContent =
+            "● TV FUERA DE AIRE";
+
+        tvStatusLabel.style.color =
+            "#ff9a42";
+
+        tvModeButton.textContent =
+            "ACTIVAR TV EN VIVO";
+
+    }
 
 }
 
 
 /* =========================================================
-   VIDEO DE FONDO TV
+   ESTADO INICIAL
+   ========================================================= */
+
+setTVMode(false);
+
+
+/* =========================================================
+   BOTÓN TV
+   ========================================================= */
+
+tvModeButton.addEventListener(
+    "click",
+    function(){
+
+        setTVMode(
+            !TV_LIVE
+        );
+
+    }
+);
+
+
+/* =========================================================
+   VIDEO CINEMATOGRÁFICO
    ========================================================= */
 
 if(tvBackground){
 
-  tvBackground.play().catch(
-    () => {
+    tvBackground.muted =
+        true;
 
-      /*
-        Algunos navegadores bloquean
-        autoplay hasta que el usuario
-        interactúa con la página.
-      */
+    tvBackground.loop =
+        true;
 
-    }
-  );
+    tvBackground.playsInline =
+        true;
+
+
+    tvBackground.play()
+        .catch(
+            function(){
+
+                console.log(
+                    "El navegador requiere interacción para reproducir el fondo."
+                );
+
+            }
+        );
 
 }
 
 
 /* =========================================================
-   INICIO
+   MENÚ
+   ========================================================= */
+
+const menuButton =
+    document.getElementById(
+        "menuButton"
+    );
+
+const mainNav =
+    document.getElementById(
+        "mainNav"
+    );
+
+
+menuButton.addEventListener(
+    "click",
+    function(){
+
+        mainNav.classList.toggle(
+            "open"
+        );
+
+    }
+);
+
+
+document.querySelectorAll(
+    ".main-nav a"
+).forEach(
+    link => {
+
+        link.addEventListener(
+            "click",
+            function(){
+
+                mainNav.classList.remove(
+                    "open"
+                );
+
+            }
+        );
+
+    }
+);
+
+
+/* =========================================================
+   FILTRO NOTICIAS
+   ========================================================= */
+
+const newsButtons =
+    document.querySelectorAll(
+        ".news-button"
+    );
+
+const newsCards =
+    document.querySelectorAll(
+        ".news-card"
+    );
+
+
+newsButtons.forEach(
+    button => {
+
+        button.addEventListener(
+            "click",
+            function(){
+
+                newsButtons.forEach(
+                    b =>
+                    b.classList.remove(
+                        "active"
+                    )
+                );
+
+
+                this.classList.add(
+                    "active"
+                );
+
+
+                const category =
+                    this.dataset.category;
+
+
+                newsCards.forEach(
+                    card => {
+
+                        if(
+                            category === "all" ||
+                            card.dataset.category === category
+                        ){
+
+                            card.style.display =
+                                "";
+
+                        }
+                        else{
+
+                            card.style.display =
+                                "none";
+
+                        }
+
+                    }
+                );
+
+            }
+        );
+
+    }
+);
+
+
+/* =========================================================
+   TECLA ESPACIO
+   ========================================================= */
+
+document.addEventListener(
+    "keydown",
+    function(event){
+
+        if(
+            event.code === "Space" &&
+            event.target.tagName !== "INPUT" &&
+            event.target.tagName !== "TEXTAREA"
+        ){
+
+            event.preventDefault();
+
+            toggleRadio();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   MENSAJE
    ========================================================= */
 
 console.log(
-  "ARENA 24 Radio y TV — sistema iniciado correctamente."
+    "ARENA 24 5.0 iniciado."
 );
 
 console.log(
-  "Stream:",
-  STREAM_URL
+    "Radio:",
+    STREAM_URL
 );
 
 console.log(
-  "TV:",
-  TV_LIVE ? "EN VIVO" : "FUERA DE AIRE"
+    "TV:",
+    TV_LIVE
+        ? "EN VIVO"
+        : "FUERA DE AIRE"
 );
