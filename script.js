@@ -1003,3 +1003,240 @@ document.addEventListener("DOMContentLoaded", () => {
 
 </section>
 
+/* =========================================
+   ARENA 24 RADIO PLAYER
+   JavaScript
+========================================= */
+
+document.addEventListener("DOMContentLoaded", () => {
+
+  const player = document.getElementById("arenaPlayer");
+  const audio = document.getElementById("arenaAudio");
+
+  const playButton = document.getElementById("playButton");
+  const muteButton = document.getElementById("muteButton");
+  const volumeButton = document.getElementById("volumeButton");
+  const volumeSlider = document.getElementById("volumeSlider");
+
+  const status = document.getElementById("radioStatus");
+  const connectionText = document.getElementById("connectionText");
+  const clock = document.getElementById("argentinaClock");
+
+  /*
+    STREAM ARENA 24
+
+    Reemplaza esta dirección solamente si
+    Zeno te proporciona otra URL directa.
+  */
+
+  const STREAM_URL =
+    "https://stream.zeno.fm/zuw6xmmwmd0uv";
+
+  audio.src = STREAM_URL;
+  audio.volume = 0.85;
+
+  let playing = false;
+
+  /* =====================================
+     PLAY / PAUSE
+  ===================================== */
+
+  playButton.addEventListener("click", async () => {
+
+    if (!playing) {
+
+      try {
+
+        status.textContent = "Conectando con ARENA 24...";
+        connectionText.textContent = "CONECTANDO";
+
+        await audio.play();
+
+      } catch (error) {
+
+        console.error(
+          "No se pudo iniciar la radio:",
+          error
+        );
+
+        status.textContent =
+          "Pulsa nuevamente para iniciar la radio";
+
+        connectionText.textContent =
+          "SIN CONEXIÓN";
+
+      }
+
+    } else {
+
+      audio.pause();
+
+    }
+
+  });
+
+  /* =====================================
+     AUDIO PLAY
+  ===================================== */
+
+  audio.addEventListener("play", () => {
+
+    playing = true;
+
+    player.classList.add("playing");
+
+    playButton.textContent = "❚❚";
+
+    status.textContent =
+      "Transmitiendo en vivo";
+
+    connectionText.textContent =
+      "CONECTADO";
+
+  });
+
+  /* =====================================
+     AUDIO PAUSE
+  ===================================== */
+
+  audio.addEventListener("pause", () => {
+
+    playing = false;
+
+    player.classList.remove("playing");
+
+    playButton.textContent = "▶";
+
+    status.textContent =
+      "Radio pausada";
+
+    connectionText.textContent =
+      "EN ESPERA";
+
+  });
+
+  /* =====================================
+     ERROR
+  ===================================== */
+
+  audio.addEventListener("error", () => {
+
+    playing = false;
+
+    player.classList.remove("playing");
+
+    playButton.textContent = "▶";
+
+    status.textContent =
+      "No se pudo conectar con la señal";
+
+    connectionText.textContent =
+      "ERROR DE CONEXIÓN";
+
+  });
+
+  /* =====================================
+     VOLUMEN
+  ===================================== */
+
+  volumeSlider.addEventListener("input", () => {
+
+    audio.volume = volumeSlider.value;
+
+    if (audio.volume === 0) {
+
+      muteButton.textContent = "🔇";
+
+    } else if (audio.volume < 0.5) {
+
+      muteButton.textContent = "🔉";
+
+    } else {
+
+      muteButton.textContent = "🔊";
+
+    }
+
+  });
+
+  /* =====================================
+     MUTE
+  ===================================== */
+
+  muteButton.addEventListener("click", () => {
+
+    audio.muted = !audio.muted;
+
+    if (audio.muted) {
+
+      muteButton.textContent = "🔇";
+
+    } else {
+
+      muteButton.textContent = "🔊";
+
+    }
+
+  });
+
+  /* =====================================
+     VOLUME BUTTON
+  ===================================== */
+
+  volumeButton.addEventListener("click", () => {
+
+    if (audio.volume > 0) {
+
+      audio.volume = 0;
+
+      volumeSlider.value = 0;
+
+      muteButton.textContent = "🔇";
+
+    } else {
+
+      audio.volume = 0.85;
+
+      volumeSlider.value = 0.85;
+
+      muteButton.textContent = "🔊";
+
+    }
+
+  });
+
+  /* =====================================
+     RELOJ ARGENTINA
+  ===================================== */
+
+  function updateArgentinaClock() {
+
+    const now = new Date();
+
+    const argentinaTime =
+      new Intl.DateTimeFormat(
+        "es-AR",
+        {
+          timeZone: "America/Argentina/Buenos_Aires",
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+          hour12: false
+        }
+      ).format(now);
+
+    clock.textContent =
+      "ARGENTINA · " + argentinaTime;
+
+  }
+
+  updateArgentinaClock();
+
+  setInterval(
+    updateArgentinaClock,
+    1000
+  );
+
+});
+
+
