@@ -268,46 +268,7 @@
 
 }
 
-  /* =====================================
-     RELOJ ARGENTINA
-  ===================================== */
-
-  function updateArgentinaClock() {
-
-    const now = new Date();
-
-    const argentinaTime =
-      new Intl.DateTimeFormat(
-        "es-AR",
-        {
-          timeZone: "America/Argentina/Buenos_Aires",
-          hour: "2-digit",
-          minute: "2-digit",
-          second: "2-digit",
-          hour12: false
-        }
-      ).format(now);
-
-    clock.textContent =
-      "ARGENTINA · " + argentinaTime;
-
-  }
-
-  updateArgentinaClock();
-
-  setInterval(
-    updateArgentinaClock,
-    1000
-  );
-
-});
-
-Importante: como ya comprobaste que el enlace directo de Zeno puede reproducir, este reproductor usa directamente el stream "https://stream.zeno.fm/zuw6xmmwmd0uv". Si ese endpoint cambia, solo hay que reemplazar "STREAM_URL".
-
-Para tu ARENA 24 4.0, yo lo integraría como reproductor principal debajo del encabezado, con Noticias + Programación + ARENA 24 TV alrededor, manteniendo la estética futurista oscura.
-
-    
-</section>
+  </section>
 
 
 <!-- =====================================================
