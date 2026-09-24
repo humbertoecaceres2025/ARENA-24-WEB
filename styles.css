@@ -3074,6 +3074,3 @@ document.addEventListener("DOMContentLoaded", () => {
 
 });
 
-Importante: como ya comprobaste que el enlace directo de Zeno puede reproducir, este reproductor usa directamente el stream "https://stream.zeno.fm/zuw6xmmwmd0uv". Si ese endpoint cambia, solo hay que reemplazar "STREAM_URL".
-
-Para tu ARENA 24 4.0, yo lo integraría como reproductor principal debajo del encabezado, con Noticias + Programación + ARENA 24 TV alrededor, manteniendo la estética futurista oscura.
