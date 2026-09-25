@@ -1201,3 +1201,17 @@ padding:0 12px
 }
 
 }
+/* =====================================================
+   ARENA 24
+   OCULTAR CONTROLES NATIVOS DEL AUDIO
+===================================================== */
+
+#radioAudio {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  position: absolute !important;
+  pointer-events: none !important;
+}
