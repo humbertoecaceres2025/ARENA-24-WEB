@@ -272,8 +272,208 @@
       ● Transmisión oficial ARENA 24
     </p>
 
+  </div
+<!-- =====================================================
+     ARENA 24 PLAYER 4.0
+===================================================== -->
+
+<section id="radio" class="arena-radio-section">
+
+  <div class="arena-player-4">
+
+    <!-- CABECERA -->
+
+    <div class="arena-player-top">
+
+      <div class="arena-station">
+
+        <div class="arena-mini-logo">
+          A24
+        </div>
+
+        <div class="arena-station-name">
+
+          <strong>ARENA 24</strong>
+
+          <span>
+            RADIO · LA RIOJA
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <div class="arena-live">
+
+        <i id="arenaLiveDot"></i>
+
+        <span id="arenaLiveText">
+          LISTO
+        </span>
+
+      </div>
+
+    </div>
+
+
+    <!-- PANTALLA CENTRAL -->
+
+    <div class="arena-display">
+
+      <div class="arena-glow"></div>
+
+
+      <div class="arena-big-logo">
+
+        <span>ARENA</span>
+
+        <strong>24</strong>
+
+      </div>
+
+
+      <div class="arena-tagline">
+        SIEMPRE CON VOS
+      </div>
+
+
+      <!-- VISUALIZADOR -->
+
+      <div
+        id="arenaVisualizer"
+        class="arena-visualizer">
+
+        <i></i>
+        <i></i>
+        <i></i>
+        <i></i>
+        <i></i>
+        <i></i>
+        <i></i>
+        <i></i>
+        <i></i>
+        <i></i>
+        <i></i>
+        <i></i>
+        <i></i>
+        <i></i>
+        <i></i>
+        <i></i>
+        <i></i>
+        <i></i>
+        <i></i>
+        <i></i>
+        <i></i>
+
+      </div>
+
+
+      <div
+        id="arenaPlayerMessage"
+        class="arena-player-message">
+
+        PRESIONÁ PLAY PARA ESCUCHAR
+
+      </div>
+
+    </div>
+
+
+    <!-- CONTROLES -->
+
+    <div class="arena-controls">
+
+      <button
+        id="arenaPlay"
+        class="arena-main-button"
+        type="button"
+        aria-label="Reproducir ARENA 24">
+
+        <span id="arenaPlayIcon">
+          ▶
+        </span>
+
+      </button>
+
+
+      <div class="arena-volume">
+
+        <span class="arena-volume-icon">
+          🔊
+        </span>
+
+        <input
+          id="arenaVolume"
+          type="range"
+          min="0"
+          max="1"
+          step="0.01"
+          value="1">
+
+        <span id="arenaVolumeValue">
+          100%
+        </span>
+
+      </div>
+
+
+      <button
+        id="arenaReconnect"
+        class="arena-control-button"
+        type="button"
+        title="Reconectar">
+
+        ↻
+
+      </button>
+
+    </div>
+
+
+    <!-- INFORMACIÓN INFERIOR -->
+
+    <div class="arena-player-bottom">
+
+      <div>
+
+        <span class="arena-small-label">
+          TRANSMISIÓN
+        </span>
+
+        <strong id="arenaConnection">
+          LISTO PARA ESCUCHAR
+        </strong>
+
+      </div>
+
+
+      <div class="arena-clock-mini">
+
+        <span>
+          ARGENTINA
+        </span>
+
+        <strong id="arenaMiniClock">
+          --:--:--
+        </strong>
+
+      </div>
+
+    </div>
+
   </div>
 
+
+  <!-- AUDIO OCULTO -->
+
+  <audio
+    id="radioAudio"
+    preload="none"
+    playsinline>
+  </audio>
+
+</section>
 </section>
 
 
