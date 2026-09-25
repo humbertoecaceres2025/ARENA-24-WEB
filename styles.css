@@ -1202,6 +1202,925 @@ padding:0 12px
 
 }
 /* =====================================================
+   ARENA 24 PLAYER 4.0
+   FUTURISTA / PROFESIONAL
+===================================================== */
+
+.arena-radio-section {
+  width: 100%;
+  padding: 80px 20px;
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
+
+.arena-player-4 {
+
+  width: min(760px, 100%);
+
+  position: relative;
+
+  overflow: hidden;
+
+  border-radius: 28px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #0c111b,
+      #05070c 55%,
+      #0b1522
+    );
+
+  border: 1px solid rgba(0,229,255,.18);
+
+  box-shadow:
+    0 30px 80px rgba(0,0,0,.55),
+    0 0 50px rgba(0,229,255,.05);
+
+  transition:
+    .35s ease;
+}
+
+
+.arena-player-4::before {
+
+  content: "";
+
+  position: absolute;
+
+  inset: 0;
+
+  pointer-events: none;
+
+  background:
+    linear-gradient(
+      120deg,
+      transparent 20%,
+      rgba(0,229,255,.04),
+      transparent 80%
+    );
+
+}
+
+
+.arena-player-4.playing {
+
+  border-color:
+    rgba(0,229,255,.45);
+
+  box-shadow:
+    0 30px 90px rgba(0,0,0,.65),
+    0 0 45px rgba(0,229,255,.12);
+
+}
+
+
+/* =====================================================
+   CABECERA
+===================================================== */
+
+.arena-player-top {
+
+  min-height: 78px;
+
+  padding: 18px 22px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  border-bottom:
+    1px solid rgba(255,255,255,.06);
+
+}
+
+
+.arena-station {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 13px;
+
+}
+
+
+.arena-mini-logo {
+
+  width: 48px;
+  height: 48px;
+
+  display: grid;
+
+  place-items: center;
+
+  border-radius: 14px;
+
+  font-weight: 1000;
+
+  font-size: 18px;
+
+  color: #05070c;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ff7200,
+      #ffad45
+    );
+
+  box-shadow:
+    0 0 25px rgba(255,114,0,.25);
+
+}
+
+
+.arena-station-name {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 3px;
+
+}
+
+
+.arena-station-name strong {
+
+  color: #fff;
+
+  font-size: 16px;
+
+  letter-spacing: 1.5px;
+
+}
+
+
+.arena-station-name span {
+
+  color: #7e8a9e;
+
+  font-size: 10px;
+
+  letter-spacing: 1.5px;
+
+}
+
+
+.arena-live {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  font-size: 10px;
+
+  font-weight: 900;
+
+  letter-spacing: 1.5px;
+
+  color: #8d98aa;
+
+}
+
+
+#arenaLiveDot {
+
+  width: 8px;
+
+  height: 8px;
+
+  border-radius: 50%;
+
+  background: #707987;
+
+}
+
+
+.arena-player-4.playing #arenaLiveDot {
+
+  background: #ff3045;
+
+  box-shadow:
+    0 0 0 5px rgba(255,48,69,.10),
+    0 0 18px rgba(255,48,69,.75);
+
+  animation:
+    arenaLivePulse 1.2s infinite;
+
+}
+
+
+@keyframes arenaLivePulse {
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.35);
+  }
+
+}
+
+
+/* =====================================================
+   DISPLAY
+===================================================== */
+
+.arena-display {
+
+  min-height: 320px;
+
+  position: relative;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+  overflow: hidden;
+
+}
+
+
+.arena-glow {
+
+  position: absolute;
+
+  width: 300px;
+  height: 300px;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(0,229,255,.10),
+      transparent 68%
+    );
+
+  filter: blur(10px);
+
+}
+
+
+.arena-player-4.playing
+.arena-glow {
+
+  animation:
+    arenaGlow 2.5s ease-in-out infinite alternate;
+
+}
+
+
+@keyframes arenaGlow {
+
+  from {
+    transform: scale(.85);
+    opacity: .5;
+  }
+
+  to {
+    transform: scale(1.25);
+    opacity: 1;
+  }
+
+}
+
+
+/* =====================================================
+   LOGO CENTRAL
+===================================================== */
+
+.arena-big-logo {
+
+  position: relative;
+
+  display: flex;
+
+  align-items: baseline;
+
+  gap: 7px;
+
+  z-index: 2;
+
+  font-size: clamp(
+    48px,
+    10vw,
+    88px
+  );
+
+  font-weight: 1000;
+
+  letter-spacing: -5px;
+
+}
+
+
+.arena-big-logo span {
+
+  color: #f4f7fb;
+
+}
+
+
+.arena-big-logo strong {
+
+  color: #ff7200;
+
+  text-shadow:
+    0 0 25px rgba(255,114,0,.35);
+
+}
+
+
+.arena-tagline {
+
+  position: relative;
+
+  z-index: 2;
+
+  margin-top: -5px;
+
+  color: #718096;
+
+  font-size: 11px;
+
+  font-weight: 800;
+
+  letter-spacing: 4px;
+
+}
+
+
+/* =====================================================
+   VISUALIZADOR
+===================================================== */
+
+.arena-visualizer {
+
+  height: 58px;
+
+  margin-top: 25px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 4px;
+
+  position: relative;
+
+  z-index: 2;
+
+}
+
+
+.arena-visualizer i {
+
+  width: 4px;
+
+  height: 12px;
+
+  display: block;
+
+  border-radius: 5px;
+
+  background:
+    linear-gradient(
+      to top,
+      #ff7200,
+      #00e5ff
+    );
+
+  opacity: .45;
+
+  transform-origin: center;
+
+}
+
+
+.arena-player-4.playing
+.arena-visualizer i {
+
+  animation:
+    arenaBars .75s
+    ease-in-out
+    infinite
+    alternate;
+
+  opacity: 1;
+
+}
+
+
+.arena-visualizer i:nth-child(1) {
+  animation-delay: -.1s;
+}
+
+.arena-visualizer i:nth-child(2) {
+  animation-delay: -.4s;
+}
+
+.arena-visualizer i:nth-child(3) {
+  animation-delay: -.2s;
+}
+
+.arena-visualizer i:nth-child(4) {
+  animation-delay: -.5s;
+}
+
+.arena-visualizer i:nth-child(5) {
+  animation-delay: -.15s;
+}
+
+.arena-visualizer i:nth-child(6) {
+  animation-delay: -.3s;
+}
+
+.arena-visualizer i:nth-child(7) {
+  animation-delay: -.6s;
+}
+
+.arena-visualizer i:nth-child(8) {
+  animation-delay: -.25s;
+}
+
+.arena-visualizer i:nth-child(9) {
+  animation-delay: -.45s;
+}
+
+.arena-visualizer i:nth-child(10) {
+  animation-delay: -.15s;
+}
+
+.arena-visualizer i:nth-child(11) {
+  animation-delay: -.35s;
+}
+
+.arena-visualizer i:nth-child(12) {
+  animation-delay: -.55s;
+}
+
+.arena-visualizer i:nth-child(13) {
+  animation-delay: -.25s;
+}
+
+.arena-visualizer i:nth-child(14) {
+  animation-delay: -.4s;
+}
+
+.arena-visualizer i:nth-child(15) {
+  animation-delay: -.15s;
+}
+
+.arena-visualizer i:nth-child(16) {
+  animation-delay: -.5s;
+}
+
+.arena-visualizer i:nth-child(17) {
+  animation-delay: -.3s;
+}
+
+.arena-visualizer i:nth-child(18) {
+  animation-delay: -.6s;
+}
+
+.arena-visualizer i:nth-child(19) {
+  animation-delay: -.2s;
+}
+
+.arena-visualizer i:nth-child(20) {
+  animation-delay: -.45s;
+}
+
+
+@keyframes arenaBars {
+
+  0% {
+    height: 8px;
+  }
+
+  25% {
+    height: 25px;
+  }
+
+  50% {
+    height: 48px;
+  }
+
+  75% {
+    height: 18px;
+  }
+
+  100% {
+    height: 38px;
+  }
+
+}
+
+
+/* =====================================================
+   MENSAJE
+===================================================== */
+
+.arena-player-message {
+
+  position: relative;
+
+  z-index: 2;
+
+  margin-top: 5px;
+
+  color: #69768a;
+
+  font-size: 9px;
+
+  font-weight: 900;
+
+  letter-spacing: 2px;
+
+}
+
+
+/* =====================================================
+   CONTROLES
+===================================================== */
+
+.arena-controls {
+
+  min-height: 92px;
+
+  padding: 18px 24px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 22px;
+
+  border-top:
+    1px solid rgba(255,255,255,.05);
+
+  border-bottom:
+    1px solid rgba(255,255,255,.05);
+
+}
+
+
+.arena-main-button {
+
+  width: 62px;
+  height: 62px;
+
+  flex: 0 0 auto;
+
+  border: 0;
+
+  border-radius: 50%;
+
+  cursor: pointer;
+
+  color: #05070c;
+
+  font-size: 20px;
+
+  font-weight: 900;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ff7200,
+      #ffad45
+    );
+
+  box-shadow:
+    0 8px 30px rgba(255,114,0,.20);
+
+  transition:
+    transform .2s ease,
+    box-shadow .2s ease;
+
+}
+
+
+.arena-main-button:hover {
+
+  transform: scale(1.06);
+
+  box-shadow:
+    0 10px 40px rgba(255,114,0,.35);
+
+}
+
+
+.arena-main-button:active {
+
+  transform: scale(.95);
+
+}
+
+
+/* =====================================================
+   VOLUMEN
+===================================================== */
+
+.arena-volume {
+
+  flex: 1;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+}
+
+
+.arena-volume-icon {
+
+  font-size: 15px;
+
+}
+
+
+#arenaVolume {
+
+  width: 100%;
+
+  accent-color: #00e5ff;
+
+  cursor: pointer;
+
+}
+
+
+#arenaVolumeValue {
+
+  min-width: 42px;
+
+  color: #8a96a8;
+
+  font-size: 10px;
+
+  text-align: right;
+
+}
+
+
+.arena-control-button {
+
+  width: 44px;
+  height: 44px;
+
+  border-radius: 12px;
+
+  border:
+    1px solid rgba(255,255,255,.08);
+
+  background:
+    rgba(255,255,255,.03);
+
+  color: #aab5c4;
+
+  cursor: pointer;
+
+  font-size: 20px;
+
+  transition: .2s ease;
+
+}
+
+
+.arena-control-button:hover {
+
+  color: #00e5ff;
+
+  border-color:
+    rgba(0,229,255,.35);
+
+  background:
+    rgba(0,229,255,.06);
+
+}
+
+
+/* =====================================================
+   PIE
+===================================================== */
+
+.arena-player-bottom {
+
+  padding: 15px 24px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 20px;
+
+}
+
+
+.arena-player-bottom > div:first-child {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 4px;
+
+}
+
+
+.arena-small-label {
+
+  color: #596679;
+
+  font-size: 8px;
+
+  letter-spacing: 1.5px;
+
+  font-weight: 900;
+
+}
+
+
+#arenaConnection {
+
+  color: #aab5c4;
+
+  font-size: 10px;
+
+  font-weight: 800;
+
+  letter-spacing: .5px;
+
+}
+
+
+.arena-clock-mini {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+}
+
+
+.arena-clock-mini span {
+
+  color: #596679;
+
+  font-size: 8px;
+
+  letter-spacing: 1px;
+
+}
+
+
+#arenaMiniClock {
+
+  color: #00e5ff;
+
+  font-size: 13px;
+
+  font-variant-numeric:
+    tabular-nums;
+
+}
+
+
+/* =====================================================
+   OCULTAR AUDIO NATIVO
+===================================================== */
+
+#radioAudio {
+
+  display: none !important;
+
+  width: 0 !important;
+
+  height: 0 !important;
+
+  opacity: 0 !important;
+
+  visibility: hidden !important;
+
+  position: absolute !important;
+
+  pointer-events: none !important;
+
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 600px) {
+
+  .arena-radio-section {
+
+    padding:
+      45px 12px;
+
+  }
+
+
+  .arena-player-top {
+
+    padding:
+      14px 15px;
+
+  }
+
+
+  .arena-mini-logo {
+
+    width: 42px;
+    height: 42px;
+
+    font-size: 15px;
+
+  }
+
+
+  .arena-station-name strong {
+
+    font-size: 13px;
+
+  }
+
+
+  .arena-display {
+
+    min-height: 270px;
+
+  }
+
+
+  .arena-big-logo {
+
+    font-size: 52px;
+
+  }
+
+
+  .arena-controls {
+
+    padding:
+      15px;
+
+    gap: 13px;
+
+  }
+
+
+  .arena-main-button {
+
+    width: 56px;
+    height: 56px;
+
+  }
+
+
+  .arena-player-bottom {
+
+    padding:
+      13px 15px;
+
+  }
+
+
+  .arena-clock-mini span {
+
+    display: none;
+
+  }
+
+}
+/* =====================================================
    ARENA 24
    OCULTAR CONTROLES NATIVOS DEL AUDIO
 ===================================================== */
