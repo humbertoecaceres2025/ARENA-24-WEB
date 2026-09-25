@@ -1,717 +1,270 @@
-/* =====================================================
-   ARENA 24
-   APP.JS
-   RADIO + TV + PROGRAMACIÓN + RELOJ
-===================================================== */
+/* =========================================================
+   ARENA 24 — APP.JS 4.0
+   Radio + Player + Reloj + TV + Interfaz
+========================================================= */
 
 "use strict";
 
-
-/* =====================================================
+/* =========================================================
    CONFIGURACIÓN
-===================================================== */
+========================================================= */
 
 const CONFIG = {
 
-  station:
-    "ARENA 24 RADIO",
+  stationName: "ARENA 24 RADIO",
+
+  stream:
+    "https://stream.zeno.fm/zuw6xmmwmd0uv",
 
   timeZone:
     "America/Argentina/La_Rioja",
 
-  /*
-    STREAM DIRECTO DE ARENA 24
-  */
-
-  radioStream:
-    "https://stream.zeno.fm/zuw6xmmwmd0uv",
-
-  /*
-    CANAL OFICIAL DE YOUTUBE
-  */
-
   youtubeChannel:
-    "UCrHexRcAlWkaTn8P-BLT3LA",
-
-  youtubeLive:
-    "https://www.youtube.com/embed/live_stream?channel=UCrHexRcAlWkaTn8P-BLT3LA"
+    "UCrHexRcAlWkaTn8P-BLT3LA"
 
 };
 
 
-/* =====================================================
-   FUNCIÓN RÁPIDA
-===================================================== */
-
-const $ = id =>
-  document.getElementById(id);
-
-
-/* =====================================================
-   MENÚ
-===================================================== */
-
-const menuButton =
-  $("menuButton");
-
-const mainNav =
-  $("mainNav");
-
-
-if (menuButton) {
-
-  menuButton.addEventListener(
-    "click",
-    () => {
-
-      mainNav.classList.toggle(
-        "open"
-      );
-
-    }
-  );
-
-}
-
-
-document
-  .querySelectorAll("#mainNav a")
-  .forEach(
-    link => {
-
-      link.addEventListener(
-        "click",
-        () => {
-
-          mainNav.classList.remove(
-            "open"
-          );
-
-        }
-      );
-
-    }
-  );
-
-
-/* =====================================================
-   RELOJ ARGENTINA
-===================================================== */
-
-const clock =
-  $("argentinaClock");
-
-
-function updateClock() {
-
-  if (!clock) return;
-
-  clock.textContent =
-    new Intl.DateTimeFormat(
-      "es-AR",
-      {
-        timeZone:
-          CONFIG.timeZone,
-
-        hour:
-          "2-digit",
-
-        minute:
-          "2-digit",
-
-        second:
-          "2-digit",
-
-        hour12:
-          false
-      }
-    ).format(
-      new Date()
-    );
-
-}
-
-
-updateClock();
-
-
-setInterval(
-  updateClock,
-  1000
-);
-
-
-/* =====================================================
-   PROGRAMACIÓN
-===================================================== */
-
-const currentProgram =
-  $("currentProgram");
-
-const currentDescription =
-  $("currentDescription");
-
-
-const schedule = [
-
-  {
-    start: 6,
-    end: 12,
-
-    name:
-      "ENRIQUE",
-
-    description:
-      "Noticias, actualidad e información de La Rioja, Argentina y el mundo."
-  },
-
-  {
-    start: 12,
-    end: 16,
-
-    name:
-      "ARENA 24 SIESTA",
-
-    description:
-      "Música para acompañarte durante la siesta."
-  },
-
-  {
-    start: 16,
-    end: 20,
-
-    name:
-      "VIANA",
-
-    description:
-      "Entretenimiento, música y compañía."
-  },
-
-  {
-    start: 20,
-    end: 23,
-
-    name:
-      "NIC",
-
-    description:
-      "Deportes, protagonistas, resultados y actualidad."
-  },
-
-  {
-    start: 23,
-    end: 24,
-
-    name:
-      "MAR",
-
-    description:
-      "Relax, música actual y compañía durante la noche."
-  },
-
-  {
-    start: 0,
-    end: 6,
-
-    name:
-      "MAR",
-
-    description:
-      "Relax, música actual y compañía durante la noche."
-  }
-
-];
-
-
-function updateProgram() {
-
-  if (!currentProgram)
-    return;
-
-
-  const hour =
-    Number(
-
-      new Intl.DateTimeFormat(
-        "es-AR",
-        {
-          timeZone:
-            CONFIG.timeZone,
-
-          hour:
-            "2-digit",
-
-          hour12:
-            false
-        }
-      ).format(
-        new Date()
-      )
-
-    );
-
-
-  const program =
-    schedule.find(
-      item =>
-        hour >= item.start &&
-        hour < item.end
-    );
-
-
-  if (program) {
-
-    currentProgram.textContent =
-      program.name;
-
-    currentDescription.textContent =
-      program.description;
-
-  }
-
-}
-
-
-updateProgram();
-
-
-setInterval(
-  updateProgram,
-  60000
-);
-
-
-/* =====================================================
-   FILTROS DE NOTICIAS
-===================================================== */
-
-document
-  .querySelectorAll(".news-filter")
-  .forEach(
-    button => {
-
-      button.addEventListener(
-        "click",
-        () => {
-
-          document
-            .querySelectorAll(
-              ".news-filter"
-            )
-            .forEach(
-              item =>
-                item.classList.remove(
-                  "active"
-                )
-            );
-
-
-          button.classList.add(
-            "active"
-          );
-
-
-          const filter =
-            button.dataset.filter;
-
-
-          document
-            .querySelectorAll(
-              ".news-card"
-            )
-            .forEach(
-              card => {
-
-                if (
-                  filter === "todos" ||
-                  card.dataset.category === filter
-                ) {
-
-                  card.style.display =
-                    "";
-
-                } else {
-
-                  card.style.display =
-                    "none";
-
-                }
-
-              }
-            );
-
-        }
-      );
-
-    }
-  );
-/* =====================================================
-   ARENA 24 PLAYER 4.0
-===================================================== */
-
-const arenaAudio =
+/* =========================================================
+   ELEMENTOS
+========================================================= */
+
+const audio =
   document.getElementById("radioAudio");
 
-const arenaPlayer =
-  document.querySelector(".arena-player-4");
+const playButton =
+  document.getElementById("playButton");
 
-const arenaPlay =
-  document.getElementById("arenaPlay");
+const playIcon =
+  document.getElementById("playIcon");
 
-const arenaPlayIcon =
-  document.getElementById("arenaPlayIcon");
+const floatingPlayer =
+  document.getElementById("floatingPlayer");
 
-const arenaVolume =
-  document.getElementById("arenaVolume");
+const volumeControl =
+  document.getElementById("volumeControl");
 
-const arenaVolumeValue =
-  document.getElementById("arenaVolumeValue");
+const equalizer =
+  document.getElementById("equalizer");
 
-const arenaReconnect =
-  document.getElementById("arenaReconnect");
+const connectionText =
+  document.getElementById("connectionText");
 
-const arenaConnection =
-  document.getElementById("arenaConnection");
+const trackTitle =
+  document.getElementById("trackTitle");
 
-const arenaLiveDot =
-  document.getElementById("arenaLiveDot");
-
-const arenaLiveText =
-  document.getElementById("arenaLiveText");
-
-const arenaPlayerMessage =
-  document.getElementById("arenaPlayerMessage");
-
-const arenaMiniClock =
-  document.getElementById("arenaMiniClock");
+const argentinaTime =
+  document.getElementById("argentinaTime");
 
 
-let arenaStopped = true;
-
-let arenaReconnectTimer = null;
-
-let arenaReconnectAttempts = 0;
-
-
-/* =====================================================
-   RELOJ DEL PLAYER
-===================================================== */
-
-function updateArenaMiniClock() {
-
-  if (!arenaMiniClock) return;
-
-  arenaMiniClock.textContent =
-    new Intl.DateTimeFormat(
-      "es-AR",
-      {
-        timeZone:
-          "America/Argentina/La_Rioja",
-
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-
-        hour12: false
-      }
-    ).format(new Date());
-
-}
-
-updateArenaMiniClock();
-
-setInterval(
-  updateArenaMiniClock,
-  1000
-);
-
-
-/* =====================================================
+/* =========================================================
    ESTADO
-===================================================== */
+========================================================= */
 
-function arenaStatus(
-  text,
-  live = false
-) {
+let isPlaying = false;
 
-  if (arenaConnection) {
 
-    arenaConnection.textContent =
-      text;
+/* =========================================================
+   INICIALIZAR AUDIO
+========================================================= */
 
-  }
+function initializeAudio() {
 
-  if (arenaLiveText) {
+  if (!audio) return;
 
-    arenaLiveText.textContent =
-      live
-        ? "EN VIVO"
-        : text;
+  audio.src = CONFIG.stream;
 
-  }
+  audio.volume = 0.8;
 
-  if (arenaLiveDot) {
-
-    arenaLiveDot.classList.toggle(
-      "live",
-      live
-    );
-
-  }
+  audio.preload = "none";
 
 }
 
 
-/* =====================================================
-   BOTÓN
-===================================================== */
-
-function updateArenaButton() {
-
-  if (!arenaAudio) return;
-
-  const playing =
-    !arenaAudio.paused &&
-    !arenaAudio.ended;
-
-
-  if (arenaPlayIcon) {
-
-    arenaPlayIcon.textContent =
-      playing
-        ? "❚❚"
-        : "▶";
-
-  }
-
-
-  if (arenaPlayer) {
-
-    arenaPlayer.classList.toggle(
-      "playing",
-      playing
-    );
-
-  }
-
-}
-
-
-/* =====================================================
-   CONEXIÓN NUEVA
-===================================================== */
-
-function connectArenaRadio() {
-
-  if (!arenaAudio) return;
-
-
-  arenaAudio.pause();
-
-  arenaAudio.removeAttribute("src");
-
-  arenaAudio.load();
-
-
-  const separator =
-    CONFIG.radioStream.includes("?")
-      ? "&"
-      : "?";
-
-
-  arenaAudio.src =
-    CONFIG.radioStream +
-    separator +
-    "arena24=" +
-    Date.now();
-
-
-  arenaAudio.preload =
-    "none";
-
-  arenaAudio.autoplay =
-    false;
-
-  arenaAudio.muted =
-    false;
-
-
-  arenaAudio.volume =
-    arenaVolume
-      ? Number(arenaVolume.value)
-      : 1;
-
-}
-
-
-/* =====================================================
+/* =========================================================
    PLAY
-===================================================== */
+========================================================= */
 
-async function playArenaRadio() {
+async function playRadio() {
 
-  if (!arenaAudio) return;
-
-
-  arenaStopped = false;
-
-
-  clearTimeout(
-    arenaReconnectTimer
-  );
-
-
-  arenaStatus(
-    "CONECTANDO…",
-    false
-  );
-
-
-  if (arenaPlayerMessage) {
-
-    arenaPlayerMessage.textContent =
-      "CONECTANDO CON ARENA 24…";
-
-  }
-
+  if (!audio) return;
 
   try {
 
-    connectArenaRadio();
+    /*
+      Recarga el stream cuando sea necesario.
+      Esto ayuda a recuperar la conexión si el
+      navegador perdió el stream.
+    */
 
+    if (
+      audio.readyState === 0 ||
+      audio.networkState === HTMLMediaElement.NETWORK_NO_SOURCE
+    ) {
 
-    arenaAudio.muted =
-      false;
+      audio.src = CONFIG.stream;
+      audio.load();
 
+    }
 
-    await arenaAudio.play();
+    await audio.play();
 
+    isPlaying = true;
 
-  } catch (error) {
+    updatePlayerUI(true);
+
+  }
+
+  catch (error) {
 
     console.error(
-      "ARENA 24 PLAYER 4.0:",
+      "No se pudo iniciar la radio:",
       error
     );
 
+    isPlaying = false;
 
-    arenaStatus(
-      "NO SE PUDO CONECTAR",
-      false
-    );
+    updatePlayerUI(false);
 
-
-    if (arenaPlayerMessage) {
-
-      arenaPlayerMessage.textContent =
-        "PRESIONÁ PLAY PARA INTENTAR NUEVAMENTE";
-
-    }
-
-
-    updateArenaButton();
+    connectionText.textContent =
+      "TOCÁ PLAY PARA CONECTAR";
 
   }
 
 }
 
 
-/* =====================================================
+/* =========================================================
    PAUSA
-===================================================== */
+========================================================= */
 
-function pauseArenaRadio() {
+function pauseRadio() {
 
-  if (!arenaAudio) return;
+  if (!audio) return;
 
+  audio.pause();
 
-  arenaStopped = true;
+  isPlaying = false;
 
+  updatePlayerUI(false);
 
-  clearTimeout(
-    arenaReconnectTimer
-  );
-
-
-  arenaAudio.pause();
+}
 
 
-  arenaStatus(
-    "PAUSADA",
-    false
-  );
+/* =========================================================
+   PLAY / PAUSE
+========================================================= */
 
+function toggleRadio() {
 
-  if (arenaPlayerMessage) {
+  if (isPlaying) {
 
-    arenaPlayerMessage.textContent =
-      "RADIO PAUSADA";
+    pauseRadio();
+
+  } else {
+
+    playRadio();
 
   }
 
+}
 
-  updateArenaButton();
+
+/* =========================================================
+   ACTUALIZAR INTERFAZ
+========================================================= */
+
+function updatePlayerUI(playing) {
+
+  if (!playIcon) return;
+
+  if (playing) {
+
+    playIcon.textContent = "❚❚";
+
+    equalizer?.classList.add("active");
+
+    connectionText.textContent =
+      "TRANSMISIÓN EN VIVO";
+
+    if (floatingPlayer) {
+      floatingPlayer.textContent = "❚❚";
+    }
+
+    if (trackTitle) {
+
+      trackTitle.textContent =
+        "ARENA 24 · Estás escuchando la radio en vivo";
+
+    }
+
+  } else {
+
+    playIcon.textContent = "▶";
+
+    equalizer?.classList.remove("active");
+
+    connectionText.textContent =
+      "RADIO ONLINE";
+
+    if (floatingPlayer) {
+      floatingPlayer.textContent = "▶";
+    }
+
+    if (trackTitle) {
+
+      trackTitle.textContent =
+        "La radio que está siempre con vos";
+
+    }
+
+  }
 
 }
 
 
-/* =====================================================
-   PLAY / PAUSA
-===================================================== */
+/* =========================================================
+   EVENTO PLAY PRINCIPAL
+========================================================= */
 
-if (arenaPlay) {
+if (playButton) {
 
-  arenaPlay.addEventListener(
+  playButton.addEventListener(
     "click",
-    async () => {
-
-      if (
-        arenaAudio &&
-        !arenaAudio.paused
-      ) {
-
-        pauseArenaRadio();
-
-      } else {
-
-        await playArenaRadio();
-
-      }
-
-    }
+    toggleRadio
   );
 
 }
 
 
-/* =====================================================
+/* =========================================================
+   BOTÓN FLOTANTE
+========================================================= */
+
+if (floatingPlayer) {
+
+  floatingPlayer.addEventListener(
+    "click",
+    toggleRadio
+  );
+
+}
+
+
+/* =========================================================
    VOLUMEN
-===================================================== */
+========================================================= */
 
-if (arenaVolume) {
+if (volumeControl) {
 
-  arenaVolume.addEventListener(
+  volumeControl.addEventListener(
     "input",
-    () => {
+    function () {
 
-      if (arenaAudio) {
+      if (audio) {
 
-        arenaAudio.volume =
-          Number(arenaVolume.value);
-
-        arenaAudio.muted =
-          false;
-
-      }
-
-
-      if (arenaVolumeValue) {
-
-        arenaVolumeValue.textContent =
-          Math.round(
-            Number(arenaVolume.value) * 100
-          ) + "%";
+        audio.volume =
+          Number(this.value);
 
       }
 
@@ -721,355 +274,68 @@ if (arenaVolume) {
 }
 
 
-/* =====================================================
-   RECONEXIÓN MANUAL
-===================================================== */
+/* =========================================================
+   EVENTOS DEL AUDIO
+========================================================= */
 
-if (arenaReconnect) {
+if (audio) {
 
-  arenaReconnect.addEventListener(
-    "click",
-    async () => {
-
-      arenaReconnectAttempts = 0;
-
-      clearTimeout(
-        arenaReconnectTimer
-      );
-
-
-      arenaStatus(
-        "REINICIANDO…",
-        false
-      );
-
-
-      await playArenaRadio();
-
-    }
-  );
-
-}
-
-
-/* =====================================================
-   AUDIO REPRODUCIENDO
-===================================================== */
-
-if (arenaAudio) {
-
-  arenaAudio.addEventListener(
+  audio.addEventListener(
     "playing",
-    () => {
+    function () {
 
-      arenaReconnectAttempts = 0;
+      isPlaying = true;
 
-
-      arenaStatus(
-        "EN VIVO",
-        true
-      );
-
-
-      if (arenaPlayerMessage) {
-
-        arenaPlayerMessage.textContent =
-          "ARENA 24 · SIEMPRE CON VOS";
-
-      }
-
-
-      updateArenaButton();
-
-
-      console.log(
-        "🔊 ARENA 24 PLAYER 4.0 · AUDIO OK"
-      );
+      updatePlayerUI(true);
 
     }
   );
 
 
-  /* ===================================================
-     PAUSA
-  =================================================== */
-
-  arenaAudio.addEventListener(
+  audio.addEventListener(
     "pause",
-    () => {
+    function () {
 
-      updateArenaButton();
+      isPlaying = false;
+
+      updatePlayerUI(false);
 
     }
   );
 
 
-  /* ===================================================
-     BUFFER
-  =================================================== */
-
-  arenaAudio.addEventListener(
+  audio.addEventListener(
     "waiting",
-    () => {
+    function () {
 
-      if (!arenaStopped) {
-
-        arenaStatus(
-          "CARGANDO…",
-          false
-        );
-
-      }
+      connectionText.textContent =
+        "CONECTANDO...";
 
     }
   );
 
 
-  /* ===================================================
-     ERROR
-  =================================================== */
+  audio.addEventListener(
+    "stalled",
+    function () {
 
-  arenaAudio.addEventListener(
+      connectionText.textContent =
+        "RECONECTANDO...";
+
+    }
+  );
+
+
+  audio.addEventListener(
     "error",
-    () => {
+    function () {
 
-      console.error(
-        "ARENA 24 PLAYER 4.0 · ERROR",
-        arenaAudio.error
+      console.warn(
+        "Error en el stream de ARENA 24"
       );
 
-
-      updateArenaButton();
-
-
-      if (arenaStopped) return;
-
-
-      arenaStatus(
-        "RECONECTANDO…",
-        false
-      );
-
-
-      if (
-        arenaPlayerMessage
-      ) {
-
-        arenaPlayerMessage.textContent =
-          "RECONECTANDO CON LA RADIO…";
-
-      }
-
-
-      if (
-        arenaReconnectAttempts >= 5
-      ) {
-
-        arenaStatus(
-          "SIN SEÑAL",
-          false
-        );
-
-        return;
-
-      }
-
-
-      arenaReconnectAttempts++;
-
-
-      clearTimeout(
-        arenaReconnectTimer
-      );
-
-
-      arenaReconnectTimer =
-        setTimeout(
-          () => {
-
-            playArenaRadio();
-
-          },
-          3000
-        );
-
-    }
-
-  );
-
-}
-
-
-/* =====================================================
-   INICIALIZACIÓN
-===================================================== */
-
-if (arenaAudio) {
-
-  arenaAudio.volume =
-    arenaVolume
-      ? Number(arenaVolume.value)
-      : 1;
-
-  arenaAudio.muted =
-    false;
-
-}
-
-
-arenaStatus(
-  "LISTO PARA ESCUCHAR",
-  false
-);
-
-
-updateArenaButton();
-
-
-console.log(
-  "ARENA 24 PLAYER 4.0 instalado."
-);
-
-/* =====================================================
-   ARENA 24 TV
-===================================================== */
-
-const tv =
-  $("tv");
-
-const tvBackground =
-  $("tvBackground");
-
-const youtube =
-  $("youtubeLive");
-
-const youtubeContainer =
-  $("youtubeContainer");
-
-const tvModeButton =
-  $("tvModeButton");
-
-const tvCinemaButton =
-  $("tvCinemaButton");
-
-const tvStatus =
-  $("tvStatus");
-
-const tvOverlay =
-  $("tvOverlay");
-
-
-/* =====================================================
-   MODO CINEMATOGRÁFICO
-===================================================== */
-
-function setCinemaMode() {
-
-  if (!tv)
-    return;
-
-
-  tv.classList.remove(
-    "live"
-  );
-
-
-  youtubeContainer.classList.remove(
-    "active"
-  );
-
-
-  youtube.src =
-    "";
-
-
-  tvOverlay.style.display =
-    "grid";
-
-
-  tvStatus.textContent =
-    "🎬 MODO CINEMATOGRÁFICO";
-
-
-  tvModeButton.textContent =
-    "📺 ACTIVAR TV EN VIVO";
-
-
-  if (tvBackground) {
-
-    tvBackground
-      .play()
-      .catch(
-        () => {}
-      );
-
-  }
-
-}
-
-
-/* =====================================================
-   TV YOUTUBE
-===================================================== */
-
-function setLiveMode() {
-
-  if (!tv)
-    return;
-
-
-  tv.classList.add(
-    "live"
-  );
-
-
-  youtube.src =
-    CONFIG.youtubeLive +
-    "?autoplay=1&mute=1&rel=0";
-
-
-  youtubeContainer.classList.add(
-    "active"
-  );
-
-
-  tvOverlay.style.display =
-    "none";
-
-
-  tvStatus.textContent =
-    "🔴 ARENA 24 TV · EN VIVO";
-
-
-  tvModeButton.textContent =
-    "🎬 VOLVER AL FONDO";
-
-}
-
-
-/* =====================================================
-   BOTONES TV
-===================================================== */
-
-if (tvModeButton) {
-
-  tvModeButton.addEventListener(
-    "click",
-    () => {
-
-      if (
-        tv.classList.contains(
-          "live"
-        )
-      ) {
-
-        setCinemaMode();
-
-      } else {
-
-        setLiveMode();
-
-      }
+      connectionText.textContent =
+        "REINTENTANDO CONEXIÓN";
 
     }
   );
@@ -1077,45 +343,145 @@ if (tvModeButton) {
 }
 
 
-if (tvCinemaButton) {
+/* =========================================================
+   RELOJ ARGENTINA
+========================================================= */
 
-  tvCinemaButton.addEventListener(
-    "click",
-    setCinemaMode
-  );
+function updateArgentinaClock() {
+
+  if (!argentinaTime) return;
+
+  const now =
+    new Date();
+
+  const time =
+    new Intl.DateTimeFormat(
+      "es-AR",
+      {
+        timeZone: CONFIG.timeZone,
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: false
+      }
+    ).format(now);
+
+  argentinaTime.textContent =
+    time;
 
 }
 
 
-/* =====================================================
-   VIDEO DE FONDO
-===================================================== */
+/* =========================================================
+   INICIAR RELOJ
+========================================================= */
 
-if (tvBackground) {
+updateArgentinaClock();
 
-  tvBackground.muted =
-    true;
-
-  tvBackground.loop =
-    true;
-
-  tvBackground.playsInline =
-    true;
+setInterval(
+  updateArgentinaClock,
+  1000
+);
 
 
-  tvBackground
-    .play()
-    .catch(
-      () => {}
+/* =========================================================
+   SCROLL SUAVE
+========================================================= */
+
+document
+  .querySelectorAll('a[href^="#"]')
+  .forEach(function (link) {
+
+    link.addEventListener(
+      "click",
+      function (event) {
+
+        const targetId =
+          this.getAttribute("href");
+
+        const target =
+          document.querySelector(targetId);
+
+        if (!target) return;
+
+        event.preventDefault();
+
+        target.scrollIntoView({
+          behavior: "smooth",
+          block: "start"
+        });
+
+      }
     );
 
+  });
 
-  tvBackground.addEventListener(
+
+/* =========================================================
+   RECUPERACIÓN AUTOMÁTICA DEL STREAM
+========================================================= */
+
+let reconnectTimer = null;
+
+function reconnectRadio() {
+
+  if (!audio || !isPlaying) return;
+
+  clearTimeout(reconnectTimer);
+
+  reconnectTimer =
+    setTimeout(
+      async function () {
+
+        try {
+
+          audio.pause();
+
+          audio.src =
+            CONFIG.stream +
+            "?v=" +
+            Date.now();
+
+          audio.load();
+
+          await audio.play();
+
+          updatePlayerUI(true);
+
+        }
+
+        catch (error) {
+
+          console.warn(
+            "Reintentando conexión..."
+          );
+
+          reconnectRadio();
+
+        }
+
+      },
+      3000
+    );
+
+}
+
+
+/* =========================================================
+   DETECTAR PÉRDIDA DE CONEXIÓN
+========================================================= */
+
+if (audio) {
+
+  audio.addEventListener(
     "error",
-    () => {
+    function () {
 
-      tvBackground.style.display =
-        "none";
+      if (isPlaying) {
+
+        reconnectRadio();
+
+      }
 
     }
   );
@@ -1123,28 +489,26 @@ if (tvBackground) {
 }
 
 
-/* =====================================================
-   RECUPERAR VIDEO AL VOLVER
-===================================================== */
+/* =========================================================
+   VISIBILIDAD DE LA PÁGINA
+========================================================= */
 
 document.addEventListener(
   "visibilitychange",
-  () => {
+  function () {
+
+    /*
+      No detenemos la radio cuando el usuario
+      cambia de pestaña.
+    */
 
     if (
-      !document.hidden &&
-      tv &&
-      !tv.classList.contains(
-        "live"
-      ) &&
-      tvBackground
+      document.visibilityState === "visible" &&
+      isPlaying &&
+      audio.paused
     ) {
 
-      tvBackground
-        .play()
-        .catch(
-          () => {}
-        );
+      playRadio();
 
     }
 
@@ -1152,69 +516,24 @@ document.addEventListener(
 );
 
 
-/* =====================================================
-   ANIMACIÓN DE ENTRADA
-===================================================== */
+/* =========================================================
+   INICIO
+========================================================= */
 
-if (
-  "IntersectionObserver"
-  in window
-) {
+initializeAudio();
 
-  const observer =
-    new IntersectionObserver(
-      entries => {
-
-        entries.forEach(
-          entry => {
-
-            if (
-              entry.isIntersecting
-            ) {
-
-              entry.target.classList.add(
-                "visible"
-              );
-
-            }
-
-          }
-        );
-
-      },
-      {
-        threshold:
-          0.1
-      }
-    );
+updatePlayerUI(false);
 
 
-  document
-    .querySelectorAll(
-      ".program-card,.news-card,.specials article"
-    )
-    .forEach(
-      element =>
-        observer.observe(
-          element
-        )
-    );
-
-}
-
-
-/* =====================================================
-   CONSOLA
-===================================================== */
+/* =========================================================
+   MENSAJE DE CONSOLA
+========================================================= */
 
 console.log(
-  "ARENA 24 Radio Web profesional inicializada."
+  "%c ARENA 24 4.0 ",
+  "background:#ff6b1a;color:white;font-size:18px;font-weight:bold;padding:8px;"
 );
 
 console.log(
-  "Radio: reproductor ARENA 24 conectado al stream directo."
-);
-
-console.log(
-  "TV: canal YouTube ARENA 24 integrado."
+  "Radio online · La Rioja · Argentina"
 );
