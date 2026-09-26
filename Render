@@ -1,0 +1,4 @@
+Root Directory: backend
+Build Command: npm install
+Start Command: npm start
+Health Check Path: /api/health
