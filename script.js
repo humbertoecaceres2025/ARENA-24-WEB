@@ -1,423 +1,621 @@
 "use strict";
 
 /* =========================================================
-   ARENA 24 RADIO Y TV
-   Versión 4.2
-   ========================================================= */
+   ARENA 24 RADIO Y TV 5.0
+========================================================= */
 
 const CONFIG = {
-  radioStream: "https://stream.zeno.fm/zuw6xmmwmd0uv",
-  youtubeChannel: "UCrHexRcAlWkaTn8P-BLT3LA",
-  youtubeLive: "https://www.youtube.com/@ARENA24LARIOJA/live",
-  timeZone: "America/Argentina/La_Rioja"
+
+    radioStream:
+        "https://stream.zeno.fm/zuw6xmmwmd0uv",
+
+    youtubeChannel:
+        "UCrHexRcAlWkaTn8P-BLT3LA",
+
+    timeZone:
+        "America/Argentina/La_Rioja"
+
 };
 
 
 /* =========================================================
    ELEMENTOS
-   ========================================================= */
+========================================================= */
 
-const audio = document.getElementById("radioAudio");
-const playButton = document.getElementById("playButton");
-const muteButton = document.getElementById("muteButton");
-const volumeControl = document.getElementById("volumeControl");
+const audio =
+    document.getElementById("radioAudio");
 
-const radioCard = document.querySelector(".radio-card");
-const radioStatus = document.getElementById("radioStatus");
-const radioDot = document.getElementById("radioDot");
+const playButton =
+    document.getElementById("playButton");
 
-const connectionDot = document.getElementById("connectionDot");
-const connectionText = document.getElementById("connectionText");
+const muteButton =
+    document.getElementById("muteButton");
 
-const radioMessage = document.getElementById("radioMessage");
+const volumeControl =
+    document.getElementById("volumeControl");
 
-const heroClock = document.getElementById("heroClock");
-const heroDate = document.getElementById("heroDate");
+const radioConsole =
+    document.querySelector(".radio-console");
 
-const floatingRadio = document.getElementById("floatingRadio");
+const radioStatus =
+    document.getElementById("radioStatus");
 
+const radioConnection =
+    document.getElementById("radioConnection");
 
-/* =========================================================
-   CONFIGURACIÓN INICIAL
-   ========================================================= */
+const statusLight =
+    document.getElementById("statusLight");
 
-audio.volume = 0.85;
-volumeControl.value = "0.85";
+const statusText =
+    document.getElementById("statusText");
 
-let retryTimer = null;
-let manualStop = false;
+const radioHelp =
+    document.getElementById("radioHelp");
 
+const floatingRadio =
+    document.getElementById("floatingRadio");
 
-/* =========================================================
-   CARGAR STREAM
-   ========================================================= */
+const clock =
+    document.getElementById("clock");
 
-function loadRadioStream() {
-
-  clearTimeout(retryTimer);
-
-  try {
-    audio.pause();
-    audio.removeAttribute("src");
-    audio.load();
-
-    audio.src = CONFIG.radioStream;
-    audio.preload = "none";
-
-  } catch (error) {
-    console.error("Error cargando radio:", error);
-  }
-}
+const date =
+    document.getElementById("date");
 
 
 /* =========================================================
-   REPRODUCIR
-   ========================================================= */
+   VARIABLES
+========================================================= */
 
-async function playRadio() {
+let reconnectTimer = null;
 
-  manualStop = false;
-
-  if (!audio.src) {
-    loadRadioStream();
-  }
-
-  setConnecting();
-
-  try {
-
-    await audio.play();
-
-    setPlaying();
-
-  } catch (error) {
-
-    console.error("No se pudo iniciar la radio:", error);
-
-    setError(
-      "El navegador no pudo iniciar el stream. Presioná nuevamente ▶."
-    );
-  }
-}
-
-
-/* =========================================================
-   PAUSAR
-   ========================================================= */
-
-function pauseRadio() {
-
-  manualStop = true;
-
-  audio.pause();
-
-  setStopped();
-}
-
-
-/* =========================================================
-   BOTÓN PLAY
-   ========================================================= */
-
-playButton.addEventListener("click", () => {
-
-  if (audio.paused) {
-    playRadio();
-  } else {
-    pauseRadio();
-  }
-
-});
-
-
-/* =========================================================
-   EVENTOS AUDIO
-   ========================================================= */
-
-audio.addEventListener("loadstart", () => {
-  if (!manualStop) setConnecting();
-});
-
-audio.addEventListener("waiting", () => {
-  if (!manualStop) setConnecting();
-});
-
-audio.addEventListener("playing", () => {
-  setPlaying();
-});
-
-audio.addEventListener("canplay", () => {
-  if (!audio.paused) {
-    setPlaying();
-  }
-});
-
-audio.addEventListener("pause", () => {
-
-  if (!manualStop && !audio.ended) {
-    setConnecting();
-    return;
-  }
-
-  if (manualStop) {
-    setStopped();
-  }
-
-});
-
-audio.addEventListener("error", () => {
-
-  if (manualStop) return;
-
-  console.error("Error del stream:", audio.error);
-
-  setError("Reconectando con ARENA 24...");
-
-  clearTimeout(retryTimer);
-
-  retryTimer = setTimeout(() => {
-
-    if (!manualStop) {
-
-      loadRadioStream();
-
-      playRadio();
-
-    }
-
-  }, 5000);
-
-});
-
-
-/* =========================================================
-   ESTADOS
-   ========================================================= */
-
-function setPlaying() {
-
-  radioStatus.textContent = "ARENA 24 · EN VIVO";
-  radioDot.style.background = "#00e676";
-  radioDot.style.boxShadow = "0 0 12px #00e676";
-
-  connectionDot.classList.add("connected");
-  connectionText.textContent = "CONECTADO";
-
-  playButton.textContent = "❚❚";
-
-  radioCard.classList.add("playing");
-
-  radioMessage.textContent =
-    "Estás escuchando ARENA 24 Radio · La Rioja Argentina.";
-
-}
-
-
-function setConnecting() {
-
-  radioStatus.textContent = "CONECTANDO...";
-  radioDot.style.background = "#ff9d00";
-  radioDot.style.boxShadow = "0 0 12px #ff9d00";
-
-  connectionDot.classList.remove("connected");
-  connectionText.textContent = "CONECTANDO";
-
-  playButton.textContent = "▶";
-
-  radioCard.classList.remove("playing");
-
-  radioMessage.textContent =
-    "Conectando con ARENA 24 Radio...";
-
-}
-
-
-function setStopped() {
-
-  radioStatus.textContent = "RADIO DETENIDA";
-
-  radioDot.style.background = "#ff3158";
-  radioDot.style.boxShadow = "none";
-
-  connectionDot.classList.remove("connected");
-  connectionText.textContent = "DESCONECTADO";
-
-  playButton.textContent = "▶";
-
-  radioCard.classList.remove("playing");
-
-  radioMessage.textContent =
-    "Presioná ▶ para volver a escuchar ARENA 24.";
-
-}
-
-
-function setError(message) {
-
-  radioStatus.textContent = "SIN CONEXIÓN";
-
-  radioDot.style.background = "#ff3158";
-  radioDot.style.boxShadow = "0 0 12px #ff3158";
-
-  connectionDot.classList.remove("connected");
-  connectionText.textContent = "SIN CONEXIÓN";
-
-  playButton.textContent = "▶";
-
-  radioCard.classList.remove("playing");
-
-  radioMessage.textContent = message;
-}
+let userStopped = true;
 
 
 /* =========================================================
    VOLUMEN
-   ========================================================= */
+========================================================= */
 
-volumeControl.addEventListener("input", () => {
+audio.volume = 0.85;
 
-  const value = Number(volumeControl.value);
-
-  audio.volume = value;
-
-  if (value === 0) {
-    audio.muted = true;
-    muteButton.textContent = "🔇";
-  } else {
-    audio.muted = false;
-    muteButton.textContent = "🔊";
-  }
-
-});
+volumeControl.value = "0.85";
 
 
 /* =========================================================
-   SILENCIO
-   ========================================================= */
+   PREPARAR STREAM
+========================================================= */
 
-muteButton.addEventListener("click", () => {
+function prepareStream(){
 
-  audio.muted = !audio.muted;
+    audio.pause();
 
-  muteButton.textContent = audio.muted ? "🔇" : "🔊";
+    audio.removeAttribute("src");
 
-});
+    audio.load();
 
+    /*
+      Usamos directamente la URL que el usuario
+      confirmó que funciona técnicamente.
+    */
 
-/* =========================================================
-   RELOJ ARGENTINA / LA RIOJA
-   ========================================================= */
+    audio.src = CONFIG.radioStream;
 
-function updateClock() {
-
-  const now = new Date();
-
-  const time = new Intl.DateTimeFormat("es-AR", {
-    timeZone: CONFIG.timeZone,
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-    hour12: false
-  }).format(now);
-
-  const date = new Intl.DateTimeFormat("es-AR", {
-    timeZone: CONFIG.timeZone,
-    weekday: "long",
-    day: "2-digit",
-    month: "long",
-    year: "numeric"
-  }).format(now);
-
-  heroClock.textContent = time;
-  heroDate.textContent =
-    date.charAt(0).toUpperCase() + date.slice(1);
+    audio.preload = "none";
 
 }
 
-updateClock();
-setInterval(updateClock, 1000);
+
+/* =========================================================
+   INICIAR RADIO
+========================================================= */
+
+async function startRadio(){
+
+    userStopped = false;
+
+    clearTimeout(reconnectTimer);
+
+    setConnecting();
+
+    /*
+      Volvemos a cargar el stream al iniciar.
+      Esto evita conservar un estado fallido
+      anterior del elemento audio.
+    */
+
+    prepareStream();
+
+    try{
+
+        await audio.play();
+
+        setPlaying();
+
+    }catch(error){
+
+        console.error(
+            "ARENA 24 - Error al reproducir:",
+            error
+        );
+
+        /*
+          Segundo intento.
+          Algunos navegadores necesitan que
+          el elemento tenga el src cargado
+          antes de play().
+        */
+
+        setTimeout(async()=>{
+
+            if(userStopped) return;
+
+            try{
+
+                await audio.play();
+
+                setPlaying();
+
+            }catch(secondError){
+
+                console.error(
+                    "ARENA 24 - Segundo intento:",
+                    secondError
+                );
+
+                setError(
+                    "No se pudo iniciar el audio. Tocá nuevamente ▶."
+                );
+
+            }
+
+        },400);
+
+    }
+
+}
 
 
 /* =========================================================
-   RADIO FLOTANTE
-   ========================================================= */
+   DETENER
+========================================================= */
 
-floatingRadio.addEventListener("click", () => {
+function stopRadio(){
 
-  if (audio.paused) {
-    playRadio();
-  } else {
-    pauseRadio();
-  }
+    userStopped = true;
 
-});
+    clearTimeout(reconnectTimer);
 
+    audio.pause();
 
-/* =========================================================
-   DETECTAR CAMBIOS DE VISIBILIDAD
-   ========================================================= */
+    setStopped();
 
-document.addEventListener("visibilitychange", () => {
-
-  /*
-   No intentamos reproducir automáticamente cuando
-   el usuario vuelve a la página, porque los navegadores
-   pueden bloquear reproducción automática.
-  */
-
-  if (!document.hidden && !audio.paused) {
-    setPlaying();
-  }
-
-});
+}
 
 
 /* =========================================================
-   PREPARAR RADIO
-   ========================================================= */
+   PLAY / PAUSE
+========================================================= */
 
-loadRadioStream();
+playButton.addEventListener(
+    "click",
+    ()=>{
+
+        if(audio.paused){
+
+            startRadio();
+
+        }else{
+
+            stopRadio();
+
+        }
+
+    }
+);
 
 
 /* =========================================================
-   LINKS DE YOUTUBE
-   ========================================================= */
+   EVENTOS DEL AUDIO
+========================================================= */
 
-const youtubePlayer = document.getElementById("youtubePlayer");
+audio.addEventListener(
+    "playing",
+    ()=>{
+        setPlaying();
+    }
+);
 
-if (youtubePlayer) {
 
-  /*
-   La inserción depende de la configuración del video
-   en YouTube Studio.
+audio.addEventListener(
+    "canplay",
+    ()=>{
 
-   Si el propietario desactiva "Permitir inserción",
-   YouTube mostrará el bloqueo dentro del iframe.
-  */
+        if(!audio.paused){
 
-  youtubePlayer.addEventListener("load", () => {
+            setPlaying();
 
-    console.log(
-      "ARENA 24 TV: iframe de YouTube cargado."
+        }
+
+    }
+);
+
+
+audio.addEventListener(
+    "waiting",
+    ()=>{
+
+        if(!userStopped){
+
+            setConnecting();
+
+        }
+
+    }
+);
+
+
+audio.addEventListener(
+    "stalled",
+    ()=>{
+
+        if(!userStopped){
+
+            setConnecting();
+
+        }
+
+    }
+);
+
+
+audio.addEventListener(
+    "error",
+    ()=>{
+
+        if(userStopped) return;
+
+        console.error(
+            "ARENA 24 - Error del stream:",
+            audio.error
+        );
+
+        setError(
+            "Reconectando con ARENA 24..."
+        );
+
+        clearTimeout(reconnectTimer);
+
+        reconnectTimer =
+            setTimeout(
+                ()=>{
+                    if(!userStopped){
+                        startRadio();
+                    }
+                },
+                5000
+            );
+
+    }
+);
+
+
+/* =========================================================
+   ESTADO REPRODUCIENDO
+========================================================= */
+
+function setPlaying(){
+
+    radioConsole.classList.add(
+        "playing"
     );
 
-  });
+    radioStatus.textContent =
+        "EN VIVO";
+
+    radioConnection.textContent =
+        "CONEXIÓN ESTABLE";
+
+    statusText.textContent =
+        "ONLINE";
+
+    statusLight.classList.add(
+        "connected"
+    );
+
+    playButton.textContent =
+        "❚❚";
+
+    radioHelp.textContent =
+        "Estás escuchando ARENA 24 Radio · La Rioja Argentina.";
 
 }
 
 
 /* =========================================================
-   PROTECCIÓN CONTRA ERRORES DE SCRIPT
-   ========================================================= */
+   ESTADO CONECTANDO
+========================================================= */
 
-window.addEventListener("error", (event) => {
+function setConnecting(){
 
-  console.error(
-    "ARENA 24 - Error:",
-    event.message
-  );
+    radioConsole.classList.remove(
+        "playing"
+    );
 
-});
+    radioStatus.textContent =
+        "CONECTANDO";
+
+    radioConnection.textContent =
+        "CONECTANDO CON ZENO";
+
+    statusText.textContent =
+        "CONECTANDO";
+
+    statusLight.classList.remove(
+        "connected"
+    );
+
+    playButton.textContent =
+        "▶";
+
+    radioHelp.textContent =
+        "Conectando con ARENA 24 Radio...";
+
+}
 
 
-console.log("ARENA 24 Radio y TV 4.2 iniciada.");
+/* =========================================================
+   ESTADO DETENIDO
+========================================================= */
+
+function setStopped(){
+
+    radioConsole.classList.remove(
+        "playing"
+    );
+
+    radioStatus.textContent =
+        "LISTO";
+
+    radioConnection.textContent =
+        "ESPERANDO CONEXIÓN";
+
+    statusText.textContent =
+        "OFFLINE";
+
+    statusLight.classList.remove(
+        "connected"
+    );
+
+    playButton.textContent =
+        "▶";
+
+    radioHelp.textContent =
+        "Presioná ▶ para comenzar a escuchar.";
+
+}
+
+
+/* =========================================================
+   ERROR
+========================================================= */
+
+function setError(message){
+
+    radioConsole.classList.remove(
+        "playing"
+    );
+
+    radioStatus.textContent =
+        "ERROR DE CONEXIÓN";
+
+    radioConnection.textContent =
+        "REVISANDO STREAM";
+
+    statusText.textContent =
+        "SIN SEÑAL";
+
+    statusLight.classList.remove(
+        "connected"
+    );
+
+    playButton.textContent =
+        "▶";
+
+    radioHelp.textContent =
+        message;
+
+}
+
+
+/* =========================================================
+   MUTE
+========================================================= */
+
+muteButton.addEventListener(
+    "click",
+    ()=>{
+
+        audio.muted =
+            !audio.muted;
+
+        muteButton.textContent =
+            audio.muted
+                ? "🔇"
+                : "🔊";
+
+    }
+);
+
+
+/* =========================================================
+   VOLUMEN
+========================================================= */
+
+volumeControl.addEventListener(
+    "input",
+    ()=>{
+
+        const value =
+            Number(
+                volumeControl.value
+            );
+
+        audio.volume =
+            value;
+
+        if(value === 0){
+
+            audio.muted = true;
+
+            muteButton.textContent =
+                "🔇";
+
+        }else{
+
+            audio.muted = false;
+
+            muteButton.textContent =
+                "🔊";
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   BOTÓN FLOTANTE
+========================================================= */
+
+floatingRadio.addEventListener(
+    "click",
+    ()=>{
+
+        if(audio.paused){
+
+            startRadio();
+
+        }else{
+
+            stopRadio();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   RELOJ LA RIOJA
+========================================================= */
+
+function updateClock(){
+
+    const now =
+        new Date();
+
+
+    const time =
+        new Intl.DateTimeFormat(
+            "es-AR",
+            {
+                timeZone:
+                    CONFIG.timeZone,
+
+                hour:
+                    "2-digit",
+
+                minute:
+                    "2-digit",
+
+                second:
+                    "2-digit",
+
+                hour12:
+                    false
+            }
+        ).format(now);
+
+
+    const currentDate =
+        new Intl.DateTimeFormat(
+            "es-AR",
+            {
+                timeZone:
+                    CONFIG.timeZone,
+
+                weekday:
+                    "long",
+
+                day:
+                    "2-digit",
+
+                month:
+                    "long",
+
+                year:
+                    "numeric"
+            }
+        ).format(now);
+
+
+    clock.textContent =
+        time;
+
+
+    date.textContent =
+        currentDate
+            .charAt(0)
+            .toUpperCase()
+        +
+        currentDate.slice(1);
+
+}
+
+
+updateClock();
+
+setInterval(
+    updateClock,
+    1000
+);
+
+
+/* =========================================================
+   VISIBILIDAD
+========================================================= */
+
+document.addEventListener(
+    "visibilitychange",
+    ()=>{
+
+        /*
+          No iniciamos audio automáticamente.
+          El navegador debe recibir una acción
+          del usuario para permitir reproducción.
+        */
+
+        if(
+            !document.hidden &&
+            !audio.paused
+        ){
+
+            setPlaying();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   INICIALIZACIÓN
+========================================================= */
+
+prepareStream();
+
+setStopped();
+
+
+console.log(
+    "ARENA 24 5.0 — Radio y TV iniciada."
+);
