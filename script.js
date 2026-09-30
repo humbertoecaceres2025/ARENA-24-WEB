@@ -1,15 +1,14 @@
 "use strict";
 
-/* =========================================================
-   ARENA 24 7.0
+/* =====================================================
+   ARENA 24 7.1
    RADIO & TV
-   La Rioja - Argentina
-========================================================= */
+===================================================== */
 
 
-/* =========================================================
-   RELOJ ARGENTINA / LA RIOJA
-========================================================= */
+/* =====================================================
+   RELOJ LA RIOJA
+===================================================== */
 
 function updateClock() {
 
@@ -23,10 +22,11 @@ function updateClock() {
     hour12: false
   };
 
-  const time = new Intl.DateTimeFormat(
-    "es-AR",
-    options
-  ).format(now);
+  const time =
+    new Intl.DateTimeFormat(
+      "es-AR",
+      options
+    ).format(now);
 
   const heroClock =
     document.getElementById("heroClock");
@@ -48,9 +48,9 @@ updateClock();
 setInterval(updateClock, 1000);
 
 
-/* =========================================================
-   NAVEGACIÓN SUAVE
-========================================================= */
+/* =====================================================
+   NAVEGACIÓN
+===================================================== */
 
 document
   .querySelectorAll('a[href^="#"]')
@@ -84,66 +84,58 @@ document
   });
 
 
-/* =========================================================
+/* =====================================================
    ECUalizador
-========================================================= */
+===================================================== */
 
-const equalizer =
-  document.querySelector(".equalizer");
-
-if (equalizer) {
-
-  const bars =
-    equalizer.querySelectorAll("i");
-
-  bars.forEach((bar, index) => {
+document
+  .querySelectorAll(".equalizer i")
+  .forEach((bar, index) => {
 
     bar.style.animationDelay =
       `${index * 0.07}s`;
 
   });
 
-}
 
+document
+  .querySelectorAll(".hero-eq i")
+  .forEach((bar, index) => {
 
-/* =========================================================
-   HERO ECUALIZADOR
-========================================================= */
-
-const heroBars =
-  document.querySelectorAll(".hero-eq i");
-
-heroBars.forEach((bar, index) => {
-
-  bar.style.animationDelay =
-    `${index * 0.08}s`;
-
-});
-
-
-/* =========================================================
-   ZENO
-========================================================= */
-
-const zeno =
-  document.querySelector(".zeno-window iframe");
-
-if (zeno) {
-
-  zeno.addEventListener("load", () => {
-
-    console.log(
-      "ARENA 24: reproductor Zeno cargado."
-    );
+    bar.style.animationDelay =
+      `${index * 0.08}s`;
 
   });
 
+
+/* =====================================================
+   ZENO
+===================================================== */
+
+const zeno =
+  document.querySelector(
+    ".zeno-window iframe"
+  );
+
+if (zeno) {
+
+  zeno.addEventListener(
+    "load",
+    () => {
+
+      console.log(
+        "ARENA 24: Zeno Radio cargado correctamente."
+      );
+
+    }
+  );
+
 }
 
 
-/* =========================================================
-   ANIMACIONES AL HACER SCROLL
-========================================================= */
+/* =====================================================
+   ANIMACIONES DE TARJETAS
+===================================================== */
 
 const elements =
   document.querySelectorAll(
@@ -179,17 +171,15 @@ if ("IntersectionObserver" in window) {
     );
 
   elements.forEach(element => {
-
     observer.observe(element);
-
   });
 
 }
 
 
-/* =========================================================
-   MENSAJE DE CONSOLA
-========================================================= */
+/* =====================================================
+   IDENTIDAD
+===================================================== */
 
 console.log(
   "%c ARENA 24 RADIO & TV ",
